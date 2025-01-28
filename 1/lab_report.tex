@@ -1,7 +1,10 @@
 \documentclass{article}
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
+\usepackage{xcolor}
 \graphicspath{{..}}
+
+\renewcommand{\contentsname}{\vspace*{-2\baselineskip}}
 
 \begin{document}
 \begin{titlepage}
@@ -12,8 +15,32 @@
 	Spring 2025\\[0.25 in]}}
 	{\large Owen Sowatzke, osowatzke@arizona.edu\\[0.05 in]
 	Department of Electrical \& Computer Engineering\\[0.05 in]
-	University of Arizona, Tucson, AZ 85721}
+	University of Arizona, Tucson, AZ 85721\\[0.5 in]}
+	\textcolor{blue}{
+	\noindent\hrulefill
+	\tableofcontents
+	\noindent\hrulefill
+	}
 \end{titlepage}
+
+\section{Introduction}
+Introduction to the laboratory experiment, including a brief description of the objectives and goals.
+
+\section{Procedure}
+Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
+
+\section{Results}
+Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
+
+\section{Conclusion}
+Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
+
+%sampling rates
+%complex samples
+%interpolation
+%decimation
+%noise analysis
+
 %\title{Lab 1 - Introduction to Software-Defined Radio\\
 %\includegraphics[scale=0.25\textwidth]{ua_logo.png}}
 %\author{Owen Sowatzke}
