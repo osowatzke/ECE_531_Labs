@@ -46,7 +46,7 @@ Topics:
 
 In this lab, we investigate the effects of sampling rates on a sinusoid signal. We, then, investigate how complex sampling differs from real sampling. Next, we observe the spectrum of the sinusoid, while varying its frequency. Then, we examine the effects of I/Q imbalance on a complex-sampled signal.
 
-\subsection{Sampling Rates}
+\subsection{Sampling Rates \label{subsection::sampling_rates}}
 
 In this experiment, we examine the effects of sampling rate. To perform this experiment, we construct the GNU radio companion (GRC) flowchart shown in Figure \ref{fig::sampling_rates_experiment}. We, then, use the "Time" and "Frequency" tabs of the QT GUI to examine the sampled signal.
 
@@ -68,6 +68,7 @@ In this section, we examine how complex sampling differs from real sampling. To 
 	\label{fig::complex_sampling_experiment}
 \end{figure}
 
+Using the updated block diagram, we compare the updated frequency spectrum to the spectrum collected in subsection \ref{subsection::sampling_rates}, noting what happens to the positive and negative frequency components. We, then, investigate the time-domain signals and measure the phase between them. Next, we examine the signal amplitude on each channel while varying the sampling frequency from 10kHz to 40kHz. At the 40kHz sampling rate, we measure the frequency peak. Then, we measure the frequency peak at a 4kHz sampling rate. Finally, we continue decreasing the sampling rate and explain the location of the frequency peak.
 
 \subsection{Frequency Observations}
 
