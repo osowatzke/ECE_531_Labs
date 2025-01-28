@@ -2,7 +2,8 @@
 \usepackage[margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{xcolor}
-\graphicspath{{..}}
+\usepackage{float}
+\graphicspath{{..} {./images}}
 
 \renewcommand{\contentsname}{\vspace*{-2\baselineskip}}
 
@@ -42,9 +43,20 @@ Topics:
 
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
+
 In this lab, we investigate the effects of sampling rates on a sinusoid signal. We, then, investigate how complex sampling differs from real sampling. Next, we observe the spectrum of the sinusoid, while varying its frequency. Then, we examine the effects of I/Q imbalance on a complex-sampled signal.
 
 \subsection{Sampling Rates}
+
+In this experiment, we examine the effects of sampling rate. To perform this experiment, we construct the GNU radio companion (GRC) flowchart shown in Figure \ref{fig::sampling_rates_experiment}. We, then, use the "Time" and "Frequency" tabs of the QT GUI to examine the sampled signal.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_experiment.png}}}
+	\caption{Setup for Sampling Rate Experiment}
+	\label{fig::sampling_rates_experiment}
+\end{figure}
+
+We start by examining the signal when it is sampled at the 10 kHz default sample rate. We qualitatively analyze the time-domain signal by comparing it to an ideal sinusoid. We, then, measure the frequency of the signal. Next, we increase the sample rate to 40 kHz and compare the updated time and frequency plots to the previously collected data. Finally, we decrease the sample rate to 3.5 kHz and examine the frequency of the sampled signal.
 
 \subsection{Complex Sampling}
 
