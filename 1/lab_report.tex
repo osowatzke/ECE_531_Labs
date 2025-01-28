@@ -58,7 +58,7 @@ In this experiment, we examine the effects of sampling rate. To perform this exp
 
 We start by examining the signal when it is sampled at the 10 kHz default sample rate. We qualitatively analyze the time-domain signal by comparing it to an ideal sinusoid. We, then, measure the frequency of the signal. Next, we increase the sample rate to 40 kHz and compare the updated time and frequency plots to the previously collected data. Finally, we decrease the sample rate to 3.5 kHz and examine the frequency of the sampled signal.
 
-\subsection{Complex Sampling}
+\subsection{Complex Sampling \label{subsection::complex_sampling}}
 
 In this section, we examine how complex sampling differs from real sampling. To perform our analysis, we modify the data types of the blocks in the GRC flowchart shown in Figure \ref{fig::sampling_rates_experiment}. The updated blocks use a "Complex Float 32" data type instead of a "Float 32" data type. Figure \ref{fig::complex_sampling_experiment} shows the updated block diagram. Note that the port colors have changed from orange to blue to reflect the change in data type.
 
@@ -72,7 +72,19 @@ Using the updated block diagram, we compare the updated frequency spectrum to th
 
 \subsection{Frequency Observations}
 
+In contrast to the previous sections, we now vary the frequency of the source while keeping the sampling rate constant. The experiment performed here reinforces the results of the previous sections and is performed on both real and complex-sampled data.
+ 
 \subsubsection{Complex-sampled Flowgraph}
+
+The updated GRC flowchart for complex sampling is shown in Figure \ref{fig::frequency_observations_complex_sampling}. Compare with the previous flowchart, the sinusoid frequency can now be controlled with a slider.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{frequency_observations_complex_sampling.png}}}
+	\caption{Complex-sampled Frequency Observations}
+	\label{fig::frequency_observations_complex_sampling}
+\end{figure}
+
+Using the updated flowchart, we vary the sinusoid frequency over its full range (from 2kHz to 15kHz), while observing the resulting spectrum. Based on the collected data, we notate any anomalies and describe why they occur. 
 
 \subsubsection{Real-sampled Flowgraph}
 
