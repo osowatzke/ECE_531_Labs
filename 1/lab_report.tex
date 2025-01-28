@@ -60,6 +60,15 @@ We start by examining the signal when it is sampled at the 10 kHz default sample
 
 \subsection{Complex Sampling}
 
+In this section, we examine how complex sampling differs from real sampling. To perform our analysis, we modify the data types of the blocks in the GRC flowchart shown in Figure \ref{fig::sampling_rates_experiment}. The updated blocks use a "Complex Float 32" data type instead of a "Float 32" data type. Figure \ref{fig::complex_sampling_experiment} shows the updated block diagram. Note that the port colors have changed from orange to blue to reflect the change in data type.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_experiment.png}}}
+	\caption{Setup for Complex Sampling Experiment}
+	\label{fig::complex_sampling_experiment}
+\end{figure}
+
+
 \subsection{Frequency Observations}
 
 \subsubsection{Complex-sampled Flowgraph}
