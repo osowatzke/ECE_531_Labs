@@ -74,9 +74,9 @@ Using the updated block diagram, we compare the updated frequency spectrum to th
 
 In contrast to the previous sections, we now vary the frequency of the source while keeping the sampling rate constant. The experiment performed here reinforces the results of the previous sections and is performed on both real and complex-sampled data.
  
-\subsubsection{Complex-sampled Flowgraph}
+\subsubsection{Complex-sampled Flowgraph \label{subsection::frequency_observations_complex_sampling}}
 
-The updated GRC flowchart for complex sampling is shown in Figure \ref{fig::frequency_observations_complex_sampling}. Compare with the previous flowchart, the sinusoid frequency can now be controlled with a slider.
+The updated GRC flowchart for complex sampling is shown in Figure \ref{fig::frequency_observations_complex_sampling}. Compared with the previous flowchart, the sinusoid frequency can now be controlled with a slider.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{frequency_observations_complex_sampling.png}}}
@@ -87,6 +87,16 @@ The updated GRC flowchart for complex sampling is shown in Figure \ref{fig::freq
 Using the updated flowchart, we vary the sinusoid frequency over its full range (from 2kHz to 15kHz), while observing the resulting spectrum. Based on the collected data, we notate any anomalies and describe why they occur. 
 
 \subsubsection{Real-sampled Flowgraph}
+
+We also investigate real-sampling using the flowchart shown in Figure \ref{fig::frequency_observations_real_sampling}. The flowchart is identical to the one shown in Figure \ref{fig::frequency_observations_complex_sampling} except for the data types which have been modified from "Complex Float 32" to "Float 32".
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{frequency_observations_real_sampling.png}}}
+	\caption{Real-sampled Frequency Observations}
+	\label{fig::frequency_observations_real_sampling}
+\end{figure}
+
+Using the above flowchart, we vary the frequency of the sinusoid from its default value (10 kHz) to its maximum value (15 kHz). We observe the resulting spectrum and compare to the results we observed in Section \ref{subsection::frequency_observations_complex_sampling}.
 
 \subsection{I/Q Imbalance}
 
