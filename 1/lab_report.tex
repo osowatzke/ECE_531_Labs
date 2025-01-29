@@ -135,7 +135,53 @@ For the final experiment, we investigate and decimation, which are used to resam
 Using the above flowchart, we observe the time and frequency domain outputs and compare the differences between each of the resampled signals. We specifically concentrate on the differences we observe in the frequency spectrum and identify the relationship between each of the signals in the frequency domain.
 
 \section{Results}
-Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
+% Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
+
+\subsection{Sampling Rates}
+
+Using the GNU flowchart shown in Figure \ref{fig::sampling_rates_experiment}, we can view the sampled signal in the time-domain. With a 10 kHz sample rate, the resulting signal is shown in Figure \ref{fig::sampling_rates_time_domain_10k_samp_rate}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_time_domain_10k_samp_rate.png}}}
+	\caption{Time-Domain Capture of Sinusoid Sampled at 10 kHz}
+	\label{fig::sampling_rates_time_domain_10k_samp_rate}
+\end{figure}
+
+Reviewing the time domain data, we see that the signal is periodic with a period of 0.5 ms, which is consistent with the 2 kHz sinusoid frequency. We also see the samples are separated by 0.1 ms, which is consistent with the 10 kHz sampling rate. Compared to a continuous time sinusoid, we note that the sine looks jagged due to the linear interpolation between samples. However, we can clearly tell that it is a sinusoid.
+
+Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate} shows the spectrum of the sampled signal. Examining the frequency response, we see that it peaks at $\pm$ 2 kHz, which is consistent with the sinusoid's frequency.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_freq_domain_10k_samp_rate.png}}}
+	\caption{Spectrum of Sinusoid Sampled at 10 kHz}
+	\label{fig::sampling_rates_freq_domain_10k_samp_rate}
+\end{figure}
+
+Next, we examine the frequency response when the sampling rate is increased to 40 kHz. The updated frequency response is shown in Figure \ref{fig::sampling_rates_freq_domain_40k_samp_rate}. Examining the updated frequency response, we see that it peaks at $\pm$ 2 kHz, which is identical to the frequency it previously peaked at. The biggest difference in the frequency responses is their span. The previously collected data spanned from $\pm$ 5 kHz, while the newly collected data spans from $\pm$ 10 kHz.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_freq_domain_40k_samp_rate.png}}}
+	\caption{Spectrum of Sinusoid Sampled at 40 kHz}
+	\label{fig::sampling_rates_freq_domain_40k_samp_rate}
+\end{figure}
+
+After increasing the sample rate to 40 kHz, the scope capture looks much more sinusoid-like. This is because there are more samples per period of the sinusoid, which results in less interpolation between points. The updated scope capture is shown in Figure \ref{fig::sampling_rates_time_domain_40k_samp_rate}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_time_domain_40k_samp_rate.png}}}
+	\caption{Time-Domain Capture of Sinusoid Sampled at 40 kHz}
+	\label{fig::sampling_rates_time_domain_40k_samp_rate}
+\end{figure}
+
+Now, we adjust the sample rate to 3.5 kHz and measure the peak of the frequency response. We see that the peak is at 1.5 kHz instead of 2 kHz. This is illustrated in Figure \ref{fig::sampling_rates_freq_domain_3_5k_samp_rate}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_freq_domain_3_5k_samp_rate.png}}}
+	\caption{Spectrum of Sinusoid Sampled at 3.5 kHz}
+	\label{fig::sampling_rates_freq_domain_3_5k_samp_rate}
+\end{figure}
+
+The phenomenon we observe is called aliasing. The spectrum of a sampled signal wraps to $\pm f_s/2$. The delta function at positive frequency aliases from 2 kHz to -1.5 kHz and the delta function at negative frequency aliases from -2 kHz to 1.5 kHz. As a result, the measured frequency changes by 0.5 kHz, from 2 kHz to 1.5 kHz.
 
 \section{Conclusion}
 Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
