@@ -11,7 +11,7 @@ options:
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: ece531_lab1c
+    id: ece531_lab1f
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -22,7 +22,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: ece531_lab1c
+    title: ece531_lab1f
     window_size: (1000,1000)
   states:
     bus_sink: false
@@ -63,7 +63,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [224, 288.0]
+    coordinate: [168, 256.0]
     rotation: 0
     state: enabled
 - name: phase
@@ -84,7 +84,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [344, 296.0]
+    coordinate: [288, 256.0]
     rotation: 0
     state: enabled
 - name: samp_rate
@@ -126,7 +126,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [464, 296.0]
+    coordinate: [408, 256.0]
     rotation: 0
     state: enabled
 - name: analog_noise_source_x_0
@@ -223,7 +223,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [600, 64.0]
+    coordinate: [608, 64.0]
     rotation: 0
     state: enabled
 - name: channels_iqbal_gen_0

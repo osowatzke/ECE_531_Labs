@@ -121,7 +121,7 @@ blocks:
     maximum: '0.1'
     maxoutbuf: '0'
     minoutbuf: '0'
-    samples_per_second: samp_rate
+    samples_per_second: '32000'
     type: float
     vlen: '1'
   states:
