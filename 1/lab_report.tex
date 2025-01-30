@@ -243,6 +243,34 @@ Finally, we continue decreasing the sampling frequency below the Nyquist rate to
 	\label{fig::complex_sampling_freq_domain_3k_samp_rate}
 \end{figure}
 
+\subsection{Frequency Observations}
+
+Using a fixed sample rate, we now vary the frequency of the source and examine what happens for complex and real data when we exceed the Nyquist frequency.
+
+\subsubsection{Complex-sampled Flowgraph}
+
+For complex-sampled data, we use the flowchart shown in Figure \ref{fig::freq_observations_complex_6k_center_freq} to perform our experiments. The measured frequency increases with increasing frequency and wraps when it cross half the sampling rate (5 kHz), through a phenomenon known as aliasing.
+
+Figure \ref{fig::freq_observations_complex_6k_center_freq} shows the resulting spectrum when the sinusoid center frequency is increased to 6 kHz. Because the sampling frequency is 10 kHz, the frequency will wrap into the interval between $\pm 5 kHz$. We can find out the wrapped (or aliased) frequency by adding or subtracting multiples of the sampling frequency. In this case, the frequency wraps to 6 kHz - 10 kHz = -4 kHz.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{freq_observations_complex_6k_center_freq.png}}}
+	\caption{Spectrum of Complex Exponential with 6 kHz Center Frequency}
+	\label{fig::freq_observations_complex_6k_center_freq}
+\end{figure}
+
+\subsubsection{Real-sampled Flowgraph}
+
+For real-sampled data, we use the flowchart shown in Figure \ref{fig::frequency_observations_real_sampling} to perform our experiments. Compared to the complex-sampled data, the positive and negative sides of the frequency response are symmetric. When increasing the frequency, we see that the frequency appears to increase and decrease instead of just increase. This is because a sinusoid can be decomposed into two complex exponentials (one with positive and one with negative frequency). The complex exponential with positive frequency center frequency results in an increasing frequency peak, while the complex exponential with negative center frequency results in an decreasing frequency peak.
+
+Figure \ref{fig::freq_observations_real_6k_center_freq} shows the resulting spectrum when the sinusoid center frequency is increased to 6 kHz. Compared to the complex sampled data, the frequency response peaks at $\pm 4 kHz$ instead of just $4 kHz$. Because the sampling frequency is 10 kHz, the frequency will wrap into the interval between $\pm 5 kHz$. We can find out the wrapped (or aliased) frequency by adding or subtracting multiples of the sampling frequency for each peak in the frequency response. In this case, the frequencies wrap to 6 kHz - 10 kHz = -4 kHz and -6 kHz + 10 kHz = 4 kHz. 
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{freq_observations_real_6k_center_freq.png}}}
+	\caption{Spectrum of Sinusoid with 6 kHz Center Frequency}
+	\label{fig::freq_observations_real_6k_center_freq}
+\end{figure}
+
 \section{Conclusion}
 Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
