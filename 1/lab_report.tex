@@ -225,6 +225,16 @@ We can also measure the peak of the frequency response with the updated sampled 
 	\label{fig::complex_sampling_freq_domain_40k_samp_rate}
 \end{figure}
 
+Next, we decrease the sampling frequency to the Nyquist rate of 4 kHz (twice the highest frequency) and recollect the frequency response. The updated frequency response is shown in \ref{fig::complex_sampling_freq_domain_4k_samp_rate} and peaks at $\pm 2 kHz$.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_freq_domain_4k_samp_rate.png}}}
+	\caption{Spectrum of Complex Exponential Sampled at 4 kHz}
+	\label{fig::complex_sampling_freq_domain_4k_samp_rate}
+\end{figure}
+
+Our frequency response is captured using a windowed subset of samples. Since, we only use a subset of samples our delta function will morph into a function with a mainlobe, of measurable width, centered about the aliased carrier frequency. Due to the periodicity of the DTFT, what we are seeing is a copy of the mainlobe from different Nyquist zones. One is from the frequency response centered about 0 kHz and the other is from the frequency response centered at -4 kHz. We could also perform an inverse FFT shift on the data and interpret it using frequencies between 0 kHz and 4 kHz. This would make it easier for us to interpret the two frequency response peaks as a single peak.
+
 \section{Conclusion}
 Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
