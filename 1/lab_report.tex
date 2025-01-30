@@ -183,6 +183,24 @@ Now, we adjust the sample rate to 3.5 kHz and measure the peak of the frequency 
 
 The phenomenon we observe is called aliasing. The spectrum of a sampled signal wraps to $\pm f_s/2$. The delta function at positive frequency aliases from 2 kHz to -1.5 kHz and the delta function at negative frequency aliases from -2 kHz to 1.5 kHz. As a result, the measured frequency changes by 0.5 kHz, from 2 kHz to 1.5 kHz.
 
+\subsection{Complex Sampling}
+
+Using the flowchart shown in Figure \ref{fig::complex_sampling_experiment}, we investigate the effects of complex sampling. Figure \ref{fig::complex_sampling_freq_domain_10k_samp_rate} shows the updated spectrum.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_freq_domain_10k_samp_rate.png}}}
+	\caption{Spectrum of Complex Exponential Sampled at 10 kHz}
+	\label{fig::complex_sampling_freq_domain_10k_samp_rate}
+\end{figure}
+
+Compared to the spectrum shown in Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, the frequency response only has a positive component. This is expected because the frequency response of a complex exponential is a delta function. Compare this to a sine function, which can be expressed using the inverse Euler formula as:
+
+\begin{equation}
+	sin({\omega_c}n) = \frac{e^{j{\omega_c}n} - e^{-j{\omega_c}n}}{2j}
+\end{equation}
+
+It is clear that a sinusoid can be decomposed into two complex exponentials with positive and negative frequencies resulting in a two-sided spectrum.
+
 \section{Conclusion}
 Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
