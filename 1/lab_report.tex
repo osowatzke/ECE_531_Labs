@@ -201,6 +201,22 @@ Compared to the spectrum shown in Figure \ref{fig::sampling_rates_freq_domain_10
 
 It is clear that a sinusoid can be decomposed into two complex exponentials with positive and negative frequencies resulting in a two-sided spectrum.
 
+When viewed in the time domain, the captured data is composed of 2 channels as illustrated in Figure \ref{fig::complex_sampling_time_domain_10k_samp_rate}. These two channels represent the in-phase (I) and quadrature (Q) components of the signal. They serve as the real and imaginary parts of the complex data stream. The in-phase and quadrature components of the signal are 90 degrees out of phase.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_time_domain_10k_samp_rate.png}}}
+	\caption{Time-Domain Capture of Complex Exponential Sampled at 10 kHz}
+	\label{fig::complex_sampling_time_domain_10k_samp_rate}
+\end{figure}
+
+After increasing the sample rate to 40 kHz, we see that the amplitude of the real and imaginary parts of the signal are both 1 as expected. This result is captured in Figure \ref{fig::complex_sampling_time_domain_40k_samp_rate}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_time_domain_40k_samp_rate.png}}}
+	\caption{Time-Domain Capture of Complex Exponential Sampled at 40 kHz}
+	\label{fig::complex_sampling_time_domain_40k_samp_rate}
+\end{figure}
+
 \section{Conclusion}
 Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
