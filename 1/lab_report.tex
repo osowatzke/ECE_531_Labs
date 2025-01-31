@@ -271,6 +271,40 @@ Figure \ref{fig::freq_observations_real_6k_center_freq} shows the resulting spec
 	\label{fig::freq_observations_real_6k_center_freq}
 \end{figure}
 
+\subsection{I/Q Imbalance}
+
+The effects of I/Q imbalance can be observed using the flowchart shown in Figure \ref{fig::iq_imbalance_experiment}. We start with the default values of 0 magnitude and 0 phase imbalance. Then, we plot the resulting signal in the time and frequency-domain. The results are shown in Figures \ref{fig::iq_imbalance_0_mag_0_phase_time} and \ref{fig::iq_imbalance_0_mag_0_phase_freq} respectively. 
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_0_mag_0_phase_time.png}}}
+	\caption{Time-Domain Capture of Complex Exponential without I/Q Imbalance}
+	\label{fig::iq_imbalance_0_mag_0_phase_time}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_0_mag_0_phase_freq.png}}}
+	\caption{Spectrum of Complex Exponential without I/Q Imbalance}
+	\label{fig::iq_imbalance_0_mag_0_phase_freq}
+\end{figure}
+
+As expected, the above plots are identical to those shown in Figures \ref{fig::complex_sampling_freq_domain_10k_samp_rate} and \ref{fig::sampling_rates_time_domain_10k_samp_rate}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_0_mag_1_phase_freq.png}}}
+	\caption{Spectrum of Complex Exponential with 1 Degree of Phase Imbalance}
+	\label{fig::iq_imbalance_0_mag_1_phase_freq}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_0p5_mag_0_phase_freq.png}}}
+	\caption{Spectrum of Complex Exponential with 0.5 dB Amplitude Imbalance}
+	\label{fig::iq_imbalance_0p5_mag_0_phase_freq}
+\end{figure}
+
+% The resulting figure is shown in Figure \ref{} and is identical to the Figure shown in \ref{fig}.
+
+
+
 \section{Conclusion}
 Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
