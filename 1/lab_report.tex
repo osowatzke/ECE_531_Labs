@@ -500,6 +500,19 @@ Figure \ref{fig::impulse_noise_histogram} shows the histogram of Uniform noise w
 	\label{fig::impulse_noise_histogram}
 \end{figure}
 
+\subsection{Interpolation and Decimation}
+
+This section examines the impact of interpolation and decimation on time and frequency-domain data. Figure \ref{fig::interpolation_and_decimation_experiment} shows the setup for our examination, and Figure \ref{fig::interpolation_and_decimation_waveforms} shows the collected data. The top figure contains time-domain data and the bottom figure contains frequency-domain data. The blue waveform is the data before interpolation and decimation. The red data is the data interpolated by 4. And the green waveform is the data decimated by 4.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{interpolation_and_decimation_waveforms.png}}}
+	\caption{Time and Frequency-Domain Data for Interpolated and Decimated Sinusoids}
+	\label{fig::interpolation_and_decimation_waveforms}
+\end{figure}
+
+Each of the time-domain curves contains the same number of points plotted on a common x-axis. Therefore, the curve sampled at the highest rate contains the fewest number of sinusoid periods. The data in the frequency-domain curves is also plotted on a common x-axis. As a result, the displayed frequencies can be misleading. In the frequency-domain curves, the data sampled at the highest rate will contain the largest span of frequency. Thus, the frequencies from the sinusoid will be closest to the origin.
+
+
 % The resulting figure is shown in Figure \ref{} and is identical to the Figure shown in \ref{fig}.
 
 
