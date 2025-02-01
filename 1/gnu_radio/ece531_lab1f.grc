@@ -42,7 +42,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 336.0]
+    coordinate: [8, 352.0]
     rotation: 0
     state: enabled
 - name: magnitude
@@ -63,7 +63,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [168, 256.0]
+    coordinate: [168, 272.0]
     rotation: 0
     state: enabled
 - name: phase
@@ -84,7 +84,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [288, 256.0]
+    coordinate: [288, 272.0]
     rotation: 0
     state: enabled
 - name: samp_rate
@@ -105,7 +105,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 216.0]
+    coordinate: [8, 232.0]
     rotation: 0
     state: enabled
 - name: snr_dB
@@ -117,7 +117,7 @@ blocks:
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
-    start: '0'
+    start: '-40'
     step: '5'
     stop: '60'
     value: '0'
@@ -126,7 +126,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [408, 256.0]
+    coordinate: [408, 272.0]
     rotation: 0
     state: enabled
 - name: analog_noise_source_x_0
@@ -135,7 +135,7 @@ blocks:
     affinity: ''
     alias: ''
     amp: pow(10, -snr_dB/20)
-    comment: ''
+    comment: Additive Noise Source
     maxoutbuf: '0'
     minoutbuf: '0'
     noise_type: analog.GR_GAUSSIAN
@@ -146,6 +146,27 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [232, 152.0]
+    rotation: 0
+    state: enabled
+- name: analog_noise_source_x_0_0
+  id: analog_noise_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: pow(10, -snr_dB/20)
+    comment: 'Noise Source for Histogram. Not All Noise
+
+      Source Types Support Complex Data'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    noise_type: analog.GR_IMPULSE
+    seed: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [552, 176.0]
     rotation: 0
     state: enabled
 - name: analog_sig_source_x_0
@@ -186,23 +207,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 64.0]
-    rotation: 0
-    state: enabled
-- name: blocks_complex_to_real_0
-  id: blocks_complex_to_real
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    vlen: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [456, 176.0]
+    coordinate: [472, 64.0]
     rotation: 0
     state: enabled
 - name: blocks_throttle2_0
@@ -472,7 +477,7 @@ blocks:
     marker9: '-1'
     name: '""'
     nconnections: '1'
-    size: '1024'
+    size: '16384'
     style1: '1'
     style10: '1'
     style2: '1'
@@ -495,13 +500,13 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    xmax: '3'
-    xmin: '-3'
+    xmax: '20'
+    xmin: '-20'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [640, 208.0]
+    coordinate: [776, 152.0]
     rotation: 0
     state: enabled
 - name: qtgui_tab_widget_0
@@ -638,10 +643,9 @@ blocks:
 
 connections:
 - [analog_noise_source_x_0, '0', blocks_add_xx_0, '1']
-- [analog_noise_source_x_0, '0', blocks_complex_to_real_0, '0']
+- [analog_noise_source_x_0_0, '0', qtgui_histogram_sink_x_0, '0']
 - [analog_sig_source_x_0, '0', blocks_add_xx_0, '0']
 - [blocks_add_xx_0, '0', blocks_throttle2_0, '0']
-- [blocks_complex_to_real_0, '0', qtgui_histogram_sink_x_0, '0']
 - [blocks_throttle2_0, '0', channels_iqbal_gen_0, '0']
 - [channels_iqbal_gen_0, '0', qtgui_const_sink_x_0, '0']
 - [channels_iqbal_gen_0, '0', qtgui_freq_sink_x_0, '0']
