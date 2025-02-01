@@ -378,11 +378,15 @@ For phase imbalance only:
 
 The image power ratio observed in Figure \ref{fig::iq_imbalance_0_mag_1_phase_freq} is consistent with Equation \ref{eq::image_power_ratio_phase_imbalance}. The equation explains why the image power increases with increasing phase imbalance for $0^{\circ} \leq \phi \leq 180^{\circ}$. Similarly, the image power ratio observed in Figure \ref{fig::iq_imbalance_0p5_mag_0_phase_freq} is consistent with Equation \ref{eq::image_power_ratio_amplitude_imbalance}. The equation explains why the image power increases with increasing amplitude imbalance for $\varepsilon \geq 0$.
 
+Next, we observe the constellation sink output. The constellation sink displays a scatter plot of the samples on the I/Q plane. For the default sample rate of 10 kHz, we observe 5 unique samples captured each period of the complex exponential. The resulting constellation is shown in Figure \ref{fig::iq_imbalance_0_mag_0_phase_10k_samp_rate_const}.
+ 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.4\textwidth]{iq_imbalance_0_mag_0_phase_10k_samp_rate_const.png}}}
 	\caption{Constellation with 10 kHz Sample Rate}
 	\label{fig::iq_imbalance_0_mag_0_phase_10k_samp_rate_const}
 \end{figure}
+
+When, we increase the sampling frequency to 39.8 kHz, the samples are periodic with period that is 10x that of the sampled sinusoid. The period of the sampled signal is greater than the original sinusoid because the samples are not aligned each period of the sinusoid. The constellation map with a sampling rate of 39.8 kHz is shown in Figure \ref{fig::iq_imbalance_0_mag_0_phase_39p8k_samp_rate_const}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.4\textwidth]{iq_imbalance_0_mag_0_phase_39p8k_samp_rate_const.png}}}
@@ -390,11 +394,41 @@ The image power ratio observed in Figure \ref{fig::iq_imbalance_0_mag_1_phase_fr
 	\label{fig::iq_imbalance_0_mag_0_phase_39p8k_samp_rate_const}
 \end{figure}
 
+For a sinusoid, we further note that the constellation points are evenly spaced around the unit circle. To better visualize the effects of I/Q imbalance, we continue our experiments with the 39.8 kHz sample rate. Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} shows the effects with 1 dB of I/Q amplitude imbalance.
+
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.4\textwidth]{iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const.png}}}
 	\caption{Constellation with 39.8 kHz Sample Rate and 1 dB of I/Q Amplitude Imbalance}
 	\label{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const}
 \end{figure}
+
+\begin{equation}
+	x_{rx}(t) = (1+\varepsilon)(\cos\phi + j\sin\phi)\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t)
+\end{equation}
+
+\begin{equation}
+	x_{rx}(t) = (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j((1+\varepsilon)\sin\phi\cos(2{\pi}f_0t) + \sin(2{\pi}f_0t))
+\end{equation}
+
+\begin{equation}
+	x_{rx}(t) = (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j((1+\varepsilon)\sin\phi\sin(2{\pi}f_0t + \pi/2) + \sin(2{\pi}f_0t))
+\end{equation}
+
+\begin{equation}
+	x_{rx}(t) = (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j\sqrt{1+(1+\varepsilon)^2\sin^2\phi}\sin(2{\pi}f_0t + \text{atan}((1+\varepsilon)\sin\phi))
+\end{equation}
+
+For I/Q phase imbalance only:
+
+\begin{equation}
+	x_{rx}(t) = \cos\phi\cos(2{\pi}f_0t) + j\sqrt{1+\sin^2\phi}\sin(2{\pi}f_0t + \text{atan}(\sin\phi))
+\end{equation}
+
+For I/Q amplitude imbalance only:
+
+\begin{equation}
+	x_{rx}(t) = (1+\epsilon)\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t)
+\end{equation}
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.4\textwidth]{iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const.png}}}
