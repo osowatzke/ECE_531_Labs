@@ -467,6 +467,39 @@ Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_sa
 \end{figure}
 
 Comparing the above figure to Figure \ref{fig::iq_imbalance_0_mag_0_phase_10k_samp_rate_const}, the additive noise causes the expected constellation points to deviate from the expected constellation points. Luckily, at a 20 dB SNR, we can clearly distinguish which noise-free constellation point the data is associated with. Decreasing the SNR, increase the amount of deviation between the constellation points and expected constellation points. This can lead to bit errors in a communication system which maps constellation points to sequences of bits.
+
+We can also create histograms from the noise data to valuate their pdf. The histogram tool only supports real data types, so we can only look at the real or imaginary parts of the data. However, some of the noise sources do not support complex types, so we instead add an additional real noise source for this experiment. Figure \ref{fig::gaussian_noise_histogram} shows the histogram of Guassian noise with an amplitude of 1. The resulting histogram is consistent with the bell-curve shape of the Gaussian pdf.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{gaussian_noise_histogram.png}}}
+	\caption{Histogram of Guassian Noise Source with Amplitude of 1}
+	\label{fig::gaussian_noise_histogram}
+\end{figure}
+
+Figure \ref{fig::uniform_noise_histogram} shows the histogram of Uniform noise with an amplitude of 1. The resulting histogram is consistent with the uniform pdf over values [-1,1).
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{uniform_noise_histogram.png}}}
+	\caption{Histogram of Uniform Noise Source with Amplitude of 1}
+	\label{fig::uniform_noise_histogram}
+\end{figure}
+
+Figure \ref{fig::laplacian_noise_histogram} shows the histogram of Uniform noise with an amplitude of 1. The resulting histogram highlights the exponential amplitude decay present in the Laplacian pdf.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{laplacian_noise_histogram.png}}}
+	\caption{Histogram of Laplacian Noise Source with Amplitude of 1}
+	\label{fig::laplacian_noise_histogram}
+\end{figure}
+
+Figure \ref{fig::impulse_noise_histogram} shows the histogram of Uniform noise with an amplitude of 1. Note that we only show a subset of the y-axis to better visualize the presence of high-amplitude impulse samples. The resulting histogram matches well with the pdf of impulse noise.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{impulse_noise_histogram.png}}}
+	\caption{Histogram of Impulse Noise Source with Amplitude of 1}
+	\label{fig::impulse_noise_histogram}
+\end{figure}
+
 % The resulting figure is shown in Figure \ref{} and is identical to the Figure shown in \ref{fig}.
 
 
