@@ -3,6 +3,7 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{float}
+\usepackage{amsmath}
 \graphicspath{{..} {./images}}
 
 \renewcommand{\contentsname}{\vspace*{-2\baselineskip}}
@@ -289,11 +290,31 @@ The effects of I/Q imbalance can be observed using the flowchart shown in Figure
 
 As expected, the above plots are identical to those shown in Figures \ref{fig::complex_sampling_freq_domain_10k_samp_rate} and \ref{fig::sampling_rates_time_domain_10k_samp_rate}.
 
+Next, we investigate the effects of a phase imbalance. As we increase the phase imbalance, we also increase the power of the frequency image. This is illusrated in Figure \ref{fig::iq_imbalance_0_mag_1_phase_freq}, which shows 1 degree of phase imbalance.
+
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_0_mag_1_phase_freq.png}}}
 	\caption{Spectrum of Complex Exponential with 1 Degree of Phase Imbalance}
 	\label{fig::iq_imbalance_0_mag_1_phase_freq}
 \end{figure}
+
+The I/Q imbalance block in our flowchart is modeling I/Q imbalance in the transmitter. Because the imbalance comes from the transmitter, we must evaluate the signal starting at the transmitter. In the transmitter, we are effectively mixing with a complex exponential and then taking the real part of the resulting signal. Here, we also add a scale the complex exponential by 2 to simplify subsequent equations.
+
+\begin{equation}
+	x_{tx}(t) = 2\text{Re}\{x(t)\}\cos(2{\pi}f_ct) - 2\text{Im}\{x(t)\}\sin(2{\pi}f_ct)
+\end{equation}
+
+Applying Inverse Euler's formula, we obtain:
+
+\begin{equation}
+	x_{tx}(t) = \text{Re}\{x(t)\}(e^{j2{\pi}f_ct} + e^{-j2{\pi}f_ct}) + j\text{Im}\{x(t)\}(e^{j2{\pi}f_ct} - e^{-j2{\pi}f_ct})
+\end{equation}
+
+In the receiver, we are effectively mixing the received signal to baseband with another complex exponential and then filtering out the high frequency component. After performing these operations, we obtain the expected result:
+ 
+\begin{equation}
+	x_{rx}(t) = \text{Re}\{x(t)\}\ + j\text{Im}\{x(t)\}
+\end{equation}
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_0p5_mag_0_phase_freq.png}}}
