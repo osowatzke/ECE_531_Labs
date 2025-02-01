@@ -440,6 +440,33 @@ The results of Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const
 
 Similarly, the results of Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_phase_imbalance}. For increase amounts of amplitude imbalance, we see the constellation stretch along the real-axis to $1+\varepsilon$, while the constellation does not stretch along the imaginary axis.
 
+\subsection{Adding Noise}
+
+This section highlights the impact of additive noise on time-domain data, frequency-domain data, and received constellations. Figure \ref{fig::noise_time_domain_10dB_snr} shows time-domain data with additive white Gaussian noise (AWGN) that results in a 10 dB SNR.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_time_domain_10dB_snr.png}}}
+	\caption{Time-Domain Sinusoid Data with AWGN Noise Resulting in 10 dB SNR}
+	\label{fig::noise_time_domain_10dB_snr}
+\end{figure}
+
+Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, we see that the added noise randomizes the values of the peaks and zeros in the sampled data. With a low enough SNR, we could easily mask the sinusoid data with the noise. Figure \ref{fig::noise_freq_domain_20dB_snr} highlights the impact of AWGN noise on the frequency response.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_freq_domain_20dB_snr.png}}}
+	\caption{Sinusoid Frequency Response with AWGN Noise Resulting in 20 dB SNR}
+	\label{fig::noise_freq_domain_20dB_snr}
+\end{figure}
+
+Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, we see that the added noise has created a noise floor in the frequency response, well above the previously observed sidelobe levels. Figure \ref{fig::noise_constellation_20dB_snr} highlights the impact of AWGN noise on the received constellation.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_constellation_20dB_snr.png}}}
+	\caption{Received Constellation with AWGN Noise Resulting in 20 dB SNR}
+	\label{fig::noise_constellation_20dB_snr}
+\end{figure}
+
+Comparing the above figure to Figure \ref{fig::iq_imbalance_0_mag_0_phase_10k_samp_rate_const}, the additive noise causes the expected constellation points to deviate from the expected constellation points. Luckily, at a 20 dB SNR, we can clearly distinguish which noise-free constellation point the data is associated with. Decreasing the SNR, increase the amount of deviation between the constellation points and expected constellation points. This can lead to bit errors in a communication system which maps constellation points to sequences of bits.
 % The resulting figure is shown in Figure \ref{} and is identical to the Figure shown in \ref{fig}.
 
 
