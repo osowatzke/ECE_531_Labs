@@ -290,7 +290,7 @@ The effects of I/Q imbalance can be observed using the flowchart shown in Figure
 
 As expected, the above plots are identical to those shown in Figures \ref{fig::complex_sampling_freq_domain_10k_samp_rate} and \ref{fig::sampling_rates_time_domain_10k_samp_rate}.
 
-Next, we investigate the effects of a phase imbalance. As we increase the phase imbalance, we also increase the power of the frequency image. This is illusrated in Figure \ref{fig::iq_imbalance_0_mag_1_phase_freq}, which shows 1 degree of phase imbalance.
+Next, we investigate the effects of a phase imbalance. As we increase the phase imbalance, we also increase the power of the frequency image. This is illustrated in Figure \ref{fig::iq_imbalance_0_mag_1_phase_freq}, which shows 1 degree of phase imbalance, and Figure \ref{fig::iq_imbalance_0p5_mag_0_phase_freq}, which shows 0.5 dB of amplitude imbalance.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_0_mag_1_phase_freq.png}}}
@@ -298,7 +298,13 @@ Next, we investigate the effects of a phase imbalance. As we increase the phase 
 	\label{fig::iq_imbalance_0_mag_1_phase_freq}
 \end{figure}
 
-The I/Q imbalance block in our flowchart is modeling I/Q imbalance in the transmitter. Because the imbalance comes from the transmitter, we must evaluate the signal starting at the transmitter. In the transmitter, we are effectively mixing with a complex exponential and then taking the real part of the resulting signal. Here, we also add a scale the complex exponential by 2 to simplify subsequent equations.
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_0p5_mag_0_phase_freq.png}}}
+	\caption{Spectrum of Complex Exponential with 0.5 dB Amplitude Imbalance}
+	\label{fig::iq_imbalance_0p5_mag_0_phase_freq}
+\end{figure}
+
+The I/Q imbalance block in our flowchart is modeling I/Q imbalance in the transmitter. Because the imbalance comes from the transmitter, we must evaluate the signal starting at the transmitter. In the transmitter, we are effectively mixing with a complex exponential and then taking the real part of the resulting signal. Here, we also scale the complex exponential by 2 to simplify subsequent equations.
 
 \begin{equation}
 	x_{tx}(t) = 2\text{Re}\{x(t)\}\cos(2{\pi}f_ct) - 2\text{Im}\{x(t)\}\sin(2{\pi}f_ct)
@@ -316,11 +322,61 @@ In the receiver, we are effectively mixing the received signal to baseband with 
 	x_{rx}(t) = \text{Re}\{x(t)\}\ + j\text{Im}\{x(t)\}
 \end{equation}
 
-\begin{figure}[H]
-	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_0p5_mag_0_phase_freq.png}}}
-	\caption{Spectrum of Complex Exponential with 0.5 dB Amplitude Imbalance}
-	\label{fig::iq_imbalance_0p5_mag_0_phase_freq}
-\end{figure}
+When we apply I/Q imbalance in the transmitter, we obtain the following for the transmitted signal:
+
+\begin{equation}
+	x_{tx}(t) = 2(1+\varepsilon)\text{Re}\{x(t)\}\cos(2{\pi}f_ct + \phi) - 2\text{Im}\{x(t)\}\sin(2{\pi}f_ct)
+\end{equation}
+
+Applying Inverse Euler's formula, we obtain:
+
+\begin{equation}
+	x_{tx}(t) = 2(1+\varepsilon)\text{Re}\{x(t)\}(e^{j(2{\pi}f_ct+\phi)} + e^{-j(2{\pi}f_ct+\phi)}) + j\text{Im}\{x(t)\}(e^{j2{\pi}f_ct} - e^{-j2{\pi}f_ct})
+\end{equation}
+
+In the receiver we obtain the following:
+
+\begin{equation}
+	x_{rx}(t) = (1+\varepsilon)e^{j\phi}\text{Re}\{x(t)\} + j\text{Im}\{x(t)\}
+\end{equation}
+
+Substituting, a complex exponential for the signal $x(t)$ we obtain the following:
+
+\begin{equation}
+	x_{rx}(t) = (1+\varepsilon)e^{j\phi}\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t)
+\end{equation}
+
+\begin{equation}
+	x_{rx}(t) = 0.5(1+\varepsilon)e^{j\phi}(e^{j2{\pi}f_0t} + e^{-j2{\pi}f_0t}) + 0.5(e^{j2{\pi}f_0t} - e^{-j2{\pi}f_0t})
+\end{equation}
+
+\begin{equation}
+	x_{rx}(t) = 0.5[(1+\varepsilon)e^{j\phi} + 1]e^{j2{\pi}f_0t} + 0.5[(1+\varepsilon)e^{j\phi} - 1]e^{-j2{\pi}f_0t}
+\end{equation}
+
+The power ratio between the spurs at $f_0$ and $-f_0$ is given by: 
+
+\begin{equation}
+	P_r = \frac{(1-(1+\varepsilon)\cos\phi)^2 + (1+\varepsilon)^2\sin^2\phi}{(1+(1+\varepsilon)\cos\phi)^2 + (1+\varepsilon)^2\sin^2\phi}
+\end{equation}
+
+\begin{equation}
+	P_r = \frac{1-2(1+\varepsilon)\cos\phi+(1+\varepsilon)^2}{1+2(1+\varepsilon)\cos\phi+(1+\varepsilon)^2}
+\end{equation}
+
+For phase imbalance only:
+
+\begin{equation}
+	P_r = \frac{1-\cos\phi}{1+\cos\phi} \label{eq::image_power_ratio_phase_imbalance}
+\end{equation}
+
+For phase imbalance only:
+
+\begin{equation}
+	P_r = \frac{1-2(1+\varepsilon)+(1+\varepsilon)^2}{1+2(1+\varepsilon)+(1+\varepsilon)^2} = \frac{(1-(1+\varepsilon))^2}{(1+(1+\varepsilon))^2} = \frac{\varepsilon^2}{(2+\varepsilon)^2} \label{eq::image_power_ratio_amplitude_imbalance}
+\end{equation}
+
+The image power ratio observed in Figure \ref{fig::iq_imbalance_0_mag_1_phase_freq} is consistent with Equation \ref{eq::image_power_ratio_phase_imbalance}. The equation explains why the image power increases with increasing phase imbalance for $0^{\circ} \leq \phi \leq 180^{\circ}$. Similarly, the image power ratio observed in Figure \ref{fig::iq_imbalance_0p5_mag_0_phase_freq} is consistent with Equation \ref{eq::image_power_ratio_amplitude_imbalance}. The equation explains why the image power increases with increasing amplitude imbalance for $\varepsilon \geq 0$.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.4\textwidth]{iq_imbalance_0_mag_0_phase_10k_samp_rate_const.png}}}
