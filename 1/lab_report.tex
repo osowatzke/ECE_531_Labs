@@ -512,6 +512,21 @@ This section examines the impact of interpolation and decimation on time and fre
 
 Each of the time-domain curves contains the same number of points plotted on a common x-axis. Therefore, the curve sampled at the highest rate contains the fewest number of sinusoid periods. The data in the frequency-domain curves is also plotted on a common x-axis. As a result, the displayed frequencies can be misleading. In the frequency-domain curves, the data sampled at the highest rate will contain the largest span of frequency. Thus, the frequencies from the sinusoid will be closest to the origin.
 
+\begin{enumerate}
+	\item What are the benefits of using in-phase and quadrature (I \& Q) sampling in SDR? Fully describe at least three benefits of IQ sampling.
+	
+	\item In GNU Radio What is the purpose of the Throttle block in GNU Radio? When should it
+be used? What happens if you use more than one throttle block? When is a throttle block
+unnecessary?
+
+		The throttle block helps GNU radio avoid CPU congestion. Simulation will run as fast as the processor allows them to. If real-time scheduling is used, GNU radio could overtake CPU resources and crash the processor. The throttle block is unneeded if using hardware because the hardware provides flow control. When using hardware, the throttle block is unnecessary, redundant, and could add an undue bottleneck.
+		
+	\item  Explain Nyquist zones and their significance in software-defined radio.
+	
+	\item Why is dither noise added in Digital-to-Analog Converter (DAC) circuits?
+\end{enumerate}
+
+
 
 % The resulting figure is shown in Figure \ref{} and is identical to the Figure shown in \ref{fig}.
 
