@@ -521,6 +521,8 @@ unnecessary?
 
 		The throttle block helps GNU radio avoid CPU congestion. Simulation will run as fast as the processor allows them to. If real-time scheduling is used, GNU radio could overtake CPU resources and crash the processor. The throttle block is unneeded if using hardware because the hardware provides flow control. When using hardware, the throttle block is unnecessary, redundant, and could add an undue bottleneck.
 		
+		Only need one element of flow control. Don't need to have multiple throttle block. Could even put throttle block in another spot of the flowchart and connect to null source/sink.
+		
 	\item  Explain Nyquist zones and their significance in software-defined radio.
 	
 	\item Why is dither noise added in Digital-to-Analog Converter (DAC) circuits?
