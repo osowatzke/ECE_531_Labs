@@ -525,6 +525,8 @@ Each of the time-domain curves contains the same number of points plotted on a c
 		
 	\item  Explain Nyquist zones and their significance in software-defined radio.
 	
+	Nyquist zones are an artifact of aliasing that results from sampling. The Nyquist zones divide the spectrum into bands that are half the sampling rate. These bands are mirrored for the negative frequencies. Positive frequencies in odd nyquist zones wrap to positive frequencies in the 1st nyquist zone ($-f_s/2$ to $f_s/2$) and negative frequencies in odd nyquist zones wrap to negative frequencies in the 1st nyquist zone. The oppositive relationship is true for even nyquist zones (positive wraps to negative and negative wraps to even). Traditional sampling (direct-conversion topology) assumes the signal is passed through a low pass filter and sampled in the first nyquist zone. However, we can also apply a bandwidth filter to a signal and sample in different nyquist noise.
+	
 	\item Why is dither noise added in Digital-to-Analog Converter (DAC) circuits?
 	
 	Dither is added to DAC circuits to increase the spur free dynamic range. Quantization of a continuous signal (especially sinusoids) can lead to large harmonics due to periodic errors in quantization. Dither noise helps to randomize the quantization error - reducing the amplitude of spurs.
