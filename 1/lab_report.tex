@@ -515,9 +515,9 @@ Each of the time-domain curves contains the same number of points plotted on a c
 \begin{enumerate}
 	\item What are the benefits of using in-phase and quadrature (I \& Q) sampling in SDR? Fully describe at least three benefits of IQ sampling.
 	
-	\item In GNU Radio What is the purpose of the Throttle block in GNU Radio? When should it
-be used? What happens if you use more than one throttle block? When is a throttle block
-unnecessary?
+	IQ sampling eliminates the negative "ghost" frequencies from a real bandpass signal. IQ sampling also allows for baseband processing - significantly reducing the required sample rates (can sample at the bandwidth of the signal instead of at twice the highest frequency). Can sample at half of the rate of real signal-processing. Can perform coherent processing since we recover phase information.
+	
+	\item In GNU Radio What is the purpose of the Throttle block in GNU Radio? When should it be used? What happens if you use more than one throttle block? When is a throttle block unnecessary?
 
 		The throttle block helps GNU radio avoid CPU congestion. Simulation will run as fast as the processor allows them to. If real-time scheduling is used, GNU radio could overtake CPU resources and crash the processor. The throttle block is unneeded if using hardware because the hardware provides flow control. When using hardware, the throttle block is unnecessary, redundant, and could add an undue bottleneck.
 		
