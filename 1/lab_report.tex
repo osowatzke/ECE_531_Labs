@@ -107,7 +107,7 @@ With the experiment setup, we first execute with the default values (no gain and
 
 \subsection{Adding Noise}
 
-Building off the flowchart shown in Figure \ref{fig::complex_sampling_experiment}, we add noise to the sinusoidal signal. The resulting flowchart is shown in Figure \ref{fig::noise_experiment}.
+In this experiment, we build off the flowchart shown in Figure \ref{fig::complex_sampling_experiment} by adding noise to the sinusoidal signal. The resulting flowchart is shown in Figure \ref{fig::noise_experiment}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_experiment.png}}}
@@ -115,11 +115,13 @@ Building off the flowchart shown in Figure \ref{fig::complex_sampling_experiment
 	\label{fig::noise_experiment}
 \end{figure}
 
-Using the updated flowchart, we explore the effects of the added noise in the time-domain signal, frequency spectrum, and received constellation points. Next, we use the histogram tab to verify the probability density function (pdf) of each noise source type.
+Using the updated flowchart, we explore the effects of the added noise in the time-domain signal, frequency spectrum, and received constellation points. Next, we use the histogram tab to verify the probability density function (pdf) of each noise source type. Note that the histogram tool only supports real data types, so we must individually examine the real and imaginary parts of the data. However, the laplacian and impulse noise sources do not support complex types, so we instead use an additional real noise source for this portion of the experiment. 
+
+% Note that we use a separate noise source for the histogram because the laplacian and impulse noise sources do not support complex types. We 
 
 \subsection{Interpolation and Decimation}
 
-For the final experiment, we investigate and decimation, which are used to resample singals. The flowchart used for this analysis is given in Figure \ref{fig::interpolation_and_decimation_experiment}.
+For the final experiment, we investigate interpolation and decimation, which are used to resample signals. The flowchart used for this analysis is given in Figure \ref{fig::interpolation_and_decimation_experiment}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{interpolation_and_decimation_experiment.png}}}
@@ -127,7 +129,7 @@ For the final experiment, we investigate and decimation, which are used to resam
 	\label{fig::interpolation_and_decimation_experiment}
 \end{figure}
 
-Using the above flowchart, we observe the time and frequency domain outputs and compare the differences between each of the resampled signals. We specifically concentrate on the differences we observe in the frequency spectrum and identify the relationship between each of the signals in the frequency domain.
+Using the above flowchart, we observe the time and frequency domain outputs and compare the differences between each of the resampled signals. We specifically concentrate on the differences we observe in the frequency domain and identify the relationship between each of the signals in this domain.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
