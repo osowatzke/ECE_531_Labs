@@ -192,13 +192,13 @@ Using the flowchart shown in Figure \ref{fig::complex_sampling_experiment}, we i
 	\label{fig::complex_sampling_freq_domain_10k_samp_rate}
 \end{figure}
 
-Compared to the spectrum shown in Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, the frequency response only has a positive component. This is expected because the frequency response of a complex exponential is a delta function. Compare this to a sine function, which can be expressed using the inverse Euler formula as:
+Compared to the spectrum shown in Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, the frequency response only has a positive delta component. This is expected because the frequency response of a complex exponential is a delta function. Compare this to a sine function, which can be expressed using the inverse Euler formula as:
 
 \begin{equation}
-	sin(2{\pi}{f_c}t) = \frac{e^{j2{\pi}{f_c}t} - e^{-j2{\pi}{f_c}t}}{2j}
+	sin(2{\pi}{f_o}t) = \frac{e^{j2{\pi}{f_o}t} - e^{-j2{\pi}{f_o}t}}{2j}
 \end{equation}
 
-It is clear that a sinusoid can be decomposed into two complex exponentials with positive and negative frequencies resulting in a two-sided spectrum.
+It is clear that the sine function can be decomposed into two complex exponentials with positive and negative frequencies resulting in a two-sided spectrum.
 
 When viewed in the time domain, the captured data is composed of 2 channels as illustrated in Figure \ref{fig::complex_sampling_time_domain_10k_samp_rate}. These two channels represent the in-phase (I) and quadrature (Q) components of the signal. They serve as the real and imaginary parts of the complex data stream. The in-phase and quadrature components of the signal are 90 degrees out of phase.
 
