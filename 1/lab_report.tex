@@ -339,18 +339,11 @@ The received signal with I/Q imbalance is then given as follows:
 \end{equation}
 
 Substituting, a complex exponential for the signal $x(t)$ we obtain the following:
-
-\begin{equation}
-	x_{rx}(t) = (1+\varepsilon)e^{j\phi}\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t)
-\end{equation}
-
-\begin{equation}
-	x_{rx}(t) = 0.5(1+\varepsilon)e^{j\phi}(e^{j2{\pi}f_0t} + e^{-j2{\pi}f_0t}) + 0.5(e^{j2{\pi}f_0t} - e^{-j2{\pi}f_0t})
-\end{equation}
-
-\begin{equation}
-	x_{rx}(t) = 0.5[(1+\varepsilon)e^{j\phi} + 1]e^{j2{\pi}f_0t} + 0.5[(1+\varepsilon)e^{j\phi} - 1]e^{-j2{\pi}f_0t}
-\end{equation}
+\begin{align}
+	x_{rx}(t) &= (1+\varepsilon)e^{j\phi}\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t) \\
+	&= 0.5(1+\varepsilon)e^{j\phi}(e^{j2{\pi}f_0t} + e^{-j2{\pi}f_0t}) + 0.5(e^{j2{\pi}f_0t} - e^{-j2{\pi}f_0t})\\
+	&= 0.5[(1+\varepsilon)e^{j\phi} + 1]e^{j2{\pi}f_0t} + 0.5[(1+\varepsilon)e^{j\phi} - 1]e^{-j2{\pi}f_0t}
+\end{align}
 
 The power ratio between the spurs at $f_0$ and $-f_0$ is given by: 
 
