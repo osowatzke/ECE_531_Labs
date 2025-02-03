@@ -342,7 +342,7 @@ Substituting, a complex exponential for the signal $x(t)$ we obtain the followin
 \begin{align}
 	x_{rx}(t) &= (1+\varepsilon)e^{j\phi}\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t) \\
 	&= 0.5(1+\varepsilon)e^{j\phi}(e^{j2{\pi}f_0t} + e^{-j2{\pi}f_0t}) + 0.5(e^{j2{\pi}f_0t} - e^{-j2{\pi}f_0t})\\
-	&= 0.5[(1+\varepsilon)e^{j\phi} + 1]e^{j2{\pi}f_0t} + 0.5[(1+\varepsilon)e^{j\phi} - 1]e^{-j2{\pi}f_0t}
+	&= 0.5[(1+\varepsilon)e^{j\phi} + 1]e^{j2{\pi}f_0t} + 0.5[(1+\varepsilon)e^{j\phi} - 1]e^{-j2{\pi}f_0t} \label{eq::rx_signal_iq_imbalance}
 \end{align}
 
 The power ratio between the spurs at $f_0$ and $-f_0$ is given by: 
@@ -394,41 +394,32 @@ For a sinusoid, we further note that the constellation points are evenly spaced 
 	\label{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const}
 \end{figure}
 
-\begin{equation}
-	x_{rx}(t) = (1+\varepsilon)(\cos\phi + j\sin\phi)\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t)
-\end{equation}
+We can rewrite Equation \ref{eq::rx_signal_iq_imbalance} in the following form to better understand what happens in the constellation diagrams:
+\begin{align}
+	x_{rx}(t) &= (1+\varepsilon)(\cos\phi + j\sin\phi)\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t) \\[6 pt]
+	&= (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j((1+\varepsilon)\sin\phi\cos(2{\pi}f_0t) + \sin(2{\pi}f_0t)) \\[6 pt]
+	&= (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j((1+\varepsilon)\sin\phi\sin(2{\pi}f_0t + \pi/2) + \sin(2{\pi}f_0t)) \\[6 pt]
+	&= (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j\sqrt{1+(1+\varepsilon)^2\sin^2\phi}\sin(2{\pi}f_0t + \text{atan}((1+\varepsilon)\sin\phi))
+\end{align}
 
-\begin{equation}
-	x_{rx}(t) = (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j((1+\varepsilon)\sin\phi\cos(2{\pi}f_0t) + \sin(2{\pi}f_0t))
-\end{equation}
-
-\begin{equation}
-	x_{rx}(t) = (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j((1+\varepsilon)\sin\phi\sin(2{\pi}f_0t + \pi/2) + \sin(2{\pi}f_0t))
-\end{equation}
-
-\begin{equation}
-	x_{rx}(t) = (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j\sqrt{1+(1+\varepsilon)^2\sin^2\phi}\sin(2{\pi}f_0t + \text{atan}((1+\varepsilon)\sin\phi))
-\end{equation}
-
-For I/Q phase imbalance only:
+For phase imbalance only, the equation reduces to the following:
 
 \begin{equation}
 	x_{rx}(t) = \cos\phi\cos(2{\pi}f_0t) + j\sqrt{1+\sin^2\phi}\sin(2{\pi}f_0t + \text{atan}(\sin\phi)) \label{eq::received_signal_phase_imbalance}
 \end{equation}
 
-For I/Q amplitude imbalance only:
+Similarly, for amplitude imbalance only, the equation reduces to the following:
 
 \begin{equation}
 	x_{rx}(t) = (1+\epsilon)\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t)
+\label{eq::received_signal_amplitude_imbalance}
 \end{equation}
 
-The results of Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_phase_imbalance}. For increase amounts of phase imbalance, we see the constellation take on a diagonally-oriented ellipsoid shape. This is because the imaginary part of the data peaks at a phase of $90^{\circ} - \text{atan}(\sin\phi)$ instead of a phase of $90^{\circ}$, while the real part of the data peaks at a phase of $0^{\circ}$. The imaginary part of the data also has increasing peaks, while the real part of the data has decreasing peaks.
-
-Similarly, the results of Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_phase_imbalance}. For increase amounts of amplitude imbalance, we see the constellation stretch along the real-axis to $1+\varepsilon$, while the constellation does not stretch along the imaginary axis.
+The results of Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_phase_imbalance}. For increase amounts of phase imbalance, we see the constellation take on a diagonally-oriented ellipsoid shape. This is because the imaginary part of the data peaks at a phase of $90^{\circ} - \text{atan}(\sin\phi)$ instead of a phase of $90^{\circ}$, while the real part of the data peaks at a phase of $0^{\circ}$. The imaginary part of the data also has increasing peaks, while the real part of the data has decreasing peaks. Similarly, the results of Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_amplitude_imbalance}. For increase amounts of amplitude imbalance, we see the constellation stretch along the real-axis to $1+\varepsilon$, while the constellation does not stretch along the imaginary axis.
 
 \subsection{Adding Noise}
 
-This section highlights the impact of additive noise on time-domain data, frequency-domain data, and received constellations. Figure \ref{fig::noise_time_domain_10dB_snr} shows time-domain data with additive white Gaussian noise (AWGN) that results in a 10 dB SNR.
+This experimented highlights the impact of additive noise on time-domain data, frequency-domain data, and received constellations. Figure \ref{fig::noise_time_domain_10dB_snr} shows time-domain data with additive white Gaussian noise (AWGN) that results in a 10 dB SNR.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_time_domain_10dB_snr.png}}}
@@ -452,9 +443,9 @@ Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_sa
 	\label{fig::noise_constellation_20dB_snr}
 \end{figure}
 
-Comparing the above figure to Figure \ref{fig::iq_imbalance_0_mag_0_phase_10k_samp_rate_const}, the additive noise causes the expected constellation points to deviate from the expected constellation points. Luckily, at a 20 dB SNR, we can clearly distinguish which noise-free constellation point the data is associated with. Decreasing the SNR, increase the amount of deviation between the constellation points and expected constellation points. This can lead to bit errors in a communication system which maps constellation points to sequences of bits.
+Comparing the above figure to Figure \ref{fig::iq_imbalance_0_mag_0_phase_10k_samp_rate_const}, the additive noise causes the expected constellation points to deviate from the expected constellation points. Luckily, at a 20 dB SNR, we can clearly distinguish which noise-free constellation point the data is associated with. Decreasing the SNR, increases the deviation between the constellation points and expected constellation points. This can lead to bit errors in a communication system which maps constellation points to sequences of bits.
 
-We can also create histograms from the noise data to valuate their pdf. The histogram tool only supports real data types, so we can only look at the real or imaginary parts of the data. However, some of the noise sources do not support complex types, so we instead add an additional real noise source for this experiment. Figure \ref{fig::gaussian_noise_histogram} shows the histogram of Guassian noise with an amplitude of 1. The resulting histogram is consistent with the bell-curve shape of the Gaussian pdf.
+We can also create histograms from the noise data to evaluate their pdf. Figure \ref{fig::gaussian_noise_histogram} shows the histogram of Guassian noise with an amplitude of 1. The resulting histogram is consistent with the bell-curve shape of the Gaussian pdf.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{gaussian_noise_histogram.png}}}
@@ -470,7 +461,7 @@ Figure \ref{fig::uniform_noise_histogram} shows the histogram of Uniform noise w
 	\label{fig::uniform_noise_histogram}
 \end{figure}
 
-Figure \ref{fig::laplacian_noise_histogram} shows the histogram of Uniform noise with an amplitude of 1. The resulting histogram highlights the exponential amplitude decay present in the Laplacian pdf.
+Figure \ref{fig::laplacian_noise_histogram} shows the histogram of laplacian noise with an amplitude of 1. The resulting histogram highlights the exponential amplitude decay present in the laplacian pdf.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{laplacian_noise_histogram.png}}}
@@ -478,7 +469,7 @@ Figure \ref{fig::laplacian_noise_histogram} shows the histogram of Uniform noise
 	\label{fig::laplacian_noise_histogram}
 \end{figure}
 
-Figure \ref{fig::impulse_noise_histogram} shows the histogram of Uniform noise with an amplitude of 1. Note that we only show a subset of the y-axis to better visualize the presence of high-amplitude impulse samples. The resulting histogram matches well with the pdf of impulse noise.
+Figure \ref{fig::impulse_noise_histogram} shows the histogram of impulse noise with an amplitude of 1. Note that we only show a subset of the y-axis to better visualize the presence of high-amplitude impulse samples. The resulting histogram matches well with the pdf of impulse noise.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{impulse_noise_histogram.png}}}
