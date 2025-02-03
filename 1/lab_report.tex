@@ -286,7 +286,7 @@ The effects of I/Q imbalance can be observed using the flowchart shown in Figure
 	\label{fig::iq_imbalance_0_mag_0_phase_freq}
 \end{figure}
 
-As expected, the above plots are identical to those shown in Figures \ref{fig::complex_sampling_freq_domain_10k_samp_rate} and \ref{fig::sampling_rates_time_domain_10k_samp_rate}.
+As expected, the above plots are identical to those shown in Figures \ref{fig::sampling_rates_time_domain_10k_samp_rate} and  \ref{fig::complex_sampling_freq_domain_10k_samp_rate}.
 
 Next, we investigate the effects of a phase imbalance. As we increase the phase imbalance, we also increase the power of the frequency image. This is illustrated in Figure \ref{fig::iq_imbalance_0_mag_1_phase_freq}, which shows 1 degree of phase imbalance, and Figure \ref{fig::iq_imbalance_0p5_mag_0_phase_freq}, which shows 0.5 dB of amplitude imbalance.
 
@@ -323,7 +323,7 @@ In the receiver, we are effectively mixing the received signal to baseband with 
 When we apply I/Q imbalance in the transmitter, we obtain the following for the transmitted signal:
 
 \begin{equation}
-	x_{tx}(t) = 2(1+\varepsilon)\text{Re}\{x(t)\}\cos(2{\pi}f_ct + \phi) - 2\text{Im}\{x(t)\}\sin(2{\pi}f_ct)
+	x_{tx}(t) = (1+\varepsilon)\text{Re}\{x(t)\}\cos(2{\pi}f_ct + \phi) - 2\text{Im}\{x(t)\}\sin(2{\pi}f_ct)
 \end{equation}
 
 Applying Inverse Euler's formula, we obtain:
