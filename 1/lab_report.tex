@@ -156,7 +156,7 @@ Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate} shows the spectrum of
 	\label{fig::sampling_rates_freq_domain_10k_samp_rate}
 \end{figure}
 
-Next, we examine the frequency response when the sampling rate is increased to 40 kHz. The updated frequency response is shown in Figure \ref{fig::sampling_rates_freq_domain_40k_samp_rate}. Examining the updated frequency response, we see that it peaks at $\pm$ 2 kHz, which is identical to the frequency it previously peaked at. The biggest difference in the frequency responses is their span. The previously collected data spanned from $\pm$ 5 kHz, while the newly collected data spans from $\pm$ 10 kHz.
+Next, we examine the frequency response when the sampling rate is increased to 40 kHz. The updated frequency response is shown in Figure \ref{fig::sampling_rates_freq_domain_40k_samp_rate}. Examining the updated frequency response, we see that it peaks at $\pm$ 2 kHz, same as Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}. The biggest difference in the frequency responses is their span. The previously collected data spanned from $\pm$ 5 kHz, while the newly collected data spans from $\pm$ 20 kHz.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_freq_domain_40k_samp_rate.png}}}
@@ -180,7 +180,7 @@ Now, we adjust the sample rate to 3.5 kHz and measure the peak of the frequency 
 	\label{fig::sampling_rates_freq_domain_3_5k_samp_rate}
 \end{figure}
 
-The phenomenon we observe is called aliasing. The spectrum of a sampled signal wraps to $\pm f_s/2$. The delta function at positive frequency aliases from 2 kHz to -1.5 kHz and the delta function at negative frequency aliases from -2 kHz to 1.5 kHz. As a result, the measured frequency changes by 0.5 kHz, from 2 kHz to 1.5 kHz.
+The phenomenon we observe is called aliasing. Aliasing occurs because the spectrum of a sampled signal wraps into the interval $[-f_s/2, f_s/2)$. In this experiment, the delta function at positive frequency aliases from 2 kHz to -1.5 kHz and the delta function at negative frequency aliases from -2 kHz to 1.5 kHz. As a result, the measured frequency changes by 0.5 kHz, from 2 kHz to 1.5 kHz.
 
 \subsection{Complex Sampling}
 
