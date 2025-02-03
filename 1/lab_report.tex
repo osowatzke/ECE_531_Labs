@@ -25,19 +25,23 @@
 	}
 \end{titlepage}
 
+\setlength{\parindent}{0pt}
+
 \section{Introduction}
 %Introduction to the laboratory experiment, including a brief description of the objectives and goals.
 
-This laboratory experiment provides a review of digital signal processing, while introducing SDR flowgraphs and simulation in GNU radio. Topics reviewed include sampling rates, complex sampling, interpolation, decimation, and noise analysis. To investigate these topics we perform multiple experiments - each with its own GNU flowchart. These experiments include sampling rates, complex sampling, frequency observations, I/Q imbalance, adding noise, and interpolation/decimation. Most of these experiments have a one-to-one alignment with the reviewed topics. However, the frequency observations and I/Q imbalance experiments highlight specific sampling subtopics. The frequency observations experiment, specifically, investigates aliasing when performing real and complex sampling. The I/Q imbalance experiment highlights the effects of imbalance in the in-phase and quadrature paths when performing complex sampling. This lab report is divided into two primary sections. One presents the procedure for each experiment, and the other provides the results of each experiment.
+This laboratory experiment provides a review of digital signal processing, while introducing SDR flowgraphs and simulations in GNU radio. Topics reviewed include sampling rates, complex sampling, interpolation, decimation, and noise analysis. To investigate these topics we perform multiple experiments - each with its own GNU flowchart. These experiments include sampling rates, complex sampling, frequency observations, I/Q imbalance, adding noise, and interpolation/decimation. Most of these experiments have a one-to-one alignment with the reviewed topics. However, the frequency observations and I/Q imbalance experiments highlight specific sampling subtopics. The frequency observations experiment, specifically, investigates aliasing when performing real and complex sampling. The I/Q imbalance experiment highlights the effects of imbalance in the in-phase and quadrature paths when performing complex sampling. The lab report that follows is divided into two primary sections. One presents the procedure for each experiment, and the other provides the results of each experiment.
 
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
-In this lab, we investigate the effects of sampling rates on a sinusoid signal. We, then, investigate how complex sampling differs from real sampling. Next, we observe the spectrum of the sinusoid, while varying its frequency. Then, we examine the effects of I/Q imbalance on a complex-sampled signal.
+% In this lab, we investigate the effects of sampling rates on a sinusoid signal. We, then, investigate how complex sampling differs from real sampling. Next, we observe the spectrum of the sinusoid, while varying its frequency. Then, we examine the effects of I/Q imbalance on a complex-sampled signal.
+
+In this section, we provide the procedures for each of the performed experiments. These experiments include sampling rates, complex sampling, frequency observations, I/Q imbalance, adding noise, and interpolation/decimation.
 
 \subsection{Sampling Rates \label{subsection::sampling_rates}}
 
-In this experiment, we examine the effects of sampling rate. To perform this experiment, we construct the GNU radio companion (GRC) flowchart shown in Figure \ref{fig::sampling_rates_experiment}. We, then, use the "Time" and "Frequency" tabs of the QT GUI to examine the sampled signal.
+In the first experiment, we examine the effects of sampling rate. To perform this experiment, we construct the GNU radio companion (GRC) flowchart shown in Figure \ref{fig::sampling_rates_experiment}. We, then, use the "Time" and "Frequency" tabs of the QT GUI to examine the sampled signal.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_experiment.png}}}
@@ -49,7 +53,7 @@ We start by examining the signal when it is sampled at the 10 kHz default sample
 
 \subsection{Complex Sampling \label{subsection::complex_sampling}}
 
-In this section, we examine how complex sampling differs from real sampling. To perform our analysis, we modify the data types of the blocks in the GRC flowchart shown in Figure \ref{fig::sampling_rates_experiment}. The updated blocks use a "Complex Float 32" data type instead of a "Float 32" data type. Figure \ref{fig::complex_sampling_experiment} shows the updated block diagram. Note that the port colors have changed from orange to blue to reflect the change in data type.
+In this experiment, we examine how complex sampling differs from real sampling. To perform our analysis, we modify the data types of the blocks in the GRC flowchart shown in Figure \ref{fig::sampling_rates_experiment}. The updated blocks use a "Complex Float 32" data type instead of a "Float 32" data type. Figure \ref{fig::complex_sampling_experiment} shows the updated block diagram. Note that the port colors have changed from orange to blue to reflect the change in data type.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_experiment.png}}}
@@ -57,11 +61,13 @@ In this section, we examine how complex sampling differs from real sampling. To 
 	\label{fig::complex_sampling_experiment}
 \end{figure}
 
-Using the updated block diagram, we compare the updated frequency spectrum to the spectrum collected in subsection \ref{subsection::sampling_rates}, noting what happens to the positive and negative frequency components. We, then, investigate the time-domain signals and measure the phase between them. Next, we examine the signal amplitude on each channel while varying the sampling frequency from 10kHz to 40kHz. At the 40kHz sampling rate, we measure the frequency peak. Then, we measure the frequency peak at a 4kHz sampling rate. Finally, we continue decreasing the sampling rate and explain the location of the frequency peak.
+Using the updated block diagram, we compare the updated frequency spectrum to the spectrum collected in subsection \ref{subsection::sampling_rates}, noting what happens to the positive and negative frequency components. We, then, investigate the time-domain signals and measure the phase between them. Next, we examine the signal amplitude on each channel while varying the sampling frequency from 10kHz to 40kHz. At the 40kHz sampling rate, we measure the frequency peak. Then, we measure the frequency peak at a 4kHz sampling rate. Finally, we continue decreasing the sampling rate and explain the location of the frequency peak at each of the updated sampling rates.
 
 \subsection{Frequency Observations}
 
-In contrast to the previous sections, we now vary the frequency of the source while keeping the sampling rate constant. The experiment performed here reinforces the results of the previous sections and is performed on both real and complex-sampled data.
+In contrast to the previous experiments, we vary the frequency of the source in this experiment while keeping the sampling rate constant. We perform this exercise for both real and complex data types. Through variations of the source frequency, we reinforce the results of the previous experiments.
+
+%The experiment performed here reinforces the results of the previous sections and is performed on both real and complex-sampled data.
  
 \subsubsection{Complex-sampled Flowgraph \label{subsection::frequency_observations_complex_sampling}}
 
