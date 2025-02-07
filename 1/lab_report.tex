@@ -61,7 +61,7 @@ In this experiment, we examine how complex sampling differs from real sampling. 
 	\label{fig::complex_sampling_experiment}
 \end{figure}
 
-Using the updated block diagram, we compare the updated frequency spectrum to the spectrum collected in subsection \ref{subsection::sampling_rates}, noting what happens to the positive and negative frequency components. We, then, investigate the time-domain signals and measure the phase between them. Next, we examine the signal amplitude on each channel while varying the sampling frequency from 10kHz to 40kHz. At the 40kHz sampling rate, we measure the frequency peak. Then, we measure the frequency peak at a 4kHz sampling rate. Finally, we continue decreasing the sampling rate and explain the location of the frequency peak at each of the updated sampling rates.
+Using the updated block diagram, we compare the updated frequency response to the frequency response collected in subsection \ref{subsection::sampling_rates}, noting what happens to the positive and negative frequency components. We, then, investigate the time-domain signals and measure the phase between them. Next, we examine the signal amplitude on each channel while varying the sampling frequency from 10kHz to 40kHz. At the 40kHz sampling rate, we measure the frequency peak. Then, we measure the frequency peak at a 4kHz sampling rate. Finally, we continue decreasing the sampling rate and explain the location of the frequency peak at each of the updated sampling rates.
 
 \subsection{Frequency Observations}
 
@@ -152,7 +152,7 @@ Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate} shows the frequency r
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_freq_domain_10k_samp_rate.png}}}
-	\caption{Frequency Response of Sinusoid Sampled at 10 kHz}
+	\caption{Frequency Response of a Sinusoid Sampled at 10 kHz}
 	\label{fig::sampling_rates_freq_domain_10k_samp_rate}
 \end{figure}
 
@@ -160,7 +160,7 @@ Next, we examine the frequency response when the sampling rate is increased to 4
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_freq_domain_40k_samp_rate.png}}}
-	\caption{Spectrum of Sinusoid Sampled at 40 kHz}
+	\caption{Frequency Response of a Sinusoid Sampled at 40 kHz}
 	\label{fig::sampling_rates_freq_domain_40k_samp_rate}
 \end{figure}
 
@@ -176,7 +176,7 @@ Now, we adjust the sample rate to 3.5 kHz and measure the peak of the frequency 
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_freq_domain_3_5k_samp_rate.png}}}
-	\caption{Spectrum of Sinusoid Sampled at 3.5 kHz}
+	\caption{Frequency Response of a Sinusoid Sampled at 3.5 kHz}
 	\label{fig::sampling_rates_freq_domain_3_5k_samp_rate}
 \end{figure}
 
@@ -184,15 +184,15 @@ The phenomenon we observe is called aliasing. Aliasing occurs because the spectr
 
 \subsection{Complex Sampling}
 
-Using the flowchart shown in Figure \ref{fig::complex_sampling_experiment}, we investigate the effects of complex sampling. Figure \ref{fig::complex_sampling_freq_domain_10k_samp_rate} shows the updated spectrum.
+Using the flowchart shown in Figure \ref{fig::complex_sampling_experiment}, we investigate the effects of complex sampling. Figure \ref{fig::complex_sampling_freq_domain_10k_samp_rate} shows the frequency response when complex sampling is used instead of real sampling.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_freq_domain_10k_samp_rate.png}}}
-	\caption{Spectrum of Complex Exponential Sampled at 10 kHz}
+	\caption{Frequency Response of a Complex Exponential Sampled at 10 kHz}
 	\label{fig::complex_sampling_freq_domain_10k_samp_rate}
 \end{figure}
 
-Compared to the spectrum shown in Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, the frequency response only has a positive delta component. This is expected because the frequency response of a complex exponential is a delta function. Compare this to a sine function, which can be expressed using the inverse Euler formula as:
+Compared to the frequency response shown in Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, the updated frequency response only has a positive delta component. This is expected because the frequency response of a complex exponential is a delta function. Compare this to a sine function, which can be expressed using the inverse Euler formula as:
 
 \begin{equation}
 	sin(2{\pi}{f_o}t) = \frac{e^{j2{\pi}{f_o}t} - e^{-j2{\pi}{f_o}t}}{2j}
@@ -220,7 +220,7 @@ We can also measure the peak of the frequency response with the updated sampled 
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_freq_domain_40k_samp_rate.png}}}
-	\caption{Spectrum of Complex Exponential Sampled at 40 kHz}
+	\caption{Frequency Response of a Complex Exponential Sampled at 40 kHz}
 	\label{fig::complex_sampling_freq_domain_40k_samp_rate}
 \end{figure}
 
@@ -228,7 +228,7 @@ Next, we decrease the sampling frequency to the Nyquist rate of 4 kHz (twice the
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_freq_domain_4k_samp_rate.png}}}
-	\caption{Spectrum of Complex Exponential Sampled at 4 kHz}
+	\caption{Frequency Response of Complex Exponential Sampled at 4 kHz}
 	\label{fig::complex_sampling_freq_domain_4k_samp_rate}
 \end{figure}
 
