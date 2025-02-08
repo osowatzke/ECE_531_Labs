@@ -508,9 +508,9 @@ In the frequency response, the peaks of the interpolated data are 4x closer to t
 	
 	\item In GNU Radio What is the purpose of the Throttle block in GNU Radio? When should it be used? What happens if you use more than one throttle block? When is a throttle block unnecessary?
 
-		The throttle block helps GNU radio avoid CPU congestion. Simulations in GNU radio will run as fast as the processor allows them to. If real-time scheduling is used, GNU radio could overtake CPU resources and crash the processor. The throttle block should be used when there are no rate-limiting components in the flowchart, such as hardware. When hardware is used, the throttle block is unneeded because the hardware provides flow control.
+		The throttle block helps GNU radio avoid CPU congestion. Simulations in GNU radio will run as fast as the processor allows them to. If real-time scheduling is used, GNU radio could overtake CPU resources and crash the processor. The throttle block should be used when there are no rate-limiting components in the flowchart, such as hardware. When hardware is used, the throttle block is unneeded because the hardware provides flow control. Using a throttle block with hardware can create a unnecessary bottleneck in the system. Only one throttle block is needed per a flowchart. Having more than one throttle block can create conflicts, especially if the sample rates of the throttle blocks are different.
 		
-		Only need one element of flow control. Don't need to have multiple throttle block. Could even put throttle block in another spot of the flowchart and connect to null source/sink.
+		%Could even put throttle block in another spot of the flowchart and connect to null source/sink.
 		
 	\item  Explain Nyquist zones and their significance in software-defined radio.
 	
