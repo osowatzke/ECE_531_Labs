@@ -115,7 +115,7 @@ In this experiment, we build off the flowchart shown in Figure \ref{fig::complex
 	\label{fig::noise_experiment}
 \end{figure}
 
-Using the updated flowchart, we explore the effects of the added noise in the time-domain signal, frequency spectrum, and received constellation points. Next, we use the histogram tab to verify the probability density function (pdf) of each noise source type. Note that the histogram tool only supports real data types, so we must individually examine the real and imaginary parts of the data. However, the laplacian and impulse noise sources do not support complex types, so we instead use an additional real noise source for this portion of the experiment. 
+Using the updated flowchart, we explore the effects of the additive noise on the time-domain signal, the frequency-domain signal, and the constellation. Next, we use the histogram tab to verify the probability density function (pdf) of each noise source type. Note that the histogram tool only supports real data types. As such, we must independently examine the real and imaginary parts of the complex source. However, the laplacian and impulse noise sources only support real types, so we instead add an additional real noise source for this portion of the experiment. 
 
 % Note that we use a separate noise source for the histogram because the laplacian and impulse noise sources do not support complex types. We 
 
