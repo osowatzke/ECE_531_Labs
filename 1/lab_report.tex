@@ -501,26 +501,33 @@ In the frequency response, the peaks of the interpolated data are 4x closer to t
 
 \subsection{Followup Questions}
 
-\begin{enumerate}
-	\item What are the benefits of using in-phase and quadrature (I \& Q) sampling in SDR? Fully describe at least three benefits of IQ sampling.
-	
-	IQ sampling eliminates the negative "ghost" frequencies from a real bandpass signal. IQ sampling also requires a lower sampling rate than real sampling. Real sampling requires at least twice the sampling rate of complex data because we must capture both the negative and positive frequencies of the signal. Finally, complex sampling allows us to perform coherent processing because we can recover phase information. This is crucial for modulation schemes such as QAM.
-	
-	\item In GNU Radio What is the purpose of the Throttle block in GNU Radio? When should it be used? What happens if you use more than one throttle block? When is a throttle block unnecessary?
+The followup questions answered here reinforce the concepts covered in this lab and extend the lab content to new subject areas. First, we discuss the benefits of I/Q sampling in SDR. Next, we discuss the purpose of the GNU throttling block and its correct use. Then, we explain Nyquist zones and their significance in software-defined radio. Finally, we discuss the purpose of dither noise in DAC circuits.
 
-		The throttle block helps GNU radio avoid CPU congestion. Simulations in GNU radio will run as fast as the processor allows them to. If real-time scheduling is used, GNU radio could overtake CPU resources and crash the processor. The throttle block should be used when there are no rate-limiting components in the flowchart, such as hardware. When hardware is used, the throttle block is unneeded because the hardware provides flow control. Using a throttle block with hardware can create a unnecessary bottleneck in the system. Only one throttle block is needed per a flowchart. Having more than one throttle block can create conflicts, especially if the sample rates of the throttle blocks are different.
+% Questions of interest involve the benefits of I/Q sampling, the GNU throttling block, nyquist zones, and the purpose of dither noise.
+
+% What are the benefits of using in-phase and quadrature (I \& Q) sampling in SDR? Fully describe at least three benefits of IQ sampling.
+
+	\subsubsection{I/Q Sampling}
+	IQ sampling is beneficial because it eliminates the negative "ghost" frequencies from a real bandpass signal. IQ sampling also requires a lower sampling rate than real sampling. (Real sampling requires at least twice the sampling rate of complex data because we must capture both the negative and positive frequencies of the signal). Finally, complex sampling allows us to perform coherent processing because we can recover phase information. This is crucial for modulation schemes such as QAM.
+	
+	% \item In GNU Radio What is the purpose of the Throttle block in GNU Radio? When should it be used? What happens if you use more than one throttle block? When is a throttle block unnecessary?
+
+	\subsubsection{Throttle Block}
+	The throttle block helps GNU radio avoid CPU congestion. Simulations in GNU radio will run as fast as the processor allows them to. If real-time scheduling is used, GNU radio could overtake CPU resources and crash the processor. The throttle block should be used when there are no rate-limiting components in the flowchart, such as hardware. When hardware is used, the throttle block is unneeded because the hardware provides flow control. Using a throttle block with hardware can create a unnecessary bottleneck in the system. Only one throttle block is needed per a flowchart. Having more than one throttle block can create conflicts, especially if the sample rates of the throttle blocks are different.
 		
 		%Could even put throttle block in another spot of the flowchart and connect to null source/sink.
 		
-	\item  Explain Nyquist zones and their significance in software-defined radio.
+	%\item  Explain Nyquist zones and their significance in software-defined radio.
 	
-	Nyquist zones are an artifact of the frequency wrapping that occurs when sampling. The Nyquist zones divide the spectrum into bands that are half the sampling rate. These bands are mirrored for the negative frequencies. Positive frequencies in odd nyquist zones wrap to positive frequencies in the 1st nyquist zone $[-f_s/2, f_s/2)$ and negative frequencies in odd nyquist zones wrap to negative frequencies in the 1st nyquist zone. The opposite relationship is true for even nyquist zones. (Positive frequencies wraps to negative frequencies, and negative frequencies wraps to positive frequencies). Most of the sampling we have dealt with thus far assume the signal is passed through a low pass filter and sampled in the first nyquist zone. However, we can also apply a bandpass filter to the signal and sample in different nyquist zones. In many systems, the required bandpass filter is already present for the conversion from RF to IF. We can then directly sample the signal at IF. The sampling rate can also be below twice the highest frequency as long as the signal is contained within a nyquist zone. This topology eliminates the need for an IF demodulator and filters, which can result in imbalance in the I/Q channels. We can instead digitize our demodulation using an NCO followed by a LPF or a Hilbert filter followed by an NCO.
+	\subsubsection{Nyquist Zones}
+	Nyquist zones are an artifact of the frequency wrapping that occurs when sampling. The Nyquist zones divide the spectrum into bands that are half the sampling rate. These bands are mirrored for the negative frequencies. Positive frequencies in odd nyquist zones wrap to positive frequencies in the 1st nyquist zone $[-f_s/2, f_s/2)$ and negative frequencies in odd nyquist zones wrap to negative frequencies in the 1st nyquist zone. The opposite relationship is true for even nyquist zones. (Positive frequencies wraps to negative frequencies, and negative frequencies wraps to positive frequencies). Most of the sampling we have dealt with thus far assumes that the signal is passed through a low pass filter and sampled in the first nyquist zone. However, we can also apply a bandpass filter to the signal and sample in different nyquist zones. In many systems, the required bandpass filter is already present for the conversion from RF to IF. As such, we can directly sample the signal at IF. The sampling rate can also be below twice the highest frequency as long as the signal is contained within a nyquist zone. This topology eliminates the need for an IF demodulator and filters, which can result in imbalance in the I/Q channels. We can instead digitize our demodulation scheme using an NCO followed by a LPF or a Hilbert filter followed by an NCO.
 	
-	\item Why is dither noise added in Digital-to-Analog Converter (DAC) circuits?
+	%\item Why is dither noise added in Digital-to-Analog Converter (DAC) circuits?
 	
+	\subsubsection{Dither Noise}
 	Dither noise is added to DAC circuits to increase the spur free dynamic range. Quantization of a continuous signal (especially sinusoids) can lead to large harmonics due to periodic errors in quantization. Dither noise helps to randomize the quantization error, reducing the amplitude of spurs.
 	
-\end{enumerate}
+% \end{enumerate}
 
 
 
