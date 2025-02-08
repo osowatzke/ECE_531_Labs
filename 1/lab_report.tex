@@ -504,11 +504,11 @@ In the frequency response, the peaks of the interpolated data are 4x closer to t
 \begin{enumerate}
 	\item What are the benefits of using in-phase and quadrature (I \& Q) sampling in SDR? Fully describe at least three benefits of IQ sampling.
 	
-	IQ sampling eliminates the negative "ghost" frequencies from a real bandpass signal. IQ sampling also allows for baseband processing - significantly reducing the required sample rates (can sample at the bandwidth of the signal instead of at twice the highest frequency). Can sample at half of the rate of real signal-processing. Can perform coherent processing since we recover phase information.
+	IQ sampling eliminates the negative "ghost" frequencies from a real bandpass signal. IQ sampling also requires a lower sampling rate than real sampling. Real sampling requires at least twice the sampling rate of complex data because we must capture both the negative and positive frequencies of the signal. Finally, complex sampling allows us to perform coherent processing because we can recover phase information. This is crucial for modulation schemes such as QAM.
 	
 	\item In GNU Radio What is the purpose of the Throttle block in GNU Radio? When should it be used? What happens if you use more than one throttle block? When is a throttle block unnecessary?
 
-		The throttle block helps GNU radio avoid CPU congestion. Simulation will run as fast as the processor allows them to. If real-time scheduling is used, GNU radio could overtake CPU resources and crash the processor. The throttle block is unneeded if using hardware because the hardware provides flow control. When using hardware, the throttle block is unnecessary, redundant, and could add an undue bottleneck.
+		The throttle block helps GNU radio avoid CPU congestion. Simulations in GNU radio will run as fast as the processor allows them to. If real-time scheduling is used, GNU radio could overtake CPU resources and crash the processor. The throttle block should be used when there are no rate-limiting components in the flowchart, such as hardware. When hardware is used, the throttle block is unneeded because the hardware provides flow control.
 		
 		Only need one element of flow control. Don't need to have multiple throttle block. Could even put throttle block in another spot of the flowchart and connect to null source/sink.
 		
