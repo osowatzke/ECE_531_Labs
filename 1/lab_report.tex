@@ -37,11 +37,11 @@ This laboratory experiment provides a review of digital signal processing, while
 
 % In this lab, we investigate the effects of sampling rates on a sinusoid signal. We, then, investigate how complex sampling differs from real sampling. Next, we observe the spectrum of the sinusoid, while varying its frequency. Then, we examine the effects of I/Q imbalance on a complex-sampled signal.
 
-In this section, we provide the procedures for each of the performed experiments. These experiments include sampling rates, complex sampling, frequency observations, I/Q imbalance, adding noise, and interpolation/decimation. Most of these experiments can be easily matched to their respective review topics. However, the linkage to the frequency observations and I/Q imbalance experiments is not as apparent. These additionally experiments highlight sampling subtopics. The frequency observations experiment, specifically, investigates aliasing when performing real and complex sampling. The I/Q imbalance experiment highlights the effects of gain and phase imbalance in the I/Q paths when performing complex sampling.
+In this section, we provide the procedures for each of the performed experiments. These experiments include sampling rates, complex sampling, frequency observations, I/Q imbalance, adding noise, and interpolation/decimation. Most of these experiments can be easily matched to their respective review topics. However, the linkage to the frequency observations and I/Q imbalance experiments is not as apparent. These additional experiments highlight sampling subtopics. The frequency observations experiment, specifically, investigates aliasing when performing real and complex sampling, while the I/Q imbalance experiment highlights the effects of gain-phase imbalance in the I/Q paths when performing complex sampling.
 
 \subsection{Sampling Rates \label{subsection::sampling_rates}}
 
-In the first experiment, we examine the effects of sampling rate. To perform this experiment, we construct the GNU radio companion (GRC) flowchart shown in Figure \ref{fig::sampling_rates_experiment}. We, then, use the "Time" and "Frequency" tabs of the QT GUI to examine the sampled signal.
+In the first experiment, we examine the effects of sampling rate. To perform this experiment, we construct the GNU radio companion (GRC) flowchart shown in Figure \ref{fig::sampling_rates_experiment}. Then, we use the ``Time" and ``Frequency" tabs of the QT GUI to examine the sampled signal.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_experiment.png}}}
@@ -49,11 +49,11 @@ In the first experiment, we examine the effects of sampling rate. To perform thi
 	\label{fig::sampling_rates_experiment}
 \end{figure}
 
-We start by examining the signal when it is sampled at the 10 kHz default sample rate. We qualitatively analyze the time-domain signal by comparing it to an ideal sinusoid. We, then, measure the frequency of the signal. Next, we increase the sample rate to 40 kHz and compare the updated time and frequency plots to the previously collected data. Finally, we decrease the sample rate to 3.5 kHz and examine the frequency of the sampled signal.
+We start by examining the signal when it is sampled at the 10 kHz default sample rate. We qualitatively analyze the time-domain signal by comparing it to an ideal sinusoid. Next, we measure the frequency of the signal. Then, we increase the sample rate to 40 kHz and compare the updated time and frequency plots to the previously collected data. Finally, we decrease the sample rate to 3.5 kHz and examine the frequency of the sampled signal.
 
 \subsection{Complex Sampling \label{subsection::complex_sampling}}
 
-In this experiment, we examine how complex sampling differs from real sampling. To perform our analysis, we modify the data types of the blocks in the GRC flowchart shown in Figure \ref{fig::sampling_rates_experiment}. The updated blocks use a "Complex Float 32" data type instead of a "Float 32" data type. Figure \ref{fig::complex_sampling_experiment} shows the updated block diagram. Note that the port colors have changed from orange to blue to reflect the change in data type.
+In this experiment, we examine how complex sampling differs from real sampling. To perform our analysis, we modify the data types of the blocks in the GRC flowchart shown in Figure \ref{fig::sampling_rates_experiment}. The updated blocks use a ``Complex Float 32" data type instead of a ``Float 32" data type. Figure \ref{fig::complex_sampling_experiment} shows the updated block diagram. Note that the port colors have changed from orange to blue to reflect the change in data type.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_experiment.png}}}
@@ -61,7 +61,7 @@ In this experiment, we examine how complex sampling differs from real sampling. 
 	\label{fig::complex_sampling_experiment}
 \end{figure}
 
-Using the updated block diagram, we compare the updated frequency response to the frequency response collected in subsection \ref{subsection::sampling_rates}, noting what happens to the positive and negative frequency components. We, then, investigate the time-domain signals and measure the phase between them. Next, we examine the signal amplitude on each channel while varying the sampling frequency from 10kHz to 40kHz. At the 40kHz sampling rate, we measure the frequency peak. Then, we measure the frequency peak at a 4kHz sampling rate. Finally, we continue decreasing the sampling rate and explain the location of the frequency peak at each of the updated sampling rates.
+Using the updated block diagram, we compare the updated frequency response to the frequency response collected in subsection \ref{subsection::sampling_rates}, noting what happens to the positive and negative frequency components. Next, we investigate the time-domain signals and measure the phase between them. Then, we examine the signal amplitude on each channel while varying the sampling frequency from 10kHz to 40kHz. At the 40kHz sampling rate, we measure the frequency peak. Then, we measure the frequency peak at a 4kHz sampling rate. Finally, we continue decreasing the sampling rate and explain the location of the frequency peak at each of the updated sampling rates.
 
 \subsection{Frequency Observations}
 
@@ -83,7 +83,7 @@ Using the updated flowchart, we vary the sinusoid frequency over its full range 
 
 \subsubsection{Real-sampled Flowgraph}
 
-We also investigate real-sampling using the flowchart shown in Figure \ref{fig::frequency_observations_real_sampling}. The flowchart is identical to the one shown in Figure \ref{fig::frequency_observations_complex_sampling} except for the data types which have been modified from "Complex Float 32" to "Float 32".
+We also investigate real-sampling using the flowchart shown in Figure \ref{fig::frequency_observations_real_sampling}. The flowchart is identical to the one shown in Figure \ref{fig::frequency_observations_complex_sampling} except for the data types which have been modified from ``Complex Float 32" to ``Float 32".
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{frequency_observations_real_sampling.png}}}
@@ -91,7 +91,7 @@ We also investigate real-sampling using the flowchart shown in Figure \ref{fig::
 	\label{fig::frequency_observations_real_sampling}
 \end{figure}
 
-Using the above flowchart, we vary the sinusoid frequency over its full range (from 2kHz to 15kHz). We observe the resulting spectrum and compare to the results we observed in Section \ref{subsection::frequency_observations_complex_sampling}.
+Using the above flowchart, we vary the sinusoid frequency over its full range (from 2kHz to 15kHz). We observe the resulting spectrum and compare it to the results we observed in Section \ref{subsection::frequency_observations_complex_sampling}.
 
 \subsection{I/Q Imbalance}
 
@@ -103,7 +103,7 @@ In this experiment, we investigate the effect of I/Q imbalance on complex sampli
 	\label{fig::iq_imbalance_experiment}
 \end{figure}
 
-With the experiment setup, we first execute with the default values (no gain and phase imbalance) and verify the results are identical to those collected previously. Next, we observe the frequency response while independently varying the gain and phase imbalances - notating what occurs and why. Then, we observe the captured constellation while independently varying the frequency, magnitude, and phase. For each variable that we vary, we log what happens to the received constellation.  
+With the experiment setup, we first execute with the default values (no gain and phase imbalance) and verify the results are identical to those collected previously. Next, we observe the frequency response while independently varying the gain and phase imbalances - notating what occurs and why. Then, we observe the captured constellation while independently varying the frequency, magnitude, and phase. For each variable that we vary, we log what happens in the resulting constellation.  
 
 \subsection{Adding Noise}
 
@@ -115,7 +115,7 @@ In this experiment, we build off the flowchart shown in Figure \ref{fig::complex
 	\label{fig::noise_experiment}
 \end{figure}
 
-Using the updated flowchart, we explore the effects of the additive noise on the time-domain signal, the frequency-domain signal, and the resulting constellation. Next, we use the histogram tab to verify the probability density function (pdf) of each noise source type. Note that the histogram tool only supports real data types. As such, we must independently examine the real and imaginary parts of the complex source. However, the laplacian and impulse noise sources only support real types, so we instead add an additional real noise source for this portion of the experiment. 
+Using the updated flowchart, we explore the effects of the additive noise on the time-domain signal, the frequency-domain signal, and the resulting constellation. Next, we use the histogram tab to verify the probability density function (pdf) of each noise source type. Note that the laplacian and impulse noise sources only support real types, so we add an additional real noise source to generate the histograms. If we were only interested in Guassian and uniform noise sources, we could instead connect the real and imaginary parts of the complex noise source to the histogram. 
 
 % Note that we use a separate noise source for the histogram because the laplacian and impulse noise sources do not support complex types. We 
 
@@ -129,7 +129,7 @@ For the final experiment, we investigate interpolation and decimation, which are
 	\label{fig::interpolation_and_decimation_experiment}
 \end{figure}
 
-Using the above flowchart, we observe the time and frequency domain outputs and compare the differences between each of the resampled signals. We specifically concentrate on the differences we observe in the frequency domain and identify the relationship between each of the signals in this domain.
+Using the above flowchart, we observe the time and frequency domain outputs and compare the differences between each of the resampled signals. We specifically concentrate on the differences that we observe in the frequency domain and identify the relationship between each of the signals in this domain.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
