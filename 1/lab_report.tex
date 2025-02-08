@@ -302,7 +302,7 @@ Next, we investigate the effects of a phase imbalance. As we increase the phase 
 	\label{fig::iq_imbalance_0p5_mag_0_phase_freq}
 \end{figure}
 
-The I/Q imbalance block in our flowchart is modeling I/Q imbalance in the transmitter. Because the imbalance comes from the transmitter, we must evaluate the signal starting at the transmitter. In the transmitter, we are effectively mixing with a complex exponential and then taking the real part of the resulting signal. Here, we also scale the complex exponential by 2 to simplify subsequent equations.
+The I/Q imbalance block in our flowchart is modeling I/Q imbalance in the transmitter. To understand its effect on the received signal, we must trace the signal from transmitter to receiver. In the transmitter, we are effectively mixing the digitized signal with a complex exponential and then taking the real part of the resulting signal. Here, we also scale the complex exponential by 2 to simplify subsequent equations.
 
 \begin{equation}
 	x_{tx}(t) = 2\text{Re}\{x(t)\}\cos(2{\pi}f_ct) - 2\text{Im}\{x(t)\}\sin(2{\pi}f_ct)
@@ -323,13 +323,13 @@ In the receiver, we are effectively mixing the received signal to baseband with 
 When we apply I/Q imbalance in the transmitter, we obtain the following for the transmitted signal:
 
 \begin{equation}
-	x_{tx}(t) = (1+\varepsilon)\text{Re}\{x(t)\}\cos(2{\pi}f_ct + \phi) - 2\text{Im}\{x(t)\}\sin(2{\pi}f_ct)
+	x_{tx}(t) = 2(1+\varepsilon)\text{Re}\{x(t)\}\cos(2{\pi}f_ct + \phi) - 2\text{Im}\{x(t)\}\sin(2{\pi}f_ct)
 \end{equation}
 
 Applying Inverse Euler's formula, we obtain:
 
 \begin{equation}
-	x_{tx}(t) = 2(1+\varepsilon)\text{Re}\{x(t)\}(e^{j(2{\pi}f_ct+\phi)} + e^{-j(2{\pi}f_ct+\phi)}) + j\text{Im}\{x(t)\}(e^{j2{\pi}f_ct} - e^{-j2{\pi}f_ct})
+	x_{tx}(t) = (1+\varepsilon)\text{Re}\{x(t)\}(e^{j(2{\pi}f_ct+\phi)} + e^{-j(2{\pi}f_ct+\phi)}) + j\text{Im}\{x(t)\}(e^{j2{\pi}f_ct} - e^{-j2{\pi}f_ct})
 \end{equation}
 
 The received signal with I/Q imbalance is then given as follows:
