@@ -487,7 +487,7 @@ Figure \ref{fig::impulse_noise_histogram} shows the histogram of impulse noise w
 
 \subsection{Interpolation and Decimation}
 
-This final experiment we performed examined the impact of interpolation and decimation on the time and frequency-domain curves. Figure \ref{fig::interpolation_and_decimation_experiment} shows the setup for our examination, and Figure \ref{fig::interpolation_and_decimation_waveforms} shows the collected data. The top figure contains time-domain data and the bottom figure contains frequency-domain data. The blue waveform is the data before interpolation and decimation. The red data is the data interpolated by 4. And the green waveform is the data decimated by 4.
+The final experiment we performed examined the impact of interpolation and decimation on the time and frequency-domain curves. Figure \ref{fig::interpolation_and_decimation_experiment} shows the setup for our examination, and Figure \ref{fig::interpolation_and_decimation_waveforms} shows the collected data. The top figure contains time-domain data and the bottom figure contains frequency-domain data. The blue waveform is the data before interpolation and decimation. The red data is the data interpolated by 4. And the green waveform is the data decimated by 4.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{interpolation_and_decimation_waveforms.png}}}
@@ -495,7 +495,9 @@ This final experiment we performed examined the impact of interpolation and deci
 	\label{fig::interpolation_and_decimation_waveforms}
 \end{figure}
 
-Each of the time-domain curves contains the same number of points plotted on a common x-axis. Therefore, the curve sampled at the highest rate contains the fewest number of sinusoid periods. The data in the frequency-domain curves is also plotted on a common x-axis. As a result, the displayed frequencies can be misleading. In the frequency-domain curves, the data sampled at the highest rate (interpolated data) will contain the largest span of frequency. Thus, the sinusoid peak frequencies will be closest to the origin.
+Each of the time-domain curves contains the same number of points plotted on a common x-axis. Therefore, the curve sampled at the highest rate contains the fewest number of sinusoid periods. The data in the frequency-domain curves is also plotted on a common x-axis. As a result, the displayed frequencies can be misleading. In the frequency-domain curves, the data sampled at the highest rate (interpolated data) will contain the largest span of frequency. Thus, the sinusoid peak frequencies will be closest to the origin. 
+
+In the frequency response, the peaks of the interpolated data are 4x closer to the origin than the original data. When, we interpolate the data the spectral content is repeated 4x, and the spectral copies are filtered out. The filter is not perfect, so we see the spectral copies at a reduced power level. The peaks of the decimated data are 4x farther from the origin than the original data. When we decimate, the data is passed through an anti-aliasing filter prior to decimation. After filtering, whatever spectral content remains outside of $\pm\pi/4$ (normalized frequency) will alias on top of the remaining spectral content. Because we are sampling a perfect sinusoid, no spectral content will alias.
 
 \subsection{Followup Questions}
 
