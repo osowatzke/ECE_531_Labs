@@ -115,7 +115,7 @@ In this experiment, we build off the flowchart shown in Figure \ref{fig::complex
 	\label{fig::noise_experiment}
 \end{figure}
 
-Using the updated flowchart, we explore the effects of the additive noise on the time-domain signal, the frequency-domain signal, and the constellation. Next, we use the histogram tab to verify the probability density function (pdf) of each noise source type. Note that the histogram tool only supports real data types. As such, we must independently examine the real and imaginary parts of the complex source. However, the laplacian and impulse noise sources only support real types, so we instead add an additional real noise source for this portion of the experiment. 
+Using the updated flowchart, we explore the effects of the additive noise on the time-domain signal, the frequency-domain signal, and the resulting constellation. Next, we use the histogram tab to verify the probability density function (pdf) of each noise source type. Note that the histogram tool only supports real data types. As such, we must independently examine the real and imaginary parts of the complex source. However, the laplacian and impulse noise sources only support real types, so we instead add an additional real noise source for this portion of the experiment. 
 
 % Note that we use a separate noise source for the histogram because the laplacian and impulse noise sources do not support complex types. We 
 
@@ -427,19 +427,19 @@ The results of Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const
 
 \subsection{Adding Noise}
 
-This experimented highlights the impact of additive noise on time-domain data, frequency-domain data, and received constellations. Figure \ref{fig::noise_time_domain_10dB_snr} shows time-domain data with additive white Gaussian noise (AWGN) that results in a 10 dB SNR.
+This experimented highlights the impact of additive noise on time-domain data, frequency-domain data, and resulting constellations. Figure \ref{fig::noise_time_domain_10dB_snr} shows time-domain data with additive white Gaussian noise (AWGN) that results in a 10 dB SNR.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_time_domain_10dB_snr.png}}}
-	\caption{Time-Domain Sinusoid Data with AWGN Noise Resulting in 10 dB SNR}
+	\caption{Time-Domain Sinusoid Data with AWGN Resulting in 10 dB SNR}
 	\label{fig::noise_time_domain_10dB_snr}
 \end{figure}
 
-Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, we see that the added noise randomizes the values of the peaks and zeros in the sampled data. With a low enough SNR, we could easily mask the sinusoid data with the noise. Figure \ref{fig::noise_freq_domain_20dB_snr} highlights the impact of AWGN noise on the frequency response.
+Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, we see that the added noise randomizes the values of the peaks and zeros in the sampled data. With a low enough SNR, we could easily mask the sinusoid data with the noise. Figure \ref{fig::noise_freq_domain_20dB_snr} highlights the impact of AWGN on the frequency response.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_freq_domain_20dB_snr.png}}}
-	\caption{Sinusoid Frequency Response with AWGN Noise Resulting in 20 dB SNR}
+	\caption{Sinusoid Frequency Response with AWGN Resulting in 20 dB SNR}
 	\label{fig::noise_freq_domain_20dB_snr}
 \end{figure}
 
@@ -447,7 +447,7 @@ Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_sa
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_constellation_20dB_snr.png}}}
-	\caption{Received Constellation with AWGN Noise Resulting in 20 dB SNR}
+	\caption{Received Constellation with AWGN Resulting in 20 dB SNR}
 	\label{fig::noise_constellation_20dB_snr}
 \end{figure}
 
@@ -461,7 +461,7 @@ We can also create histograms from the noise data to evaluate their pdf. Figure 
 	\label{fig::gaussian_noise_histogram}
 \end{figure}
 
-Figure \ref{fig::uniform_noise_histogram} shows the histogram of Uniform noise with an amplitude of 1. The resulting histogram is consistent with the uniform pdf over values [-1,1).
+Figure \ref{fig::uniform_noise_histogram} shows the histogram of Uniform noise with an amplitude of 1. The resulting histogram is consistent with the uniform pdf over the interval [-1,1).
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{uniform_noise_histogram.png}}}
