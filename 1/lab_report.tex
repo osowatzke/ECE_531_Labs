@@ -4,9 +4,17 @@
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{amsmath}
+\usepackage{hyperref}
 \graphicspath{{..} {./images}}
 
+\definecolor{navy-blue}{rgb}{0.22,0.38,0.71}
+
 \renewcommand{\contentsname}{\vspace*{-2\baselineskip}}
+
+\hypersetup{
+  colorlinks,
+  linkcolor=navy-blue
+}
 
 \begin{document}
 \begin{titlepage}
@@ -18,11 +26,9 @@
 	{\large Owen Sowatzke, osowatzke@arizona.edu\\[0.05 in]
 	Department of Electrical \& Computer Engineering\\[0.05 in]
 	University of Arizona, Tucson, AZ 85721\\[0.5 in]}
-	\textcolor{blue}{
 	\noindent\hrulefill
 	\tableofcontents
 	\noindent\hrulefill
-	}
 \end{titlepage}
 
 \setlength{\parindent}{0pt}
