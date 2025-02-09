@@ -56,7 +56,7 @@ In the first experiment, we examine the effects of sampling rate. To perform thi
 	\label{fig::sampling_rates_experiment}
 \end{figure}
 
-We start by examining the signal when it is sampled at the 10 kHz default sample rate. We qualitatively analyze the time-domain signal by comparing it to an ideal sinusoid. Next, we measure the frequency of the signal. Then, we increase the sample rate to 40 kHz and compare the updated time and frequency plots to the previously collected data. Finally, we decrease the sample rate to 3.5 kHz and examine the frequency of the sampled signal.
+We start by examining the signal when it is sampled at the 10 kHz default sample rate. We qualitatively analyze the time domain signal by comparing it to an ideal sinusoid. Next, we measure the frequency of the signal. Then, we increase the sample rate to 40 kHz and compare the updated time and frequency plots to the previously collected data. Finally, we decrease the sample rate to 3.5 kHz and examine the frequency of the sampled signal.
 
 \subsection{Complex Sampling \label{subsection::complex_sampling}}
 
@@ -68,7 +68,7 @@ In this experiment, we examine how complex sampling differs from real sampling. 
 	\label{fig::complex_sampling_experiment}
 \end{figure}
 
-Using the updated block diagram, we compare the updated frequency response to the frequency response collected in subsection \ref{subsection::sampling_rates}, noting what happens to the positive and negative frequency components. Next, we investigate the time-domain signals and measure the phase between them. Then, we examine the signal amplitude on each channel while varying the sampling frequency from 10kHz to 40kHz. At the 40kHz sampling rate, we measure the frequency peak. Then, we measure the frequency peak at a 4kHz sampling rate. Finally, we continue decreasing the sampling rate and explain the location of the frequency peak at each of the updated sampling rates.
+Using the updated block diagram, we compare the updated frequency response to the frequency response collected in subsection \ref{subsection::sampling_rates}, noting what happens to the positive and negative frequency components. Next, we investigate the time domain signals and measure the phase between them. Then, we examine the signal amplitude on each channel while varying the sampling frequency from 10kHz to 40kHz. At the 40kHz sampling rate, we measure the frequency peak. Then, we measure the frequency peak at a 4kHz sampling rate. Finally, we continue decreasing the sampling rate and explain the location of the frequency peak at each of the updated sampling rates.
 
 \subsection{Frequency Observations}
 
@@ -122,7 +122,7 @@ In this experiment, we build off the flowchart shown in Figure \ref{fig::complex
 	\label{fig::noise_experiment}
 \end{figure}
 
-Using the updated flowchart, we explore the effects of the additive noise on the time-domain signal, the frequency-domain signal, and the resulting constellation. Next, we use the histogram tab to verify the probability density function (pdf) of each noise source type. Note that the laplacian and impulse noise sources only support real types, so we add an additional real noise source to generate the histograms. If we were only interested in Guassian and uniform noise sources, we could instead connect the real and imaginary parts of the complex noise source to the histogram. 
+Using the updated flowchart, we explore the effects of the additive noise on the time domain signal, the frequency domain signal, and the resulting constellation. Next, we use the histogram tab to verify the probability density function (pdf) of each noise source type. Note that the laplacian and impulse noise sources only support real types, so we add an additional real noise source to generate the histograms. If we were only interested in Guassian and uniform noise sources, we could instead connect the real and imaginary parts of the complex noise source to the histogram. 
 
 % Note that we use a separate noise source for the histogram because the laplacian and impulse noise sources do not support complex types. We 
 
@@ -145,11 +145,11 @@ This section highlights the results from each of the experiments and provides an
 
 \subsection{Sampling Rates}
 
-Using the GNU flowchart shown in Figure \ref{fig::sampling_rates_experiment}, we can view the sampled signal in the time-domain. With a 10 kHz sample rate, the resulting signal is shown in Figure \ref{fig::sampling_rates_time_domain_10k_samp_rate}.
+Using the GNU flowchart shown in Figure \ref{fig::sampling_rates_experiment}, we can view the sampled signal in the time domain. With a 10 kHz sample rate, the resulting signal is shown in Figure \ref{fig::sampling_rates_time_domain_10k_samp_rate}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_time_domain_10k_samp_rate.png}}}
-	\caption{Time-Domain Capture of Sinusoid Sampled at 10 kHz}
+	\caption{Time Domain Capture of Sinusoid Sampled at 10 kHz}
 	\label{fig::sampling_rates_time_domain_10k_samp_rate}
 \end{figure}
 
@@ -175,7 +175,7 @@ After increasing the sample rate to 40 kHz, the scope capture looks much more si
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sampling_rates_time_domain_40k_samp_rate.png}}}
-	\caption{Time-Domain Capture of Sinusoid Sampled at 40 kHz}
+	\caption{Time Domain Capture of Sinusoid Sampled at 40 kHz}
 	\label{fig::sampling_rates_time_domain_40k_samp_rate}
 \end{figure}
 
@@ -211,7 +211,7 @@ When viewed in the time domain, the captured data is composed of 2 channels as i
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_time_domain_10k_samp_rate.png}}}
-	\caption{Time-Domain Capture of Complex Exponential Sampled at 10 kHz}
+	\caption{Time Domain Capture of Complex Exponential Sampled at 10 kHz}
 	\label{fig::complex_sampling_time_domain_10k_samp_rate}
 \end{figure}
 
@@ -219,7 +219,7 @@ For the I and Q channels shown in Figure \ref{fig::complex_sampling_time_domain_
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_time_domain_40k_samp_rate.png}}}
-	\caption{Time-Domain Capture of Complex Exponential Sampled at 40 kHz}
+	\caption{Time Domain Capture of Complex Exponential Sampled at 40 kHz}
 	\label{fig::complex_sampling_time_domain_40k_samp_rate}
 \end{figure}
 
@@ -277,11 +277,11 @@ Figure \ref{fig::freq_observations_real_6k_center_freq} shows the resulting spec
 
 \subsection{I/Q Imbalance}
 
-The effects of I/Q imbalance can be observed using the flowchart shown in Figure \ref{fig::iq_imbalance_experiment}. We start with the default values of 0 magnitude and 0 phase imbalance. Then, we plot the resulting signal in the time and frequency-domain. The results are shown in Figures \ref{fig::iq_imbalance_0_mag_0_phase_time} and \ref{fig::iq_imbalance_0_mag_0_phase_freq} respectively. 
+The effects of I/Q imbalance can be observed using the flowchart shown in Figure \ref{fig::iq_imbalance_experiment}. We start with the default values of 0 magnitude and 0 phase imbalance. Then, we plot the resulting signal in the time and frequency domain. The results are shown in Figures \ref{fig::iq_imbalance_0_mag_0_phase_time} and \ref{fig::iq_imbalance_0_mag_0_phase_freq} respectively. 
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_0_mag_0_phase_time.png}}}
-	\caption{Time-Domain Capture of Complex Exponential without I/Q Imbalance}
+	\caption{Time Domain Capture of Complex Exponential without I/Q Imbalance}
 	\label{fig::iq_imbalance_0_mag_0_phase_time}
 \end{figure}
 
@@ -434,11 +434,11 @@ The results of Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const
 
 \subsection{Adding Noise}
 
-This experiment highlights the impact of additive noise on time-domain data, frequency-domain data, and received constellation. Figure \ref{fig::noise_time_domain_10dB_snr} shows time-domain data with additive white Gaussian noise (AWGN) that results in a 10 dB SNR.
+This experiment highlights the impact of additive noise on time domain data, frequency domain data, and received constellation. Figure \ref{fig::noise_time_domain_10dB_snr} shows time domain data with additive white Gaussian noise (AWGN) that results in a 10 dB SNR.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_time_domain_10dB_snr.png}}}
-	\caption{Time-Domain Complex Exponential Data with AWGN Resulting in 10 dB SNR}
+	\caption{Time Domain Complex Exponential Data with AWGN Resulting in 10 dB SNR}
 	\label{fig::noise_time_domain_10dB_snr}
 \end{figure}
 
@@ -494,15 +494,15 @@ Figure \ref{fig::impulse_noise_histogram} shows the histogram of impulse noise w
 
 \subsection{Interpolation and Decimation}
 
-The final experiment we performed examined the impact of interpolation and decimation on the time and frequency-domain curves. Figure \ref{fig::interpolation_and_decimation_experiment} shows the setup for our examination, and Figure \ref{fig::interpolation_and_decimation_waveforms} shows the collected data. The top figure contains time-domain data and the bottom figure contains frequency-domain data. The blue waveform is the data before interpolation and decimation. The red data is the data interpolated by 4. And the green waveform is the data decimated by 4.
+The final experiment we performed examined the impact of interpolation and decimation on the time and frequency domain curves. Figure \ref{fig::interpolation_and_decimation_experiment} shows the setup for our examination, and Figure \ref{fig::interpolation_and_decimation_waveforms} shows the collected data. The top figure contains time domain data and the bottom figure contains frequency domain data. The blue waveform is the data before interpolation and decimation. The red data is the data interpolated by 4. And the green waveform is the data decimated by 4.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{interpolation_and_decimation_waveforms.png}}}
-	\caption{Time and Frequency-Domain Data for Interpolated and Decimated Sinusoids}
+	\caption{Time and Frequency Domain Data for Interpolated and Decimated Sinusoids}
 	\label{fig::interpolation_and_decimation_waveforms}
 \end{figure}
 
-Each of the time-domain curves contains the same number of points plotted on a common x-axis. Therefore, the curve sampled at the highest rate contains the fewest number of sinusoid periods. The data in the frequency-domain curves is also plotted on a common x-axis. As a result, the displayed frequencies can be misleading. In the frequency-domain curves, the data sampled at the highest rate (interpolated data) will contain the largest span of frequency. Thus, the frequency response peaks will be closest to the origin for the interpolated data and farthest from the origin for the decimated data. 
+Each of the time domain curves contains the same number of points plotted on a common x-axis. Therefore, the curve sampled at the highest rate contains the fewest number of sinusoid periods. The data in the frequency domain curves is also plotted on a common x-axis. As a result, the displayed frequencies can be misleading. In the frequency domain curves, the data sampled at the highest rate (interpolated data) will contain the largest span of frequency. Thus, the frequency response peaks will be closest to the origin for the interpolated data and farthest from the origin for the decimated data. 
 
 In the frequency response, the peaks of the interpolated data are 4x closer to the origin than the original data. When, we interpolate the data the spectral content is repeated 4x, and the spectral copies are filtered out. The filter is not perfect, so we see the spectral copies at a reduced power level. The peaks of the decimated data are 4x farther from the origin than the original data. When we decimate, the data is passed through an anti-aliasing filter prior to decimation. After filtering, whatever spectral content remains outside of $\pm\pi/4$ (normalized frequency) will alias on top of the remaining spectral content. Because we are sampling a perfect sinusoid, no spectral content will alias.
 
@@ -545,7 +545,7 @@ The followup questions answered here reinforce the concepts covered in this lab 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
-In this lab, we reviewed digital processing topics and learned how to create SDR flowgraphs and perform simulations in GNU radio. We specifically reviewed sampling rates, complex sampling, interpolation, decimation, and noise analysis. When sampling real data, we observed a two-sided spectrum. In the frequency response, we correctly measured the sinusoid center frequency as long as the sampling rate was greater the Nyquist rate (2x the highest frequency). When we violated this condition, the center frequency wrapped to $0 \leq |f_o - kf_s| \leq f_s/2$ where $k \in \mathcal{Z}$. When we performed complex sampling, we sampled in-phase (I) and quadrature (Q) channels that were $90^\circ$ apart. We were also able to generate a one-sided spectrum and remove the "ghost frequency". We correctly measured the center frequency as long as our sampling rate exceeded the Nyquist rate. Once our sampling rate fell below the Nyquist rate, the center frequency wrapped to $-f_s/2 \leq f_o - kf_s < f_s/2$ where $k \in \mathcal{Z}$. Next, we investigated the effects of I/Q imbalance. In the frequency-domain, I/Q imbalance resulted in a frequency image. I/Q imbalance also distorted the received constellation. Without I/Q imbalance, the constellation was composed of points scattered evenly around a unit circle. With amplitude imbalance, our constellation was stretched along the real-axis resulting in an ellipse. Similarly, for phase imbalance, the constellation was tilted, the imaginary-axis was stretched, and the real-axis was compressed. This resulted in a titled ellipse. After investigating I/Q imbalance, we examined the effects of additive white Gaussian noise (AWGN) on our collected data. The AWGN randomized the our time-domain data, created a noise floor in our frequency-domain data, and added errors to our constellation points. The AWGN can have significant effects on our system. For example, in communications systems, where constellation points are mapped to sequences of bits, the AWGN can result in bit errors. Finally, we reviewed the impacts of interpolation and decimation. Interpolation resulted in a compressed spectrum (representing an increased frequency span), and decimation resulted in a stretched spectrum (representing a decreased frequency span). Both interpolation and decimation require filtering. Interpolation filters the data after upsampling to remove spectral images, and decimation filters the data before downsampling to prevent aliasing. In our experiments, we only saw the filter artifacts during interpolation because the data was perfectly bandlimited prior to decimation.
+In this lab, we reviewed digital processing topics and learned how to create SDR flowgraphs and perform simulations in GNU radio. We specifically reviewed sampling rates, complex sampling, interpolation, decimation, and noise analysis. When sampling real data, we observed a two-sided spectrum. In the frequency response, we correctly measured the sinusoid center frequency as long as the sampling rate was greater the Nyquist rate (2x the highest frequency). When we violated this condition, the center frequency wrapped to $0 \leq |f_o - kf_s| \leq f_s/2$ where $k \in \mathcal{Z}$. When we performed complex sampling, we sampled in-phase (I) and quadrature (Q) channels that were $90^\circ$ apart. We were also able to generate a one-sided spectrum and remove the "ghost frequency". We correctly measured the center frequency as long as our sampling rate exceeded the Nyquist rate. Once our sampling rate fell below the Nyquist rate, the center frequency wrapped to $-f_s/2 \leq f_o - kf_s < f_s/2$ where $k \in \mathcal{Z}$. Next, we investigated the effects of I/Q imbalance. In the frequency domain, I/Q imbalance resulted in a frequency image. I/Q imbalance also distorted the received constellation. Without I/Q imbalance, the constellation was composed of points scattered evenly around a unit circle. With amplitude imbalance, our constellation was stretched along the real-axis resulting in an ellipse. Similarly, for phase imbalance, the constellation was tilted, the imaginary-axis was stretched, and the real-axis was compressed. This resulted in a titled ellipse. After investigating I/Q imbalance, we examined the effects of additive white Gaussian noise (AWGN) on our collected data. The AWGN randomized the our time domain data, created a noise floor in our frequency domain data, and added errors to our constellation points. The AWGN can have significant effects on our system. For example, in communications systems, where constellation points are mapped to sequences of bits, the AWGN can result in bit errors. Finally, we reviewed the impacts of interpolation and decimation. Interpolation resulted in a compressed spectrum (representing an increased frequency span), and decimation resulted in a stretched spectrum (representing a decreased frequency span). Both interpolation and decimation require filtering. Interpolation filters the data after upsampling to remove spectral images, and decimation filters the data before downsampling to prevent aliasing. In our experiments, we only saw the filter artifacts during interpolation because the data was perfectly bandlimited prior to decimation.
 
 In the followup questions, we discussed the benefits of I/Q sampling which included removing the ghost frequency, a lower sampling rate, and the ability to recover phase information. Then, we talked about the GNU throttling block. We needed a single throttle block to provide flow control when no hardware flow-control elements were present. Without it, we ran the risk of crashing the CPU. Then, we talked about Nyquist zones, which divided the spectrum into blocks that were $f_s/2$ wide. As long as our data was bandlimited and contained within a single Nyquist zone, we learned that we could sample it in a higher Nyquist zones and allow the data to wrap back into the first Nyquist zone. Finally, we talked about dither noise. We specifically learned that we could use it to randomize the quantization error and in turn increase the spur free dynamic range.
 
