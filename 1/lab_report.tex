@@ -423,27 +423,27 @@ Similarly, for amplitude imbalance only, Equation \ref{eq::iq_imbalance_revisite
 \label{eq::received_signal_amplitude_imbalance}
 \end{equation}
 
-The results of Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_phase_imbalance}. For increasing amounts of phase imbalance, the constellation becomes a diagonally-oriented ellipse. This is because the imaginary part of the data peaks at a phase of $90^{\circ} - \text{atan}(\sin\phi)$ instead of a phase of $90^{\circ}$, while the real part of the data peaks at a phase of $0^{\circ}$. The peak of the imaginary part of the data also increases with increasing phase imbalance, while the peak of the real part of the data decreases with increasing phase imbalance. Similarly, the results of Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_amplitude_imbalance}. For increasing amounts of amplitude imbalance, we see the constellation stretch along the real-axis to $1+\varepsilon$, while the constellation does not stretch along the imaginary axis.
+The results of Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_phase_imbalance}. For increasing amounts of phase imbalance, the constellation becomes a tilted ellipse. This is because the imaginary part of the data peaks at a phase of $90^{\circ} - \text{atan}(\sin\phi)$ instead of a phase of $90^{\circ}$, while the real part of the data peaks at a phase of $0^{\circ}$. The peak of the imaginary part of the data also increases with increasing phase imbalance, while the peak of the real part of the data decreases with increasing phase imbalance. Similarly, the results of Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_amplitude_imbalance}. For increasing amounts of amplitude imbalance, we see the constellation stretch along the real-axis to $1+\varepsilon$, while the constellation does not stretch along the imaginary axis.
 
 \subsection{Adding Noise}
 
-This experimented highlights the impact of additive noise on time-domain data, frequency-domain data, and resulting constellations. Figure \ref{fig::noise_time_domain_10dB_snr} shows time-domain data with additive white Gaussian noise (AWGN) that results in a 10 dB SNR.
+This experiment highlights the impact of additive noise on time-domain data, frequency-domain data, and received constellation. Figure \ref{fig::noise_time_domain_10dB_snr} shows time-domain data with additive white Gaussian noise (AWGN) that results in a 10 dB SNR.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_time_domain_10dB_snr.png}}}
-	\caption{Time-Domain Sinusoid Data with AWGN Resulting in 10 dB SNR}
+	\caption{Time-Domain Complex Exponential Data with AWGN Resulting in 10 dB SNR}
 	\label{fig::noise_time_domain_10dB_snr}
 \end{figure}
 
-Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, we see that the added noise randomizes the values of the peaks and zeros in the sampled data. With a low enough SNR, we could easily mask the sinusoid data with the noise. Figure \ref{fig::noise_freq_domain_20dB_snr} highlights the impact of AWGN on the frequency response.
+Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, we see that the added noise randomizes our samples. This is most apparent in the peaks and zeros of the sampled waveform. With a low enough SNR, we could easily mask the complex exponential data with the noise. Figure \ref{fig::noise_freq_domain_20dB_snr} highlights the impact of AWGN on the frequency response.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_freq_domain_20dB_snr.png}}}
-	\caption{Sinusoid Frequency Response with AWGN Resulting in 20 dB SNR}
+	\caption{Complex Exponential Frequency Response with AWGN Resulting in 20 dB SNR}
 	\label{fig::noise_freq_domain_20dB_snr}
 \end{figure}
 
-Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, we see that the added noise has created a noise floor in the frequency response, well above the previously observed sidelobe levels. Figure \ref{fig::noise_constellation_20dB_snr} highlights the impact of AWGN noise on the received constellation.
+Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_samp_rate}, we see that the added noise has created a noise floor in the frequency response, well above the previously observed sidelobe levels. Figure \ref{fig::noise_constellation_20dB_snr} highlights the impact of AWGN on the received constellation.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_constellation_20dB_snr.png}}}
@@ -451,7 +451,7 @@ Comparing the above figure to Figure \ref{fig::sampling_rates_freq_domain_10k_sa
 	\label{fig::noise_constellation_20dB_snr}
 \end{figure}
 
-Comparing the above figure to Figure \ref{fig::iq_imbalance_0_mag_0_phase_10k_samp_rate_const}, the additive noise causes the expected constellation points to deviate from the expected constellation points. Luckily, at a 20 dB SNR, we can clearly distinguish which noise-free constellation point the data is associated with. Decreasing the SNR, increases the deviation between the constellation points and expected constellation points. This can lead to bit errors in a communication system which maps constellation points to sequences of bits.
+Comparing the above figure to Figure \ref{fig::iq_imbalance_0_mag_0_phase_10k_samp_rate_const}, the additive noise causes the measured constellation points to deviate from the expected constellation points. Luckily, at a 20 dB SNR, we can clearly distinguish which noise-free constellation point the data is associated with. Decreasing the SNR, increases the deviation between the measured constellation points and expected constellation points. This can lead to bit errors in a communication system which maps constellation points to sequences of bits.
 
 We can also create histograms from the noise data to evaluate their pdf. Figure \ref{fig::gaussian_noise_histogram} shows the histogram of Guassian noise with an amplitude of 1. The resulting histogram is consistent with the bell-curve shape of the Gaussian pdf.
 
@@ -477,7 +477,7 @@ Figure \ref{fig::laplacian_noise_histogram} shows the histogram of laplacian noi
 	\label{fig::laplacian_noise_histogram}
 \end{figure}
 
-Figure \ref{fig::impulse_noise_histogram} shows the histogram of impulse noise with an amplitude of 1. Note that we only show a subset of the y-axis to better visualize the presence of high-amplitude impulse samples. The resulting histogram matches well with the pdf of impulse noise.
+Figure \ref{fig::impulse_noise_histogram} shows the histogram of impulse noise with an amplitude of 1. The resulting histogram matches well with the pdf of impulse noise. Note that we only show a subset of the y-axis to better visualize the presence of high-amplitude impulse samples. The number of samples with a value of 0 is orders of magnitude larger than what is captured in the plot. 
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{impulse_noise_histogram.png}}}
