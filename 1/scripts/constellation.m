@@ -23,7 +23,7 @@ x = exp(1i*2*pi*freq/sim_rate*n);
 eps = 0;
 
 % I/Q Phase Imbalance
-phi = pi/4;
+phi = -3*pi/4;
 
 % Carrier Frequency
 fc = 0.3;
@@ -45,8 +45,8 @@ rx_sig = rx_sig(1:OSR:end);
 % Create plot of constellation
 figure(1); clf;
 scatter(real(rx_sig),imag(rx_sig));
-xlim([-1.5 1.5])
-ylim([-1.5 1.5])
+% xlim([-1.5 1.5])
+% ylim([-1.5 1.5])
 
 % Generate received signal based on formulas stated in homework submission
 ar = (1+eps)*cos(phi);
@@ -64,7 +64,19 @@ hold on;
 % Show form in problem is mathematically equivalent
 ai_mag = sqrt(1+(1+eps)^2*sin(phi)^2);
 ai_phase = atan((1+eps)*sin(phi));
-x = ar*cos(2*pi*f*(0:999)) + 1i*ai_mag*sin(2*pi*f*(0:999)+ai_phase);
+% x = ar*cos(2*pi*f*(0:999)) + 1i*ai_mag*sin(2*pi*f*(0:999)+ai_phase);
+theta = phi/2+pi/4;
+theta/pi
+t = 0:999;
+a1_mag = sqrt((1+eps)^2*cos(phi-theta)^2+sin(theta)^2);
+a2_mag = sqrt((1+eps)^2*sin(phi-theta)^2+cos(theta)^2);
+a1_phase = atan2(-sin(theta),(1+eps)*cos(phi-theta))
+a2_phase = atan2((1+eps)*sin(phi-theta),cos(theta))
+x = a1_mag*cos(2*pi*f*t+a1_phase) + 1i*a2_mag*sin(2*pi*f*t+a2_phase);
+% x = x*exp(1i*theta);
+% x = sqrt(1+2*(1+eps)*cos*cos(phi-theta)*cos(2*pi*f*(0:999))+
 scatter(real(x),imag(x))
-xlim([-1.5 1.5])
-ylim([-1.5 1.5])
+% xlim([-1.5 1.5])
+% ylim([-1.5 1.5])
+% x = a1_mag*cos(2*pi*f*t+a1_phase) + 1i*a2_mag*sin(2*pi*f*t+a1_phase);
+scatter(real(x),imag(x))
