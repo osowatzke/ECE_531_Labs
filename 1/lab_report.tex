@@ -180,7 +180,7 @@ Now, we adjust the sample rate to 3.5 kHz and measure the peak of the frequency 
 	\label{fig::sampling_rates_freq_domain_3_5k_samp_rate}
 \end{figure}
 
-The phenomenon we observe is called aliasing. Aliasing occurs because the spectrum of a sampled signal wraps into the interval $[-f_s/2, f_s/2)$. In this experiment, the delta function at positive frequency aliases from 2 kHz to -1.5 kHz and the delta function at negative frequency aliases from -2 kHz to 1.5 kHz. As a result, the measured frequency changes by 0.5 kHz, from 2 kHz to 1.5 kHz.
+The phenomenon we observe is called aliasing. Aliasing occurs because the spectrum of a sampled signal wraps into the interval $[-f_s/2, f_s/2)$. In this experiment, the delta function at positive frequency aliases from 2 kHz to -1.5 kHz, and the delta function at negative frequency aliases from -2 kHz to 1.5 kHz. As a result, the measured frequency changes by 0.5 kHz, from 2 kHz to 1.5 kHz.
 
 \subsection{Complex Sampling}
 
@@ -198,7 +198,7 @@ Compared to the frequency response shown in Figure \ref{fig::sampling_rates_freq
 	sin(2{\pi}{f_o}t) = \frac{e^{j2{\pi}{f_o}t} - e^{-j2{\pi}{f_o}t}}{2j}
 \end{equation}
 
-It is clear that the sine function can be decomposed into two complex exponentials with positive and negative frequencies resulting in a two-sided spectrum.
+Referring to the above equation, we see that the sine function can be decomposed into two complex exponentials - one with a positive frequency and another with a negative frequency. As a result, the sine function has a two-sided spectrum.
 
 When viewed in the time domain, the captured data is composed of 2 channels as illustrated in Figure \ref{fig::complex_sampling_time_domain_10k_samp_rate}. These two channels represent the in-phase (I) and quadrature (Q) components of the signal. They serve as the real and imaginary parts of the complex data stream. The in-phase and quadrature components of the signal are 90 degrees out of phase.
 
@@ -224,7 +224,7 @@ We can also measure the peak of the frequency response with the updated sampled 
 	\label{fig::complex_sampling_freq_domain_40k_samp_rate}
 \end{figure}
 
-Next, we decrease the sampling frequency to the Nyquist rate of 4 kHz (twice the highest frequency) and recollect the frequency response. The updated frequency response is shown in \ref{fig::complex_sampling_freq_domain_4k_samp_rate} and peaks at $\pm 2 kHz$.
+Next, we decrease the sampling frequency to the Nyquist rate of 4 kHz (twice the highest frequency) and recollect the frequency response. The updated frequency response is shown in Figure \ref{fig::complex_sampling_freq_domain_4k_samp_rate} and peaks at $\pm 2 kHz$.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_freq_domain_4k_samp_rate.png}}}
@@ -232,9 +232,9 @@ Next, we decrease the sampling frequency to the Nyquist rate of 4 kHz (twice the
 	\label{fig::complex_sampling_freq_domain_4k_samp_rate}
 \end{figure}
 
-We expect one delta function in the frequency response, so why do we see two? Well, our frequency response is captured using a windowed subset of samples. Since we only use a subset of samples, our frequency response will not be a delta function but will have a measurable mainlobe and sidelobes. The frequency response will peak at the aliased carrier frequency. Due to the periodicity of the DTFT, what we are seeing is a copy of the mainlobe from different Nyquist zones. One is from the frequency response centered about 0 kHz and the other is from the frequency response centered at -4 kHz. We could also perform an inverse FFT shift on the data and interpret it using frequencies between 0 kHz and 4 kHz. This would make it easier for us to interpret the "two" frequency response peaks as a single peak.
+We expect one delta function in the frequency response, so why do we see two? Well, our frequency response is captured using a windowed subset of samples. Since we only use a subset of samples, our frequency response will not be a delta function but will have a measurable mainlobe and sidelobes. The frequency response will peak at the aliased carrier frequency (-2kHz). Due to the periodicity of the DTFT, what we are seeing is a copy of the mainlobe from different periods of the DTFT. One is from the frequency response centered about 0 kHz and the other is from the frequency response centered at 4 kHz. We could also perform an inverse FFT shift on the data and interpret it using frequencies between 0 kHz and 4 kHz. This would make it easier for us to interpret the "two" frequency response peaks as a single peak.
 
-Finally, we continue decreasing the sampling frequency below the Nyquist rate to visualize the effects of aliasing. We display the results at a sampling frequency of 3 kHz. At this sampling rate, the frequency response peaks at -1 kHz as illustrated in Figure \ref{fig::complex_sampling_freq_domain_3k_samp_rate}. At this sampling frequency, the frequency wraps into the interval between $\pm 1.5 kHz$. We can find out the wrapped frequency by adding or subtracting multiples of the sampling frequency. In this case the frequency wraps to 2 kHz - 3 kHz = -1 kHz.
+Finally, we continue decreasing the sampling frequency below the Nyquist rate to visualize the effects of aliasing. We display the results at a sampling frequency of 3 kHz. At this sampling rate, the frequency response peaks at -1 kHz as illustrated in Figure \ref{fig::complex_sampling_freq_domain_3k_samp_rate}. At this sampling frequency, the frequency wraps into the interval between $\pm 1.5 kHz$. We can find out the wrapped frequency by adding or subtracting multiples of the sampling frequency. In this case, the frequency wraps to 2 kHz - 3 kHz = -1 kHz.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_freq_domain_3k_samp_rate.png}}}
