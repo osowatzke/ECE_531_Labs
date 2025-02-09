@@ -302,7 +302,7 @@ Next, we investigate the effects of a phase imbalance. As we increase the phase 
 	\label{fig::iq_imbalance_0p5_mag_0_phase_freq}
 \end{figure}
 
-The I/Q imbalance block in our flowchart is modeling I/Q imbalance in the transmitter. To understand its effect on the received signal, we must trace the signal from transmitter to receiver. In the transmitter, we are effectively mixing the digitized signal with a complex exponential and then taking the real part of the resulting signal. Here, we also scale the complex exponential by 2 to simplify subsequent equations.
+The I/Q imbalance block in our flowchart is modeling I/Q imbalance in the transmitter. To understand its effect on the received signal, we must trace the signal from transmitter to receiver. In the transmitter, we are effectively mixing the DAC output with a complex exponential and then taking the real part of the resulting signal. Here, we also scale the complex exponential by 2 to simplify subsequent equations.
 
 \begin{equation}
 	x_{tx}(t) = 2\text{Re}\{x(t)\}\cos(2{\pi}f_ct) - 2\text{Im}\{x(t)\}\sin(2{\pi}f_ct)
@@ -372,13 +372,13 @@ Next, we observe the constellation sink output. The constellation sink displays 
 	\label{fig::iq_imbalance_0_mag_0_phase_10k_samp_rate_const}
 \end{figure}
 
-In general, we will see $N$ unique samples in the constellation, where $N$ is the period of the sampled signal. $N$ must be an integer. As a result, $N$ is not always the sampling rate ($f_s$) divided by the center frequency ($f_o$). $N$ is instead defined as follows:
+In general, we will see $N$ unique samples in the constellation, where $N$ is the period of the sampled signal. Because the sampled signal is discrete, the period ($N$) must be an integer. As a result, $N$ is not necessarily the sampling rate ($f_s$) divided by the center frequency ($f_o$). $N$ is instead defined as follows:
 
 \begin{equation}
 	\frac{f_o}{f_s} = \frac{M}{N} \label{eq::period_of_discrete_signal}
 \end{equation}
 
-where $N, M \in \mathcal{Z}$. Here $N=f_s/\text{gcd}(f_o,f_s)$ is the period of the sampled signal, and $M=f_o/\text{gcd}(f_o,f_s)$ is the number of input signal cycles in a period of the sampled signal. When we use a sampling rate of 39.8 kHz, we find that $M=10$ and $N=199$. Thus, we will see 199 unique samples in the constellation. The constellation with a sampling rate of 39.8kHz is shown in Figure \ref{fig::iq_imbalance_0_mag_0_phase_39p8k_samp_rate_const}.
+where $N, M \in \mathcal{Z}$. Here $N=f_s/\text{gcd}(f_o,f_s)$ is the period of the sampled signal, and $M=f_o/\text{gcd}(f_o,f_s)$ is the number of input signal cycles in a period of the sampled signal. When we configure a sampling rate of 39.8 kHz, we find that $M=10$ and $N=199$. Thus, we will see 199 unique samples in the constellation. The constellation with a sampling rate of 39.8kHz is shown in Figure \ref{fig::iq_imbalance_0_mag_0_phase_39p8k_samp_rate_const}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.4\textwidth]{iq_imbalance_0_mag_0_phase_39p8k_samp_rate_const.png}}}
@@ -388,7 +388,7 @@ where $N, M \in \mathcal{Z}$. Here $N=f_s/\text{gcd}(f_o,f_s)$ is the period of 
 
 For sampling rates that are multiples of the center frequency, we will see more points in the constellation as we increase the sampling rate. However, in general, we must use Equation \ref{eq::period_of_discrete_signal} to determine the number of points in the constellation. With the updated sampling rate, we see that the captured samples trace a unit circle in the I/Q plane.
 
-Next, we capture the constellation with I/Q imbalance. However, we continue using a sampling rate of 39.8 kHz when performing this subsequent capture. Note that this deviates slightly from what was requested, but it helps us to better visualize the effects of I/Q imbalance. Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const} shows the resulting constellation with 6 degrees of I/Q phase imbalance, and Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} shows the resulting constellation with 1 dB of I/Q amplitude imbalance.
+Next, we capture the constellation with I/Q imbalance. However, we continue using a sampling rate of 39.8 kHz when performing subsequent captures. Note that this deviates slightly from the procedure, but it helps us to better visualize the effects of I/Q imbalance. Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const} shows the resulting constellation with 6 degrees of I/Q phase imbalance, and Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} shows the resulting constellation with 1 dB of I/Q amplitude imbalance.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.4\textwidth]{iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const.png}}}
@@ -402,7 +402,7 @@ Next, we capture the constellation with I/Q imbalance. However, we continue usin
 	\label{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const}
 \end{figure}
 
-To better understand what the effects of I/Q imbalance on the constellations, we can rewrite Equation \ref{eq::rx_signal_iq_imbalance} in the following form:
+To better understand the effects of I/Q imbalance on the resulting constellations, we can rewrite Equation \ref{eq::rx_signal_iq_imbalance} in the following form:
 \begin{align}
 	x_{rx}(t) &= (1+\varepsilon)(\cos\phi + j\sin\phi)\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t) \\[6 pt]
 	&= (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j((1+\varepsilon)\sin\phi\cos(2{\pi}f_0t) + \sin(2{\pi}f_0t)) \\[6 pt]
@@ -410,20 +410,20 @@ To better understand what the effects of I/Q imbalance on the constellations, we
 	&= (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j\sqrt{1+(1+\varepsilon)^2\sin^2\phi}\sin(2{\pi}f_0t + \text{atan}((1+\varepsilon)\sin\phi)) \label{eq::iq_imbalance_revisited}
 \end{align}
 
-For phase imbalance only, Equation \ref{eq::iq_imbalance_revisited} reduces as follows:
+For phase imbalance only, Equation \ref{eq::iq_imbalance_revisited} reduces to the following form:
 
 \begin{equation}
 	x_{rx}(t) = \cos\phi\cos(2{\pi}f_0t) + j\sqrt{1+\sin^2\phi}\sin(2{\pi}f_0t + \text{atan}(\sin\phi)) \label{eq::received_signal_phase_imbalance}
 \end{equation}
 
-Similarly, for amplitude imbalance only, Equation \ref{eq::iq_imbalance_revisited} reduces as follows:
+Similarly, for amplitude imbalance only, Equation \ref{eq::iq_imbalance_revisited} reduces to the following form:
 
 \begin{equation}
 	x_{rx}(t) = (1+\epsilon)\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t)
 \label{eq::received_signal_amplitude_imbalance}
 \end{equation}
 
-The results of Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_phase_imbalance}. For increasing amounts of phase imbalance, the constellation becomes a diagonally-oriented ellipsoid. This is because the imaginary part of the data peaks at a phase of $90^{\circ} - \text{atan}(\sin\phi)$ instead of a phase of $90^{\circ}$, while the real part of the data peaks at a phase of $0^{\circ}$. The peak of the imaginary part of the data also increases with increasing phase imbalance, while the peak of the real part of the data decreases with increasing phase imbalance. Similarly, the results of Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_amplitude_imbalance}. For increasing amounts of amplitude imbalance, we see the constellation stretch along the real-axis to $1+\varepsilon$, while the constellation does not stretch along the imaginary axis.
+The results of Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_phase_imbalance}. For increasing amounts of phase imbalance, the constellation becomes a diagonally-oriented ellipse. This is because the imaginary part of the data peaks at a phase of $90^{\circ} - \text{atan}(\sin\phi)$ instead of a phase of $90^{\circ}$, while the real part of the data peaks at a phase of $0^{\circ}$. The peak of the imaginary part of the data also increases with increasing phase imbalance, while the peak of the real part of the data decreases with increasing phase imbalance. Similarly, the results of Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_amplitude_imbalance}. For increasing amounts of amplitude imbalance, we see the constellation stretch along the real-axis to $1+\varepsilon$, while the constellation does not stretch along the imaginary axis.
 
 \subsection{Adding Noise}
 
