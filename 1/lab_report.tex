@@ -200,7 +200,7 @@ Compared to the frequency response shown in Figure \ref{fig::sampling_rates_freq
 
 Referring to the above equation, we see that the sine function can be decomposed into two complex exponentials - one with a positive frequency and another with a negative frequency. As a result, the sine function has a two-sided spectrum.
 
-When viewed in the time domain, the captured data is composed of 2 channels as illustrated in Figure \ref{fig::complex_sampling_time_domain_10k_samp_rate}. These two channels represent the in-phase (I) and quadrature (Q) components of the signal. They serve as the real and imaginary parts of the complex data stream. The in-phase and quadrature components of the signal are 90 degrees out of phase.
+When viewed in the time domain, the captured data is composed of 2 channels as illustrated in Figure \ref{fig::complex_sampling_time_domain_10k_samp_rate}. These two channels represent the in-phase (I) and quadrature (Q) components of the signal. They serve as the real and imaginary parts of the complex data stream. The I and Q components of the signal are $90^\circ$ out of phase. For positive frequencies, like the one used here, the I channel leads the Q channel by $90^\circ$. For negative frequencies, the I channel lags the Q channel by $90^\circ$.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_time_domain_10k_samp_rate.png}}}
@@ -208,7 +208,7 @@ When viewed in the time domain, the captured data is composed of 2 channels as i
 	\label{fig::complex_sampling_time_domain_10k_samp_rate}
 \end{figure}
 
-After increasing the sample rate to 40 kHz, we see that the amplitude of the real and imaginary parts of the signal are both 1 as expected. This result is captured in Figure \ref{fig::complex_sampling_time_domain_40k_samp_rate}.
+For the I and Q channels shown in Figure \ref{fig::complex_sampling_time_domain_10k_samp_rate}, it is not clear that their amplitude is 1. However, once we increase the sampling rate to 40 kHz, we see that the amplitude of the I and Q channels are both 1 as expected. This result is captured in Figure \ref{fig::complex_sampling_time_domain_40k_samp_rate}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_time_domain_40k_samp_rate.png}}}
