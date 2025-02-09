@@ -102,7 +102,7 @@ Using the above flowchart, we vary the sinusoid frequency over its full range (f
 
 \subsection{I/Q Imbalance}
 
-In this experiment, we investigate the effect of I/Q imbalance on complex sampling. I/Q imbalance refers to a gain-phase mismatches in the I (in-phase) and Q (quadrature) paths. These gain-phase mismatches degrade the sampled signal and result in distortion. Figure \ref{fig::iq_imbalance_experiment} shows the GNU radio flowchart used to investigate I/Q imbalance.
+In this experiment, we investigate the effect of I/Q imbalance on complex sampling. I/Q imbalance refers to a gain-phase mismatches in the I (in-phase) and Q (quadrature) paths. These gain-phase mismatches result in signal distortion, which in turn degrade performance. Figure \ref{fig::iq_imbalance_experiment} shows the GNU radio flowchart used to investigate I/Q imbalance.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_experiment.png}}}
@@ -110,7 +110,7 @@ In this experiment, we investigate the effect of I/Q imbalance on complex sampli
 	\label{fig::iq_imbalance_experiment}
 \end{figure}
 
-With the experiment setup, we first execute with the default values (no gain and phase imbalance) and verify the results are identical to those collected previously. Next, we observe the frequency response while independently varying the gain and phase imbalances - notating what occurs and why. Then, we observe the captured constellation while independently varying the frequency, magnitude, and phase. For each variable that we vary, we log what happens in the resulting constellation.  
+We start by executing the flowchart with the default values (no gain and phase imbalance) and verify the results are identical to those collected previously. Next, we observe the frequency response while independently varying the gain and phase imbalances - notating what occurs and why. Then, we observe the captured constellation while independently varying the frequency, magnitude, and phase. For each variable that we vary, we log what happens in the resulting constellation.  
 
 \subsection{Adding Noise}
 
@@ -136,7 +136,7 @@ For the final experiment, we investigate interpolation and decimation, which are
 	\label{fig::interpolation_and_decimation_experiment}
 \end{figure}
 
-Using the above flowchart, we observe the time and frequency domain outputs and compare the differences between each of the resampled signals. We specifically concentrate on the differences that we observe in the frequency domain and identify the relationship between each of the signals in this domain.
+Using the above flowchart, we compare each of the resampled signals in the time and frequency domain. We concentrate on the differences that we observe in the frequency domain and identify the relationship between each of the signals in this domain.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
