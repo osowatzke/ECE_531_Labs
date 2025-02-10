@@ -409,28 +409,135 @@ Next, we capture the constellation with I/Q imbalance. For these subsequent capt
 	\label{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const}
 \end{figure}
 
-To better understand the effects of I/Q imbalance on the resulting constellations, we can rewrite Equation \ref{eq::rx_signal_iq_imbalance} in the following form:
+To characterize the effects of I/Q imbalance on the resulting constellations, we can write our received signal in the following form:
+
+\begin{equation}
+	x_{rx}(t) = e^{j\theta}x_i(t) = e^{j\theta}\left[(1+\varepsilon)e^{j(\phi-\theta)}\cos(2{\pi}f_ot)+je^{-j\theta}\sin(2{\pi}f_ot)\right]
+\end{equation}
+
+where $\theta$ represents a rotation in the complex plane. Next, we can solve $x_i(t)$ (the signal prior to the rotation). Doing, so we get the following result:
+
+\begin{equation}
+	x_i(t) = (1+\varepsilon)[\cos(\phi-\theta)+j\sin(\phi-\theta)]\cos(2{\pi}f_ot)+j[\cos\theta-j\sin\theta]\sin(2{\pi}f_ot)
+\end{equation}
+
+\begin{equation}
+\begin{split}
+	x_i(t) &= \left[(1+\varepsilon)\cos(\phi-\theta)\cos(2{\pi}f_ot)+\sin\theta\sin(2{\pi}f_ot)\right]\\
+	&+j\left[(1+\varepsilon)\sin(\phi-\theta)\cos(2{\pi}f_ot)+\cos\theta\sin(2{\pi}f_ot)\right]
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+	x_i(t) &= \left[(1+\varepsilon)\cos(\phi-\theta)\cos(2{\pi}f_ot)+\sin\theta\cos(2{\pi}f_ot-\pi/2)\right]\\
+	&+j\left[(1+\varepsilon)\sin(\phi-\theta)\sin(2{\pi}f_ot+\pi/2)+\cos\theta\sin(2{\pi}f_ot)\right]
+\end{split}
+\end{equation}
+
+Using phasor math, we can put $x_i(t)$ in the following form:
+
+\begin{equation}
+	x_i(t) = \alpha_1\cos(2{\pi}f_ot+\beta_1)+j\alpha_2\sin(2{\pi}f_ot+\beta_2)
+\end{equation}
+
+where $\alpha_1$, $\alpha_2$, $\beta_1$, and $\beta_2$ are given as follows:
+
+\begin{equation}
+	\alpha_1 = \sqrt{(1+\varepsilon)^2\cos^2(\phi-\theta)+\sin^2\theta}
+\end{equation}
+
+\begin{equation}
+	\alpha_2 = \sqrt{(1+\varepsilon)^2\sin^2(\phi-\theta)+\cos^2\theta}
+\end{equation}
+
+\begin{equation}
+	\beta_1 = \text{atan}\left[\frac{-\sin\theta}{(1+\varepsilon)\cos(\phi-\theta)}\right]
+\end{equation}
+
+\begin{equation}
+	\beta_2 = \text{atan}\left[\frac{(1+\varepsilon)\sin(\phi-\theta)}{\cos\theta}\right]
+\end{equation}
+
+We are interested in values of $\theta$ where $\beta_1$ = $\beta_2$. This gives us an ellipse whose major and minor axis correspond with the real and imaginary axis. Solving for $\theta$, we get the following result:
+
+\begin{equation}
+	\frac{-\sin\theta}{(1+\varepsilon)\cos(\phi-\theta)} = \frac{(1+\varepsilon)\sin(\phi-\theta)}{\cos\theta}
+\end{equation}
+
+\begin{equation}
+	-\sin\theta\cos\theta = (1+\varepsilon)^2\sin(\phi-\theta)\cos(\phi-\theta)
+\end{equation}
+
+\begin{equation}
+	-\sin(2\theta) = (1+\varepsilon)^2\sin(2(\phi-\theta))
+\end{equation}
+
+\begin{equation}
+	-\sin(2\theta)=(1+\varepsilon)^2\left[\sin(2\phi)\cos(2\theta) - \sin(2\theta)\cos(2\phi)\right]
+\end{equation}
+
+\begin{equation}
+	\left[(1+\varepsilon)^2\cos(2\phi)-1\right]\sin(2\theta)=(1+\varepsilon)^2\sin(2\phi)\cos(2\theta)
+\end{equation}
+
+\begin{equation}
+	\tan(2\theta)=\frac{(1+\varepsilon)^2\sin(2\phi)}{(1+\varepsilon)^2\cos(2\phi)-1}
+\end{equation}
+
+\begin{equation}
+	2\theta = \text{atan}\left[\frac{(1+\varepsilon)^2\sin(2\phi)}{(1+\varepsilon)^2\cos(2\phi)-1}\right]
+\end{equation}
+
+\begin{equation}
+	\theta = \frac{1}{2}\text{atan}\left[\frac{(1+\varepsilon)^2\sin(2\phi)}{(1+\varepsilon)^2\cos(2\phi)-1}\right]
+\end{equation}
+
+When we consider phase-imbalance only, $\theta$ can be expressed in the following form
+
+\begin{equation}
+	\theta = \frac{1}{2}\text{atan}\left[\frac{\sin(2\phi)}{\cos(2\phi)-1}\right] = \frac{1}{2}\text{atan}\left[\frac{2\sin\phi\cos\phi}{-2\sin^2\phi}\right] = \frac{1}{2}\text{atan}(-\text{cot}\phi)
+\end{equation}
+
+\begin{equation}
+	\theta = \frac{1}{2}\text{atan}\left[\text{tan}\left(\phi+\frac{\pi}{2}\right)\right] = \frac{\phi}{2}+\frac{\pi}{4}
+\end{equation}
+
+Using the value we found for $\theta$, we can solve for the remaining unknowns. Doing so, we find:
+
 \begin{align}
-	x_{rx}(t) &= (1+\varepsilon)(\cos\phi + j\sin\phi)\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t) \\[6 pt]
-	&= (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j((1+\varepsilon)\sin\phi\cos(2{\pi}f_0t) + \sin(2{\pi}f_0t)) \\[6 pt]
-	&= (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j((1+\varepsilon)\sin\phi\sin(2{\pi}f_0t + \pi/2) + \sin(2{\pi}f_0t)) \\
-	&= (1+\varepsilon)\cos\phi\cos(2{\pi}f_0t) + j\sqrt{1+(1+\varepsilon)^2\sin^2\phi}\sin(2{\pi}f_0t + \text{atan}((1+\varepsilon)\sin\phi)) \label{eq::iq_imbalance_revisited}
+	\alpha_1 = \sqrt{\cos^2(\phi-\theta)+\sin^2\theta} = \sqrt{1+\sin\phi}
 \end{align}
 
-For phase imbalance only, Equation \ref{eq::iq_imbalance_revisited} reduces to the following form:
+\begin{align}
+	\alpha_2 = \sqrt{\sin^2(\phi-\theta)+cos^2(\theta)} = \sqrt{1-\sin\phi}
+\end{align}
+
+\begin{align}
+	\beta_1 = \text{atan}\left[\frac{-\sin\theta}{\cos(\phi-\theta)}\right] = -\frac{\pi}{4}
+\end{align}
+
+\begin{align}
+	\beta_2 = \text{atan}\left[\frac{\sin(\phi-\theta)}{\cos\phi}\right] = -\frac{\pi}{4}
+\end{align}
+
+Using the above equations, we can see what happens when we have I/Q phase imbalance. First, we rotate our constellation points around the unit circle by $-45^{\circ}$. Then, we stretch the unit circle along the real axis and compress it along the imaginary axis, creating an ellipse. Finally, we rotate this ellipse around the unit circle. This results in a titled ellipse as shown in Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const}.
+
+We can perform similar analysis for I/Q amplitude imbalance. With amplitude imbalance we find that $\theta = 0$. Using the value we found for $\theta$, we can solve for the remaining unknowns. Doing so, we find:
 
 \begin{equation}
-	x_{rx}(t) = \cos\phi\cos(2{\pi}f_0t) + j\sqrt{1+\sin^2\phi}\sin(2{\pi}f_0t + \text{atan}(\sin\phi)) \label{eq::received_signal_phase_imbalance}
+	\alpha_1 = \sqrt{(1+\varepsilon)^2\cos^2(0)+\sin^2(0)} = 1 + \varepsilon
 \end{equation}
-
-Similarly, for amplitude imbalance only, Equation \ref{eq::iq_imbalance_revisited} reduces to the following form:
 
 \begin{equation}
-	x_{rx}(t) = (1+\epsilon)\cos(2{\pi}f_0t) + j\sin(2{\pi}f_0t)
-\label{eq::received_signal_amplitude_imbalance}
+	\alpha_2 = \sqrt{(1+\varepsilon)^2\sin^2(0)+\cos^2(0)} = 1
 \end{equation}
 
-The results of Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_phase_imbalance}. For increasing amounts of phase imbalance, the constellation becomes a tilted ellipse. This is because the imaginary part of the data peaks at a phase of $90^{\circ} - \text{atan}(\sin\phi)$ instead of a phase of $90^{\circ}$, while the real part of the data peaks at a phase of $0^{\circ}$. The peak of the imaginary part of the data also increases with increasing phase imbalance, while the peak of the real part of the data decreases with increasing phase imbalance. Similarly, the results of Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} can be explained using Equation \ref{eq::received_signal_amplitude_imbalance}. For increasing amounts of amplitude imbalance, we see the constellation stretch along the real-axis to $1+\varepsilon$, while the constellation does not stretch along the imaginary axis.
+\begin{equation}
+	\beta_1 = \beta_2 = 0
+\end{equation}
+
+In other words, amplitude imbalance, stretches the unit circle along the real axis, resulting in the ellipse we see in Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const}.
 
 \subsection{Adding Noise}
 
@@ -545,7 +652,7 @@ The followup questions answered here reinforce the concepts covered in this lab 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
-In this lab, we reviewed digital processing topics and learned how to create SDR flowgraphs and perform simulations in GNU radio. We specifically reviewed sampling rates, complex sampling, interpolation, decimation, and noise analysis. When sampling real data, we observed a two-sided spectrum. In the frequency response, we correctly measured the sinusoid center frequency as long as the sampling rate was greater the Nyquist rate (2x the highest frequency). When we violated this condition, the center frequency wrapped to $0 \leq |f_o - kf_s| \leq f_s/2$ where $k \in \mathcal{Z}$. When we performed complex sampling, we sampled in-phase (I) and quadrature (Q) channels that were $90^\circ$ apart. We were also able to generate a one-sided spectrum and remove the "ghost frequency". We correctly measured the center frequency as long as our sampling rate exceeded the Nyquist rate. Once our sampling rate fell below the Nyquist rate, the center frequency wrapped to $-f_s/2 \leq f_o - kf_s < f_s/2$ where $k \in \mathcal{Z}$. Next, we investigated the effects of I/Q imbalance. In the frequency domain, I/Q imbalance resulted in a frequency image. I/Q imbalance also distorted the received constellation. Without I/Q imbalance, the constellation was composed of points scattered evenly around a unit circle. With amplitude imbalance, our constellation was stretched along the real-axis resulting in an ellipse. Similarly, for phase imbalance, the constellation was tilted, the imaginary-axis was stretched, and the real-axis was compressed. This resulted in a titled ellipse. After investigating I/Q imbalance, we examined the effects of additive white Gaussian noise (AWGN). AWGN randomized the our time domain data, created a noise floor in our frequency domain data, and added errors to our constellation points. AWGN can have significant effects. For example, in communications systems, where constellation points are mapped to sequences of bits, the AWGN can result in bit errors. Finally, we reviewed the impacts of interpolation and decimation. Interpolation resulted in a compressed spectrum (representing an increased frequency span), and decimation resulted in a stretched spectrum (representing a decreased frequency span). Both interpolation and decimation require filtering. When we interpolate, we filter the data after upsampling to remove spectral images. When we decimate, we filter the data before downsampling to prevent aliasing. In our experiments, we only saw the filter artifacts during interpolation. We did not see artifacts due to the decimation filters because the sampled data was perfectly bandlimited to begin with.
+In this lab, we reviewed digital processing topics and learned how to create SDR flowgraphs and perform simulations in GNU radio. We specifically reviewed sampling rates, complex sampling, interpolation, decimation, and noise analysis. When sampling real data, we observed a two-sided spectrum. In the frequency response, we correctly measured the sinusoid center frequency as long as the sampling rate was greater the Nyquist rate (2x the highest frequency). When we violated this condition, the center frequency wrapped to $0 \leq |f_o - kf_s| \leq f_s/2$ where $k \in \mathcal{Z}$. When we performed complex sampling, we sampled in-phase (I) and quadrature (Q) channels that were $90^\circ$ apart. We were also able to generate a one-sided spectrum and remove the "ghost frequency". We correctly measured the center frequency as long as our sampling rate exceeded the Nyquist rate. Once our sampling rate fell below the Nyquist rate, the center frequency wrapped to $-f_s/2 \leq f_o - kf_s < f_s/2$ where $k \in \mathcal{Z}$. Next, we investigated the effects of I/Q imbalance. In the frequency domain, I/Q imbalance resulted in a frequency image. I/Q imbalance also distorted the received constellation. Without I/Q imbalance, the constellation was composed of points scattered evenly around a unit circle. The number of points we captured in the constellation was a function of the sinusoid's center frequency and the sampling rate. With amplitude imbalance, the constellation was stretched along the real-axis, resulting in an ellipse. Similarly, for phase imbalance, the constellation was manipulated through a combination of rotation, compression, and stretching to form a tilted ellipse.  After investigating I/Q imbalance, we examined the effects of additive white Gaussian noise (AWGN). AWGN randomized the our time domain data, created a noise floor in our frequency domain data, and added errors to our constellation points. AWGN can have significant effects. For example, in communications systems, where constellation points are mapped to sequences of bits, the AWGN can result in bit errors. Finally, we reviewed the impacts of interpolation and decimation. Interpolation resulted in a compressed spectrum (representing an increased frequency span), and decimation resulted in a stretched spectrum (representing a decreased frequency span). Both interpolation and decimation require filtering. When we interpolate, we filter the data after upsampling to remove spectral images. When we decimate, we filter the data before downsampling to prevent aliasing. In our experiments, we only saw the filter artifacts during interpolation. We did not see artifacts due to the decimation filters because the sampled data was perfectly bandlimited to begin with.
 
 In the followup questions, we discussed the benefits of I/Q sampling which included removing the ``ghost" frequency, a lower sampling rate, and the ability to recover phase information. Then, we talked about the GNU throttling block. We needed a single throttle block to provide flow control when no hardware flow-control elements were present. Without it, we ran the risk of crashing the CPU. Then, we talked about Nyquist zones, which divided the spectrum into blocks that were $f_s/2$ wide. As long as our data was bandlimited and contained within a single Nyquist zone, we learned that we could sample it in a higher Nyquist zones and allow the data to wrap back into the first Nyquist zone. Finally, we talked about dither noise. We specifically learned that we could use it to randomize the quantization error and in turn increase the spur free dynamic range.
 
