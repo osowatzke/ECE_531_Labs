@@ -45,4 +45,38 @@
 \begin{equation}
 	\beta_2 = \text{atan2}((1+\varepsilon)\sin(\phi-\theta),\cos\theta)
 \end{equation}
+
+Want $\beta_1 = \beta_2$
+
+\begin{equation}
+	\begin{cases}
+		-k\sin\theta=(1+\varepsilon)\sin(\phi-\theta)\\
+		k(1+\varepsilon)cos(\phi-\theta)=\cos\theta
+	\end{cases}
+\end{equation}
+
+\begin{equation}
+	k = \frac{\cos\theta}{(1+\varepsilon)\cos(\phi-\theta)}
+\end{equation}
+
+\begin{equation}
+	-\frac{\sin\theta\cos\theta}{(1+\varepsilon)\cos(\phi-\theta)}=(1+\varepsilon)\sin(\phi-\theta)
+\end{equation}
+
+\begin{equation}
+	-\sin(2\theta)=(1+\varepsilon)^2\sin(2(\phi-\theta))
+\end{equation}
+
+\begin{equation}
+	-\sin(2\theta)=(1+\varepsilon)^2\left[\sin(2\phi)\cos(2\theta) - \sin(2\theta)\cos(2\phi)\right]
+\end{equation}
+
+\begin{equation}
+	\left[(1+\varepsilon)^2\cos(2\phi)-1\right]\sin(2\theta)=(1+\varepsilon)^2\sin(2\phi)\cos(2\theta)
+\end{equation}
+
+\begin{equation}
+	\tan(2\theta)=\frac{(1+\varepsilon)^2\sin(2\phi)}{(1+\varepsilon)^2\cos(2\phi)-1}
+\end{equation}
+
 \end{document}
