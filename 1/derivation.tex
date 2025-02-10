@@ -26,4 +26,23 @@
 \end{split}
 \end{equation}
 
+\begin{equation}
+	x_i(t) = \alpha_1\cos(2{\pi}f_ot+\beta_1)+j\alpha_2\sin(2{\pi}f_ot+\beta_2)
+\end{equation}
+
+\begin{equation}
+	\alpha_1 = \sqrt{(1+\varepsilon)^2\cos^2(\phi-\theta)+\sin^2\phi}
+\end{equation}
+
+\begin{equation}
+	\alpha_2 = \sqrt{(1+\varepsilon)^2\sin^2(\phi-\theta)+\cos^2\phi}
+\end{equation}
+
+\begin{equation}
+	\beta_1 = \text{atan2}(-\sin\theta,(1+\varepsilon)\cos(\phi-\theta))
+\end{equation}
+
+\begin{equation}
+	\beta_2 = \text{atan2}((1+\varepsilon)\sin(\phi-\theta),\cos\theta)
+\end{equation}
 \end{document}
