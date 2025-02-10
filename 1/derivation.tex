@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+
+\begin{document}
+
+\begin{equation}
+	x_{rx}(t) = e^{j\theta}x_i(t) = e^{j\theta}\left[(1+\varepsilon)e^{j(\phi-\theta)}\cos(2{\pi}f_ot)+je^{-j\theta}\sin(2{\pi}f_ot)\right]
+\end{equation}
+
+\begin{equation}
+	x_i(t) = (1+\varepsilon)[\cos(\phi-\theta)+j\sin(\phi-\theta)]\cos(2{\pi}f_ot)+j[\cos\theta-j\sin\theta]\sin(2{\pi}f_ot)
+\end{equation}
+
+\begin{equation}
+\begin{split}
+	x_i(t) &= \left[(1+\varepsilon)\cos(\phi-\theta)\cos(2{\pi}f_ot)+\sin\theta\sin(2{\pi}f_ot)\right]\\
+	&+j\left[(1+\varepsilon)\sin(\phi-\theta)\cos(2{\pi}f_ot)+\cos\theta\sin(2{\pi}f_ot)\right]
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+	x_i(t) &= \left[(1+\varepsilon)\cos(\phi-\theta)\cos(2{\pi}f_ot)+\sin\theta\cos(2{\pi}f_ot-\pi/2)\right]\\
+	&+j\left[(1+\varepsilon)\sin(\phi-\theta)\sin(2{\pi}f_ot+\pi/2)+\cos\theta\sin(2{\pi}f_ot)\right]
+\end{split}
+\end{equation}
+
+\end{document}
