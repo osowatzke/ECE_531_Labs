@@ -48,6 +48,18 @@ scatter(real(rx_sig),imag(rx_sig));
 % xlim([-1.5 1.5])
 % ylim([-1.5 1.5])
 
+a1 = sqrt(1+sin(phi));
+a2 = sqrt(1-sin(phi));
+b1 = -pi/4;
+b2 = -pi/4;
+fo = freq/samp_rate;
+t = 0:(N-1);
+x = a1*cos(2*pi*fo*t+b1) + 1i*a2*sin(2*pi*fo*t+b2);
+theta = phi/2+pi/4;
+x = x*exp(1i*theta);
+hold on;
+scatter(real(x),imag(x));
+
 % Generate received signal based on formulas stated in homework submission
 ar = (1+eps)*cos(phi);
 ai = 1i*(1+eps)*sin(phi)+1;
