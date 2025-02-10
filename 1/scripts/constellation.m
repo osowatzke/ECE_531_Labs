@@ -23,7 +23,7 @@ x = exp(1i*2*pi*freq/sim_rate*n);
 eps = 0;
 
 % I/Q Phase Imbalance
-phi = pi%pi/4; %3*pi/16 + pi;
+phi = 6*pi/180;%pi/4; %3*pi/16 + pi;
 
 % Carrier Frequency
 fc = 0.3;
@@ -50,7 +50,7 @@ scatter(real(rx_sig(15)),imag(rx_sig(15)),'filled')
 % xlim([-1.5 1.5])
 % ylim([-1.5 1.5])
 
-n = 1;
+n = 0;
 if (mod(n,2) == 0)
     a1 = sqrt(1+sin(phi));
     a2 = sqrt(1-sin(phi));
@@ -59,12 +59,12 @@ else
     a2 = sqrt(1+sin(phi));
 end
 b1 = -pi/4;
-b2 = pi-pi/4;
+b2 = -pi/4;
 fo = freq/samp_rate;
 t = 0:(N-1);
 x = a1*cos(2*pi*fo*t+b1) + 1i*a2*sin(2*pi*fo*t+b2);
 theta = phi/2+pi/4+n*pi/2;
-x = x*exp(-1i*theta);
+x = x*exp(1i*theta);
 scatter(real(x),imag(x));
 scatter(real(x(15)),imag(x(15)),'filled')
 
