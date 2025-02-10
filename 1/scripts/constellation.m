@@ -45,6 +45,8 @@ rx_sig = rx_sig(1:OSR:end);
 % Create plot of constellation
 figure(1); clf;
 scatter(real(rx_sig),imag(rx_sig));
+hold on;
+scatter(real(rx_sig(15)),imag(rx_sig(15)),'filled')
 % xlim([-1.5 1.5])
 % ylim([-1.5 1.5])
 
@@ -57,8 +59,8 @@ t = 0:(N-1);
 x = a1*cos(2*pi*fo*t+b1) + 1i*a2*sin(2*pi*fo*t+b2);
 theta = phi/2+pi/4;
 x = x*exp(1i*theta);
-hold on;
 scatter(real(x),imag(x));
+scatter(real(x(15)),imag(x(15)),'filled')
 
 % Generate received signal based on formulas stated in homework submission
 ar = (1+eps)*cos(phi);
