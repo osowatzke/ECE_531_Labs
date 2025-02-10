@@ -46,7 +46,7 @@
 	\beta_2 = \text{atan2}((1+\varepsilon)\sin(\phi-\theta),\cos\theta)
 \end{equation}
 
-Want $\beta_1 = \beta_2$
+Want $\beta_1 = \beta_2$.
 
 \begin{equation}
 	\begin{cases}
@@ -77,6 +77,14 @@ Want $\beta_1 = \beta_2$
 
 \begin{equation}
 	\tan(2\theta)=\frac{(1+\varepsilon)^2\sin(2\phi)}{(1+\varepsilon)^2\cos(2\phi)-1}
+\end{equation}
+
+\begin{equation}
+	2\theta = \text{atan}\left[\frac{(1+\varepsilon)^2\sin(2\phi)}{(1+\varepsilon)^2\cos(2\phi)-1}\right]+n\pi
+\end{equation}
+
+\begin{equation}
+	\theta = \frac{1}{2}\text{atan}\left[\frac{(1+\varepsilon)^2\sin(2\phi)}{(1+\varepsilon)^2\cos(2\phi)-1}\right]+\frac{n\pi}{2}
 \end{equation}
 
 \end{document}
