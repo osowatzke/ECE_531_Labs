@@ -4,9 +4,13 @@
 
 \begin{document}
 
+To characterize the effects of I/Q imbalance on the resulting constellations, we can write our received signal in the following form:
+
 \begin{equation}
 	x_{rx}(t) = e^{j\theta}x_i(t) = e^{j\theta}\left[(1+\varepsilon)e^{j(\phi-\theta)}\cos(2{\pi}f_ot)+je^{-j\theta}\sin(2{\pi}f_ot)\right]
 \end{equation}
+
+where $\theta$ represents a rotation in the complex plane. Next, we can solve $x_i(t)$ (the signal prior to the rotation).
 
 \begin{equation}
 	x_i(t) = (1+\varepsilon)[\cos(\phi-\theta)+j\sin(\phi-\theta)]\cos(2{\pi}f_ot)+j[\cos\theta-j\sin\theta]\sin(2{\pi}f_ot)
@@ -26,9 +30,13 @@
 \end{split}
 \end{equation}
 
+Using phasor math, we can reduce our solution for $x_i(t)$ to the following form:
+
 \begin{equation}
 	x_i(t) = \alpha_1\cos(2{\pi}f_ot+\beta_1)+j\alpha_2\sin(2{\pi}f_ot+\beta_2)
 \end{equation}
+
+where $\alpha_1$, $\alpha_2$, $\beta_1$, and $\beta_2$ are given as follows:
 
 \begin{equation}
 	\alpha_1 = \sqrt{(1+\varepsilon)^2\cos^2(\phi-\theta)+\sin^2\theta}
@@ -39,14 +47,14 @@
 \end{equation}
 
 \begin{equation}
-	\beta_1 = \text{atan2}(-\sin\theta,(1+\varepsilon)\cos(\phi-\theta))
+	\beta_1 = \text{atan}\left[\frac{-\sin\theta}{(1+\varepsilon)\cos(\phi-\theta)}\right]
 \end{equation}
 
 \begin{equation}
-	\beta_2 = \text{atan2}((1+\varepsilon)\sin(\phi-\theta),\cos\theta)
+	\beta_2 = \text{atan}\left[\frac{(1+\varepsilon)\sin(\phi-\theta)}{\cos\theta}\right]
 \end{equation}
 
-Want $\beta_1 = \beta_2$.
+We are interested in values of $\theta$ where $\beta_1$ = $\beta_2$. This gives us an ellipse whose major and minor axis correspond with the real and imaginary axis.
 
 \begin{equation}
 	\begin{cases}
