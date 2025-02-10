@@ -23,7 +23,7 @@ x = exp(1i*2*pi*freq/sim_rate*n);
 eps = 0;
 
 % I/Q Phase Imbalance
-phi = pi/4;
+phi = 3*pi/16 + pi;
 
 % Carrier Frequency
 fc = 0.3;
@@ -65,8 +65,17 @@ hold on;
 ai_mag = sqrt(1+(1+eps)^2*sin(phi)^2);
 ai_phase = atan((1+eps)*sin(phi));
 % x = ar*cos(2*pi*f*(0:999)) + 1i*ai_mag*sin(2*pi*f*(0:999)+ai_phase);
-theta = phi/2+pi/4-3*pi/2
-% 0.5*atan2(sin(2*phi),(cos(2*phi)-1))
+% theta = phi/2+pi/4-3*pi/2
+% 0.5*atan2(sin(2*phi),(cos(2*phi)-1))]
+n = mod(round(mod(phi/(2*pi),1)*4),4)
+% if n == 2
+%     n = 0;
+% end
+n = 0
+theta = 0.5*atan(((1+eps)^2*sin(2*phi))/((1+eps)^2*cos(2*phi)-1)) + n*pi/2;
+% if (sign(cos(theta)) ~= sign(cos(phi-theta)))
+%     error('Bad Rotation Angle');
+% end
 % theta/pi
 t = 0:999;
 a1_mag = sqrt((1+eps)^2*cos(phi-theta)^2+sin(theta)^2);
