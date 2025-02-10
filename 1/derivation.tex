@@ -10,7 +10,7 @@ To characterize the effects of I/Q imbalance on the resulting constellations, we
 	x_{rx}(t) = e^{j\theta}x_i(t) = e^{j\theta}\left[(1+\varepsilon)e^{j(\phi-\theta)}\cos(2{\pi}f_ot)+je^{-j\theta}\sin(2{\pi}f_ot)\right]
 \end{equation}
 
-where $\theta$ represents a rotation in the complex plane. Next, we can solve $x_i(t)$ (the signal prior to the rotation).
+where $\theta$ represents a rotation in the complex plane. Next, we can solve $x_i(t)$ (the signal prior to the rotation). Doing, so we get the following result:
 
 \begin{equation}
 	x_i(t) = (1+\varepsilon)[\cos(\phi-\theta)+j\sin(\phi-\theta)]\cos(2{\pi}f_ot)+j[\cos\theta-j\sin\theta]\sin(2{\pi}f_ot)
@@ -30,7 +30,7 @@ where $\theta$ represents a rotation in the complex plane. Next, we can solve $x
 \end{split}
 \end{equation}
 
-Using phasor math, we can reduce our solution for $x_i(t)$ to the following form:
+Using phasor math, we can put $x_i(t)$ in the following form:
 
 \begin{equation}
 	x_i(t) = \alpha_1\cos(2{\pi}f_ot+\beta_1)+j\alpha_2\sin(2{\pi}f_ot+\beta_2)
@@ -54,25 +54,18 @@ where $\alpha_1$, $\alpha_2$, $\beta_1$, and $\beta_2$ are given as follows:
 	\beta_2 = \text{atan}\left[\frac{(1+\varepsilon)\sin(\phi-\theta)}{\cos\theta}\right]
 \end{equation}
 
-We are interested in values of $\theta$ where $\beta_1$ = $\beta_2$. This gives us an ellipse whose major and minor axis correspond with the real and imaginary axis.
+We are interested in values of $\theta$ where $\beta_1$ = $\beta_2$. This gives us an ellipse whose major and minor axis correspond with the real and imaginary axis. Solving for $\theta$, we get the following result:
 
 \begin{equation}
-	\begin{cases}
-		-k\sin\theta=(1+\varepsilon)\sin(\phi-\theta)\\
-		k(1+\varepsilon)cos(\phi-\theta)=\cos\theta
-	\end{cases}
+	\frac{-\sin\theta}{(1+\varepsilon)\cos(\phi-\theta)} = \frac{(1+\varepsilon)\sin(\phi-\theta)}{\cos\theta}
 \end{equation}
 
 \begin{equation}
-	k = \frac{\cos\theta}{(1+\varepsilon)\cos(\phi-\theta)}
+	-\sin\theta\cos\theta = (1+\varepsilon)^2\sin(\phi-\theta)\cos(\phi-\theta)
 \end{equation}
 
 \begin{equation}
-	-\frac{\sin\theta\cos\theta}{(1+\varepsilon)\cos(\phi-\theta)}=(1+\varepsilon)\sin(\phi-\theta)
-\end{equation}
-
-\begin{equation}
-	-\sin(2\theta)=(1+\varepsilon)^2\sin(2(\phi-\theta))
+	-\sin(2\theta) = (1+\varepsilon)^2\sin(2(\phi-\theta))
 \end{equation}
 
 \begin{equation}
@@ -88,116 +81,64 @@ We are interested in values of $\theta$ where $\beta_1$ = $\beta_2$. This gives 
 \end{equation}
 
 \begin{equation}
-	2\theta = \text{atan}\left[\frac{(1+\varepsilon)^2\sin(2\phi)}{(1+\varepsilon)^2\cos(2\phi)-1}\right]+n\pi
+	2\theta = \text{atan}\left[\frac{(1+\varepsilon)^2\sin(2\phi)}{(1+\varepsilon)^2\cos(2\phi)-1}\right]
 \end{equation}
 
 \begin{equation}
-	\theta = \frac{1}{2}\text{atan}\left[\frac{(1+\varepsilon)^2\sin(2\phi)}{(1+\varepsilon)^2\cos(2\phi)-1}\right]+\frac{n\pi}{2}
+	\theta = \frac{1}{2}\text{atan}\left[\frac{(1+\varepsilon)^2\sin(2\phi)}{(1+\varepsilon)^2\cos(2\phi)-1}\right]
 \end{equation}
 
-For phase imbalance-only:
+When we consider phase-imbalance only, $\theta$ can be expressed in the following form
 
 \begin{equation}
-	\theta = \frac{1}{2}\text{atan}\left[\frac{\sin(2\phi)}{\cos(2\phi)-1}\right]+\frac{n\pi}{2}
-\end{equation}
-
-\begin{equation}
-	\theta = \frac{1}{2}\text{atan}\left[\frac{2\sin\phi\cos\phi}{-2\sin^2\phi}\right]+\frac{n\pi}{2}
+	\theta = \frac{1}{2}\text{atan}\left[\frac{\sin(2\phi)}{\cos(2\phi)-1}\right] = \frac{1}{2}\text{atan}\left[\frac{2\sin\phi\cos\phi}{-2\sin^2\phi}\right] = \frac{1}{2}\text{atan}(-\text{cot}\phi)
 \end{equation}
 
 \begin{equation}
-	\theta = \frac{1}{2}\text{atan}(-\text{cot}\phi)+\frac{n\pi}{2}
+	\theta = \frac{1}{2}\text{atan}\left[\text{tan}\left(\phi+\frac{\pi}{2}\right)\right] = \frac{\phi}{2}+\frac{\pi}{4}
 \end{equation}
 
-\begin{equation}
-	\theta = \frac{1}{2}\text{atan}[\text{cot}(-\phi)]+\frac{n\pi}{2}
-\end{equation}
+Using the value we found for $\theta$, we can solve for the remaining unknowns. Doing so, we find:
 
-\begin{equation}
-	\theta = \frac{1}{2}\text{atan}\left[\text{tan}\left(\phi+\frac{\pi}{2}\right)\right]+\frac{n\pi}{2}
-\end{equation}
+\begin{align}
+	\alpha_1 &= \sqrt{\cos^2(\phi-\theta)+\sin^2\theta} \\
+	&= \sqrt{\frac{1+\cos(2(\phi-\theta))}{2}+\frac{1-\cos(2\theta)}{2}} \\
+	&= \sqrt{\frac{1+\cos(\phi-\pi/2)}{2}+\frac{1-\cos(\phi+\pi/2)}{2}} \\
+	&= \sqrt{\frac{1+\cos(\phi-\pi/2)}{2}+\frac{1+\cos(\phi-\pi/2)}{2}} \\
+	&= \sqrt{1+\cos(\phi-\pi/2)} \\
+	&= \sqrt{1+\sin\phi}
+\end{align}
 
-\begin{equation}
-	\theta = \frac{\phi}{2}+\frac{\pi}{4}+\frac{n\pi}{2}
-\end{equation}
+\begin{align}
+	\alpha_2 &= \sqrt{\sin^2(\phi-\theta)+cos^2(\theta)} \\
+	&= \sqrt{\frac{1-\cos(2(\phi-\theta))}{2}+\frac{1+\cos(2\theta)}{2}} \\
+	&= \sqrt{\frac{1-\cos(\phi-\pi/2)}{2}+\frac{1+\cos(\phi+\pi/2)}{2}} \\
+	&= \sqrt{\frac{1-\cos(\phi-\pi/2)}{2}+\frac{1-\cos(\phi-\pi/2)}{2}} \\
+	&= \sqrt{1-\cos(\phi-\pi/2)} \\
+	&= \sqrt{1-\sin\phi}
+\end{align}
 
-\begin{equation}
-	\alpha_1 = \sqrt{\cos^2(\phi-\theta)+sin^2(\theta)}
-\end{equation}
+\begin{align}
+	\beta_1 &= \text{atan}\left[\frac{-\sin\theta}{\cos(\phi-\theta)}\right] \\
+	&= \text{atan}\left[\frac{-\sin(\phi/2+\pi/4)}{\cos(\phi/2-\pi/4)}\right] \\
+	&= \text{atan}\left[\frac{-\cos(\pi/2-(\phi/2+\pi/4))}{\cos(\phi/2-\pi/4)}\right] \\
+	&= \text{atan}\left[\frac{-\cos(\phi/2-\pi/4)}{\cos(\phi/2-\pi/4)}\right] \\
+	&= \text{atan}(-1) \\
+	&= -\frac{\pi}{4}
+\end{align}
 
-\begin{equation}
-	\alpha_1 = \sqrt{\frac{1+\cos(2(\phi-\theta))}{2}+\frac{1-\cos(2\theta)}{2}}
-\end{equation}
+\begin{align}
+	\beta_2 &= \text{atan}\left[\frac{\sin(\phi-\theta)}{\cos\phi}\right] \\
+	&= \text{atan}\left[\frac{\sin(\phi/2-\pi/4)}{\cos(\phi/2+\pi/4)}\right] \\
+	&= \text{atan}\left[\frac{\sin(\phi/2-\pi/4)}{\sin(\pi/2-(\phi/2+\pi/4))s}\right] \\
+	&= \text{atan}\left[\frac{\sin(\phi/2-\pi/4)}{-\sin(\phi/2-\pi/4)}\right] \\
+	&= \text{atan}(-1) \\
+	&= -\frac{\pi}{4}
+\end{align}
 
-\begin{equation}
-	\alpha_1 = \sqrt{\frac{1+\cos(\phi-\pi/2)}{2}+\frac{1-\cos(\phi+\pi/2)}{2}}
-\end{equation}
+Using the above equations, we can see what happens when we have I/Q phase imbalance. First, we rotate our points around the unit circle by $-45^{\circ}$. Then, we stretch the unit circle along the real axis and compress it along the imaginary axis, creating an ellipse. Next, we rotate this ellipse around the unit circle. This results in a titled ellipse as shown in Figure \ref{}.
 
-\begin{equation}
-	\alpha_1 = \sqrt{\frac{1+\cos(\phi-\pi/2)}{2}+\frac{1+\cos(\phi-\pi/2)}{2}}
-\end{equation}
-
-\begin{equation}
-	\alpha_1 = \sqrt{1+\cos(\phi-\pi/2)} = \sqrt{1+\sin\phi}
-\end{equation}
-
-\begin{equation}
-	\alpha_2 = \sqrt{\sin^2(\phi-\theta)+cos^2(\theta)}
-\end{equation}
-
-\begin{equation}
-	\alpha_1 = \sqrt{\frac{1-\cos(2(\phi-\theta))}{2}+\frac{1+\cos(2\theta)}{2}}
-\end{equation}
-
-\begin{equation}
-	\alpha_1 = \sqrt{\frac{1-\cos(\phi-\pi/2)}{2}+\frac{1+\cos(\phi+\pi/2)}{2}}
-\end{equation}
-
-\begin{equation}
-	\alpha_1 = \sqrt{\frac{1-\cos(\phi-\pi/2)}{2}+\frac{1-\cos(\phi-\pi/2)}{2}}
-\end{equation}
-
-\begin{equation}
-	\alpha_1 = \sqrt{1-\cos(\phi-\pi/2)} = \sqrt{1-\sin\phi}
-\end{equation}
-
-\begin{equation}
-	\beta_1 = \text{atan}\left[\frac{-\sin\theta}{\cos(\phi-\theta)}\right]
-\end{equation}
-
-\begin{equation}
-	\beta_1 = \text{atan}\left[\frac{-\sin(\phi/2+\pi/4)}{\cos(\phi/2-\pi/4)}\right]
-\end{equation}
-
-\begin{equation}
-	\beta_1 = \text{atan}\left[\frac{-\cos(\pi/2-(\phi/2+\pi/4))}{\cos(\phi/2-\pi/4)}\right]
-\end{equation}
-
-\begin{equation}
-	\beta_1 = \text{atan}\left[\frac{-\cos(\phi/2-\pi/4)}{\cos(\phi/2-\pi/4)}\right] = \text{atan}(-1) = -\frac{\pi}{4}
-\end{equation}
-
-\begin{equation}
-	\beta_2 = \text{atan}\left[\frac{\sin(\phi-\theta)}{\cos\phi}\right]
-\end{equation}
-
-\begin{equation}
-	\beta_2 = \text{atan}\left[\frac{\sin(\phi/2-\pi/4)}{\cos(\phi/2+\pi/4)}\right]
-\end{equation}
-
-\begin{equation}
-	\beta_2 = \text{atan}\left[\frac{\sin(\phi/2-\pi/4)}{\sin(\pi/2-(\phi/2+\pi/4))s}\right]
-\end{equation}
-
-\begin{equation}
-	\beta_2 = \text{atan}\left[\frac{\sin(\phi/2-\pi/4)}{-\sin(\phi/2-\pi/4)}\right] = \text{atan}(-1) = -\frac{\pi}{4}
-\end{equation}
-
-For amplitude imbalance only:
-
-\begin{equation}
-	\phi = n\pi/2
-\end{equation}
+We can perform similar analysis for I/Q amplitude imbalance. With amplitude imbalance we find that $\theta = 0$. Using the value we found for $\theta$, we can solve for the remaining unknowns. Doing so, we find:
 
 \begin{equation}
 	\alpha_1 = 1 + \varepsilon
@@ -214,5 +155,7 @@ For amplitude imbalance only:
 \begin{equation}
 	\beta_2 = 0
 \end{equation}
+
+In other words, amplitude imbalance, only stretches the unit circle along the real axis, resulting in the ellipse we see in Figure \ref{}.
 
 \end{document}
