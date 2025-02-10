@@ -23,7 +23,7 @@ x = exp(1i*2*pi*freq/sim_rate*n);
 eps = 0;
 
 % I/Q Phase Imbalance
-phi = 3*pi/16 + pi;
+phi = pi/4; %3*pi/16 + pi;
 
 % Carrier Frequency
 fc = 0.3;
@@ -73,6 +73,7 @@ n = mod(round(mod(phi/(2*pi),1)*4),4)
 % end
 n = 0
 theta = 0.5*atan(((1+eps)^2*sin(2*phi))/((1+eps)^2*cos(2*phi)-1)) + n*pi/2;
+theta = phi/2 + pi/4;
 % if (sign(cos(theta)) ~= sign(cos(phi-theta)))
 %     error('Bad Rotation Angle');
 % end
