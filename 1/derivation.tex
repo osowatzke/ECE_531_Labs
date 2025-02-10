@@ -101,59 +101,35 @@ When we consider phase-imbalance only, $\theta$ can be expressed in the followin
 Using the value we found for $\theta$, we can solve for the remaining unknowns. Doing so, we find:
 
 \begin{align}
-	\alpha_1 &= \sqrt{\cos^2(\phi-\theta)+\sin^2\theta} \\
-	&= \sqrt{\frac{1+\cos(2(\phi-\theta))}{2}+\frac{1-\cos(2\theta)}{2}} \\
-	&= \sqrt{\frac{1+\cos(\phi-\pi/2)}{2}+\frac{1-\cos(\phi+\pi/2)}{2}} \\
-	&= \sqrt{\frac{1+\cos(\phi-\pi/2)}{2}+\frac{1+\cos(\phi-\pi/2)}{2}} \\
-	&= \sqrt{1+\cos(\phi-\pi/2)} \\
-	&= \sqrt{1+\sin\phi}
+	\alpha_1 = \sqrt{\cos^2(\phi-\theta)+\sin^2\theta} = \sqrt{1+\sin\phi}
 \end{align}
 
 \begin{align}
-	\alpha_2 &= \sqrt{\sin^2(\phi-\theta)+cos^2(\theta)} \\
-	&= \sqrt{\frac{1-\cos(2(\phi-\theta))}{2}+\frac{1+\cos(2\theta)}{2}} \\
-	&= \sqrt{\frac{1-\cos(\phi-\pi/2)}{2}+\frac{1+\cos(\phi+\pi/2)}{2}} \\
-	&= \sqrt{\frac{1-\cos(\phi-\pi/2)}{2}+\frac{1-\cos(\phi-\pi/2)}{2}} \\
-	&= \sqrt{1-\cos(\phi-\pi/2)} \\
-	&= \sqrt{1-\sin\phi}
+	\alpha_2 = \sqrt{\sin^2(\phi-\theta)+cos^2(\theta)} = \sqrt{1-\sin\phi}
 \end{align}
 
 \begin{align}
-	\beta_1 &= \text{atan}\left[\frac{-\sin\theta}{\cos(\phi-\theta)}\right] \\
-	&= \text{atan}\left[\frac{-\sin(\phi/2+\pi/4)}{\cos(\phi/2-\pi/4)}\right] \\
-	&= \text{atan}\left[\frac{-\cos(\pi/2-(\phi/2+\pi/4))}{\cos(\phi/2-\pi/4)}\right] \\
-	&= \text{atan}\left[\frac{-\cos(\phi/2-\pi/4)}{\cos(\phi/2-\pi/4)}\right] \\
-	&= \text{atan}(-1) \\
-	&= -\frac{\pi}{4}
+	\beta_1 = \text{atan}\left[\frac{-\sin\theta}{\cos(\phi-\theta)}\right] = -\frac{\pi}{4}
 \end{align}
 
 \begin{align}
-	\beta_2 &= \text{atan}\left[\frac{\sin(\phi-\theta)}{\cos\phi}\right] \\
-	&= \text{atan}\left[\frac{\sin(\phi/2-\pi/4)}{\cos(\phi/2+\pi/4)}\right] \\
-	&= \text{atan}\left[\frac{\sin(\phi/2-\pi/4)}{\sin(\pi/2-(\phi/2+\pi/4))s}\right] \\
-	&= \text{atan}\left[\frac{\sin(\phi/2-\pi/4)}{-\sin(\phi/2-\pi/4)}\right] \\
-	&= \text{atan}(-1) \\
-	&= -\frac{\pi}{4}
+	\beta_2 = \text{atan}\left[\frac{\sin(\phi-\theta)}{\cos\phi}\right] = -\frac{\pi}{4}
 \end{align}
 
-Using the above equations, we can see what happens when we have I/Q phase imbalance. First, we rotate our points around the unit circle by $-45^{\circ}$. Then, we stretch the unit circle along the real axis and compress it along the imaginary axis, creating an ellipse. Next, we rotate this ellipse around the unit circle. This results in a titled ellipse as shown in Figure \ref{}.
+Using the above equations, we can see what happens when we have I/Q phase imbalance. First, we rotate our constellation points around the unit circle by $-45^{\circ}$. Then, we stretch the unit circle along the real axis and compress it along the imaginary axis, creating an ellipse. Next, we rotate this ellipse around the unit circle. This results in a titled ellipse as shown in Figure \ref{}.
 
 We can perform similar analysis for I/Q amplitude imbalance. With amplitude imbalance we find that $\theta = 0$. Using the value we found for $\theta$, we can solve for the remaining unknowns. Doing so, we find:
 
 \begin{equation}
-	\alpha_1 = 1 + \varepsilon
+	\alpha_1 = \sqrt{(1+\varepsilon)^2\cos^2(0)+\sin^2(0)} = 1 + \varepsilon
 \end{equation}
 
 \begin{equation}
-	\alpha_2 = 1
+	\alpha_2 = \sqrt{(1+\varepsilon)^2\sin^2(0)+\cos^2(0)} = 1
 \end{equation}
 
 \begin{equation}
-	\beta_1 = 0
-\end{equation}
-
-\begin{equation}
-	\beta_2 = 0
+	\beta_1 = \beta_2 = 0
 \end{equation}
 
 In other words, amplitude imbalance, only stretches the unit circle along the real axis, resulting in the ellipse we see in Figure \ref{}.
