@@ -600,7 +600,7 @@ Finally, Figure \ref{fig::impulse_noise_histogram} shows the histogram of impuls
 
 \subsection{Interpolation and Decimation}
 
-The final experiment we performed examined the impact of interpolation and decimation on the time and frequency domain curves. Figure \ref{fig::interpolation_and_decimation_experiment} shows the setup for our examination, and Figure \ref{fig::interpolation_and_decimation_waveforms} shows the collected data. The top figure contains time domain data and the bottom figure contains frequency domain data. The blue waveform is the data before interpolation and decimation. The red data is the data interpolated by 4. And the green waveform is the data decimated by 4.
+The final experiment we performed examined the impact of interpolation and decimation on the time and frequency domain curves. Figure \ref{fig::interpolation_and_decimation_experiment} shows the setup for our examination, and Figure \ref{fig::interpolation_and_decimation_waveforms} shows the collected data. The top figure contains time domain data and the bottom figure contains frequency domain data. The blue waveform is the original data. The red data is the data interpolated by 4. And the green waveform is the data decimated by 4.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{interpolation_and_decimation_waveforms.png}}}
@@ -612,7 +612,7 @@ Each of the time domain curves contains the same number of points plotted on a c
 
 When we interpolate the data, the spectral content is compressed by a factor of 4 (in normalized frequency) and then repeated 4 times. Each of the spectral copies are then filtered out with a low-pass filter. This filter is not perfect, so we see the spectral copies at a reduced power level. Because the spectral content is compressed by a factor of 4, the peaks are 4 times closer to the origin than the original peaks.
 
-When we decimate the data, the spectral content is stretched by a factor of 4 (in normalized frequency). To prevent aliasing, we filter the data beforehand with an anti-aliasing filter that has a cutoff frequency of $\pi/4$.  In this experiment, we sample a perfect sinusoid, which is contained well within the passband of this filter. As a result, we don't see any filtering artifacts. Because the spectral content is stretched by a factor of 4, the peaks are 4 times farther from the origin than the original peaks.
+When we decimate the data, the spectral content is stretched by a factor of 4 (in normalized frequency). To prevent aliasing, we filter the data beforehand with an anti-aliasing filter that has a cutoff frequency of $\pi/4$.  In this experiment, we sample a perfect sinusoid, which is contained well within the passband of this filter. As a result, we don't see any significant filtering artifacts. Because the spectral content is stretched by a factor of 4, the peaks are 4 times farther from the origin than the original peaks.
 
 \subsection{Followup Questions}
 
