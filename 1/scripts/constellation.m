@@ -23,7 +23,7 @@ x = exp(1i*2*pi*freq/sim_rate*n);
 eps = 0;
 
 % I/Q Phase Imbalance
-phi = 6*pi/180;%pi/4; %3*pi/16 + pi;
+phi = pi/2-0.1; %6*pi/180;%pi/4; %3*pi/16 + pi;
 
 % Carrier Frequency
 fc = 0.3;

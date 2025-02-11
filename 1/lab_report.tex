@@ -86,7 +86,7 @@ The GRC flowchart for this experiment, using complex sampling, is shown in Figur
 	\label{fig::frequency_observations_complex_sampling}
 \end{figure}
 
-Using the updated flowchart, we vary the sinusoid frequency over its full range (from 2kHz to 15kHz), while observing the resulting spectrum. Based on the collected data, we notate any anomalies and describe why they occur. 
+Using the updated flowchart, we vary the sinusoid frequency over its full range (from 2kHz to 15kHz), while observing the resulting spectrum. Observing the collected data, we notate any anomalies and describe why they occur. 
 
 \subsubsection{Real-sampled Flowgraph}
 
@@ -98,7 +98,7 @@ We also investigate real-sampling using the flowchart shown in Figure \ref{fig::
 	\label{fig::frequency_observations_real_sampling}
 \end{figure}
 
-Using the above flowchart, we vary the sinusoid frequency over its full range (from 2kHz to 15kHz). We observe the resulting spectrum and compare it to the results we observed in Section \ref{subsection::frequency_observations_complex_sampling}.
+Using the above flowchart, we vary the sinusoid frequency over its full range (from 2kHz to 15kHz). As vary the frequency, we observe the resulting spectrum and compare it to the results we observed in Section \ref{subsection::frequency_observations_complex_sampling}.
 
 \subsection{I/Q Imbalance}
 
@@ -239,9 +239,9 @@ Next, we decrease the sampling frequency to the Nyquist rate of 4 kHz (twice the
 	\label{fig::complex_sampling_freq_domain_4k_samp_rate}
 \end{figure}
 
-We expect one delta function in the frequency response, so why do we see two? Well, our frequency response is captured using a windowed subset of samples. Since we only use a subset of samples, our frequency response will not be a delta function but will have a measurable mainlobe and sidelobes. The frequency response will peak at the aliased carrier frequency (-2kHz). Due to the periodicity of the DTFT, what we are seeing is a copy of the mainlobe from different periods of the DTFT. One is from the frequency response centered about 0 kHz and the other is from the frequency response centered at 4 kHz. We could also perform an inverse FFT shift on the data and interpret it using frequencies between -4 kHz and 0 kHz. This would make it easier for us to interpret the "two" frequency response peaks as a single peak.
+We expect one delta function in the frequency response, so why do we see two? Well, our frequency response is captured using a windowed subset of samples. Since we only use a subset of samples, our frequency response will not actually be a delta function but will instead have a measurable mainlobe and sidelobes. The frequency response will peak at the aliased carrier frequency, -2kHz. Due to the periodicity of the DTFT, what we are seeing is a copy of the mainlobe from different periods of the DTFT. One is from the frequency response centered about 0 kHz and the other is from the frequency response centered at 4 kHz. We could also perform an inverse FFT shift on the data and interpret it using frequencies between -4 kHz and 0 kHz. This would make it easier for us to interpret the "two" frequency response peaks as a single peak.
 
-Finally, we continue decreasing the sampling frequency below the Nyquist rate to visualize the effects of aliasing. We display the results at a sampling frequency of 3 kHz. At this sampling rate, the frequency response peaks at -1 kHz as illustrated in Figure \ref{fig::complex_sampling_freq_domain_3k_samp_rate}. At this sampling frequency, the frequency wraps into the interval between $\pm 1.5 kHz$. We can find out the wrapped frequency by adding or subtracting multiples of the sampling frequency. In this case, the frequency wraps to 2 kHz - 3 kHz = -1 kHz.
+Finally, we continue decreasing the sampling frequency below the Nyquist rate to visualize the effects of aliasing. We display the results at a sampling frequency of 3 kHz in Figure \ref{fig::complex_sampling_freq_domain_3k_samp_rate}. At this sampling frequency, the peak frequency wraps into the interval between $\pm 1.5 kHz$. We can find out the wrapped frequency by adding or subtracting multiples of the sampling frequency. In this case, the frequency wraps to 2 kHz - 3 kHz = -1 kHz.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{complex_sampling_freq_domain_3k_samp_rate.png}}}
@@ -255,7 +255,7 @@ Using a fixed sample rate, we now vary the frequency of the source and examine w
 
 \subsubsection{Complex-sampled Flowgraph}
 
-For complex-sampled data, we use the flowchart shown in Figure \ref{fig::freq_observations_complex_6k_center_freq} to perform our experiments. The measured frequency increases with increasing frequency and wraps when it cross half the sampling rate (5 kHz), through a phenomenon known as aliasing. Without specificity, we further consider one of the wrapped center frequencies, 6 kHz. Figure \ref{fig::freq_observations_complex_6k_center_freq} shows the resulting spectrum when the sinusoid center frequency is increased to 6 kHz. Because the sampling frequency is 10 kHz, the frequency will wrap into the interval between $\pm 5 kHz$. We can find out the wrapped (or aliased) frequency by adding or subtracting multiples of the sampling frequency. In this case, the frequency wraps to 6 kHz - 10 kHz = -4 kHz.
+For complex-sampled data, we use the flowchart shown in Figure \ref{fig::freq_observations_complex_6k_center_freq} to perform our experiments. The measured frequency increases with increasing frequency and wraps when it cross half the sampling rate (5 kHz), through a phenomenon known as aliasing. Without loss of generality, we consider one of the wrapped center frequencies, 6 kHz. Figure \ref{fig::freq_observations_complex_6k_center_freq} shows the resulting spectrum when the sinusoid center frequency is increased to 6 kHz. Because the sampling frequency is 10 kHz, the frequency will wrap into the interval between $\pm 5 kHz$. We can find out the wrapped (or aliased) frequency by adding or subtracting multiples of the sampling frequency. In this case, the frequency wraps to 6 kHz - 10 kHz = -4 kHz.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{freq_observations_complex_6k_center_freq.png}}}
@@ -301,7 +301,7 @@ Next, we investigate the effects of a phase imbalance. As we increase the phase 
 	\label{fig::iq_imbalance_0_mag_1_phase_freq}
 \end{figure}
 
-Similarly, we when increase the amplitude imbalance, we increase the power of the frequency image. This is shown in Figure \ref{fig::iq_imbalance_0p5_mag_0_phase_freq}, which shows 0.5 dB of amplitude imbalance.
+Similarly, we when increase the amplitude imbalance, we increase the power of the frequency image. This is illustrated in Figure \ref{fig::iq_imbalance_0p5_mag_0_phase_freq}, which shows 0.5 dB of amplitude imbalance.
  
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{iq_imbalance_0p5_mag_0_phase_freq.png}}}
@@ -395,7 +395,7 @@ where $N, M \in \mathcal{Z}$. Here $N=f_s/\text{gcd}(f_o,f_s)$ is the period of 
 
 For sampling rates that are multiples of the center frequency, we will see more points in the constellation as we increase the sampling rate. However, in general, we must use Equation \ref{eq::period_of_discrete_signal} to determine the number of points in the constellation. With the updated sampling rate, we see that the captured samples trace a unit circle in the I/Q plane.
 
-Next, we capture the constellation with I/Q imbalance. For these subsequent captures, we continue using a sampling rate of 39.8 kHz. Note that this deviates slightly from the procedure, but it helps us to better visualize the effects of I/Q imbalance. Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const} shows the resulting constellation with 6 degrees of I/Q phase imbalance, and Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} shows the resulting constellation with 1 dB of I/Q amplitude imbalance.
+Next, we capture the constellation with I/Q imbalance. For these subsequent captures, we use a sampling rate of 39.8 kHz. Note that this deviates slightly from the procedure, but it helps us to better visualize the effects of I/Q imbalance. Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const} shows the resulting constellation with 6 degrees of I/Q phase imbalance, and Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const} shows the resulting constellation with 1 dB of I/Q amplitude imbalance.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.4\textwidth]{iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const.png}}}
@@ -435,7 +435,7 @@ where $\theta$ represents a rotation in the complex plane. Next, we can solve $x
 \end{split}
 \end{equation}
 
-Using phasor math, we can put $x_i(t)$ in the following form:
+Using phasor math, we can write $x_i(t)$ in the following form:
 
 \begin{equation}
 	x_i(t) = \alpha_1\cos(2{\pi}f_ot+\beta_1)+j\alpha_2\sin(2{\pi}f_ot+\beta_2)
@@ -496,14 +496,13 @@ We are interested in values of $\theta$ where $\beta_1$ = $\beta_2$. This gives 
 When we consider phase-imbalance only, $\theta$ can be expressed in the following form
 
 \begin{equation}
-	\theta = \frac{1}{2}\text{atan}\left[\frac{\sin(2\phi)}{\cos(2\phi)-1}\right] = \frac{1}{2}\text{atan}\left[\frac{2\sin\phi\cos\phi}{-2\sin^2\phi}\right] = \frac{1}{2}\text{atan}(-\text{cot}\phi)
+\begin{split}
+	\theta &= \frac{1}{2}\text{atan}\left[\frac{\sin(2\phi)}{\cos(2\phi)-1}\right] = \frac{1}{2}\text{atan}\left[\frac{2\sin\phi\cos\phi}{-2\sin^2\phi}\right] \\
+	&= \frac{1}{2}\text{atan}(-\text{cot}\phi) = \frac{1}{2}\text{atan}\left[\text{tan}\left(\phi+\frac{\pi}{2}\right)\right] = \frac{\phi}{2}+\frac{\pi}{4}
+\end{split}
 \end{equation}
 
-\begin{equation}
-	\theta = \frac{1}{2}\text{atan}\left[\text{tan}\left(\phi+\frac{\pi}{2}\right)\right] = \frac{\phi}{2}+\frac{\pi}{4}
-\end{equation}
-
-Using the value we found for $\theta$, we can solve for the remaining unknowns. Doing so, we find:
+Using the value we find for $\theta$, we can solve for the remaining unknowns as follows:
 
 \begin{align}
 	\alpha_1 = \sqrt{\cos^2(\phi-\theta)+\sin^2\theta} = \sqrt{1+\sin\phi}
@@ -523,7 +522,7 @@ Using the value we found for $\theta$, we can solve for the remaining unknowns. 
 
 Using the above equations, we can see what happens when we have I/Q phase imbalance. First, we rotate our constellation points around the unit circle by $-45^{\circ}$. Then, we stretch the unit circle along the real axis and compress it along the imaginary axis, creating an ellipse. Finally, we rotate this ellipse around the unit circle. This results in a titled ellipse as shown in Figure \ref{fig::iq_imbalance_0_mag_6_phase_39p8k_samp_rate_const}.
 
-We can perform similar analysis for I/Q amplitude imbalance. With amplitude imbalance we find that $\theta = 0$. Using the value we found for $\theta$, we can solve for the remaining unknowns. Doing so, we find:
+We can perform similar analysis for I/Q amplitude imbalance. With amplitude imbalance we find that $\theta = 0$. Using the value we find for $\theta$, we solve for the remaining unknowns as follows:
 
 \begin{equation}
 	\alpha_1 = \sqrt{(1+\varepsilon)^2\cos^2(0)+\sin^2(0)} = 1 + \varepsilon
@@ -537,11 +536,11 @@ We can perform similar analysis for I/Q amplitude imbalance. With amplitude imba
 	\beta_1 = \beta_2 = 0
 \end{equation}
 
-In other words, amplitude imbalance, stretches the unit circle along the real axis, resulting in the ellipse we see in Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const}.
+Using the above equations, we can see what happens when we have I/Q amplitude imbalance. We, specifically, stretch the unit circle along the real axis, resulting in the ellipse we see in Figure \ref{fig::iq_imbalance_1_mag_0_phase_39p8k_samp_rate_const}.
 
 \subsection{Adding Noise}
 
-This experiment highlights the impact of additive noise on time domain data, frequency domain data, and received constellation. Figure \ref{fig::noise_time_domain_10dB_snr} shows time domain data with additive white Gaussian noise (AWGN) that results in a 10 dB SNR.
+This experiment highlights the impact of additive noise on time domain data, frequency domain data, and received constellations. Figure \ref{fig::noise_time_domain_10dB_snr} shows time domain data with additive white Gaussian noise (AWGN) that results in a 10 dB SNR.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{noise_time_domain_10dB_snr.png}}}
