@@ -76,8 +76,8 @@ blocks:
     orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0'
-    step: '1'
-    stop: '180'
+    step: 100e-3
+    stop: '6.2'
     value: '0'
     widget: counter_slider
   states:
