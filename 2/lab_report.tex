@@ -4,6 +4,7 @@
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{amsmath}
+\usepackage{cite}
 \usepackage{hyperref}
 \graphicspath{{..} {./images}}
 
@@ -13,7 +14,8 @@
 
 \hypersetup{
 	colorlinks,
-	linkcolor=black
+	linkcolor=black,
+	urlcolor=black
 }
   		
 \begin{document}
@@ -40,10 +42,36 @@
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
+\subsection{Industrial Input/Output (IIO)}
+\label{subsection::industrial_input_output}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.9\textwidth]{iio_info_putty.png}}}
+	\caption{Result of ``iio\_info -s" Command when Executed in Putty}
+	\label{fig::iio_info_putty}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.9\textwidth]{iio_info_cmd.png}}}
+	\caption{Result of ``iio\_info -s" Command when Executed in Command Prompt}
+	\label{fig::iio_info_cmd}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.9\textwidth]{iio_info_vm.png}}}
+	\caption{Result of ``iio\_info -s" Command when Executed in Virtual Machine}
+	\label{fig::iio_info_vm}
+\end{figure}
+
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
+\nocite{analog_devices_libiio_error}
+\bibliographystyle{IEEEtran}
+\bibliography{sources}{}
+%\bibliographystyle{ieeetr}
+	
 \end{document}
