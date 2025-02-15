@@ -5,3 +5,5 @@
 *.toc
 *.asv
 *.out
+*.bbl
+*.blg
