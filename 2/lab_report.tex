@@ -15,7 +15,8 @@
 \hypersetup{
 	colorlinks,
 	linkcolor=black,
-	urlcolor=black
+	urlcolor=black,
+	citecolor=black
 }
   		
 \begin{document}
@@ -43,6 +44,7 @@
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
 \subsection{Industrial Input/Output (IIO)}
+\label{section::industrial_input_output}
 
 We can use the \texttt{iio\_info -s} command to identify the PlutoSDR device's Universal Resource Identifier (URI). We execute the provided command in an SSH terminal session connected to the embedded PlutoSDR operating system and in a local PC terminal. After executing the command in both terminals, we compare the resulting URIs.
 
@@ -58,17 +60,23 @@ where \texttt{$<$iio\_device$>$} is the IIO device we find with the \texttt{iio\
 \section{Results}
 \subsection{Industrial Input/Output (IIO)}
 
+In this section, we display the results from the industrial input/output commands provided in Section \ref{section::industrial_input_output}. Figure \ref{fig::iio_info_putty} displays the results of the \texttt{iio\_info -s} command, when executed in Putty (an SSH terminal).  
+
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.9\textwidth]{iio_info_putty.png}}
-	\caption{Result of ``iio\_info -s" Command when Executed in Putty}
+	\caption{Result of \texttt{iio\_info -s} Command when Executed in Putty}
 	\label{fig::iio_info_putty}
 \end{figure}
 
+Figure \ref{fig::iio_info_cmd} shows the outputs of the same command when executed in command prompt, a local PC terminal.
+
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.9\textwidth]{iio_info_cmd.png}}
-	\caption{Result of ``iio\_info -s" Command when Executed in Command Prompt}
+	\caption{Result of \texttt{iio\_info -s} Command when Executed in Command Prompt}
 	\label{fig::iio_info_cmd}
 \end{figure}
+
+Compared to the outputs shown in Figure \ref{fig::iio_info_putty}, the command prompt output shows very similar URIs. Both contain an ip:pluto.local URI with an IP address of 192.168.2.1. They also both contain an additional ip:pluto.local URI, which is nearly the same. However, the biggest difference between the two outputs is in the final URI. The SSH output shows a local URI (local:), while the command prompt output shows a USB URI (usb:1.31.5). We note that command prompt also contains an additional warning message, which says "Unable to create Local IIO context: Function not implemented (40)." This warning message is described in more detail in \cite{analog_devices_libiio_error}. However, it is expected warning because \texttt{iio\_info} tries to open local contexts, which are not supported in Windows. For comparison, we run the same command on the Virtual Machine. The results of this command are display in Figure \ref{fig::iio_info_vm}.
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.9\textwidth]{iio_info_vm.png}}
