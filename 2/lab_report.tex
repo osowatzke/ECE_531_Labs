@@ -46,6 +46,15 @@
 
 We can use the \texttt{iio\_info -s} command to identify the PlutoSDR device's Universal Resource Identifier (URI). We execute the provided command in an SSH terminal session connected to the embedded PlutoSDR operating system and in a local PC terminal. After executing the command in both terminals, we compare the resulting URIs.
 
+Next, we use the \texttt{iio\_attr} command in the SSH terminal to locate the \textit{ad9361-phy} device. Once we find the device, we use the following command to verify the device name:
+
+\begin{center}
+\texttt{cat /sys/bus/iio/devices/$<$iio\_device$>$/name}
+\end{center}
+
+where \texttt{$<$iio\_device$>$} is the IIO device we find with the \texttt{iio\_attr} command. Then, we use the \texttt{iio\_attr} command to list the attributes of the \textit{ad9361-phy} device.
+
+
 \section{Results}
 \subsection{Industrial Input/Output (IIO)}
 
