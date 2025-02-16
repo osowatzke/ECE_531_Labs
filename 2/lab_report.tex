@@ -80,9 +80,11 @@ Compared to the outputs shown in Figure \ref{fig::iio_info_putty}, the command p
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.9\textwidth]{iio_info_vm.png}}
-	\caption{Result of ``iio\_info -s" Command when Executed in Virtual Machine}
+	\caption{Result of \texttt{iio\_info -s} Command when Executed in Virtual Machine}
 	\label{fig::iio_info_vm}
 \end{figure}
+
+Compared to the results of Figure \ref{fig::iio_info_cmd}, we see that the IIO context warning message is no longer present. Next, we use the \texttt{iio\_attr -d} command without a device to list all the devices. The output of this command is listed in Figure \ref{fig::iio_devices}.
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.75\textwidth]{iio_devices.png}}
@@ -90,23 +92,36 @@ Compared to the outputs shown in Figure \ref{fig::iio_info_putty}, the command p
 	\label{fig::iio_devices}
 \end{figure}
 
+Examining the command output, we find that \textit{ad9361-phy} corresponds to iio:device0. With the following command, we can get the name of iio:device0 and confirm our findings:
+
+\begin{center}
+\texttt{cat /sys/bus/iio/devices/iio:device0/name}
+\end{center}
+
+The outputs of this command are given in Figure \ref{fig::iio_device0_name}.
+
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.5\textwidth]{iio_device0_name.png}}
 	\caption{Confirming Name of ``iio:device0"}
 	\label{fig::iio_device0_name}
 \end{figure}
 
+Examining the command outputs, we find that the name of iio:device0 is \textit{ad9361-phy} as expected. We can pass the name of the device as an argument to the \text{iio\_attr -d} command to list the attributes of the device. The results of this command are given in Figure \ref{fig::iio_raw_attributes}.
+
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.9\textwidth]{iio_raw_attributes.png}}
-	\caption{Attributes for ``ad9361-phy" Device}
+	\caption{Attributes for the \textit{ad9361-phy} Device}
 	\label{fig::iio_raw_attributes}
 \end{figure}
 
+This command gives the device attributes and their values. However, the command window is very cluttered. We can extract just the attribute names from the command output using a combination of \texttt{grep} and \texttt{sed} as illustrated in Figure \ref{fig::iio_filtered_attributes}.
+
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.9\textwidth]{iio_filtered_attributes.png}}
-	\caption{Filtering Output of "iio\_attr" Command}
+	\caption{Filtering Output of \texttt{iio\_attr} Command}
 	\label{fig::iio_filtered_attributes}
 \end{figure}
+
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
 \section{Conclusion}
