@@ -43,7 +43,11 @@
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
 \subsection{Industrial Input/Output (IIO)}
-\label{subsection::industrial_input_output}
+
+We can use the \texttt{iio\_info -s} command to identify the PlutoSDR device's Universal Resource Identifier (URI). We execute the provided command in an SSH terminal session connected to the embedded PlutoSDR operating system and in a local PC terminal. After executing the command in both terminals, we compare the resulting URIs.
+
+\section{Results}
+\subsection{Industrial Input/Output (IIO)}
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.9\textwidth]{iio_info_putty.png}}
@@ -86,8 +90,6 @@
 	\caption{Filtering Output of "iio\_attr" Command}
 	\label{fig::iio_filtered_attributes}
 \end{figure}
-
-\section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
 \section{Conclusion}
