@@ -56,6 +56,9 @@ Next, we use the \texttt{iio\_attr} command in the SSH terminal to locate the \t
 
 where \texttt{$<$iio\_device$>$} is the IIO device we find with the \texttt{iio\_attr} command. Then, we use the \texttt{iio\_attr} command to list the attributes of the \textit{ad9361-phy} device.
 
+\subsection{MATLAB Loopback}
+
+In this experiment, we perform a loopback test by connecting the Pluto SDR's transmit and receive ports together with a coaxial SMA cable. Once the cable is properly connected, we execute the provided \texttt{loopback.m} script to perform a physical collect. After validating that our loopback collect works, we evaluate the impact of the \textit{GainSource} (AGC) settings by testing each possible configuration: \textit{Manual}, \textit{AGC Slow Attack}, and \textit{AGC Fast Attack}. To characterize the impact of these settings, we modify the transmitted signal. We perform one collect while varying the amplitude of the signal and another collect with zero portions added to the signal. Finally, we determine what gain values are necessary to turn the receive sinusoid into a square wave (saturate the signal).
 
 \section{Results}
 \subsection{Industrial Input/Output (IIO)}
