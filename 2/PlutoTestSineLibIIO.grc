@@ -49,7 +49,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '2400000000'
+    value: '1000000000'
   states:
     bus_sink: false
     bus_source: false
@@ -69,6 +69,39 @@ blocks:
     coordinate: [1136, 96.0]
     rotation: 0
     state: enabled
+- name: rx_gain
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Rx Gain (dB)
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: int
+    start: '0'
+    step: '1'
+    stop: '71'
+    value: '20'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [696, 408.0]
+    rotation: 0
+    state: enabled
+- name: rx_gain_2
+  id: variable
+  parameters:
+    comment: ''
+    value: rx_gain
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1488, 664.0]
+    rotation: 0
+    state: enabled
 - name: samp_rate
   id: variable
   parameters:
@@ -81,19 +114,7 @@ blocks:
     coordinate: [44, 90]
     rotation: 0
     state: enabled
-- name: uri
-  id: variable
-  parameters:
-    comment: ''
-    value: '"ip:192.168.2.1"'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [1136, 16.0]
-    rotation: 0
-    state: enabled
-- name: variable_qtgui_range_0
+- name: tone_freq
   id: variable_qtgui_range
   parameters:
     comment: ''
@@ -114,27 +135,18 @@ blocks:
     coordinate: [696, 272.0]
     rotation: 0
     state: enabled
-- name: variable_qtgui_range_1
-  id: variable_qtgui_range
+- name: uri
+  id: variable
   parameters:
     comment: ''
-    gui_hint: ''
-    label: Rx Gain (dB)
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: '0'
-    step: '1'
-    stop: '71'
-    value: '20'
-    widget: counter_slider
+    value: '"ip:192.168.2.1"'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [696, 408.0]
+    coordinate: [1136, 16.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: analog_sig_source_x_0
   id: analog_sig_source_x
   parameters:
@@ -142,7 +154,7 @@ blocks:
     alias: ''
     amp: '1'
     comment: ''
-    freq: variable_qtgui_range_0
+    freq: tone_freq
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
@@ -258,6 +270,86 @@ blocks:
     coordinate: [1448, 440.0]
     rotation: 0
     state: enabled
+- name: epy_block_0
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr, iio\n\n\nclass blk(iio.attr_updater):  # other base\
+      \ classes are basic_block, decim_block, interp_block\n    \"\"\"Embedded Python\
+      \ Block example - a simple multiply const\"\"\"\n\n    def __init__(self, **kwargs):\
+      \  # only default arguments here\n        super().__init__(kwargs)\n       \
+      \ gr.__init__(self,\n            name=\"attr_updater\",\n            in_sig=None,\n\
+      \            out_sig=None)\n\n    def set_value(self, **kwargs):\n        self.set_params(kwargs)\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    example_param: '1.0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Embedded Python Block', 'blk', [('example_param', '1.0')], [('0',
+      'complex', 1)], [('0', 'complex', 1)], 'Embedded Python Block example - a simple
+      multiply const', ['example_param'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [640, 1144.0]
+    rotation: 0
+    state: disabled
+- name: epy_block_2
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\n\n\nclass blk(gr.basic_block):  # other base classes\
+      \ are basic_block, decim_block, interp_block\n    \"\"\"Embedded Python Block\
+      \ example - a simple multiply const\"\"\"\n\n    def __init__(self, attribute=\"\
+      \", value=\"\", interval_ms=1000):  # only default arguments here\n        self.iio_attr_updater_1_2\
+      \ = iio.attr_updater(attribute, str(rx_gain_2), 0)\n        \n        \"\"\"\
+      arguments to this function show up as parameters in GRC\"\"\"\n        gr.basic_block.__init__(self,\n\
+      \            name=\"attr_updater\",\n            in_sig=None,\n            out_sig=None)\n\
+      \            \n        gr.sync_block.__init__(\n            self,\n        \
+      \    name='Embedded Python Block',   # will show up in GRC\n            in_sig=[np.complex64],\n\
+      \            out_sig=[np.complex64]\n        )\n        # if an attribute with\
+      \ the same name as a parameter is found,\n        # a callback is registered\
+      \ (properties work, too).\n        self.example_param = example_param\n\n  \
+      \  def work(self, input_items, output_items):\n        \"\"\"example: multiply\
+      \ with constant\"\"\"\n        output_items[0][:] = input_items[0] * self.example_param\n\
+      \        return len(output_items[0])\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    example_param: '1.0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Embedded Python Block', 'blk', [('example_param', '1.0')], [('0',
+      'complex', 1)], [('0', 'complex', 1)], 'Embedded Python Block example - a simple
+      multiply const', ['example_param'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [864, 1136.0]
+    rotation: 0
+    state: disabled
+- name: epy_module_0
+  id: epy_module
+  parameters:
+    alias: ''
+    comment: ''
+    source_code: '# this module will be imported in the into your flowgraph'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [264, 1072.0]
+    rotation: 0
+    state: enabled
 - name: iio_attr_sink_0
   id: iio_attr_sink
   parameters:
@@ -330,6 +422,42 @@ blocks:
     coordinate: [1144, 688.0]
     rotation: 0
     state: enabled
+- name: iio_attr_sink_0_1_0
+  id: iio_attr_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attr_type: '0'
+    channel: '"altvoltage1"'
+    comment: ''
+    device: '"ad9361-phy"'
+    output: 'True'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1152, 928.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_sink_0_2
+  id: iio_attr_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attr_type: '0'
+    channel: '"voltage0"'
+    comment: ''
+    device: '"ad9361-phy"'
+    output: 'False'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1136, 816.0]
+    rotation: 0
+    state: enabled
 - name: iio_attr_source_0
   id: iio_attr_source
   parameters:
@@ -355,6 +483,24 @@ blocks:
     coordinate: [576, 84.0]
     rotation: 0
     state: disabled
+- name: iio_attr_updater_0
+  id: iio_attr_updater
+  parameters:
+    affinity: ''
+    alias: ''
+    attr: ''
+    comment: ''
+    interval: '1000'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [552, 872.0]
+    rotation: 0
+    state: disabled
 - name: iio_attr_updater_1
   id: iio_attr_updater
   parameters:
@@ -362,7 +508,7 @@ blocks:
     alias: ''
     attr: '"sampling_frequency"'
     comment: ''
-    interval: '1000'
+    interval: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
     value: str(samp_rate)
@@ -380,7 +526,7 @@ blocks:
     alias: ''
     attr: '"rf_bandwidth"'
     comment: ''
-    interval: '1000'
+    interval: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
     value: str(rf_bandwidth)
@@ -398,10 +544,10 @@ blocks:
     alias: ''
     attr: '"gain_control_mode"'
     comment: ''
-    interval: '1000'
+    interval: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
-    value: '''manual'''
+    value: gain_control_mode
   states:
     bus_sink: false
     bus_source: false
@@ -416,7 +562,7 @@ blocks:
     alias: ''
     attr: '"frequency"'
     comment: ''
-    interval: '1000'
+    interval: '0'
     maxoutbuf: '0'
     minoutbuf: '0'
     value: str(lo_freq)
@@ -425,6 +571,42 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [912, 696.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_updater_1_1_0
+  id: iio_attr_updater
+  parameters:
+    affinity: ''
+    alias: ''
+    attr: '"frequency"'
+    comment: ''
+    interval: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: str(lo_freq)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [920, 936.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_updater_1_2
+  id: iio_attr_updater
+  parameters:
+    affinity: ''
+    alias: ''
+    attr: '"hardwaregain"'
+    comment: ''
+    interval: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: str(rx_gain_2)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [904, 816.0]
     rotation: 0
     state: enabled
 - name: iio_device_sink_0
@@ -736,6 +918,36 @@ blocks:
     coordinate: [696, 80.0]
     rotation: 0
     state: disabled
+- name: snippet_0
+  id: snippet
+  parameters:
+    alias: ''
+    code: ''
+    comment: ''
+    priority: '0'
+    section: main_after_init
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 448.0]
+    rotation: 0
+    state: enabled
+- name: snippet_1
+  id: snippet
+  parameters:
+    alias: ''
+    code: ''
+    comment: ''
+    priority: '0'
+    section: main_after_init
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 944.0]
+    rotation: 0
+    state: enabled
 
 connections:
 - [analog_sig_source_x_0, '0', blocks_complex_to_float_1, '0']
@@ -751,6 +963,8 @@ connections:
 - [iio_attr_updater_1_0, out, iio_attr_sink_0_0, attr]
 - [iio_attr_updater_1_0_0, out, iio_attr_sink_0_0_0, attr]
 - [iio_attr_updater_1_1, out, iio_attr_sink_0_1, attr]
+- [iio_attr_updater_1_1_0, out, iio_attr_sink_0_1_0, attr]
+- [iio_attr_updater_1_2, out, iio_attr_sink_0_2, attr]
 - [iio_device_source_0, '0', blocks_short_to_float_0, '0']
 - [iio_device_source_0, '1', blocks_short_to_float_0_0, '0']
 - [iio_pluto_source_0, '0', qtgui_freq_sink_x_0, '0']
