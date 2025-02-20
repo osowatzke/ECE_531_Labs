@@ -62,9 +62,17 @@ In this experiment, we perform a loopback test by connecting the Pluto SDR's tra
 
 \subsection{GNU Radio Loopback}
 
-We can perform a similar loopback experiment using GNU Radio instead of MATLAB. For this test, we use the provided \texttt{PlutoTestSine.grc} flowchart. Before we run the loopback test, we review the properties of the PlutoSDR blocks. We specifically review the RF bandwidth and its impact on performance. Then, we describe what the "Cyclic" option does in the PlutoSDR sink. Finally, we discuss the effects of Manual Gain control in the Pluto SDR and review alternative gain control strategies.
+We can perform a similar loopback experiment using GNU Radio instead of MATLAB. For this test, we use the provided \texttt{PlutoTestSine.grc} flowchart. The lab also mentions a QT GUI Time Sink, which is not included in the provided flowchart. To meet the requirements of this experiment, we have added the time sink to the flowchart. The resulting flowchart is shown in Figure \ref{fig::gnu_radio_loopback_flowchart0}.
 
-After reviewing the PlutoSDR blocks, we run the flowchart and determine the RX gain where the signal distorts (or clips). Next, we replace the "QT Time Sink" block with a "QT GUI Sink" block. Using the updated block, we examine the impacts of increasing the number of averages and changing the window function. Then, we determine the transmitted RF frequency and explain how our transmitter configuration produced this frequency.
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{gnu_radio_loopback_flowchart0.png}}}
+	\caption{GNU Radio Flowchart for Loopback Test}
+	\label{fig::gnu_radio_loopback_flowchart0}
+\end{figure}
+
+Before we run the flowchart, we review the properties of the PlutoSDR blocks. We specifically review the RF bandwidth and its impact on performance. Then, we describe what the "Cyclic" option does in the PlutoSDR sink. Finally, we discuss the effects of Manual Gain control in the Pluto SDR and review alternative gain control strategies.
+
+After reviewing the PlutoSDR blocks, we run the flowchart and determine the RX gain where the signal distorts (or clips). Next, we replace the "QT Time Sink" and "QT Frequency Sink" blocks with a "QT GUI Sink" block. Using the updated block, we examine the impacts of increasing the number of averages and changing the window function. Then, we determine the transmitted RF frequency and explain how our transmitter configuration produced this frequency.
 
 \section{Results}
 \subsection{Industrial Input/Output (IIO)}
