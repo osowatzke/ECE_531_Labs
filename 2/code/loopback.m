@@ -1,9 +1,13 @@
 % Pluto Gain Source Configuration
-gainSource = 'AGC Fast Attack'; % Default is 'AGC Slow Attack';
+gainSource = 'AGC Slow Attack'; %AGC Fast Attack'; % Default is 'AGC Slow Attack';
 gain = 30; % Default is 10
 
 % Desired Frequency
 freq = 300;
+
+% Modify sinusoid
+dutyCycle = 0.75;
+rampData = false;
 
 % Setup Receiver
 rx=sdrrx('Pluto',...
@@ -52,13 +56,24 @@ rx.SamplesPerFrame = samplesPerFrame;
 % Setup Transmitter
 tx = sdrtx('Pluto','Gain',-30);
 
-% Transmit sinewave
+% Create the Sinewave
 sine = dsp.SineWave('Frequency',freq,...
                     'SampleRate',rx.BasebandSampleRate,...
                     'SamplesPerFrame', samplesPerFrame,...
                     'ComplexOutput', true);
-data = data.*(1:length(data)).'/length(data);
-tx.transmitRepeat(sine()); % Transmit continuously
+data = sine();
+
+% Ramp the data
+if rampData
+    data = data.*(1:length(data)).'/length(data);
+end
+
+% Zero out a portion of the pulse
+pulseTime = round(length(data)*dutyCycle);
+data(pulseTime+1:end) = 0;
+
+% Transmit continuously
+tx.transmitRepeat(data);
 % Setup Scope
 samplesPerStep = rx.SamplesPerFrame/rx.BasebandSampleRate;
 steps = 3;
