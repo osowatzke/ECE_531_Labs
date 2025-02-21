@@ -1,0 +1,200 @@
+options:
+  parameters:
+    author: ''
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: hb
+    hier_block_src_path: '.:'
+    id: iio_input_chanel_attribute
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: IIO Input Channel Attribute
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: attribute
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Attribute
+    short_id: ''
+    type: str
+    value: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [600, 8.0]
+    rotation: 0
+    state: enabled
+- name: blocks_var_to_msg_1
+  id: blocks_var_to_msg
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msgname: attribute
+    target: value
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 144.0]
+    rotation: 0
+    state: enabled
+- name: channel_name
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Channel Name
+    short_id: ''
+    type: str
+    value: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 8.0]
+    rotation: 0
+    state: enabled
+- name: device_name
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Device Name/ID
+    short_id: ''
+    type: str
+    value: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [320, 8.0]
+    rotation: 0
+    state: enabled
+- name: epy_block_0
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      import pmt\nfrom gnuradio import gr\n\n\nclass blk(gr.basic_block):  # other\
+      \ base classes are sync_block, decim_block, interp_block\n    \"\"\"Embedded\
+      \ Python Block to Convert Message Pair to Meta Value\"\"\"\n\n    def __init__(self):\
+      \  # only default arguments here\n        \"\"\"arguments to this function show\
+      \ up as parameters in GRC\"\"\"\n        gr.basic_block.__init__(\n        \
+      \    self,\n            name='Message Pair to Meta Value',   # will show up\
+      \ in GRC\n            in_sig=None,\n            out_sig=None\n        )\n  \
+      \      # if an attribute with the same name as a parameter is found,\n     \
+      \   # a callback is registered (properties work, too).\n        self.in_port\
+      \ = pmt.intern(\"inpair\")\n        self.out_port = pmt.intern(\"outmeta\");\n\
+      \        self.message_port_register_in(self.in_port)\n        self.message_port_register_out(self.out_port)\n\
+      \        self.set_msg_handler(self.in_port, self.handle_msg)\n\n    def handle_msg(self,\
+      \ in_msg):\n        key = pmt.car(in_msg)\n        val = pmt.cdr(in_msg)\n \
+      \       out_msg = pmt.make_dict()\n        out_msg = pmt.dict_add(out_msg, key,\
+      \ val) \n        self.message_port_pub(self.out_port, out_msg)\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Message Pair to Meta Value', 'blk', [], [('inpair', 'message', 1)],
+      [('outmeta', 'message', 1)], 'Embedded Python Block to Convert Message Pair
+      to Meta Value', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [304, 160.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_sink_0_0_0_0_0
+  id: iio_attr_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attr_type: '0'
+    channel: channel_name
+    comment: ''
+    device: device_name
+    output: 'False'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [592, 128.0]
+    rotation: 0
+    state: enabled
+- name: uri
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: IIO context URI
+    short_id: ''
+    type: str
+    value: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 8.0]
+    rotation: 0
+    state: enabled
+- name: value
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Value
+    short_id: ''
+    type: str
+    value: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [704, 8.0]
+    rotation: 0
+    state: enabled
+
+connections:
+- [blocks_var_to_msg_1, msgout, epy_block_0, inpair]
+- [epy_block_0, outmeta, iio_attr_sink_0_0_0_0_0, attr]
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.9.2
