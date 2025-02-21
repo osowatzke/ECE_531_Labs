@@ -183,6 +183,10 @@ We use the GNU Radio flowchart shown in Figure \ref{fig::gnu_radio_loopback_flow
 	\caption{Filter Attributes of Pluto SDR Source}
 	\label{fig::filter_attributes_pluto_sdr_source}
 \end{figure}
+
+The RF bandwidth sets the bandwidth of the analog filters in the TX and RX paths. It is set at 20 MHz in Figure \ref{fig::filter_attributes_pluto_sdr_sink} and \ref{fig::filter_attributes_pluto_sdr_source}. The TX filter removes sampling artifacts and acts as a low-pass filter prior to upconversion. When we mix the signal, we are centering a copy of the spectrum at $+f_c$ and $-f_c$. If our signal is not properly bandlimited, the spectral copies may add together resulting in distortion. The RX filter is responsible for getting rid of the unwanted mixer products and removing out-of-band noise prior to sampling. If our filter bandwidth is too large, this unwanted noise will alias into our spectrum, degrading the SNR. 
+
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
