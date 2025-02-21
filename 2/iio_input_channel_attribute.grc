@@ -50,6 +50,23 @@ blocks:
     coordinate: [600, 8.0]
     rotation: 0
     state: enabled
+- name: blocks_message_strobe_0
+  id: blocks_message_strobe
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msg: 'pmt.to_pmt({attribute: value})'
+    period: '10000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [352, 232.0]
+    rotation: 0
+    state: disabled
 - name: blocks_var_to_msg_1
   id: blocks_var_to_msg
   parameters:
@@ -66,7 +83,7 @@ blocks:
     bus_structure: null
     coordinate: [24, 144.0]
     rotation: 0
-    state: enabled
+    state: disabled
 - name: channel_name
   id: parameter
   parameters:
@@ -137,6 +154,50 @@ blocks:
     bus_structure: null
     coordinate: [304, 160.0]
     rotation: 0
+    state: disabled
+- name: epy_block_1
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\nimport pmt\n\n\nclass blk(gr.basic_block):  # other\
+      \ base classes are sync_block, decim_block, interp_block\n    \"\"\"Embedded\
+      \ Python Block to Create IIO Attribute Message\"\"\"\n\n    def __init__(self,\
+      \ attribute : str = \"\", value : str = \"\"):  # only default arguments here\n\
+      \        \"\"\"arguments to this function show up as parameters in GRC\"\"\"\
+      \n        gr.basic_block.__init__(\n            self,\n            name='IIO\
+      \ Attribute Message',   # will show up in GRC\n            in_sig=None,\n  \
+      \          out_sig=None\n        )\n        # if an attribute with the same\
+      \ name as a parameter is found,\n        # a callback is registered (properties\
+      \ work, too).\n        self.attribute = attribute\n        self._value = value\n\
+      \        \n        # Create message port\n        self.out_port = pmt.intern(\"\
+      out\");\n        self.message_port_register_out(self.out_port)\n        \n \
+      \   def start(self):\n        # Send message at time=0\n        self.send_msg()\n\
+      \        \n    def get_value(self):\n        return self._value\n        \n\
+      \    def set_value(self, value):\n        self._value = value\n        # Send\
+      \ message on updates to value\n        self.send_msg()\n        \n    def del_value(self):\
+      \ \n         del self._value\n         \n    def send_msg(self):\n        msg\
+      \ = pmt.to_pmt({self.attribute : self.value})\n        self.message_port_pub(self.out_port,\
+      \ msg)\n        \n    # Setup callback functions for value\n    value = property(get_value,\
+      \ set_value, del_value)\n"
+    affinity: ''
+    alias: ''
+    attribute: attribute
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: value
+  states:
+    _io_cache: ('IIO Attribute Message', 'blk', [('attribute', "''"), ('value', "''")],
+      [], [('out', 'message', 1)], 'Embedded Python Block to Create IIO Attribute
+      Message', ['attribute', 'value'])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [152, 320.0]
+    rotation: 0
     state: enabled
 - name: iio_attr_sink_0_0_0_0_0
   id: iio_attr_sink
@@ -192,8 +253,11 @@ blocks:
     state: enabled
 
 connections:
+- [blocks_message_strobe_0, strobe, iio_attr_sink_0_0_0_0_0, attr]
+- [blocks_var_to_msg_1, msgout, blocks_message_strobe_0, set_msg]
 - [blocks_var_to_msg_1, msgout, epy_block_0, inpair]
 - [epy_block_0, outmeta, iio_attr_sink_0_0_0_0_0, attr]
+- [epy_block_1, out, iio_attr_sink_0_0_0_0_0, attr]
 
 metadata:
   file_format: 1
