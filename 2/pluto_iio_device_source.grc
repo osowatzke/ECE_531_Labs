@@ -237,7 +237,7 @@ blocks:
     comment: ''
     device_name: '"ad9361-phy"'
     uri: uri
-    value: str(sampling_frequency)
+    value: str(sample_rate)
   states:
     bus_sink: false
     bus_source: false
@@ -355,7 +355,7 @@ blocks:
     hide: none
     label: Manual Gain (RX1)(dB)
     short_id: ''
-    type: eng_float
+    type: intx
     value: '64'
   states:
     bus_sink: false
@@ -416,7 +416,7 @@ blocks:
     coordinate: [544, 8.0]
     rotation: 0
     state: enabled
-- name: sampling_frequency
+- name: sample_rate
   id: parameter
   parameters:
     alias: ''
@@ -439,7 +439,7 @@ blocks:
     alias: ''
     comment: ''
     hide: none
-    label: IIO context uri
+    label: IIO context URI
     short_id: ''
     type: str
     value: ''
