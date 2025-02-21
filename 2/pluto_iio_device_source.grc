@@ -155,7 +155,7 @@ blocks:
     channel: '"altvoltage0"'
     comment: ''
     device: '"ad9361-phy"'
-    output: 'False'
+    output: 'True'
     uri: uri
   states:
     bus_sink: false
