@@ -41,11 +41,11 @@ blocks:
     label: LO Frequency (Hz)
     min_len: '200'
     orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: 500e6
-    step: 100e6
-    stop: 5e9
-    value: 2.4e9
+    rangeType: int
+    start: '500000000'
+    step: '100000000'
+    stop: '5000000000'
+    value: '2400000000'
     widget: counter_slider
   states:
     bus_sink: false

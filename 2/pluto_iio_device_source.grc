@@ -284,7 +284,7 @@ blocks:
     hide: none
     label: LO Frequency
     short_id: ''
-    type: eng_float
+    type: intx
     value: '2400000000'
   states:
     bus_sink: false
