@@ -112,6 +112,23 @@ blocks:
     coordinate: [432, 512.0]
     rotation: 0
     state: enabled
+- name: blocks_var_to_msg_0
+  id: blocks_var_to_msg
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msgname: hardwaregain
+    target: str(manual_gain)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [976, 368.0]
+    rotation: 0
+    state: disabled
 - name: buffer_size
   id: parameter
   parameters:
@@ -374,7 +391,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    attr: '"hardware_gain"'
+    attr: '"hardwaregain"'
     comment: ''
     interval: '0'
     maxoutbuf: '0'
@@ -580,8 +597,8 @@ blocks:
     hide: none
     label: RF Bandwidth (Hz)
     short_id: ''
-    type: eng_float
-    value: 20e6
+    type: intx
+    value: '20000000'
   states:
     bus_sink: false
     bus_source: false
