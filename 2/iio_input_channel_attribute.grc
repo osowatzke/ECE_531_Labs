@@ -50,40 +50,6 @@ blocks:
     coordinate: [600, 8.0]
     rotation: 0
     state: enabled
-- name: blocks_message_strobe_0
-  id: blocks_message_strobe
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    msg: 'pmt.to_pmt({attribute: value})'
-    period: '10000'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [352, 232.0]
-    rotation: 0
-    state: disabled
-- name: blocks_var_to_msg_1
-  id: blocks_var_to_msg
-  parameters:
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    msgname: attribute
-    target: value
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [24, 144.0]
-    rotation: 0
-    state: disabled
 - name: channel_name
   id: parameter
   parameters:
@@ -118,43 +84,6 @@ blocks:
     coordinate: [320, 8.0]
     rotation: 0
     state: enabled
-- name: epy_block_0
-  id: epy_block
-  parameters:
-    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
-      \ GRC will instantiate the first class it finds\nto get ports and parameters\
-      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
-      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
-      import pmt\nfrom gnuradio import gr\n\n\nclass blk(gr.basic_block):  # other\
-      \ base classes are sync_block, decim_block, interp_block\n    \"\"\"Embedded\
-      \ Python Block to Convert Message Pair to Meta Value\"\"\"\n\n    def __init__(self):\
-      \  # only default arguments here\n        \"\"\"arguments to this function show\
-      \ up as parameters in GRC\"\"\"\n        gr.basic_block.__init__(\n        \
-      \    self,\n            name='Message Pair to Meta Value',   # will show up\
-      \ in GRC\n            in_sig=None,\n            out_sig=None\n        )\n  \
-      \      # if an attribute with the same name as a parameter is found,\n     \
-      \   # a callback is registered (properties work, too).\n        self.in_port\
-      \ = pmt.intern(\"inpair\")\n        self.out_port = pmt.intern(\"outmeta\");\n\
-      \        self.message_port_register_in(self.in_port)\n        self.message_port_register_out(self.out_port)\n\
-      \        self.set_msg_handler(self.in_port, self.handle_msg)\n\n    def handle_msg(self,\
-      \ in_msg):\n        key = pmt.car(in_msg)\n        val = pmt.cdr(in_msg)\n \
-      \       out_msg = pmt.make_dict()\n        out_msg = pmt.dict_add(out_msg, key,\
-      \ val) \n        self.message_port_pub(self.out_port, out_msg)\n"
-    affinity: ''
-    alias: ''
-    comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
-  states:
-    _io_cache: ('Message Pair to Meta Value', 'blk', [], [('inpair', 'message', 1)],
-      [('outmeta', 'message', 1)], 'Embedded Python Block to Convert Message Pair
-      to Meta Value', [])
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [304, 160.0]
-    rotation: 0
-    state: disabled
 - name: epy_block_1
   id: epy_block
   parameters:
@@ -196,7 +125,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [152, 320.0]
+    coordinate: [40, 128.0]
     rotation: 0
     state: enabled
 - name: iio_attr_sink_0_0_0_0_0
@@ -214,7 +143,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [592, 128.0]
+    coordinate: [320, 112.0]
     rotation: 0
     state: enabled
 - name: uri
@@ -253,10 +182,6 @@ blocks:
     state: enabled
 
 connections:
-- [blocks_message_strobe_0, strobe, iio_attr_sink_0_0_0_0_0, attr]
-- [blocks_var_to_msg_1, msgout, blocks_message_strobe_0, set_msg]
-- [blocks_var_to_msg_1, msgout, epy_block_0, inpair]
-- [epy_block_0, outmeta, iio_attr_sink_0_0_0_0_0, attr]
 - [epy_block_1, out, iio_attr_sink_0_0_0_0_0, attr]
 
 metadata:
