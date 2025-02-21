@@ -1,0 +1,660 @@
+options:
+  parameters:
+    author: ''
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: hb
+    hier_block_src_path: '.:'
+    id: pluto_iio_device_source
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Pluto IIO Device Source
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '32000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1136, 1232.0]
+    rotation: 0
+    state: disabled
+- name: bb_dc_correction
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: BB DC Correction
+    short_id: ''
+    type: intx
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 320.0]
+    rotation: 0
+    state: enabled
+- name: blocks_float_to_complex_0
+  id: blocks_float_to_complex
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [616, 456.0]
+    rotation: 0
+    state: enabled
+- name: blocks_short_to_float_0
+  id: blocks_short_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: (2**15-1)
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [432, 448.0]
+    rotation: 0
+    state: enabled
+- name: blocks_short_to_float_0_0
+  id: blocks_short_to_float
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    scale: (2**15-1)
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [432, 512.0]
+    rotation: 0
+    state: enabled
+- name: buffer_size
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Buffer Size
+    short_id: ''
+    type: intx
+    value: '32768'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 456.0]
+    rotation: 0
+    state: enabled
+- name: gain_control_mode
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Gain Mode (RX1)
+    short_id: ''
+    type: str
+    value: manual
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [800, 8.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_sink_0
+  id: iio_attr_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attr_type: '0'
+    channel: '"altvoltage0"'
+    comment: ''
+    device: '"ad9361-phy"'
+    output: 'False'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [616, 8.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_sink_0_0
+  id: iio_attr_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attr_type: '0'
+    channel: '"voltage0"'
+    comment: ''
+    device: '"ad9361-phy"'
+    output: 'False'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [616, 112.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_sink_0_0_0
+  id: iio_attr_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attr_type: '0'
+    channel: '"voltage0"'
+    comment: ''
+    device: '"ad9361-phy"'
+    output: 'False'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1232, 216.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_sink_0_0_0_0
+  id: iio_attr_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attr_type: '0'
+    channel: '"voltage0"'
+    comment: ''
+    device: '"ad9361-phy"'
+    output: 'False'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1232, 8.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_sink_0_0_0_0_0
+  id: iio_attr_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attr_type: '0'
+    channel: '"voltage0"'
+    comment: ''
+    device: '"ad9361-phy"'
+    output: 'False'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1232, 112.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_sink_0_0_0_0_1
+  id: iio_attr_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attr_type: '0'
+    channel: '"voltage0"'
+    comment: ''
+    device: '"ad9361-phy"'
+    output: 'False'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [616, 320.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_sink_0_0_0_0_1_0
+  id: iio_attr_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attr_type: '0'
+    channel: '"voltage0"'
+    comment: ''
+    device: '"ad9361-phy"'
+    output: 'False'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [616, 216.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_source_0
+  id: iio_attr_source
+  parameters:
+    address: int("0x123",0)
+    affinity: ''
+    alias: ''
+    attr_type: '0'
+    attribute: ''
+    channel: ''
+    comment: ''
+    device: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    output: 'False'
+    samples_per_update: '1024'
+    type: '0'
+    update_interval_ms: '1'
+    uri: 'local:'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [832, 1252.0]
+    rotation: 0
+    state: disabled
+- name: iio_attr_updater_0
+  id: iio_attr_updater
+  parameters:
+    affinity: ''
+    alias: ''
+    attr: '"frequency"'
+    comment: ''
+    interval: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: str(lo_freq)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [392, 16.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_updater_0_0
+  id: iio_attr_updater
+  parameters:
+    affinity: ''
+    alias: ''
+    attr: '"sampling_frequency"'
+    comment: ''
+    interval: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: str(samp_freq)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [360, 120.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_updater_0_0_0
+  id: iio_attr_updater
+  parameters:
+    affinity: ''
+    alias: ''
+    attr: '"rf_bandwidth"'
+    comment: ''
+    interval: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: str(rf_bandwidth)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1008, 224.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_updater_0_0_0_0
+  id: iio_attr_updater
+  parameters:
+    affinity: ''
+    alias: ''
+    attr: '"gain_control_mode"'
+    comment: ''
+    interval: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: gain_control_mode
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [976, 16.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_updater_0_0_0_0_0
+  id: iio_attr_updater
+  parameters:
+    affinity: ''
+    alias: ''
+    attr: '"hardware_gain"'
+    comment: ''
+    interval: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: str(manual_gain)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1000, 120.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_updater_0_0_0_0_1
+  id: iio_attr_updater
+  parameters:
+    affinity: ''
+    alias: ''
+    attr: '"bb_dc_offset_tracking_en"'
+    comment: ''
+    interval: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: str(bb_dc_correction)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [368, 328.0]
+    rotation: 0
+    state: enabled
+- name: iio_attr_updater_0_0_0_0_1_0
+  id: iio_attr_updater
+  parameters:
+    affinity: ''
+    alias: ''
+    attr: '"rf_dc_offset_tracking_en"'
+    comment: ''
+    interval: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: str(rf_dc_correction)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [368, 224.0]
+    rotation: 0
+    state: enabled
+- name: iio_device_source_0
+  id: iio_device_source
+  parameters:
+    affinity: ''
+    alias: ''
+    buffer_size: buffer_size
+    channels: '["voltage0","voltage1"]'
+    comment: ''
+    decimation: '1'
+    device: '"cf-ad9361-lpc"'
+    device_phy: '"ad9361-phy"'
+    len_tag_key: packet_len
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    params: '[]'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [168, 428.0]
+    rotation: 0
+    state: enabled
+- name: iio_pluto_sink_0
+  id: iio_pluto_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attenuation1: '10.0'
+    bandwidth: '20000000'
+    buffer_size: '32768'
+    comment: ''
+    cyclic: 'False'
+    filter: ''
+    filter_source: '''Auto'''
+    fpass: '0'
+    frequency: '2400000000'
+    fstop: '0'
+    len_tag_key: ''
+    samplerate: samp_rate
+    type: fc32
+    uri: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1120, 1012.0]
+    rotation: 0
+    state: disabled
+- name: iio_pluto_source_0
+  id: iio_pluto_source
+  parameters:
+    affinity: ''
+    alias: ''
+    bandwidth: '20000000'
+    bbdc: 'True'
+    buffer_size: '32768'
+    comment: ''
+    filter: ''
+    filter_source: '''Auto'''
+    fpass: '0'
+    frequency: '2400000000'
+    fstop: '0'
+    gain1: '''manual'''
+    len_tag_key: packet_len
+    manual_gain1: '64'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    quadrature: 'True'
+    rfdc: 'True'
+    samplerate: samp_rate
+    type: fc32
+    uri: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1320, 1148.0]
+    rotation: 0
+    state: disabled
+- name: lo_freq
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: LO Frequency
+    short_id: ''
+    type: eng_float
+    value: '2400000000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 8.0]
+    rotation: 0
+    state: enabled
+- name: manual_gain
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Manual Gain (RX1)(dB)
+    short_id: ''
+    type: eng_float
+    value: '64'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [800, 112.0]
+    rotation: 0
+    state: enabled
+- name: pad_sink_0
+  id: pad_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    label: out
+    num_streams: '1'
+    optional: 'False'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [800, 464.0]
+    rotation: 0
+    state: enabled
+- name: parameter_0
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: ''
+    short_id: ''
+    type: ''
+    value: '0'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1136, 1440.0]
+    rotation: 0
+    state: disabled
+- name: rf_bandwidth
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: RF Bandwidth (Hz)
+    short_id: ''
+    type: eng_float
+    value: 20e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [800, 216.0]
+    rotation: 0
+    state: enabled
+- name: rf_dc_correction
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: RF DC Correction
+    short_id: ''
+    type: intx
+    value: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 216.0]
+    rotation: 0
+    state: enabled
+- name: samp_freq
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Sample Rate
+    short_id: ''
+    type: eng_float
+    value: 2.084e6
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 112.0]
+    rotation: 0
+    state: enabled
+- name: uri
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: IIO context uri
+    short_id: ''
+    type: str
+    value: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 120.0]
+    rotation: 0
+    state: enabled
+
+connections:
+- [blocks_float_to_complex_0, '0', pad_sink_0, '0']
+- [blocks_short_to_float_0, '0', blocks_float_to_complex_0, '0']
+- [blocks_short_to_float_0_0, '0', blocks_float_to_complex_0, '1']
+- [iio_attr_updater_0, out, iio_attr_sink_0, attr]
+- [iio_attr_updater_0_0, out, iio_attr_sink_0_0, attr]
+- [iio_attr_updater_0_0_0, out, iio_attr_sink_0_0_0, attr]
+- [iio_attr_updater_0_0_0_0, out, iio_attr_sink_0_0_0_0, attr]
+- [iio_attr_updater_0_0_0_0_0, out, iio_attr_sink_0_0_0_0_0, attr]
+- [iio_attr_updater_0_0_0_0_1, out, iio_attr_sink_0_0_0_0_1, attr]
+- [iio_attr_updater_0_0_0_0_1_0, out, iio_attr_sink_0_0_0_0_1_0, attr]
+- [iio_device_source_0, '0', blocks_short_to_float_0, '0']
+- [iio_device_source_0, '1', blocks_short_to_float_0_0, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.9.2
