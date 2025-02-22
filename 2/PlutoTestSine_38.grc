@@ -179,7 +179,7 @@ blocks:
     coordinate: [248, 220.0]
     rotation: 0
     state: true
-- name: qtgui_freq_sink_x_0
+- name: qtgui_freq_sink_x_0_0
   id: qtgui_freq_sink_x
   parameters:
     affinity: ''
@@ -209,7 +209,7 @@ blocks:
     color8: '"dark red"'
     color9: '"dark green"'
     comment: ''
-    ctrlpanel: 'True'
+    ctrlpanel: 'False'
     fc: '0'
     fftsize: '1024'
     freqhalf: 'True'
@@ -234,8 +234,8 @@ blocks:
     norm_window: 'False'
     showports: 'False'
     tr_chan: '0'
-    tr_level: '-60'
-    tr_mode: qtgui.TRIG_MODE_AUTO
+    tr_level: '0.0'
+    tr_mode: qtgui.TRIG_MODE_FREE
     tr_tag: '""'
     type: complex
     units: dB
@@ -257,10 +257,10 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [512, 320.0]
+    coordinate: [520, 312.0]
     rotation: 0
     state: true
-- name: qtgui_time_sink_x_0
+- name: qtgui_time_sink_x_1
   id: qtgui_time_sink_x
   parameters:
     affinity: ''
@@ -288,7 +288,7 @@ blocks:
     color8: dark red
     color9: dark green
     comment: ''
-    ctrlpanel: 'True'
+    ctrlpanel: 'False'
     entags: 'True'
     grid: 'False'
     gui_hint: ''
@@ -354,14 +354,14 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [512, 216.0]
+    coordinate: [520, 224.0]
     rotation: 0
     state: enabled
 
 connections:
 - [analog_sig_source_x_0, '0', iio_pluto_sink_0, '0']
-- [iio_pluto_source_0, '0', qtgui_freq_sink_x_0, '0']
-- [iio_pluto_source_0, '0', qtgui_time_sink_x_0, '0']
+- [iio_pluto_source_0, '0', qtgui_freq_sink_x_0_0, '0']
+- [iio_pluto_source_0, '0', qtgui_time_sink_x_1, '0']
 
 metadata:
   file_format: 1
