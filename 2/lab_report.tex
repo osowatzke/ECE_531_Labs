@@ -214,6 +214,32 @@ We note that the signal is no longer distorted but is very close to full scale (
 	\label{fig::gnu_radio_loopback_rx_gain_13dB}
 \end{figure}
 
+Next, we replace the "QT Time Sink" and "QT Frequency Sink" sink and observe the output. Figure \ref{fig::gnu_radio_loopback_qt_gui_sink} shows the frequency response with the RX Gain set to 0 dB.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_qt_gui_sink.png}}}
+	\caption{Frequency Response with QT GUI Sink and 0 dB of RX Gain}
+	\label{fig::gnu_radio_loopback_qt_gui_sink}
+\end{figure}
+
+Looking at the frequency response, we see roughly 75 dB of SNR (peak to noise floor). Figure \ref{fig::gnu_radio_loopback_qt_gui_sink} shows the frequency response for the same configuration, average in amplitude over 256 frames.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_qt_gui_sink_avg_256.png}}}
+	\caption{Frequency Response Averaged Over 256 Frames}
+	\label{fig::gnu_radio_loopback_qt_gui_sink_avg_256}
+\end{figure}
+
+Comparing Figures \ref{fig::gnu_radio_loopback_qt_gui_sink} and \ref{fig::gnu_radio_loopback_qt_gui_sink_avg_256}, we see that integrating multiple frames of the FFT output reduces the variance of the noise, allowing us to better visualize sidelobes in the frequency response. 
+
+Using a different window will change the sidelobe levels and sidelobe rolloff in the frequency response. However, when we reduce sidelobe levels we also increase the mainlobe width. Compare Figure \ref{fig::gnu_radio_loopback_qt_gui_sink_avg_256} which uses a Blackman-harris window to Figure \ref{fig::gnu_radio_loopback_qt_gui_sink_rect_win} which uses a rectangular window. The sidelobes of the Blackman-harris are substantially lower. However, the mainlobe of the frequency response is much larger.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_qt_gui_sink_rect_win.png}}}
+	\caption{Frequency Response Using Rectangular Window Instead of Blackman-Harris Window}
+	\label{fig::gnu_radio_loopback_qt_gui_sink_rect_win}
+\end{figure}
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
