@@ -97,9 +97,103 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [16, 272.0]
+    coordinate: [8, 216.0]
     rotation: 0
     state: enabled
+- name: cyclic
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Cyclic
+    short_id: ''
+    type: str
+    value: '"True"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 320.0]
+    rotation: 0
+    state: enabled
+- name: epy_block_1
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\nimport pmt\n\n\nclass blk(gr.basic_block):  # other\
+      \ base classes are sync_block, decim_block, interp_block\n    \"\"\"Embedded\
+      \ Python Block to Create IIO Attribute Message\"\"\"\n\n    def __init__(self):\
+      \  # only default arguments here\n        \"\"\"arguments to this function show\
+      \ up as parameters in GRC\"\"\"\n        gr.basic_block.__init__(\n        \
+      \    self,\n            name='IIO Attribute Message',   # will show up in GRC\n\
+      \            in_sig=None,\n            out_sig=None\n        )\n        \n \
+      \       # Create message port\n        # self.out_port = pmt.intern(\"out\"\
+      );\n        # self.message_port_register_out(self.out_port)\n        self.taps\
+      \ = [-15,-27,-23,-6,17,33,31,9,-23,-47,-45,-13,34,69,67,21,-49,-102,-99,-32,69,146,143,48,-96,-204,-200,-69,129,278,275,97,-170,\\\
+      \n\t        -372,-371,-135,222,494,497,187,-288,-654,-665,-258,376,875,902,363,-500,-1201,-1265,-530,699,1748,1906,845,-1089,-2922,-3424,\\\
+      \n\t        -1697,2326,7714,12821,15921,15921,12821,7714,2326,-1697,-3424,-2922,-1089,845,1906,1748,699,-530,-1265,-1201,-500,363,902,875,\\\
+      \n\t        376,-258,-665,-654,-288,187,497,494,222,-135,-371,-372,-170,97,275,278,129,-69,-200,-204,-96,48,143,146,69,-32,-99,-102,-49,21,\\\
+      \n\t        67,69,34,-13,-45,-47,-23,9,31,33,17,-6,-23,-27,-15]\n        \n\
+      \    def start(self):\n        # Send message at time=0\n        self.send_msg()\n\
+      \         \n    def send_msg(self):\n        msg_value = \"RX 3 GAIN -6 DEC\
+      \ 4\\n\"\n        msg_value += \"TX 3 GAIN 0 INT 4\\n\"\n        for i in range(len(self.taps)):\n\
+      \            msg_value += str(self.taps) + \",\" + str(self.taps) + \"\\n\"\n\
+      \        print(msg_value)\n        #msg = pmt.to_pmt({'filter_fir_config' :\
+      \ msg_value})\n        #self.message_port_pub(self.out_port, msg)\n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('IIO Attribute Message', 'blk', [], [], [], 'Embedded Python Block
+      to Create IIO Attribute Message', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [912, 32.0]
+    rotation: 0
+    state: disabled
+- name: iio_attr_sink_1
+  id: iio_attr_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    attr_type: '1'
+    channel: ''
+    comment: ''
+    device: ad9361-phy
+    output: 'False'
+    uri: uri
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1136, 8.0]
+    rotation: 0
+    state: disabled
+- name: iio_attr_updater_0
+  id: iio_attr_updater
+  parameters:
+    affinity: ''
+    alias: ''
+    attr: filter_fir_config
+    comment: ''
+    interval: '0'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    value: '"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1112, 264.0]
+    rotation: 0
+    state: disabled
 - name: iio_device_sink_0
   id: iio_device_sink
   parameters:
@@ -108,7 +202,7 @@ blocks:
     buffer_size: '32768'
     channels: '["voltage0","voltage1"]'
     comment: ''
-    cyclic: 'False'
+    cyclic: eval(cyclic)
     device: '"cf-ad9361-dds-core-lpc"'
     device_phy: '"ad9361-phy"'
     interpolation: '1'
