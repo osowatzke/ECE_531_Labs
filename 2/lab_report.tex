@@ -190,6 +190,30 @@ Next, we review the cyclic option in the PlutoSDR sink. When the cyclic option i
 
 The manual gain control in the PlutoSDR source block disables AGC and allows us to manually set the attenuation. Alternative gain control strategies include manual, slow attack, hybrid, and fast attack. The hybrid gain control is present in just the GNU Radio block and can be set view \texttt{iio\_attr}. However, it is not present in the MATLAB API. The hybrid mode is the same as the slow attack AGC mode with the exception of the gain update counter, which is not present in hybrid mode. This allows the hybrid algorithm to more frequently adjust the attenuation.
 
+Using the default receive gain setting of 20 dB, we observe the time and frequency data shown in Figure \ref{fig::gnu_radio_loopback_baseline}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_baseline.png}}}
+	\caption{Baseline Loopback Test with GNU Radio}
+	\label{fig::gnu_radio_loopback_baseline}
+\end{figure}
+
+With the default settings the signal has already clipped. We can reduce the receive signal gain until we no longer see distortion. Figure \ref{fig::gnu_radio_loopback_rx_gain_12dB} shows the collect with 12 dB of receive signal gain.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_rx_gain_12dB.png}}}
+	\caption{GNU Radio Loopback Collect with 12 dB of RX Gain}
+	\label{fig::gnu_radio_loopback_rx_gain_12dB}
+\end{figure}
+
+We note that the signal is no longer distorted but is very close to full scale ($\pm 1$). If we increase the receive signal gain back up to 13 dB, we start to see clipping again as illustrated in Figure \ref{fig::gnu_radio_loopback_rx_gain_13dB}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_rx_gain_13dB.png}}}
+	\caption{GNU Radio Loopback Collect with 13 dB of RX Gain}
+	\label{fig::gnu_radio_loopback_rx_gain_13dB}
+\end{figure}
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
