@@ -273,7 +273,7 @@ I then created an additional hierarchy blocks to function as the Pluto Source an
 	\label{fig::pluto_iio_device_sink}
 \end{figure}
 
-Both the source and sink hierarchy blocks use multiple IIO Channel Attribute blocks, described by Figure \ref{fig::iio_input_channel_attribute}, to set block parameters. Each of these blocks get the same arguments as the \texttt{iio\_attr} command.
+Both the source and sink hierarchy blocks use multiple IIO Channel Attribute blocks, described by Figure \ref{fig::iio_input_channel_attribute}, to set block parameters. Each of these blocks get the same arguments as the \texttt{iio\_attr} command. The source block uses an IIO device source to grab buffers of samples from the ADC. These samples are then scaled and convert to a complex float for processing. In a similar manner, the sink block converts comnplex floats to complex shorts. Then, it uses an IIO device sink to push buffers of samples to the DAC. 
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
