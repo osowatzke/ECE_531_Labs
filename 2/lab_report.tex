@@ -241,14 +241,13 @@ Using a different window will change the sidelobe levels and sidelobe rolloff in
 \end{figure}
 
 The PlutoSDR uses a quadrature mixer to mix the DAC output to the correct frequency. The output of a quadrature mixer is given as follows:
-
 \begin{align}
-	y(t) &= \cos(2{\pi}f_ct)\text{Re}\{x(t)\} - \sin(2{\pi}f_ct)\text{Im}\{x(t)\} \\ [3pt]
-	&= \text{Re}\{(\text{Re}\{x(t)\} + j\text{Im}\{x(t)\})(\cos(2{\pi}f_ct) + j\sin(2{\pi}f_ct))\} \\ [3pt]
+	y(t) &= \cos(2{\pi}f_ct)\text{Re}\{x(t)\} - \sin(2{\pi}f_ct)\text{Im}\{x(t)\} \\
+	&= \text{Re}\{(\text{Re}\{x(t)\} + j\text{Im}\{x(t)\})(\cos(2{\pi}f_ct) + j\sin(2{\pi}f_ct))\} \\
 	&= \text{Re}\{X(t)e^{j2{\pi}f_ct}\}
 \end{align}
 
-In other words, the transmitted spectrum should be centered about $f_c$, and the frequency image should be centered about $-f_c$. For our experiment, we output a 10 kHZ sinusoid and mixed it with a 2.4 GHz LO. Thus, our transmitted frequency was 2.40001 GHz.
+In other words, the transmitted spectrum will be the DAC spectrum centered about $f_c$ and mirrored about the origin. For the PlutoSDR, $f_c$ is the LO frequency. Therefore, our transmitted frequency will be the sinusoid frequency plus the LO frequency. Substituting the parameters from our experiment (10 kHz and 2.4 GHz), we find that our transmitted frequency is 2.40001 GHz. 
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
