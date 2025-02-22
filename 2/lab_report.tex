@@ -259,6 +259,22 @@ In this experiment, we performed a loopback test using the generic IIO blocks sh
 	\label{fig::iio_input_channel_attribute}
 \end{figure}
 
+I then created an additional hierarchy blocks to function as the Pluto Source and Sink. These hierarchy blocks are shown in Figure \ref{fig::pluto_iio_device_source} and Figure \ref{fig::pluto_iio_device_sink}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.9\textwidth]{pluto_iio_device_source.png}}}
+	\caption{Hierarchy Block which Functions as Pluto Source}
+	\label{fig::pluto_iio_device_source}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{pluto_iio_device_sink.png}}}
+	\caption{Hierarchy Block which Functions as Pluto Sink}
+	\label{fig::pluto_iio_device_sink}
+\end{figure}
+
+Both the source and sink hierarchy blocks use multiple IIO Channel Attribute blocks, described by Figure \ref{fig::iio_input_channel_attribute}, to set block parameters. Each of these blocks get the same arguments as the \texttt{iio\_attr} command.
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
