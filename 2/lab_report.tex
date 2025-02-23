@@ -324,6 +324,22 @@ In a similar manner, we collect the frequency again using a rectangular window. 
 	\label{fig::gnu_radio_loopback_generic_iio_rect_win}
 \end{figure}
 
+Next, we increase the sample rate to 4 MHz and observe the frequency response. Figure \ref{fig::gnu_radio_loopback_generic_iio_4MSPS} shows the updated frequency response. The updated frequency response has a frequency span of $\pm 2 \text{MHz}$.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_4MSPS.png}}}
+	\caption{Frequency Response when Sampling Rate is Increased to 4 MHz}
+	\label{fig::gnu_radio_loopback_generic_iio_4MSPS}
+\end{figure}
+
+We can also confirm these settings using the \texttt{iio\_attr} commands shown in Figure \ref{fig::iio_attr_confirm_sampling_rate}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{iio_attr_confirm_sampling_rate.png}}}
+	\caption{Confirming a 4MHz Sampling Rate with the \texttt{iio\_attr} commands}
+	\label{fig::iio_attr_confirm_sampling_rate}
+\end{figure}
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
