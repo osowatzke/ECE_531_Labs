@@ -96,7 +96,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [456, 16.0]
+    coordinate: [456, 8.0]
     rotation: 0
     state: enabled
 - name: uri
@@ -131,7 +131,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [16, 192.0]
+    coordinate: [8, 176.0]
     rotation: 0
     state: enabled
 - name: pluto_iio_device_sink_0
@@ -153,7 +153,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [224, 164.0]
+    coordinate: [224, 148.0]
     rotation: 0
     state: enabled
 - name: pluto_iio_device_source_0
@@ -162,7 +162,7 @@ blocks:
     affinity: ''
     alias: ''
     auto_filter: '"True"'
-    bb_dc_correction: '1'
+    bb_dc_correction: '"True"'
     buffer_size: '32768'
     comment: ''
     filter_path: '""'
@@ -172,14 +172,14 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     rf_bandwidth: '20000000'
-    rf_dc_correction: '1'
+    rf_dc_correction: '"True"'
     sample_rate: samp_rate
     uri: uri
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [400, 164.0]
+    coordinate: [400, 148.0]
     rotation: 0
     state: enabled
 - name: qtgui_sink_x_1
@@ -208,7 +208,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [632, 216.0]
+    coordinate: [632, 200.0]
     rotation: 0
     state: enabled
 
