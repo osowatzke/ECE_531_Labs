@@ -283,6 +283,14 @@ Using the previously described hierarchy blocks, I created an additional layer o
 
 Both the hierarchy blocks shown above use IIO Channel Attribute blocks to set block parameters. Each of the IIO Channel Attribute blocks get the same arguments as the \texttt{iio\_attr} command. They also leverage  IIO FIR Configuration blocks to configure the programmable FIR. The source block uses an IIO device source to grab buffers of samples from the ADC. These samples are then scaled and convert to a complex float for processing. In a similar manner, the sink block converts comnplex floats to complex shorts. Then, it uses an IIO device sink to push buffers of samples to the DAC. 
 
+Using the Generic IIO PlutoSDR Sink and Source blocks shown above, we create a GNU flowchart for a loopback test. The updated flowchart is shown in Figure \ref{fig::gnu_radio_loopback_generic_iio} and is nearly identical to the flowchart shown in Figure \ref{fig::gnu_radio_loopback_flowchart0}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{gnu_radio_loopback_generic_iio.png}}}
+	\caption{GNU Flowchart for Loopback Test with Generic IIO Blocks}
+	\label{fig::gnu_radio_loopback_generic_iio}
+\end{figure}
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
