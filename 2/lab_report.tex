@@ -293,6 +293,37 @@ Using the Generic IIO PlutoSDR Sink and Source blocks shown above, we create a G
 
 Using the flowchart in Figure \ref{fig::gnu_radio_loopback_generic_iio}, we repeat the experiment described in Section \ref{section::gnu_radio_loopback}. Note that our initial flowchart contains the QT GUI Sink instead of the QT GUI Time Sink. This is okay for our experiment because the QT GUI Sink contains all the functionality of the QT GUI Time Sink.
 
+As we did previously, we measure the receive gain at which we first observe clipping. Figure \ref{fig::gnu_radio_loopback_generic_iio_rx_gain_12dB} and Figure 
+\ref{fig::gnu_radio_loopback_generic_iio_rx_gain_13dB} show the resulting time-domain data at 12 and 13 dB of receive gain. Looking at the captured data, we conclude that clipping occurs at 13 dB, the same gain we measured previously.
+ 
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_rx_gain_12dB.png}}}
+	\caption{Time Domain Loopback Data with 12 dB of Receive Gain}
+	\label{fig::gnu_radio_loopback_generic_iio_rx_gain_12dB}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_rx_gain_13dB.png}}}
+	\caption{Time Domain Loopback Data with 13 dB of Receive Gain}
+	\label{fig::gnu_radio_loopback_generic_iio_rx_gain_13dB}
+\end{figure}
+
+Next, we capture the frequency response with 0dB of receive gain and average it across 256 frames. We capture this result in Figure \ref{fig::gnu_radio_loopback_generic_iio_avg_256} and note that is nearly identical to the data we captured in Figure \ref{fig::gnu_radio_loopback_qt_gui_sink_avg_256}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_avg_256.png}}}
+	\caption{Frequency Response Averaged Over 256 Frames}
+	\label{fig::gnu_radio_loopback_generic_iio_avg_256}
+\end{figure}
+
+In a similar manner, we collect the frequency again using a rectangular window. These results are shown in Figure \ref{fig::gnu_radio_loopback_generic_iio_rect_win}. Again, we note that the results are nearly the same as the ones we captured in Figure \ref{fig::gnu_radio_loopback_generic_iio_rect_win}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_rect_win.png}}}
+	\caption{Frequency Response Using Rectangular Window Instead of Blackman-Harris Window}
+	\label{fig::gnu_radio_loopback_generic_iio_rect_win}
+\end{figure}
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
