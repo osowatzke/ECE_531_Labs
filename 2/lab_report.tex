@@ -259,15 +259,15 @@ In this experiment, we performed a loopback test using the generic IIO blocks sh
 	\label{fig::iio_input_channel_attribute}
 \end{figure}
 
-The PlutoSDR Source and Sink blocks also leverage a programmable FIR. This programmable FIR requires a file to be written to the \texttt{filter\_fir\_config} attribute of the \texttt{ad9361-phy} device with an IIO Attribute Sink. Then, after loading the filter, the \texttt{filter\_fir\_en} attribute needs to be written to the \texttt{voltage0} channel. I created a custom python block to create both of the messages and coordinate the timing of both messages. I then wrapped the custom block in a hierarchy block, to leverage the same code for the source and sink. The resulting hierarchy block is shown in Figure \ref{fig::iio_fir_config}.
+The PlutoSDR Source and Sink blocks also leverage a programmable FIR. This programmable FIR requires a file to be written to the \texttt{filter\_fir\_config} attribute of the \texttt{ad9361-phy} device with an IIO Attribute Sink. Then, after loading the filter, the \texttt{filter\_fir\_en} attribute needs to be written to the \texttt{voltage0} channel. I created a custom python block to create both of the messages and coordinate their timing. I then wrapped the custom block in another hierarchy block, so I could easily leverage it in both the source and sink blocks. The resulting hierarchy block is shown in Figure \ref{fig::iio_fir_config}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{iio_fir_config.png}}}
-	\caption{Hierarchy Block to Setup the Programmable FIR with IIO Attribute Writes}
+	\caption{Hierarchy Block which Create Messages  to Configure the Programmable FIR}
 	\label{fig::iio_fir_config}
 \end{figure}
 
-I then created an additional hierarchy blocks to function as the Pluto Source and Sink. These hierarchy blocks are shown in Figure \ref{fig::pluto_iio_device_source} and Figure \ref{fig::pluto_iio_device_sink}.
+Using the previously described hierarchy blocks, I created an additional layer of hierarchy blocks to function as the Pluto Source and Sink. These hierarchy blocks are shown in Figure \ref{fig::pluto_iio_device_source} and Figure \ref{fig::pluto_iio_device_sink}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.9\textwidth]{pluto_iio_device_source.png}}}
@@ -276,12 +276,12 @@ I then created an additional hierarchy blocks to function as the Pluto Source an
 \end{figure}
 
 \begin{figure}[H]
-	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{pluto_iio_device_sink.png}}}
+	\centerline{\fbox{\includegraphics[width=0.9\textwidth]{pluto_iio_device_sink.png}}}
 	\caption{Hierarchy Block which Functions as Pluto Sink}
 	\label{fig::pluto_iio_device_sink}
 \end{figure}
 
-Both the source and sink hierarchy blocks use multiple IIO Channel Attribute blocks, described by Figure \ref{fig::iio_input_channel_attribute}, to set block parameters. Each of these blocks get the same arguments as the \texttt{iio\_attr} command. The source block uses an IIO device source to grab buffers of samples from the ADC. These samples are then scaled and convert to a complex float for processing. In a similar manner, the sink block converts comnplex floats to complex shorts. Then, it uses an IIO device sink to push buffers of samples to the DAC. 
+Both the hierarchy blocks shown above use IIO Channel Attribute blocks to set block parameters. Each of the IIO Channel Attribute blocks get the same arguments as the \texttt{iio\_attr} command. They also leverage  IIO FIR Configuration blocks to configure the programmable FIR. The source block uses an IIO device source to grab buffers of samples from the ADC. These samples are then scaled and convert to a complex float for processing. In a similar manner, the sink block converts comnplex floats to complex shorts. Then, it uses an IIO device sink to push buffers of samples to the DAC. 
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
