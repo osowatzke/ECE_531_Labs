@@ -34,24 +34,15 @@ options:
 
 blocks:
 - name: lo_freq
-  id: variable_qtgui_range
+  id: variable
   parameters:
     comment: ''
-    gui_hint: ''
-    label: LO Frequency (Hz)
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: int
-    start: '500000000'
-    step: '100000000'
-    stop: '5000000000'
     value: '2400000000'
-    widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [568, 8.0]
+    coordinate: [376, 8.0]
     rotation: 0
     state: enabled
 - name: rx_gain
@@ -66,13 +57,13 @@ blocks:
     start: '0'
     step: '1'
     stop: '71'
-    value: '0'
+    value: '20'
     widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [720, 8.0]
+    coordinate: [608, 8.0]
     rotation: 0
     state: enabled
 - name: samp_rate
@@ -84,7 +75,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [312, 8.0]
+    coordinate: [288, 8.0]
     rotation: 0
     state: enabled
 - name: tone_freq
@@ -105,7 +96,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [408, 8.0]
+    coordinate: [456, 16.0]
     rotation: 0
     state: enabled
 - name: uri
@@ -117,7 +108,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [176, 8.0]
+    coordinate: [160, 8.0]
     rotation: 0
     state: enabled
 - name: analog_sig_source_x_0
@@ -148,8 +139,11 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
+    auto_filter: '"True"'
     buffer_size: '32768'
     comment: ''
+    cyclic: '"True"'
+    filter_path: '""'
     lo_freq: lo_freq
     rf_bandwidth: '20000000'
     sample_rate: samp_rate
@@ -159,7 +153,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [224, 192.0]
+    coordinate: [224, 164.0]
     rotation: 0
     state: enabled
 - name: pluto_iio_device_source_0
@@ -167,9 +161,11 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
+    auto_filter: '"True"'
     bb_dc_correction: '1'
     buffer_size: '32768'
     comment: ''
+    filter_path: '""'
     gain_control_mode: manual
     lo_freq: lo_freq
     manual_gain: rx_gain
@@ -212,7 +208,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [632, 200.0]
+    coordinate: [632, 216.0]
     rotation: 0
     state: enabled
 
