@@ -47,7 +47,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [16, 416.0]
+    coordinate: [8, 352.0]
     rotation: 0
     state: enabled
 - name: bb_dc_correction
@@ -80,7 +80,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [648, 264.0]
+    coordinate: [1152, 272.0]
     rotation: 0
     state: enabled
 - name: blocks_short_to_float_0
@@ -97,7 +97,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [464, 256.0]
+    coordinate: [968, 264.0]
     rotation: 0
     state: enabled
 - name: blocks_short_to_float_0_0
@@ -114,7 +114,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [464, 320.0]
+    coordinate: [968, 328.0]
     rotation: 0
     state: enabled
 - name: buffer_size
@@ -131,82 +131,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 272.0]
-    rotation: 0
-    state: enabled
-- name: epy_block_1_0
-  id: epy_block
-  parameters:
-    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
-      \ GRC will instantiate the first class it finds\nto get ports and parameters\
-      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
-      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
-      from gnuradio import gr\nimport pmt\nimport time\n\nclass blk(gr.basic_block):\
-      \  # other base classes are sync_block, decim_block, interp_block\n    \"\"\"\
-      Embedded Python Block to Create IIO Filter Messages\"\"\"\n\n    def __init__(self,\
-      \ sample_rate : int = 2084000, auto_filter : bool = True, filter_path : str\
-      \ = \"\"):  # only default arguments here\n        \"\"\"arguments to this function\
-      \ show up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n    \
-      \        self,\n            name='FIR Config Message',   # will show up in GRC\n\
-      \            in_sig=None,\n            out_sig=None\n        )\n        \n \
-      \       # Set Default Properties\n        self._sample_rate = sample_rate\n\
-      \        self.auto_filter = auto_filter\n        if self.auto_filter:\n    \
-      \        self.filter_path = self.auto_filter_path()\n        else:\n       \
-      \     self.filter_path = filter_path\n        \n        # Create message port\
-      \ to enable filter\n        self.en_port = pmt.intern(\"en_out\")        \n\
-      \        self.message_port_register_out(self.en_port)\n        \n        # Create\
-      \ message port to write filter coefficients\n        self.coefs_port = pmt.intern(\"\
-      coefs_out\")\n        self.message_port_register_out(self.coefs_port)\n    \
-      \            \n    def start(self):\n        # Send message at time=0\n    \
-      \    self.send_msg()\n         \n    def send_msg(self):\n        # Disable\
-      \ filter if no filter is provided\n        if self.filter_path == \"\":\n  \
-      \          # msg = pmt.to_pmt({'filter_fir_config' : \"RX 3 GAIN 0 DEC 4\\nTX\
-      \ 3 GAIN 0 INT 4\\n\\n\"})\n            # self.message_port_pub(self.coefs_port,\
-      \ msg)\n            msg = pmt.to_pmt({'filter_fir_en' : '0'})\n            self.message_port_pub(self.en_port,\
-      \ msg)\n        else:\n            # Enable filter if file exists\n        \
-      \    try:\n                with open(self.filter_path, 'r') as file:\n     \
-      \               msg = pmt.to_pmt({'filter_fir_config' : file.read()})\n    \
-      \            self.message_port_pub(self.coefs_port, msg)\n                #\
-      \ Wait for coefficients to be loaded\n                time.sleep(1.0)\n    \
-      \            msg = pmt.to_pmt({'filter_fir_en' : '1'})\n                self.message_port_pub(self.en_port,\
-      \ msg)\n            # Otherwise, disable filter\n            except:\n     \
-      \           print(\"Unable to find file: \\\"%s\\\"\" % self.filter_path)\n\
-      \                msg = pmt.to_pmt({'filter_fir_en','0'})\n                self.message_port_pub(self.en_port,\
-      \ msg)\n        \n    # Function updates filter coefficients when they change\n\
-      \    def update_filter_path(self, filter_path):\n        if (self.filter_path\
-      \ != filter_path):\n            self.filter_path = filter_path\n           \
-      \ self.send_msg()\n       \n    # Automatically select filter coefficients based\
-      \ on sample rate\n    def auto_filter_path(self):\n        if (self._sample_rate\
-      \ <= 20000000):\n            filter_path = \"fir_128_4.txt\"\n        elif (self._sample_rate\
-      \ <= 40000000):\n            filter_path = \"fir_128_2.txt\"\n        elif (self._sample_rate\
-      \ <= 53333333):\n            filter_path = \"fir_96_2.txt\"\n        else:\n\
-      \            filter_path = \"fir_64_2.txt\"\n        return filter_path\n  \
-      \      \n    # Function updates filter with automatically computed coefficients\n\
-      \    def auto_update_filter_path(self):\n        filter_path = self.auto_filter_path()\n\
-      \        self.update_filter_path(filter_path)\n        \n    def get_sample_rate(self):\n\
-      \        return self._sample_rate\n        \n    def set_sample_rate(self, sample_rate):\n\
-      \        self.sample_rate = sample_rate\n        if self.auto_filter:\n    \
-      \        self.auto_update_filter_path() \n        \n    def del_sample_rate(self):\n\
-      \        del self._sample_rate\n        \n    # Setup callback functions for\
-      \ sample rate\n    sample_rate = property(get_sample_rate, set_sample_rate,\
-      \ del_sample_rate)\n"
-    affinity: ''
-    alias: ''
-    auto_filter: eval(auto_filter)
-    comment: ''
-    filter_path: filter_path
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    sample_rate: sample_rate
-  states:
-    _io_cache: ('FIR Config Message', 'blk', [('sample_rate', '2084000'), ('auto_filter',
-      'True'), ('filter_path', "''")], [], [('coefs_out', 'message', 1), ('en_out',
-      'message', 1)], 'Embedded Python Block to Create IIO Filter Messages', ['auto_filter',
-      'filter_path', 'sample_rate'])
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [224, 432.0]
+    coordinate: [544, 232.0]
     rotation: 0
     state: enabled
 - name: filter_path
@@ -223,7 +148,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [16, 520.0]
+    coordinate: [8, 248.0]
     rotation: 0
     state: enabled
 - name: gain_control_mode
@@ -258,7 +183,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [496, 416.0]
+    coordinate: [376, 232.0]
     rotation: 0
     state: enabled
 - name: iio_attr_sink_1_1_0
@@ -276,7 +201,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [496, 520.0]
+    coordinate: [376, 320.0]
     rotation: 0
     state: enabled
 - name: iio_device_source_0
@@ -299,7 +224,25 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [200, 252.0]
+    coordinate: [712, 260.0]
+    rotation: 0
+    state: enabled
+- name: iio_fir_config_0
+  id: iio_fir_config
+  parameters:
+    affinity: ''
+    alias: ''
+    auto_filter: auto_filter
+    comment: ''
+    filter_path: filter_path
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    sample_rate: sample_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [120, 248.0]
     rotation: 0
     state: enabled
 - name: iio_input_chanel_attribute_1_0_0
@@ -470,7 +413,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [832, 272.0]
+    coordinate: [1328, 280.0]
     rotation: 0
     state: enabled
 - name: rf_bandwidth
@@ -546,10 +489,10 @@ connections:
 - [blocks_float_to_complex_0, '0', pad_sink_0, '0']
 - [blocks_short_to_float_0, '0', blocks_float_to_complex_0, '0']
 - [blocks_short_to_float_0_0, '0', blocks_float_to_complex_0, '1']
-- [epy_block_1_0, coefs_out, iio_attr_sink_1_0, attr]
-- [epy_block_1_0, en_out, iio_attr_sink_1_1_0, attr]
 - [iio_device_source_0, '0', blocks_short_to_float_0, '0']
 - [iio_device_source_0, '1', blocks_short_to_float_0_0, '0']
+- [iio_fir_config_0, coefs_out, iio_attr_sink_1_0, attr]
+- [iio_fir_config_0, en_out, iio_attr_sink_1_1_0, attr]
 
 metadata:
   file_format: 1
