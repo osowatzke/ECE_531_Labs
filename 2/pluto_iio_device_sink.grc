@@ -33,6 +33,23 @@ options:
     state: enabled
 
 blocks:
+- name: auto_filter
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: Auto Filter
+    short_id: ''
+    type: str
+    value: '"True"'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [888, 8.0]
+    rotation: 0
+    state: enabled
 - name: blocks_complex_to_float_1
   id: blocks_complex_to_float
   parameters:
@@ -97,7 +114,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 216.0]
+    coordinate: [8, 240.0]
     rotation: 0
     state: enabled
 - name: cyclic
@@ -114,50 +131,26 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [8, 320.0]
+    coordinate: [8, 344.0]
     rotation: 0
     state: enabled
-- name: epy_block_1
-  id: epy_block
+- name: filter_path
+  id: parameter
   parameters:
-    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
-      \ GRC will instantiate the first class it finds\nto get ports and parameters\
-      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
-      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
-      from gnuradio import gr\nimport pmt\n\n\nclass blk(gr.basic_block):  # other\
-      \ base classes are sync_block, decim_block, interp_block\n    \"\"\"Embedded\
-      \ Python Block to Create IIO Attribute Message\"\"\"\n\n    def __init__(self):\
-      \  # only default arguments here\n        \"\"\"arguments to this function show\
-      \ up as parameters in GRC\"\"\"\n        gr.basic_block.__init__(\n        \
-      \    self,\n            name='IIO Attribute Message',   # will show up in GRC\n\
-      \            in_sig=None,\n            out_sig=None\n        )\n        \n \
-      \       # Create message port\n        # self.out_port = pmt.intern(\"out\"\
-      );\n        # self.message_port_register_out(self.out_port)\n        self.taps\
-      \ = [-15,-27,-23,-6,17,33,31,9,-23,-47,-45,-13,34,69,67,21,-49,-102,-99,-32,69,146,143,48,-96,-204,-200,-69,129,278,275,97,-170,\\\
-      \n\t        -372,-371,-135,222,494,497,187,-288,-654,-665,-258,376,875,902,363,-500,-1201,-1265,-530,699,1748,1906,845,-1089,-2922,-3424,\\\
-      \n\t        -1697,2326,7714,12821,15921,15921,12821,7714,2326,-1697,-3424,-2922,-1089,845,1906,1748,699,-530,-1265,-1201,-500,363,902,875,\\\
-      \n\t        376,-258,-665,-654,-288,187,497,494,222,-135,-371,-372,-170,97,275,278,129,-69,-200,-204,-96,48,143,146,69,-32,-99,-102,-49,21,\\\
-      \n\t        67,69,34,-13,-45,-47,-23,9,31,33,17,-6,-23,-27,-15]\n        \n\
-      \    def start(self):\n        # Send message at time=0\n        self.send_msg()\n\
-      \         \n    def send_msg(self):\n        msg_value = \"RX 3 GAIN -6 DEC\
-      \ 4\\n\"\n        msg_value += \"TX 3 GAIN 0 INT 4\\n\"\n        for i in range(len(self.taps)):\n\
-      \            msg_value += str(self.taps) + \",\" + str(self.taps) + \"\\n\"\n\
-      \        print(msg_value)\n        #msg = pmt.to_pmt({'filter_fir_config' :\
-      \ msg_value})\n        #self.message_port_pub(self.out_port, msg)\n"
-    affinity: ''
     alias: ''
     comment: ''
-    maxoutbuf: '0'
-    minoutbuf: '0'
+    hide: none
+    label: Filter
+    short_id: ''
+    type: str
+    value: '""'
   states:
-    _io_cache: ('IIO Attribute Message', 'blk', [], [], [], 'Embedded Python Block
-      to Create IIO Attribute Message', [])
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [912, 32.0]
+    coordinate: [888, 112.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: iio_attr_sink_1
   id: iio_attr_sink
   parameters:
@@ -173,27 +166,27 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1136, 8.0]
+    coordinate: [1248, 16.0]
     rotation: 0
-    state: disabled
-- name: iio_attr_updater_0
-  id: iio_attr_updater
+    state: enabled
+- name: iio_attr_sink_1_1
+  id: iio_attr_sink
   parameters:
     affinity: ''
     alias: ''
-    attr: filter_fir_config
+    attr_type: '0'
+    channel: '"voltage0"'
     comment: ''
-    interval: '0'
-    maxoutbuf: '0'
-    minoutbuf: '0'
-    value: '"'
+    device: ad9361-phy
+    output: 'True'
+    uri: uri
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1112, 264.0]
+    coordinate: [1248, 112.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: iio_device_sink_0
   id: iio_device_sink
   parameters:
@@ -214,6 +207,24 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [704, 236.0]
+    rotation: 0
+    state: enabled
+- name: iio_fir_config_0
+  id: iio_fir_config
+  parameters:
+    affinity: ''
+    alias: ''
+    auto_filter: auto_filter
+    comment: ''
+    filter_path: filter_path
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    sample_rate: sample_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1008, 64.0]
     rotation: 0
     state: enabled
 - name: iio_output_chanel_attribute_0
@@ -395,6 +406,8 @@ connections:
 - [blocks_complex_to_float_1, '1', blocks_float_to_short_0_0, '0']
 - [blocks_float_to_short_0, '0', iio_device_sink_0, '0']
 - [blocks_float_to_short_0_0, '0', iio_device_sink_0, '1']
+- [iio_fir_config_0, coefs_out, iio_attr_sink_1, attr]
+- [iio_fir_config_0, en_out, iio_attr_sink_1_1, attr]
 - [pad_source_0, '0', blocks_complex_to_float_1, '0']
 
 metadata:
