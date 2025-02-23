@@ -1,6 +1,6 @@
 % Pluto Gain Source Configuration
 gainSource = 'AGC Slow Attack'; %AGC Fast Attack'; % Default is 'AGC Slow Attack';
-gain = 30; % Default is 10
+gain = 10; % Default is 10
 
 % Desired Frequency
 freq = 300;
