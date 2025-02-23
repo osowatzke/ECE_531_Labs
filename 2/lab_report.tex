@@ -251,12 +251,20 @@ In other words, the transmitted spectrum will be the DAC spectrum centered about
 
 \subsection{GNU Radio as a libIIO Client}
 
-In this experiment, we performed a loopback test using the generic IIO blocks shown in Figure \ref{fig::generic_iio_blocks} instead of the PlutoSDR Source and the PlutoSDR Sink blocks. Most of the properties given in Figures \ref{fig::general_attributes_pluto_sdr_sink} - \ref{fig::filter_attributes_pluto_sdr_source}, can now be set with the IIO Attribute Sink. Each IIO Attribute Sink must be fed with a message, which can be created with an IIO Attribute Updater. However, the IIO Attribute Updater has a broken callback function in GNU Radio 3.10.9.2 \cite{analog_devices_broken_iio_block}. As a result, the IIO Attribute Updater cannot be used with a slider. To work around this, I wrote an embedded block which sends a message at the start of the run and every time its input changes. I wrapped this custom block and the IIO Attribute sink into a hierarchy block shown in Figure \ref{fig::iio_input_channel_attribute}.
+In this experiment, we performed a loopback test using the generic IIO blocks shown in Figure \ref{fig::generic_iio_blocks} instead of the PlutoSDR Source and the PlutoSDR Sink blocks. Most of the properties given in Figures \ref{fig::general_attributes_pluto_sdr_sink} - \ref{fig::filter_attributes_pluto_sdr_source}, can now be set with the IIO Attribute Sink. Each IIO Attribute Sink must be fed with a message, which can be created with an IIO Attribute Updater. However, the IIO Attribute Updater has a broken callback function in GNU Radio 3.10.9.2 \cite{analog_devices_broken_iio_block}. As a result, the IIO Attribute Updater cannot be used with a slider. To work around this, I wrote an embedded block which sends a message at the start of the run and every time its input changes. I wrapped this custom block and the IIO Attribute sink into the hierarchy block shown in Figure \ref{fig::iio_input_channel_attribute}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{iio_input_channel_attribute.png}}}
 	\caption{Hierarchy Block to Set IIO Channel Attributes}
 	\label{fig::iio_input_channel_attribute}
+\end{figure}
+
+The PlutoSDR Source and Sink blocks also leverage a programmable FIR. This programmable FIR requires a file to be written to the \texttt{filter\_fir\_config} attribute of the \texttt{ad9361-phy} device with an IIO Attribute Sink. Then, after loading the filter, the \texttt{filter\_fir\_en} attribute needs to be written to the \texttt{voltage0} channel. I created a custom python block to create both of the messages and coordinate the timing of both messages. I then wrapped the custom block in a hierarchy block, to leverage the same code for the source and sink. The resulting hierarchy block is shown in Figure \ref{fig::iio_fir_config}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{iio_fir_config.png}}}
+	\caption{Hierarchy Block to Setup the Programmable FIR with IIO Attribute Writes}
+	\label{fig::iio_fir_config}
 \end{figure}
 
 I then created an additional hierarchy blocks to function as the Pluto Source and Sink. These hierarchy blocks are shown in Figure \ref{fig::pluto_iio_device_source} and Figure \ref{fig::pluto_iio_device_sink}.
