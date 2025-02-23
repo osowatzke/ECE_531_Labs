@@ -133,7 +133,7 @@ blocks:
     comment: ''
     cyclic: 'True'
     filter: ''
-    filter_source: '''Auto'''
+    filter_source: '''Off'''
     fpass: '0'
     frequency: '2400000000'
     fstop: '0'
