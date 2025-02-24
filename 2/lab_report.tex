@@ -213,6 +213,20 @@ We perform similar collects with the \textit{AGC Slow Attack} and \textit{AGC Fa
 Observing the collected data, we see that the \textit{AGC Fast Attack} Setting quickly converges to the correct headroom, while the 
 \textit{AGC Slow Attack} setting takes longer to do so.
 
+Next, we measure the \textit{Gain} setting which results in signal clipping. We find that the signal begins to clip at 34 dB of RX Gain. We show the resulting data in Figure \ref{fig::matlab_loopback_agc_manual_34db_gain}. As we increase the \textit{Gain} more, the effects of clipping become more severe resulting in a square wave. We illustrate this in Figure \ref{fig::matlab_loopback_agc_manual_45db_gain}, which shows the results of 45 dB of RX Gain.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{matlab_loopback_agc_manual_34db_gain.png}}}
+	\caption{Data Collected with 34 dB of RX Gain Resulting in Clipping}
+	\label{fig::matlab_loopback_agc_manual_34db_gain}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{matlab_loopback_agc_manual_45db_gain.png}}}
+	\caption{Data Collected with 45 dB of RX Gain Resulting Resulting in Increased Clipping}
+	\label{fig::matlab_loopback_agc_manual_45db_gain}
+\end{figure}
+
 \subsection{GNU Radio Loopback}
 
 We use the GNU Radio flowchart shown in Figure \ref{fig::gnu_radio_loopback_flowchart0} to perform a loopback test. We start the experiment by reviewing the properties of the PlutoSDR blocks (both transmit and receive). Relevant properties for each block are displayed in Figures \ref{fig::general_attributes_pluto_sdr_sink} - \ref{fig::filter_attributes_pluto_sdr_source}.
