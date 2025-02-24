@@ -158,6 +158,13 @@ TODO: NEED TO ADD WHAT THE AD9361-PHY DOES!
 
 \subsection{MATLAB Loopback}
 
+In this section, we perform a loopback test with MATLAB. To prevent discontinuities in the transmitted data, we modify the buffer size in the \texttt{loopback.m} script, so that it contains an integer number of sinusoid periods. To do this, we choose integers $N$ and $M$ to satisfy the following relationship:
+
+\begin{equation}
+	\frac{f_o}{f_s} = \frac{M}{N}
+\end{equation} 
+
+In the script, $f_o = 300\ \text{Hz}$ and $f_s = 1\ \text{MHz}$. Reducing, we find that $M = 3k$ and $N = 10000k$ where $k$ is any positive integer. We choose $k=3$ to get a buffer size $N = 30000$.
 
 \subsection{GNU Radio Loopback}
 
