@@ -445,7 +445,23 @@ In a similar manner to what was shown above, we confirm the updated sampling rat
 
 \subsection{Measurements and the Radio}
 
-In this section, we use loopback SDR data collected with MATLAB to measure the SNR. To perform this measurement, we follow the procedure outlined in Section \ref{section::snr_measurement}. When the transmitted signal power suddenly drops, the received signal power takes time to change due to the decaying response of IIR filters in the chain. Measuring the noise power when the received signal power is still decaying can lead to artificially high noise power estimates. To mitigate these effects, we increase the buffer size to increase the duration of the high and low signal energy segments. For the experiments that follow, we specifically increase the buffer size to 100,000 samples.
+In this section, we use loopback SDR data collected with MATLAB to measure the SNR. To perform this measurement, we follow the procedure outlined in Section \ref{section::snr_measurement}. When the transmitted signal power suddenly drops, the received signal power takes time to change due to the decaying response of IIR filters in the chain. Measuring the noise power when the received signal power is still decaying can lead to artificially high noise power estimates. To mitigate these effects, we increase the buffer size to increase the duration of the high and low signal energy segments. For the collects that follow, we specifically increase the buffer size to 100,000 samples.
+
+We start by measuring the SNR when the receive signal gain is 50 dB and the transmit signal gain is -70 dB. The signal power of each sample is plotted in Figure \ref{fig::snr_manual_agc_50db_rx_gain_70db_tx_atten}. In the figure, we also mark the regions we used for power measurements. Note that we specifically avoid the regions with decaying signal power.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{snr_manual_agc_50db_rx_gain_70db_tx_atten.png}}}
+	\caption{Signal Power with 50 dB RX Gain and -70 dB of TX Gain}
+	\label{fig::snr_manual_agc_50db_rx_gain_70db_tx_atten}
+\end{figure}
+
+Examining the figure, we find that the received SNR is 36.45 dB. For comparison, we also measure the SNR when the transmit signal gain is increased to -50 dB. The resulting signal power is shown in Figure \ref{fig::snr_manual_agc_50db_rx_gain_50db_tx_atten}. Based on the figure, we conclude that the updated SNR is 55.89 dB. This is roughly 20 dB higher than what we previously measured. This is the received signal power is 20 dB higher, while the noise power is untouched.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{snr_manual_agc_50db_rx_gain_50db_tx_atten.png}}}
+	\caption{Signal Power with 50 dB RX Gain and -50 dB of TX Gain}
+	\label{fig::snr_manual_agc_50db_rx_gain_50db_tx_atten}
+\end{figure}
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
