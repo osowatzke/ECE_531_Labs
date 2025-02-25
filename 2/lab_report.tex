@@ -486,7 +486,8 @@ We compare the SNR from the \textit{Manual} AGC collects to the SNR when the AGC
 	\caption{SSignal Power Measurement with \textit{Fast Attack AGC} Algorithm}
 	\label{fig::snr_agc_fast_attack_30db_tx_atten}
 \end{figure}
- 
+
+Examining the above figures, we see that the instantaneous power plots are distorted by both AGC algorithms. The AGC algorithms increase the power of the noise samples to maintain a given headroom. In doing so, they distort our SNR measurement, which depends on constant noise levels throughout the collect. Use the methods mentioned previously, we measure an SNR of 14.15 dB for the \textit{AGC Slow Attack} algorithm and an SNR of -0.02 dB for the \textit{AGC Fast Attack} algorithm. Over portions of the pulse with a signal and good AGC settings, the SNR is likely similar to what was measured before. If we took a short-time Fourier Transform (STFT) over these samples, we could use the power of different FFT bins to measure the noise floor and signal power and come up with a much better SNR estimate. 
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
