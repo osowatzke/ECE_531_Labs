@@ -134,6 +134,7 @@ Compared to the results of Figure \ref{fig::iio_info_cmd}, we see that the IIO c
 	\label{fig::iio_devices}
 \end{figure}
 
+
 Examining the command output, we find that \textit{ad9361-phy} corresponds to iio:device0. With the following command, we can get the name of iio:device0 and confirm our findings:
 
 \begin{center}
@@ -164,7 +165,7 @@ This command gives the device attributes and their values. However, the command 
 	\label{fig::iio_filtered_attributes}
 \end{figure}
 
-TODO: NEED TO ADD WHAT THE AD9361-PHY DOES!
+The ad9361-phy device controls the physical (PHY) layer of the transceiver and is responsible for device configuration. In addition to the properties shown above, the ad9361-phy device contains multiple channels, which provide access to critical device properties. For example, the \texttt{altvoltage0} and \texttt{altvoltage1} channels provide access to the LO frequencies of the transmitter and receiver, and the \texttt{voltage0} channels provides access to the sample rate, RF bandwidth, and gain control mode. All these parameters will be explored later in the lab.
 
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
