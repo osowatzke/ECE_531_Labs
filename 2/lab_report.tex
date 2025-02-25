@@ -38,13 +38,14 @@
 \setlength{\parindent}{0pt}
 
 \section{Introduction}
+%Introduction to the laboratory experiment, including a brief description of the objectives and goals.
 
 In this lab, we introduce the ADALM-PLUTO Active Learning Module (PlutoSDR). We specifically learn how to interface with the device via IIO. Then, we perform loopback collects by connecting the transmitter and receiver ports together with a coaxial cable. With the hardware in this configuration, we use MATLAB and GNU radio to perform more in-depth experiments. First, in MATLAB, we experiment with the AGC settings and determine the gain needed to saturate the receiver. Next, in GNU radio, we evaluate the parameters of the built-in PlutoSDR blocks and once again determine the gain needed to saturate the receiver. We also observe the frequency response and learn how to map the input frequency to the RF frequency. Next, we create our own PlutoSDR blocks from IIO primitives and vaidate their behavior. Finally, we use MATLAB to measure the SNR of the received signal for different gain levels and AGC settings. 
 
-%Introduction to the laboratory experiment, including a brief description of the objectives and goals.
-
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
+
+In this section, we outline the procedures for each of our experiments. We start by interfacing with the device via IIO. Then, we perform loopback collects in MATLAB and GNU Radio. For our GNU radio experiments, we perform the outlined procedure with the default PlutoSDR blocks and generic IIO blocks. Finally, we present a method for measuring the SNR.
 
 \subsection{Industrial Input/Output (IIO)}
 \label{section::industrial_input_output}
