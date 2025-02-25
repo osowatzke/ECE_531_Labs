@@ -89,11 +89,13 @@ After replacing the PlutoSDR source and sink blocks with the blocks shown in Fig
 
 \subsection{Measurements and the Radio}
 
-In this experiment, we use measure the SNR of the Pluto loopback signal. We collect data with a 50\% duty cycle in MATLAB. Then, we use the "zero" regions of the received signal to measure the noise power and the signal portions of the pulse to measure the power of the signal-plus-noise. With our measurements, we estimate the signal to noise ratio as follows.
+In this experiment, we use measure the SNR of the Pluto loopback signal with MATLAB. We collect data with a 50\% duty cycle. Then, we use the "zero" regions of the received signal to measure the noise power and the signal portions of the pulse to measure the power of the signal plus noise. With our measurements, we estimate the signal to noise ratio as follows.
 
 \begin{equation*}
 	\text{SNR}_\text{dB} = 10\text{log}_{10}\left(\frac{P_{SN} - P_{N}}{P_{N}}\right)
 \end{equation*}
+
+We carry out this computation for data collected with \textit{Manual} AGC at varying levels of attenuation. Finally, we compare our SNR measurements to measurements with the \textit{AGC Slow Attack} and the \textit{AGC Fast Attack} setting.
 
 \section{Results}
 \subsection{Industrial Input/Output (IIO)}
