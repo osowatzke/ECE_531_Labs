@@ -473,6 +473,21 @@ We perform a similar experiment by modifying the receive gain while keeping the 
 
 Examining the figure, we see that the SNR increases from 36.45 dB to 40.44 dB. What causes the SNR to change when the transmit signal power is constant? The SNR of the received signal is reduced by the noise figure. According to Friss' formula, the noise figure is smallest when the gain in the initial receiver stages is largest. When the receive gain is increased to 70 dB, the gain in the initial receiver stages increases, resulting in an SNR increase.
 
+We compare the SNR from the \textit{Manual} AGC collects to the SNR when the AGC algorithm is changed to \textit{AGC Slow Attack} and \textit{AGC Fast Attack}. Figure \ref{fig::snr_agc_slow_attack_30db_tx_atten} shows the instantaneous power when the AGC algorithm is set to \textit{AGC Slow Attack}, and Figure \ref{fig::snr_agc_fast_attack_30db_tx_atten} shows the instantaneous power when the AGC algorithm is set to \textit{AGC Fast Attack}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{snr_agc_slow_attack_30db_tx_atten.png}}}
+	\caption{Signal Power Measurement with \textit{Slow Attack AGC} Algorithm}
+	\label{fig::snr_agc_slow_attack_30db_tx_atten}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{snr_agc_fast_attack_30db_tx_atten.png}}}
+	\caption{SSignal Power Measurement with \textit{Fast Attack AGC} Algorithm}
+	\label{fig::snr_agc_fast_attack_30db_tx_atten}
+\end{figure}
+ 
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
