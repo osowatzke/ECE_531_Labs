@@ -463,6 +463,16 @@ Examining the figure, we find that the received SNR is 36.45 dB. For comparison,
 	\label{fig::snr_manual_agc_50db_rx_gain_50db_tx_atten}
 \end{figure}
 
+We perform a similar experiment by modifying the receive gain while keeping the transmit gain constant. In this experiment, we set the receive gain to 70 dB, while keeping the TX gain at -70 dB. The resulting signal power is shown in Figure \ref{fig::snr_manual_agc_70db_rx_gain_70db_tx_atten}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{snr_manual_agc_70db_rx_gain_70db_tx_atten.png}}}
+	\caption{Signal Power with 70 dB RX Gain and -70 dB of TX Gain}
+	\label{fig::snr_manual_agc_70db_rx_gain_70db_tx_atten}
+\end{figure}
+
+Examining the figure, we see that the SNR increases from 36.45 dB to 40.44 dB. What causes the SNR to change when the transmit signal power is constant? The SNR of the received signal is reduced by the noise figure. According to Friss' formula, the noise figure is smallest when the gain in the initial receiver stages is largest. When the receive gain is increased to 70 dB, the gain in the initial receiver stages increases, resulting in an SNR increase.
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
