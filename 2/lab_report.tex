@@ -86,7 +86,15 @@ For this experiment, we replace the PlutoSDR source and sink blocks with generic
 \end{figure}
 
 After replacing the PlutoSDR source and sink blocks with the blocks shown in Figure \ref{fig::generic_iio_blocks}, we repeat the experiment from Section \ref{section::gnu_radio_loopback}. Then, we change the TX and RX frequencies from 2.4 GHz to 915 MHz and increase the sample rates from 2.084 MSPS to a higher arbitrarily-chosen sampling rate. Finally, we verify that each of these settings are correctly applied using IIO Scope plugins and the \texttt{iio\_attr} command. 
- 
+
+\subsection{Measurements and the Radio}
+
+In this experiment, we use measure the SNR of the Pluto loopback signal. We collect data with a 50\% duty cycle in MATLAB. Then, we use the "zero" regions of the received signal to measure the noise power and the signal portions of the pulse to measure the power of the signal-plus-noise. With our measurements, we estimate the signal to noise ratio as follows.
+
+\begin{equation*}
+	\text{SNR}_\text{dB} = 10\text{log}_{10}\left(\frac{P_{SN} - P_{N}}{P_{N}}\right)
+\end{equation*}
+
 \section{Results}
 \subsection{Industrial Input/Output (IIO)}
 
