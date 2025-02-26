@@ -50,19 +50,17 @@ In this section, we outline the procedures for each of our experiments. We start
 \subsection{Industrial Input/Output (IIO)}
 \label{section::industrial_input_output}
 
-We can use the \texttt{iio\_info -s} command to identify the PlutoSDR device's Universal Resource Identifier (URI). We execute the provided command in an SSH terminal session connected to the embedded PlutoSDR operating system and in a local PC terminal. After executing the command in both terminals, we compare the resulting URIs.
-
-Next, we use the \texttt{iio\_attr} command in the SSH terminal to locate the \textit{ad9361-phy} device. Once we find the device, we use the following command to verify the device name:
+In this experiment, we learn how to interface with the PlutoSDR with IIO. We start by executing the \texttt{iio\_info -s} command to identify the PlutoSDR device's Universal Resource Identifier (URI). We perform this step in an SSH terminal session connected to the embedded PlutoSDR operating system and in a local PC terminal. Then, we compare the resulting URIs. Next, in the SSH terminal, we use the \texttt{iio\_attr} command to locate the \textit{ad9361-phy} device. Once we find the device, we use the following command to verify its name:
 
 \begin{center}
 \texttt{cat /sys/bus/iio/devices/$<$iio\_device$>$/name}
 \end{center}
 
-where \texttt{$<$iio\_device$>$} is the IIO device we find with the \texttt{iio\_attr} command. Then, we use the \texttt{iio\_attr} command to list the attributes of the \textit{ad9361-phy} device.
+where \texttt{$<$iio\_device$>$} is the IIO device we found previously with the \texttt{iio\_attr} command. Finally, we use the \texttt{iio\_attr} command to list the attributes of the \textit{ad9361-phy} device.
 
 \subsection{MATLAB Loopback}
 
-In this experiment, we perform a loopback test by connecting the Pluto SDR's transmit and receive ports together with a coaxial SMA cable. Once the cable is properly connected, we execute the provided \texttt{loopback.m} script to perform a physical collect. After validating that our loopback collect works, we evaluate the impact of the \textit{GainSource} (AGC) settings by testing each possible configuration: \textit{Manual}, \textit{AGC Slow Attack}, and \textit{AGC Fast Attack}. To characterize the impact of these settings, we modify the transmitted signal. We perform one collect while varying the amplitude of the signal and another collect with zero portions added to the signal. Finally, we determine what gain values are necessary to turn the receive sinusoid into a square wave (saturate the signal).
+In this experiment, we perform a loopback test by connecting the Pluto SDR's transmit and receive ports together with a coaxial SMA cable. Once the cable is properly connected, we execute the provided \texttt{loopback.m} script to perform a physical collect. After validating that our loopback collect works, we evaluate the impact of the \textit{GainSource} (AGC) settings by testing each possible configuration: \textit{Manual}, \textit{AGC Slow Attack}, and \textit{AGC Fast Attack}. To characterize the impact of these settings, we slightly modify our transmitted signal. We perform one collect while varying the amplitude of the signal and another collect with zero portions added to the signal. Finally, we determine what gain values are necessary to turn the receive sinusoid into a square wave (saturate the signal).
 
 \subsection{GNU Radio Loopback}
 \label{section::gnu_radio_loopback}
