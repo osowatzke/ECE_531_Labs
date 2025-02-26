@@ -304,8 +304,16 @@ We note that the signal is no longer distorted but is very close to full scale (
 	\label{fig::gnu_radio_loopback_rx_gain_13dB}
 \end{figure}
 
-Next, we replace the "QT Time Sink" and "QT Frequency Sink" sink and observe the output. Figure \ref{fig::gnu_radio_loopback_qt_gui_sink} shows the frequency response with the RX Gain set to 0 dB.
+Next, we replace the "QT Time Sink" and "QT Frequency Sink" with the "QT GUI Sink" and observe the output. The resulting flowchart is shown in Figure \ref{fig::gnu_radio_loopback_flowchart_qt_gui_sink}.
 
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{gnu_radio_loopback_flowchart_qt_gui_sink.png}}}
+	\caption{GNU Radio Loopback Flowchart with QT QUI Sink}
+	\label{fig::gnu_radio_loopback_flowchart_qt_gui_sink}
+\end{figure}
+
+Using the flowchart with 0 dB of receive attenuation, we collect the frequency response shown in Figure \ref{fig::gnu_radio_loopback_qt_gui_sink}.
+ 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_qt_gui_sink.png}}}
 	\caption{Frequency Response with QT GUI Sink and 0 dB of Receive Gain}
