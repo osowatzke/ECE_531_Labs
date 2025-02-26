@@ -274,17 +274,17 @@ In this section, we use GNU Radio instead of MATLAB to perform a loopback test. 
 	\label{fig::filter_attributes_pluto_sdr_source}
 \end{figure}
 
-The RF bandwidth sets the bandwidth of the analog filters in the TX and RX paths. It is set at 20 MHz in Figure \ref{fig::filter_attributes_pluto_sdr_sink} and \ref{fig::filter_attributes_pluto_sdr_source}. The TX filter removes sampling artifacts and acts as a low-pass filter prior to upconversion. When we mix the signal, we are centering a copy of the spectrum at $+f_c$ and $-f_c$. If our signal is not properly bandlimited, the spectral copies may add together resulting in distortion. The RX filter is responsible for getting rid of the unwanted mixer products and removing out-of-band noise prior to sampling. If our filter bandwidth is too large, this unwanted noise will alias into our spectrum, degrading the SNR. 
+In the above figures, the RF bandwidth sets the bandwidth of the analog filters in the transmit and receive paths. The transmit filter removes sampling artifacts and acts as a low-pass filter prior to upconversion. When we mix the signal, we are centering a copy of the spectrum at $+f_c$ and copy at $-f_c$. If our signal is not properly bandlimited, the spectral copies may add together resulting in distortion. The receive filter is responsible for getting rid of the unwanted mixer products and removing out-of-band noise prior to sampling. If our filter bandwidth is too large, this unwanted noise will alias into our spectrum, degrading the SNR. 
 
-Next, we review the cyclic option in the PlutoSDR sink. When the cyclic option is selected, as illustrated in Figure \ref{fig::general_attributes_pluto_sdr_sink}, the PlutoSDR will repeat the first buffer of samples it receives until the program is stopped. Conversely, when this option is not selected, the PlutoSDR will transmit buffers of samples as it receives them, creating a potentially discontinuous stream, which is more difficult to analyze. Additionally, not re-transmitting the same buffer of samples enables us to dedicate more of the USB bandwidth to the received data stream. As long as our buffer size is a multiple of the period, the cyclic option results in the same transmission as a signal source feeding a PlutoSDR Sink with infinite USB bandwidth.
+Next, we review the cyclic option in the PlutoSDR sink. When the cyclic option is selected, as illustrated in Figure \ref{fig::general_attributes_pluto_sdr_sink}, the PlutoSDR will repeat the first buffer of samples it receives until the program is stopped. Conversely, when this option is not selected, the PlutoSDR will transmit buffers of samples as it receives them, creating a potentially discontinuous stream of samples which is more difficult to analyze. Additionally, not re-transmitting the same buffer of samples enables us to dedicate more of the USB bandwidth to the received data stream. As long as our buffer size is a multiple of the period, the cyclic option results in the same transmission as a signal source feeding a PlutoSDR Sink with infinite USB bandwidth.
 
-The manual gain control in the PlutoSDR source block disables AGC and allows us to manually set the attenuation. Alternative gain control strategies include manual, slow attack, hybrid, and fast attack. The hybrid gain control is present in just the GNU Radio block and can be set view \texttt{iio\_attr}. However, it is not present in the MATLAB API. The hybrid mode is the same as the slow attack AGC mode with the exception of the gain update counter, which is not present in hybrid mode. This allows the hybrid algorithm to more frequently adjust the attenuation.
+The manual gain control in the PlutoSDR source block disables AGC and allows us to manually set the attenuation. Alternative gain control strategies include slow attack, hybrid, and fast attack. The hybrid gain control option is unique to the GNU Radio block and is not present in the MATLAB API. The hybrid mode is the same as the slow attack AGC mode with the exception of the gain update counter, which is not present in hybrid mode. This allows the hybrid algorithm to adjust the attenuation more frequently.
 
 Using the default receive gain setting of 20 dB, we observe the time and frequency data shown in Figure \ref{fig::gnu_radio_loopback_baseline}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_baseline.png}}}
-	\caption{Baseline Loopback Test with GNU Radio}
+	\caption{GNU Radio Loopback Test with 20 dB of Receive Gain}
 	\label{fig::gnu_radio_loopback_baseline}
 \end{figure}
 
@@ -292,7 +292,7 @@ With the default settings the signal has already clipped. We can reduce the rece
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_rx_gain_12dB.png}}}
-	\caption{GNU Radio Loopback Collect with 12 dB of RX Gain}
+	\caption{GNU Radio Loopback Collect with 12 dB of Receive Gain}
 	\label{fig::gnu_radio_loopback_rx_gain_12dB}
 \end{figure}
 
@@ -300,7 +300,7 @@ We note that the signal is no longer distorted but is very close to full scale (
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_rx_gain_13dB.png}}}
-	\caption{GNU Radio Loopback Collect with 13 dB of RX Gain}
+	\caption{GNU Radio Loopback Collect with 13 dB of Receive Gain}
 	\label{fig::gnu_radio_loopback_rx_gain_13dB}
 \end{figure}
 
@@ -308,7 +308,7 @@ Next, we replace the "QT Time Sink" and "QT Frequency Sink" sink and observe the
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_qt_gui_sink.png}}}
-	\caption{Frequency Response with QT GUI Sink and 0 dB of RX Gain}
+	\caption{Frequency Response with QT GUI Sink and 0 dB of Receive Gain}
 	\label{fig::gnu_radio_loopback_qt_gui_sink}
 \end{figure}
 
