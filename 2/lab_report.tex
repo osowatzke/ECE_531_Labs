@@ -75,7 +75,7 @@ We can perform a similar loopback experiment using GNU Radio instead of MATLAB. 
 
 Before we run the flowchart, we review the properties of the PlutoSDR blocks. We specifically review the RF bandwidth and its impact on performance. Then, we describe what the "Cyclic" option does in the PlutoSDR sink. Finally, we discuss the effects of Manual Gain control in the Pluto SDR and review alternative gain control strategies.
 
-After reviewing the PlutoSDR blocks, we run the flowchart and determine the RX gain where the signal distorts (or clips). Next, we replace the "QT Time Sink" and "QT Frequency Sink" blocks with a "QT GUI Sink" block. Using the updated block, we examine the impacts of increasing the number of averages and changing the window function. Then, we determine the transmitted RF frequency and explain how our transmitter configuration produced this frequency.
+After reviewing the PlutoSDR blocks, we run the flowchart and determine the receiver gain where the signal distorts (or clips). Next, we replace the "QT Time Sink" and "QT Frequency Sink" blocks with a "QT GUI Sink" block. Using the updated block, we examine the impacts of increasing the number of averages and changing the window function. Then, we determine the transmitted RF frequency and explain how our transmitter configuration resulted in this frequency.
 
 \subsection{GNU Radio as a libIIO Client}
 
