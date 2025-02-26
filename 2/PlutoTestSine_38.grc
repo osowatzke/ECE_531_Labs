@@ -33,18 +33,6 @@ options:
     state: enabled
 
 blocks:
-- name: rf_bandwidth
-  id: variable
-  parameters:
-    comment: ''
-    value: 20e6
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [96, 96.0]
-    rotation: 0
-    state: enabled
 - name: rx_gain
   id: variable_qtgui_range
   parameters:
@@ -87,9 +75,9 @@ blocks:
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
-    start: -20e6
-    step: 10e3
-    stop: 20e6
+    start: 0e3
+    step: 1e3
+    stop: 100e3
     value: '10000'
     widget: counter_slider
   states:
@@ -119,7 +107,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [248, 24.0]
+    coordinate: [184, 32.0]
     rotation: 0
     state: true
 - name: iio_pluto_sink_0
@@ -133,7 +121,7 @@ blocks:
     comment: ''
     cyclic: 'True'
     filter: ''
-    filter_source: '''Off'''
+    filter_source: '''Auto'''
     fpass: '0'
     frequency: '2400000000'
     fstop: '0'
@@ -145,7 +133,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [512, 4.0]
+    coordinate: [448, 12.0]
     rotation: 0
     state: true
 - name: iio_pluto_source_0
@@ -176,7 +164,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [248, 220.0]
+    coordinate: [184, 220.0]
     rotation: 0
     state: true
 - name: qtgui_freq_sink_x_0_0
@@ -257,7 +245,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [520, 312.0]
+    coordinate: [448, 320.0]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_1
@@ -354,7 +342,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [520, 224.0]
+    coordinate: [448, 224.0]
     rotation: 0
     state: enabled
 
