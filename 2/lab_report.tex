@@ -65,12 +65,12 @@ In this experiment, we perform a loopback test by connecting the Pluto SDR's tra
 \subsection{GNU Radio Loopback}
 \label{section::gnu_radio_loopback}
 
-We can perform a similar loopback experiment using GNU Radio instead of MATLAB. For this test, we use the provided \texttt{PlutoTestSine.grc} flowchart. The lab also mentions a QT GUI Time Sink, which is not included in the provided flowchart. To meet the requirements of this experiment, we have added the time sink to the flowchart. The resulting flowchart is shown in Figure \ref{fig::gnu_radio_loopback_flowchart0}.
+We can perform a similar loopback experiment using GNU Radio instead of MATLAB. For this test, we use the provided \texttt{PlutoTestSine.grc} flowchart. The lab also mentions a QT GUI Time Sink, which is not included in the provided flowchart. To meet the requirements of this experiment, we have added the time sink to the flowchart. The resulting flowchart is shown in Figure \ref{fig::gnu_radio_loopback_flowchart}.
 
 \begin{figure}[H]
-	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{gnu_radio_loopback_flowchart0.png}}}
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{gnu_radio_loopback_flowchart.png}}}
 	\caption{GNU Radio Flowchart for Loopback Test}
-	\label{fig::gnu_radio_loopback_flowchart0}
+	\label{fig::gnu_radio_loopback_flowchart}
 \end{figure}
 
 Before we run the flowchart, we review the properties of the PlutoSDR blocks. We specifically review the RF bandwidth and its impact on performance. Then, we describe what the "Cyclic" option does in the PlutoSDR sink. Finally, we discuss the effects of Manual Gain control in the Pluto SDR and review alternative gain control strategies.
@@ -87,19 +87,19 @@ For this experiment, we replace the PlutoSDR source and sink blocks with generic
 	\label{fig::generic_iio_blocks}
 \end{figure}
 
-After replacing the PlutoSDR source and sink blocks with the blocks shown in Figure \ref{fig::generic_iio_blocks}, we repeat the experiment from Section \ref{section::gnu_radio_loopback}. Then, we change the TX and RX frequencies from 2.4 GHz to 915 MHz and increase the sample rates from 2.084 MSPS to a higher arbitrarily-chosen sampling rate. Finally, we verify that each of these settings are correctly applied using IIO Scope plugins and the \texttt{iio\_attr} command. 
+After replacing the PlutoSDR source and sink blocks with the blocks shown in Figure \ref{fig::generic_iio_blocks}, we repeat the experiment from Section \ref{section::gnu_radio_loopback}. Then, we change the TX and RX frequencies from 2.4 GHz to 915 MHz and increase the sample rates from 2.084 MSPS to 4 MSPS. Finally, we verify that each of these settings are correctly applied using IIO Scope plugins and the \texttt{iio\_attr} command. 
 
 \subsection{Measurements and the Radio}
 \label{section::snr_measurement}
 
-In this experiment, we use measure the SNR of the Pluto loopback signal with MATLAB. We collect data with a 50\% duty cycle. Then, we use the "zero" regions of the received signal to measure the noise power and the signal portions of the pulse to measure the power of the signal plus noise. With our measurements, we estimate the signal to noise ratio as follows.
+In this experiment, we use measure the SNR of the Pluto loopback signal with MATLAB. We collect data with a 50\% duty cycle. Then, we use the "zero" regions of the received signal to measure the noise power and the portions of the data with signal to measure the power of the signal plus noise. With our measurements, we estimate the signal to noise ratio as follows.
 
 \begin{equation*}
 	\text{SNR}_\text{dB} = 10\text{log}_{10}\left(\frac{P_{SN} - P_{N}}{P_{N}}\right)
 	\label{eq::snr_estimate}
 \end{equation*}
 
-We carry out this computation for data collected with \textit{Manual} AGC at varying levels of attenuation. Finally, we compare our SNR measurements to measurements with the \textit{AGC Slow Attack} and the \textit{AGC Fast Attack} setting.
+We peform this computation for data collected with \textit{Manual} AGC at varying levels of attenuation. Finally, we compare our SNR measurements to measurements with the \textit{AGC Slow Attack} and the \textit{AGC Fast Attack} gain settings.
 
 \section{Results}
 \subsection{Industrial Input/Output (IIO)}
@@ -245,7 +245,7 @@ Next, we measure the \textit{Gain} setting which results in signal clipping. We 
 
 \subsection{GNU Radio Loopback}
 
-We use the GNU Radio flowchart shown in Figure \ref{fig::gnu_radio_loopback_flowchart0} to perform a loopback test. We start the experiment by reviewing the properties of the PlutoSDR blocks (both transmit and receive). Relevant properties for each block are displayed in Figures \ref{fig::general_attributes_pluto_sdr_sink} - \ref{fig::filter_attributes_pluto_sdr_source}.
+We use the GNU Radio flowchart shown in Figure \ref{fig::gnu_radio_loopback_flowchart} to perform a loopback test. We start the experiment by reviewing the properties of the PlutoSDR blocks (both transmit and receive). Relevant properties for each block are displayed in Figures \ref{fig::general_attributes_pluto_sdr_sink} - \ref{fig::filter_attributes_pluto_sdr_source}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{general_attributes_pluto_sdr_sink.png}}}
@@ -370,7 +370,7 @@ Using the previously described hierarchy blocks, I created an additional layer o
 
 Both the hierarchy blocks shown above use IIO Channel Attribute blocks to set block parameters. Each of the IIO Channel Attribute blocks get the same arguments as the \texttt{iio\_attr} command. They also leverage  IIO FIR Configuration blocks to configure the programmable FIR. The source block uses an IIO device source to grab buffers of samples from the ADC. These samples are then scaled and convert to a complex float for processing. In a similar manner, the sink block converts comnplex floats to complex shorts. Then, it uses an IIO device sink to push buffers of samples to the DAC. 
 
-Using the Generic IIO PlutoSDR Sink and Source blocks shown above, we create a GNU flowchart for a loopback test. The updated flowchart is shown in Figure \ref{fig::gnu_radio_loopback_generic_iio} and is nearly identical to the flowchart shown in Figure \ref{fig::gnu_radio_loopback_flowchart0}.
+Using the Generic IIO PlutoSDR Sink and Source blocks shown above, we create a GNU flowchart for a loopback test. The updated flowchart is shown in Figure \ref{fig::gnu_radio_loopback_generic_iio} and is nearly identical to the flowchart shown in Figure \ref{fig::gnu_radio_loopback_flowchart}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{gnu_radio_loopback_generic_iio.png}}}
