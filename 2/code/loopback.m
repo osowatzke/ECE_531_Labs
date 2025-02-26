@@ -6,7 +6,7 @@ gain = 30; % Default is 10
 freq = 300;
 
 % Modify sinusoid
-dutyCycle = 0.75;
+dutyCycle = 0.5;
 rampData = false;
 
 % Setup Receiver
@@ -34,7 +34,7 @@ samplesPerFrame = rx.BasebandSampleRate/freqDivisor;
 
 % Can scale number of samples per frame by any integer
 % Choose an integer that gets us clsoe to 2^15
-desiredSamplesPerFrame = 2^15;
+desiredSamplesPerFrame = 5e5;
 samplesPerFrame = samplesPerFrame*...
     round(desiredSamplesPerFrame/samplesPerFrame);
 
@@ -54,7 +54,7 @@ fprintf('samplesPerFrame = %d\n', samplesPerFrame);
 rx.SamplesPerFrame = samplesPerFrame;
 
 % Setup Transmitter
-tx = sdrtx('Pluto','Gain',-30);
+tx = sdrtx('Pluto','Gain',-50);
 
 % Create the Sinewave
 sine = dsp.SineWave('Frequency',freq,...
@@ -71,6 +71,7 @@ end
 % Zero out a portion of the pulse
 pulseTime = round(length(data)*dutyCycle);
 data(pulseTime+1:end) = 0;
+mf = flip(conj(data(1:pulseTime)));
 
 % Transmit continuously
 tx.transmitRepeat(data);
@@ -89,3 +90,89 @@ for k=1:steps
   end
 end
 ts(data(:));
+
+save('data.mat','data');
+
+% % Meausre SNR
+% if dutyCycle < 1
+%     mfOut = fftfilt(mf,data);
+%     mfPwrOut = mfOut.*conj(mfOut);
+%     [~,I] = max(mfPwrOut);
+%     priStart = I - pulseTime + 1;
+%     priStart = priStart + 8;
+%     priLen = size(data,1);
+%     priLen = priLen = 
+% 
+% 
+%     numPulses = steps;
+% 
+%     % priStart = 
+%     % priStart = priStart + priLen;
+% 
+% 
+%     pwr = abs(data(:).^2);
+% 
+%     tau_fast = 16;
+%     tau_slow = size(data,1)*dutyCycle/5;
+%     alpha_fast = exp(-1/tau_fast);
+%     alpha_slow = exp(-1/tau_slow);
+%     pwr_fast = filter(1-alpha_fast,[1 -alpha_fast],pwr);
+%     pwr_slow = filter(1-alpha_slow,[1 -alpha_slow],pwr);
+% 
+%     % plot(db(fftfilt(mf,data(:))));
+%     figure(1); 
+%     clf;
+%     plot(pwr_slow);
+%     hold on;
+%     plot(pwr_fast);
+% 
+%     figure(2)
+%     clf;
+%     pwrDelta_dB = db(pwr_fast) - db(pwr_slow);
+%     plot(pwrDelta_dB)
+% 
+%     priLen = size(data,1);
+%     coolDown = 0;
+%     priStart = false(size(data(:)));
+%     priEnd = false(size(data(:)));
+%     for i = (2*priLen):length(pwr)
+%         if coolDown == 0
+%             if (pwrDelta_dB(i) > 20)
+%                 priStart(i) = true;
+%                 coolDown = priLen*0.75;
+%             end
+%         else
+%             coolDown = coolDown - 1;
+%         end
+%     end
+%     coolDown = 0;
+%     for i = (2*priLen):length(pwr)
+%         if coolDown == 0
+%             if (pwrDelta_dB(i) < -20)
+%                 priEnd(i) = true;
+%                 coolDown = priLen*0.75;
+%             end
+%         else
+%             coolDown = coolDown - 1;
+%         end
+%     end
+%     hold on;
+%     plot(priStart*max(pwrDelta_dB));
+%     plot(priEnd*min(pwrDelta_dB));
+% 
+%     avgPwr = mean(pwr);
+%     maxSigPwr = 2*avgPwr;
+%     pwrThreshold = maxSigPwr/10;
+%     sigDet = (pwr > pwrThreshold);
+%     isNoise = ~sigDet;
+%     isData = sigDet;
+%     figure(1)
+%     clf;
+%     plot(sigDet);
+%     % isNoise = ~isData;
+%     Pn = mean(abs(data(isNoise)).^2,'all');
+%     Psn = mean(abs(data(isData)).^2,'all');
+%     SNR_dB = 10*log10((Psn - Pn)/Pn);
+%     fprintf('SNR(dB) = %.2f dB\n', SNR_dB)
+% end
+% % plot(db(fft(data(:))));
