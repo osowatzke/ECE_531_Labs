@@ -94,10 +94,10 @@ After replacing the PlutoSDR source and sink blocks with the blocks shown in Fig
 
 In this experiment, we use measure the SNR of the Pluto loopback signal with MATLAB. We collect data with a 50\% duty cycle. Then, we use the "zero" regions of the received signal to measure the noise power and the portions of the data with signal to measure the power of the signal plus noise. With our measurements, we estimate the signal to noise ratio as follows.
 
-\begin{equation*}
+\begin{equation}
 	\text{SNR}_\text{dB} = 10\text{log}_{10}\left(\frac{P_{SN} - P_{N}}{P_{N}}\right)
 	\label{eq::snr_estimate}
-\end{equation*}
+\end{equation}
 
 We peform this computation for data collected with \textit{Manual} AGC at varying levels of attenuation. Finally, we compare our SNR measurements to measurements with the \textit{AGC Slow Attack} and the \textit{AGC Fast Attack} gain settings.
 
@@ -131,7 +131,7 @@ Compared to the outputs shown in Figure \ref{fig::iio_info_putty}, the command p
 	\label{fig::iio_info_vm}
 \end{figure}
 
-Compared to the results of Figure \ref{fig::iio_info_cmd}, we see that the IIO context warning message is no longer present. Next, we use the \texttt{iio\_attr -d} command without a device to list all the devices. The output of this command is listed in Figure \ref{fig::iio_devices}.
+Compared to the results of Figure \ref{fig::iio_info_cmd}, we see that the IIO context warning message is no longer present. Next, we use the \texttt{iio\_attr -d} command without a device to list all the devices in the PlutoSDR. The output of this command is listed in Figure \ref{fig::iio_devices}.
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.75\textwidth]{iio_devices.png}}
@@ -140,7 +140,7 @@ Compared to the results of Figure \ref{fig::iio_info_cmd}, we see that the IIO c
 \end{figure}
 
 
-Examining the command output, we find that \textit{ad9361-phy} corresponds to iio:device0. With the following command, we can get the name of iio:device0 and confirm our findings:
+Examining the command output, we find that \textit{ad9361-phy} corresponds to iio:device0. Using the following command, we confirm the name of iio:device0.
 
 \begin{center}
 \texttt{cat /sys/bus/iio/devices/iio:device0/name}
@@ -162,7 +162,7 @@ Examining the command outputs, we find that the name of iio:device0 is \textit{a
 	\label{fig::iio_raw_attributes}
 \end{figure}
 
-This command gives the device attributes and their values. However, the command window is very cluttered. We can extract just the attribute names from the command output using a combination of \texttt{grep} and \texttt{sed} as illustrated in Figure \ref{fig::iio_filtered_attributes}.
+Note that this command gives the device attributes and their values. However, is is difficult to parse. We can instead display just the attribute names by piping the command output to a combination of \texttt{grep} and \texttt{sed} commands as illustrated in Figure \ref{fig::iio_filtered_attributes}.
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.9\textwidth]{iio_filtered_attributes.png}}
@@ -170,7 +170,7 @@ This command gives the device attributes and their values. However, the command 
 	\label{fig::iio_filtered_attributes}
 \end{figure}
 
-The ad9361-phy device controls the physical (PHY) layer of the transceiver and is responsible for device configuration. In addition to the properties shown above, the ad9361-phy device contains multiple channels, which provide access to critical device properties. For example, the \texttt{altvoltage0} and \texttt{altvoltage1} channels provide access to the LO frequencies of the transmitter and receiver, and the \texttt{voltage0} channels provides access to the sample rate, RF bandwidth, and gain control mode. All these parameters will be explored later in the lab.
+The \textit{ad9361-phy} device controls the physical (PHY) layer of the transceiver and is responsible for device configuration. In addition to the properties shown above, the ad9361-phy device contains multiple channels, which provide access to critical device properties. For example, the \texttt{altvoltage0} and \texttt{altvoltage1} channels provide access to the LO frequencies of the transmitter and receiver, and the \texttt{voltage0} channels provides access to the sample rate, RF bandwidth, and gain control mode. All these parameters will be explored later in the lab.
 
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
