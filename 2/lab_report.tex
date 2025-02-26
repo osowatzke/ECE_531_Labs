@@ -349,7 +349,7 @@ In other words, the transmitted spectrum will be the DAC spectrum centered about
 
 \subsection{GNU Radio as a libIIO Client}
 
-In this experiment, we performed a loopback test using the generic IIO blocks shown in Figure \ref{fig::generic_iio_blocks} instead of the PlutoSDR Source and the PlutoSDR Sink blocks. Most of the properties given in Figures \ref{fig::general_attributes_pluto_sdr_sink} - \ref{fig::filter_attributes_pluto_sdr_source}, can now be set with the IIO Attribute Sink. Each IIO Attribute Sink must be fed with a message, which can be created with an IIO Attribute Updater. However, the IIO Attribute Updater has a broken callback function in GNU Radio 3.10.9.2 \cite{analog_devices_broken_iio_block}. As a result, the IIO Attribute Updater cannot be used with a slider. To work around this, I wrote an embedded block which sends a message at the start of the run and every time its input changes. I wrapped this custom block and the IIO Attribute sink into the hierarchy block shown in Figure \ref{fig::iio_input_channel_attribute}.
+In this experiment, we performed a loopback test using the generic IIO blocks shown in Figure \ref{fig::generic_iio_blocks} instead of the PlutoSDR Source and Sink blocks. Most of the PlutoSDR properties displayed in Figures \ref{fig::general_attributes_pluto_sdr_sink} - \ref{fig::filter_attributes_pluto_sdr_source}, can now be set with the IIO Attribute Sink. Each IIO Attribute Sink must be fed with a message, which can be created with an IIO Attribute Updater. However, the IIO Attribute Updater has a broken callback function in GNU Radio 3.10.9.2 \cite{analog_devices_broken_iio_block}. As a result, the IIO Attribute Updater cannot be used with a slider. To work around this, I wrote an embedded block which sends a message at the start of the run and every time its input changes. I wrapped this custom block and the IIO Attribute sink into the hierarchy block shown in Figure \ref{fig::iio_input_channel_attribute}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{iio_input_channel_attribute.png}}}
@@ -357,11 +357,11 @@ In this experiment, we performed a loopback test using the generic IIO blocks sh
 	\label{fig::iio_input_channel_attribute}
 \end{figure}
 
-The PlutoSDR Source and Sink blocks also leverage a programmable FIR. This programmable FIR requires a file to be written to the \texttt{filter\_fir\_config} attribute of the \texttt{ad9361-phy} device with an IIO Attribute Sink. Then, after loading the filter, the \texttt{filter\_fir\_en} attribute needs to be written to the \texttt{voltage0} channel. I created a custom python block to create both of the messages and coordinate their timing. I then wrapped the custom block in another hierarchy block, so I could easily leverage it in both the source and sink blocks. The resulting hierarchy block is shown in Figure \ref{fig::iio_fir_config}.
+The PlutoSDR Source and Sink blocks also leverage a programmable FIR. This programmable FIR requires a file to be written to the \texttt{filter\_fir\_config} attribute of the \texttt{ad9361-phy} device with an IIO Attribute Sink. Then, after loading the filter, the \texttt{filter\_fir\_en} attribute needs to be written to the \texttt{voltage0} channel. I created a custom python block to create both of the messages and coordinate their timing. I then wrapped the custom block in another hierarchy block, so I could easily leverage it in the source and sink. The resulting hierarchy block is shown in Figure \ref{fig::iio_fir_config}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{iio_fir_config.png}}}
-	\caption{Hierarchy Block which Create Messages  to Configure the Programmable FIR}
+	\caption{Hierarchy Block which Create Messages to Configure the Programmable FIR}
 	\label{fig::iio_fir_config}
 \end{figure}
 
@@ -379,9 +379,9 @@ Using the previously described hierarchy blocks, I created an additional layer o
 	\label{fig::pluto_iio_device_sink}
 \end{figure}
 
-Both the hierarchy blocks shown above use IIO Channel Attribute blocks to set block parameters. Each of the IIO Channel Attribute blocks get the same arguments as the \texttt{iio\_attr} command. They also leverage  IIO FIR Configuration blocks to configure the programmable FIR. The source block uses an IIO device source to grab buffers of samples from the ADC. These samples are then scaled and convert to a complex float for processing. In a similar manner, the sink block converts comnplex floats to complex shorts. Then, it uses an IIO device sink to push buffers of samples to the DAC. 
+Both the hierarchy blocks shown above use IIO Channel Attribute blocks to set block parameters. Each of the IIO Channel Attribute blocks get the same arguments as the equivalent \texttt{iio\_attr} command. The hierarchy blocks also leverage IIO FIR Configuration blocks to configure the programmable FIR. The source block uses an IIO device source to grab buffers of samples from the ADC. These samples are then scaled and converted to a complex float for processing. In a similar manner, the sink block converts comnplex floats to complex shorts. Then, it uses an IIO device sink to push buffers of samples to the DAC. 
 
-Using the Generic IIO PlutoSDR Sink and Source blocks shown above, we create a GNU flowchart for a loopback test. The updated flowchart is shown in Figure \ref{fig::gnu_radio_loopback_generic_iio} and is nearly identical to the flowchart shown in Figure \ref{fig::gnu_radio_loopback_flowchart}.
+Using the Generic IIO Sink and Source blocks shown above, we create a top-level GNU flowchart for our test. This flowchart is shown in Figure \ref{fig::gnu_radio_loopback_generic_iio} and is nearly identical to the flowchart shown in Figure \ref{fig::gnu_radio_loopback_flowchart}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{gnu_radio_loopback_generic_iio.png}}}
@@ -389,10 +389,10 @@ Using the Generic IIO PlutoSDR Sink and Source blocks shown above, we create a G
 	\label{fig::gnu_radio_loopback_generic_iio}
 \end{figure}
 
-Using the flowchart in Figure \ref{fig::gnu_radio_loopback_generic_iio}, we repeat the experiment described in Section \ref{section::gnu_radio_loopback}. Note that our initial flowchart contains the QT GUI Sink instead of the QT GUI Time Sink. This is okay for our experiment because the QT GUI Sink contains all the functionality of the QT GUI Time Sink.
+Using the updated flowchart, we repeat the experiment described in Section \ref{section::gnu_radio_loopback}. Note that our initial flowchart contains the QT GUI Sink instead of the QT GUI Time Sink. This is okay for our experiment because the QT GUI Sink contains all the functionality of the QT GUI Time Sink.
 
-As we did previously, we measure the receive gain at which we first observe clipping. Figure \ref{fig::gnu_radio_loopback_generic_iio_rx_gain_12dB} and Figure 
-\ref{fig::gnu_radio_loopback_generic_iio_rx_gain_13dB} show the resulting time-domain data at 12 and 13 dB of receive gain. Looking at the captured data, we conclude that clipping occurs at 13 dB, the same gain we measured previously.
+Repeating what was previously done, we measure the receive gain at which clipping occurs. Figure \ref{fig::gnu_radio_loopback_generic_iio_rx_gain_12dB} and Figure 
+\ref{fig::gnu_radio_loopback_generic_iio_rx_gain_13dB} show the resulting time-domain data at 12 and 13 dB of receive gain. Looking at the captured data, we conclude that clipping occurs at 13 dB, the same gain we measured earlier.
  
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_rx_gain_12dB.png}}}
@@ -406,7 +406,7 @@ As we did previously, we measure the receive gain at which we first observe clip
 	\label{fig::gnu_radio_loopback_generic_iio_rx_gain_13dB}
 \end{figure}
 
-Next, we capture the frequency response with 0dB of receive gain and average it across 256 frames. We capture this result in Figure \ref{fig::gnu_radio_loopback_generic_iio_avg_256} and note that is nearly identical to the data we captured in Figure \ref{fig::gnu_radio_loopback_qt_gui_sink_avg_256}.
+Next, we capture the frequency response with 0 dB of receive gain and average it across 256 frames. We capture this result in Figure \ref{fig::gnu_radio_loopback_generic_iio_avg_256} and note that is nearly identical to the data we captured in Figure \ref{fig::gnu_radio_loopback_qt_gui_sink_avg_256}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_avg_256.png}}}
@@ -414,7 +414,7 @@ Next, we capture the frequency response with 0dB of receive gain and average it 
 	\label{fig::gnu_radio_loopback_generic_iio_avg_256}
 \end{figure}
 
-In a similar manner, we collect the frequency again using a rectangular window. These results are shown in Figure \ref{fig::gnu_radio_loopback_generic_iio_rect_win}. Again, we note that the results are nearly the same as the ones we captured in Figure \ref{fig::gnu_radio_loopback_generic_iio_rect_win}
+In a similar manner, we recollect the frequency with a rectangular window. These results are shown in Figure \ref{fig::gnu_radio_loopback_generic_iio_rect_win} and are nearly identical to the ones we captured in Figure \ref{fig::gnu_radio_loopback_qt_gui_sink_rect_win}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_rect_win.png}}}
@@ -422,8 +422,7 @@ In a similar manner, we collect the frequency again using a rectangular window. 
 	\label{fig::gnu_radio_loopback_generic_iio_rect_win}
 \end{figure}
 
-Next, we reduce the LO frequency to 915 MHz and observe the frequency response. 
-Figure \ref{fig::gnu_radio_loopback_generic_iio_915_MHz_lo} shows the updated frequency response.
+Then, we reduce the LO frequency to 915 MHz and observe the frequency response, which is included in Figure \ref{fig::gnu_radio_loopback_generic_iio_915_MHz_lo}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_915_MHz_lo.png}}}
@@ -431,21 +430,19 @@ Figure \ref{fig::gnu_radio_loopback_generic_iio_915_MHz_lo} shows the updated fr
 	\label{fig::gnu_radio_loopback_generic_iio_915_MHz_lo}
 \end{figure}
 
-Note that the update frequency response is approximately the same because we are performing baseband. However, we can confirm the LO frequency change with \texttt{iio\_attr} commands as shown in Figure \ref{fig::iio_attr_confirm_lo_frequency}.
+Note that the updated frequency response is approximately the same because we are performing baseband sampling. However, we can confirm the LO frequency change with the \texttt{iio\_attr} commands shown in Figure \ref{fig::iio_attr_confirm_lo_frequency}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{iio_attr_confirm_lo_frequency.png}}}
-	\caption{Confirming a 915MHz LO Frequency with the \texttt{iio\_attr} commands}
+	\caption{Confirming a 915MHz LO Frequency with \texttt{iio\_attr} Commands}
 	\label{fig::iio_attr_confirm_lo_frequency}
 \end{figure}
 
-Note that the \texttt{altvoltage0} channel gives us the \texttt{RX\_LO} frequency, while the \texttt{altvoltage1} channel gives us the \texttt{TX\_LO} frequency.
-
-After updating the LO frequency, we also increase the sample rate to 4 MHz. The updated frequency responds is shown in Figure \ref{fig::gnu_radio_loopback_generic_iio_4MSPS} and has a frequency span of $\pm 2 \text{MHz}$.
+Note that the \texttt{altvoltage0} channel gives us the \texttt{RX\_LO} frequency, while the \texttt{altvoltage1} channel gives us the \texttt{TX\_LO} frequency. After updating the LO frequency, we also increase the sample rate to 4 MHz. The updated frequency responds is shown in Figure \ref{fig::gnu_radio_loopback_generic_iio_4MSPS} and has a frequency span of $\pm 2 \text{MHz}$.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_4MSPS.png}}}
-	\caption{Frequency Response when Sampling Rate is Increased to 4 MHz}
+	\caption{Frequency Response when the Sampling Rate is Increased to 4 MHz}
 	\label{fig::gnu_radio_loopback_generic_iio_4MSPS}
 \end{figure}
 
@@ -453,7 +450,7 @@ In a similar manner to what was shown above, we confirm the updated sampling rat
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{iio_attr_confirm_sampling_rate.png}}}
-	\caption{Confirming a 4MHz Sampling Rate with the \texttt{iio\_attr} commands}
+	\caption{Confirming a 4MHz Sampling Rate with \texttt{iio\_attr} Commands}
 	\label{fig::iio_attr_confirm_sampling_rate}
 \end{figure}
 
