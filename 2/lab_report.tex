@@ -277,7 +277,7 @@ In the above figures, the RF bandwidth sets the bandwidth of the analog filters 
 
 Next, we review the cyclic option in the PlutoSDR sink. When the cyclic option is selected, as illustrated in Figure \ref{fig::general_attributes_pluto_sdr_sink}, the PlutoSDR will repeat the first buffer of samples that it receives until the program is stopped. Conversely, when this option is not selected, the PlutoSDR will transmit buffers of samples as it receives them, creating a potentially discontinuous stream of samples which is more difficult to analyze. Additionally, not re-transmitting the same buffer of samples enables us to dedicate more of the USB bandwidth for received data. As long as our buffer size is a multiple of the period, the cyclic option results in the same transmission as a signal source feeding a PlutoSDR Sink with infinite USB bandwidth.
 
-The manual gain control in the PlutoSDR source block disables AGC and allows us to manually set the attenuation. Alternative gain control strategies include slow attack, hybrid, and fast attack. The hybrid gain control option is unique to the GNU Radio block and is not present in the MATLAB API. The hybrid mode is the same as the slow attack AGC mode with the exception of the gain update counter, which is not present in hybrid mode. This allows the hybrid algorithm to adjust the attenuation more frequently.
+The manual gain control in the PlutoSDR source block disables AGC and allows us to manually set the attenuation. Alternative gain control strategies include slow attack, hybrid, and fast attack. The hybrid gain control option is unique to the GNU Radio block and is not present in the MATLAB API. From an algorithms prespective, the hybrid mode is the same as the slow attack AGC mode with the exception of the gain update counter, which is not present in hybrid mode. This allows the hybrid algorithm to perform more frequent attenuation adjustments.
 
 Using the default receive gain setting of 20 dB, we observe the time and frequency data shown in Figure \ref{fig::gnu_radio_loopback_baseline}.
 
@@ -287,7 +287,7 @@ Using the default receive gain setting of 20 dB, we observe the time and frequen
 	\label{fig::gnu_radio_loopback_baseline}
 \end{figure}
 
-With the default settings the signal has already clipped. We can reduce the receive signal gain until we no longer see distortion. Figure \ref{fig::gnu_radio_loopback_rx_gain_12dB} shows the collect with 12 dB of receive signal gain.
+With the default settings, the signal has already clipped. From here, we reduce the receive signal gain until we no longer see distortion, which occurs at approximately 12 dB. Figure \ref{fig::gnu_radio_loopback_rx_gain_12dB} shows the collected data with this receive gain setting.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_rx_gain_12dB.png}}}
@@ -295,7 +295,7 @@ With the default settings the signal has already clipped. We can reduce the rece
 	\label{fig::gnu_radio_loopback_rx_gain_12dB}
 \end{figure}
 
-We note that the signal is no longer distorted but is very close to full scale ($\pm 1$). If we increase the receive signal gain back up to 13 dB, we start to see clipping again as illustrated in Figure \ref{fig::gnu_radio_loopback_rx_gain_13dB}.
+We note that the signal is no longer distorted but is very close to full scale ($\pm 1$). If we increase the receive signal gain to 13 dB, we start to see clipping again as illustrated in Figure \ref{fig::gnu_radio_loopback_rx_gain_13dB}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_rx_gain_13dB.png}}}
@@ -319,7 +319,7 @@ Using the flowchart with 0 dB of receive attenuation, we collect the frequency r
 	\label{fig::gnu_radio_loopback_qt_gui_sink}
 \end{figure}
 
-Looking at the frequency response, we see roughly 75 dB of SNR (peak to noise floor). Figure \ref{fig::gnu_radio_loopback_qt_gui_sink} shows the frequency response for the same configuration, average in amplitude over 256 frames.
+Looking at the frequency response, we see roughly 75 dB of SNR (peak to noise floor). Figure \ref{fig::gnu_radio_loopback_qt_gui_sink_avg_256} shows the frequency response for the same configuration, when we average in power over 256 frames.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_qt_gui_sink_avg_256.png}}}
@@ -348,7 +348,7 @@ In other words, the transmitted spectrum will be the DAC spectrum centered about
 
 \subsection{GNU Radio as a libIIO Client}
 
-In this experiment, we performed a loopback test using the generic IIO blocks shown in Figure \ref{fig::generic_iio_blocks} instead of the PlutoSDR Source and Sink blocks. Most of the PlutoSDR properties displayed in Figures \ref{fig::general_attributes_pluto_sdr_sink} - \ref{fig::filter_attributes_pluto_sdr_source}, can now be set with the IIO Attribute Sink. Each IIO Attribute Sink must be fed with a message, which can be created with an IIO Attribute Updater. However, the IIO Attribute Updater has a broken callback function in GNU Radio 3.10.9.2 \cite{analog_devices_broken_iio_block}. As a result, the IIO Attribute Updater cannot be used with a slider. To work around this, I wrote an embedded block which sends a message at the start of the run and every time its input changes. I wrapped this custom block and the IIO Attribute sink into the hierarchy block shown in Figure \ref{fig::iio_input_channel_attribute}.
+In this experiment, we performed a loopback test using the generic IIO blocks shown in Figure \ref{fig::generic_iio_blocks} instead of the PlutoSDR Source and Sink blocks. Most of the PlutoSDR properties displayed in Figures \ref{fig::general_attributes_pluto_sdr_sink} through \ref{fig::filter_attributes_pluto_sdr_source} can now be set with the IIO Attribute Sink. Each IIO Attribute Sink must be fed with a message, which can be created with an IIO Attribute Updater. However, the IIO Attribute Updater has a broken callback function in GNU Radio 3.10.9.2 \cite{analog_devices_broken_iio_block}. As a result, the IIO Attribute Updater cannot be used with a slider. To work around this, I wrote an embedded block which sends a message at the start of the run and every time its input changes. I wrapped this custom block and the IIO Attribute sink into the hierarchy block shown in Figure \ref{fig::iio_input_channel_attribute}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{iio_input_channel_attribute.png}}}
@@ -356,7 +356,7 @@ In this experiment, we performed a loopback test using the generic IIO blocks sh
 	\label{fig::iio_input_channel_attribute}
 \end{figure}
 
-The PlutoSDR Source and Sink blocks also leverage a programmable FIR. This programmable FIR requires a file to be written to the \texttt{filter\_fir\_config} attribute of the \texttt{ad9361-phy} device with an IIO Attribute Sink. Then, after loading the filter, the \texttt{filter\_fir\_en} attribute needs to be written to the \texttt{voltage0} channel. I created a custom python block to create both of the messages and coordinate their timing. I then wrapped the custom block in another hierarchy block, so I could easily leverage it in the source and sink. The resulting hierarchy block is shown in Figure \ref{fig::iio_fir_config}.
+The PlutoSDR Source and Sink blocks also leverage a programmable FIR. This programmable FIR requires a file to be written to the \texttt{filter\_fir\_config} attribute of the \texttt{ad9361-phy} device with an IIO Attribute Sink. After loading the filter, the \texttt{filter\_fir\_en} attribute needs to be written to the \texttt{voltage0} channel. I created a custom python block to create both of these messages and coordinate their timing. I then wrapped the custom block in another hierarchy block, so I could easily leverage it in the source and sink. The resulting hierarchy block is shown in Figure \ref{fig::iio_fir_config}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{iio_fir_config.png}}}
@@ -405,7 +405,7 @@ Repeating what was previously done, we measure the receive gain at which clippin
 	\label{fig::gnu_radio_loopback_generic_iio_rx_gain_13dB}
 \end{figure}
 
-Next, we capture the frequency response with 0 dB of receive gain and average it across 256 frames. We capture this result in Figure \ref{fig::gnu_radio_loopback_generic_iio_avg_256} and note that is nearly identical to the data we captured in Figure \ref{fig::gnu_radio_loopback_qt_gui_sink_avg_256}.
+Next, we capture the frequency response with 0 dB of receive gain and average it across 256 frames. We capture this result in Figure \ref{fig::gnu_radio_loopback_generic_iio_avg_256} and note that it is nearly identical to the data we captured in Figure \ref{fig::gnu_radio_loopback_qt_gui_sink_avg_256}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_avg_256.png}}}
