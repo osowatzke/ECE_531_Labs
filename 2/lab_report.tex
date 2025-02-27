@@ -378,9 +378,9 @@ Using the previously described hierarchy blocks, I created an additional layer o
 	\label{fig::pluto_iio_device_sink}
 \end{figure}
 
-Both the hierarchy blocks shown above use IIO Channel Attribute blocks to set block parameters. Each of the IIO Channel Attribute blocks get the same arguments as the equivalent \texttt{iio\_attr} command. The hierarchy blocks also leverage IIO FIR Configuration blocks to configure the programmable FIR. The source block uses an IIO device source to grab buffers of samples from the ADC. These samples are then scaled and converted to a complex float for processing. In a similar manner, the sink block converts comnplex floats to complex shorts. Then, it uses an IIO device sink to push buffers of samples to the DAC. 
+Both the hierarchy blocks shown above use IIO Channel Attribute blocks to set block parameters. Each of the IIO Channel Attribute blocks get the same arguments as the equivalent \texttt{iio\_attr} command. The hierarchy blocks also leverage IIO FIR Configuration blocks to configure the programmable FIR. The source block uses an IIO device source to grab buffers of samples from the ADC. These samples are then scaled and converted to complex floats for processing. In a similar manner, the sink block converts comnplex floats to complex shorts. Then, it uses an IIO device sink to push buffers of samples to the DAC. 
 
-Using the Generic IIO Sink and Source blocks shown above, we create a top-level GNU flowchart for our test. This flowchart is shown in Figure \ref{fig::gnu_radio_loopback_generic_iio} and is nearly identical to the flowchart shown in Figure \ref{fig::gnu_radio_loopback_flowchart}.
+Using the Generic IIO Sink and Source blocks shown above, we create a top-level GNU flowchart for our experiment. This flowchart is shown in Figure \ref{fig::gnu_radio_loopback_generic_iio} and is nearly identical to the flowchart shown in Figure \ref{fig::gnu_radio_loopback_flowchart}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{gnu_radio_loopback_generic_iio.png}}}
@@ -391,7 +391,7 @@ Using the Generic IIO Sink and Source blocks shown above, we create a top-level 
 Using the updated flowchart, we repeat the experiment described in Section \ref{section::gnu_radio_loopback}. Note that our initial flowchart contains the QT GUI Sink instead of the QT GUI Time Sink. This is okay for our experiment because the QT GUI Sink contains all the functionality of the QT GUI Time Sink.
 
 Repeating what was previously done, we measure the receive gain at which clipping occurs. Figure \ref{fig::gnu_radio_loopback_generic_iio_rx_gain_12dB} and Figure 
-\ref{fig::gnu_radio_loopback_generic_iio_rx_gain_13dB} show the resulting time-domain data at 12 and 13 dB of receive gain. Looking at the captured data, we conclude that clipping occurs at 13 dB, the same gain we measured earlier.
+\ref{fig::gnu_radio_loopback_generic_iio_rx_gain_13dB} show the resulting time-domain data with 12 and 13 dB of receive gain. Looking at the captured data, we conclude that clipping occurs at 13 dB, the same gain we measured earlier.
  
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_rx_gain_12dB.png}}}
@@ -437,7 +437,7 @@ Note that the updated frequency response is approximately the same because we ar
 	\label{fig::iio_attr_confirm_lo_frequency}
 \end{figure}
 
-Note that the \texttt{altvoltage0} channel gives us the \texttt{RX\_LO} frequency, while the \texttt{altvoltage1} channel gives us the \texttt{TX\_LO} frequency. After updating the LO frequency, we also increase the sample rate to 4 MHz. The updated frequency responds is shown in Figure \ref{fig::gnu_radio_loopback_generic_iio_4MSPS} and has a frequency span of $\pm 2 \text{MHz}$.
+Note that the \texttt{altvoltage0} channel gives us the \texttt{RX\_LO} frequency, while the \texttt{altvoltage1} channel gives us the \texttt{TX\_LO} frequency. After updating the LO frequency, we also increase the sampling rate to 4 MHz. The updated frequency response is shown in Figure \ref{fig::gnu_radio_loopback_generic_iio_4MSPS} and has a frequency span of $\pm 2 \text{MHz}$.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{gnu_radio_loopback_generic_iio_4MSPS.png}}}
