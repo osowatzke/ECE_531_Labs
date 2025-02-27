@@ -455,7 +455,7 @@ In a similar manner to what was shown above, we confirm the updated sampling rat
 
 \subsection{Measurements and the Radio}
 
-In this section, we use loopback SDR data collected in MATLAB to measure the SNR. To perform this measurement, we follow the procedure outlined in Section \ref{section::snr_measurement}. When the transmitted signal power suddenly drops, the received signal power takes time to converge due to IIR filters in the chain. Measuring the noise power when the received signal power is still decaying can lead to artificially high noise power estimates. To mitigate these effects, we increase the buffer size to increase the duration of the high and low-energy signal segments. For the collects that follow, we have specifically configured the buffer size to be 100,000 samples.
+In this section, we use loopback SDR data collected in MATLAB to measure the SNR. To perform this measurement, we follow the procedure outlined in Section \ref{section::snr_measurement}. When the transmitted signal power suddenly drops, the received signal power takes time to converge due to IIR filters in the chain. Measuring the noise power when the received signal power is still decaying can lead to artificially high noise power estimates. To mitigate these effects, we increase the buffer size, which in turn increases the duration of the high and low-energy signal segments. For the collects that follow, we have specifically configured the buffer size to be 100,000 samples.
 
 We start by measuring the SNR when the receive signal gain is 50 dB and the transmit signal gain is -70 dB. The signal power is plotted in Figure \ref{fig::snr_manual_agc_50db_rx_gain_70db_tx_atten}. In the figure, we also mark the regions we used for power measurements. Note that we specifically have avoided the regions with decaying signal power.
 
@@ -481,7 +481,7 @@ We perform a similar experiment by modifying the receive gain while keeping the 
 	\label{fig::snr_manual_agc_70db_rx_gain_70db_tx_atten}
 \end{figure}
 
-Examining the figure, we see that the SNR increases from 36.45 dB to 40.44 dB. What causes the SNR to change when the transmit signal power is constant? The SNR of the received signal is degraded by the noise figure. According to Friss' formula, the noise figure is large when the gain in the first gain stage is largest. When the receive gain is increased to 70 dB, the gain in the first gain stage increases, resulting in an SNR increase.
+Examining the figure, we see that the SNR increases from 36.45 dB to 40.44 dB. What causes the SNR to change when the transmit signal power is constant? The SNR of the received signal is degraded by the noise figure. According to Friss' formula, the noise figure is smallest when the gain in the first gain stage is largest. When the receive gain is increased to 70 dB, the gain in the first gain stage increases, resulting in an SNR increase.
 
 We compare the SNR of the \textit{Manual} AGC data to the SNR when the \textit{AGC Slow Attack} and \textit{AGC Fast Attack} algorithm are used. Figure \ref{fig::snr_agc_slow_attack_30db_tx_atten} shows the instantaneous power when the AGC algorithm is set to \textit{AGC Slow Attack}, and Figure \ref{fig::snr_agc_fast_attack_30db_tx_atten} shows the instantaneous power when the AGC algorithm is set to \textit{AGC Fast Attack}.
 
@@ -497,7 +497,7 @@ We compare the SNR of the \textit{Manual} AGC data to the SNR when the \textit{A
 	\label{fig::snr_agc_fast_attack_30db_tx_atten}
 \end{figure}
 
-Examining the above figures, we see that the instantaneous power plots are distorted by both AGC algorithms. The AGC algorithms increase the power of the noise samples to maintain a given headroom. In doing so, they distort our SNR measurement, which depends on constant noise levels throughout the collect. Use the methods mentioned previously, we measure an SNR of 14.15 dB for the \textit{AGC Slow Attack} algorithm and an SNR of -0.02 dB for the \textit{AGC Fast Attack} algorithm. Over portions of the pulse with a signal and good AGC settings, the SNR is likely similar to what was measured before. If we took a short-time Fourier Transform (STFT) over these samples, we could use the power of different FFT bins to measure the noise floor and signal power resulting in a much better SNR estimate. 
+Examining the above figures, we see that the instantaneous power plots are distorted by both AGC algorithms. The AGC algorithms increase the power of the noise samples to maintain a given headroom. In doing so, they distort our SNR measurement, which depends on constant noise levels throughout the collect. Use the methods mentioned previously, we measure an SNR of 14.15 dB for the \textit{AGC Slow Attack} algorithm and an SNR of -0.02 dB for the \textit{AGC Fast Attack} algorithm. Over portions of the pulse with a signal and good AGC settings, the SNR is likely similar to what was measured before. If we took a short-time Fourier Transform (STFT) over these samples, we could use the power of different FFT bins to measure the noise floor and signal power, which would in turn result in a much better SNR estimate. 
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
