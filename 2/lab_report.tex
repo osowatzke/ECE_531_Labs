@@ -303,7 +303,7 @@ We note that the signal is no longer distorted but is very close to full scale (
 	\label{fig::gnu_radio_loopback_rx_gain_13dB}
 \end{figure}
 
-Next, we replace the "QT Time Sink" and "QT Frequency Sink" with the "QT GUI Sink" and observe the output. The resulting flowchart is shown in Figure \ref{fig::gnu_radio_loopback_flowchart_qt_gui_sink}.
+Next, we replace the QT Time Sin" and QT Frequency Sink with the QT GUI Sink and observe the output. The resulting flowchart is shown in Figure \ref{fig::gnu_radio_loopback_flowchart_qt_gui_sink}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{gnu_radio_loopback_flowchart_qt_gui_sink.png}}}
@@ -506,7 +506,7 @@ In this lab, we started working with the ADALM-PLUTO Active Learning Module (Plu
 
 Next, we performed a loopback collect in GNU Radio. The built-in Pluto Sink and Source blocks provided access to critical device settings which included the RF bandwidth, the cyclic option, and the gain control mode. The RF bandwidth is the bandwidth of the analog filters in the transmitter and receiver. Having too large of an RF bandwidth can lead to an SNR degradation due to extra noise aliasing into our spectrum. The cyclic option allows us to repeat a single buffer of samples in the transmitter. Using the cyclic option allows us to achieve a continuous transmitted data stream, while freeing up USB bandwidth. The AGC settings in the GNU Radio block provide access to all the AGC settings available in MATLAB and an additional hybrid AGC setting. 
 
-In GNU Radio, we also used the provided flowchart to measure the receiver gain that resulted in saturation. When we replaced the "QT Time" and "QT Frequency" sink with the "QT GUI" sink, we were given an additional averaging option. This option averaged the power of the FFT outputs resulting in a reduced noise variance and a better estimate of the signal's frequency response. We also collected the frequency response with a rectangular window instead of a Blackmann-Harris window. This change resulted in a reduced mainlobe width at the cost of increased sidelobe levels.
+In GNU Radio, we also used the provided flowchart to measure the receiver gain that resulted in saturation. When we replaced the QT Time and QT Frequency Sink with the QT GUI Sink, we were given an additional averaging option. This option averaged the power of the FFT outputs resulting in a reduced noise variance and a better estimate of the signal's frequency response. We also collected the frequency response with a rectangular window instead of a Blackmann-Harris window. This change resulted in a reduced mainlobe width at the cost of increased sidelobe levels.
 
 Then, we replaced the PlutoSDR Sink and Source block with equivalent generic IIO blocks. This gave us an opportunity to learn more about the IIO control of the \textit{ad9361-phy}. To validate our work, we repeated the GNU Radio loopback experiment using the updated flowchart. We also updated the LO frequency and sampling rate in the flowchart. Then, we validated that these parameters were correctly applied using the \texttt{iio\_attr} command.
 
