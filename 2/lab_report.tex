@@ -40,7 +40,7 @@
 \section{Introduction}
 %Introduction to the laboratory experiment, including a brief description of the objectives and goals.
 
-In this lab, we introduce the ADALM-PLUTO Active Learning Module (PlutoSDR). We specifically learn how to interface with the device via IIO. Then, we perform loopback collects by connecting the transmitter and receiver ports together with a coaxial cable. With the hardware in this configuration, we use MATLAB and GNU radio to perform more in-depth experiments. First, in MATLAB, we experiment with the AGC settings and determine the gain needed to saturate the receiver. Next, in GNU radio, we evaluate the parameters of the built-in PlutoSDR blocks and once again determine the gain needed to saturate the receiver. We also observe the frequency response and learn how to map the input frequency to the RF frequency. Next, we create our own PlutoSDR blocks from IIO primitives and vaidate their behavior. Finally, we use MATLAB to measure the SNR of the received signal for different gain levels and AGC settings. 
+In this lab, we introduce the ADALM-PLUTO Active Learning Module (PlutoSDR). We specifically learn how to interface with the device via IIO. Then, we perform loopback collects by connecting the transmitter and receiver ports together with a coaxial cable. With the hardware in this configuration, we use MATLAB and GNU radio to perform more in-depth experiments. First, in MATLAB, we experiment with the AGC settings and determine the gain needed to saturate the receiver. Next, in GNU radio, we evaluate the parameters of the built-in PlutoSDR blocks and once again determine the gain needed to saturate the receiver. We also observe the frequency response and learn how to map the input frequency to the RF frequency. Next, we create our own PlutoSDR blocks from IIO primitives and validate the behavior of these blocks. Finally, we use MATLAB to measure the SNR of the received signal for different gain levels and AGC settings. 
 
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
@@ -56,16 +56,16 @@ In this experiment, we learn how to interface with the PlutoSDR with IIO. We sta
 \texttt{cat /sys/bus/iio/devices/$<$iio\_device$>$/name}
 \end{center}
 
-where \texttt{$<$iio\_device$>$} is the IIO device we found previously with the \texttt{iio\_attr} command. Finally, we use the \texttt{iio\_attr} command to list the attributes of the \textit{ad9361-phy} device.
+where \texttt{$<$iio\_device$>$} is the IIO device we found with the \texttt{iio\_attr -s} command. Finally, we use the \texttt{iio\_attr} command to list the attributes of the \textit{ad9361-phy} device.
 
 \subsection{MATLAB Loopback}
 
-In this experiment, we perform a loopback test by connecting the Pluto SDR's transmit and receive ports together with a coaxial SMA cable. Once the cable is properly connected, we execute the provided \texttt{loopback.m} script to perform a physical collect. After validating that our loopback collect works, we evaluate the impact of the \textit{GainSource} (AGC) settings by testing each possible configuration: \textit{Manual}, \textit{AGC Slow Attack}, and \textit{AGC Fast Attack}. To characterize the impact of these settings, we slightly modify our transmitted signal. We perform one collect while varying the amplitude of the signal and another collect with zero portions added to the signal. Finally, we determine what gain values are necessary to turn the receive sinusoid into a square wave (saturate the signal).
+In this experiment, we perform a loopback test by connecting the Pluto SDR's transmit and receive ports together with a coaxial SMA cable. Once the cable is properly connected, we execute the provided \texttt{loopback.m} script to perform a physical collect. After validating that our loopback collect works, we evaluate the impact of the \textit{GainSource} (AGC) settings by testing each of its possible configurations: \textit{Manual}, \textit{AGC Slow Attack}, and \textit{AGC Fast Attack}. To characterize the impact of these settings, we modify our transmitted signal by adding segments of zeros. Finally, we determine what gain values are necessary to turn the receive sinusoid into a square wave (saturate the signal).
 
 \subsection{GNU Radio Loopback}
 \label{section::gnu_radio_loopback}
 
-We can perform a similar loopback experiment using GNU Radio instead of MATLAB. For this test, we use the provided \texttt{PlutoTestSine.grc} flowchart. The lab also mentions a QT GUI Time Sink, which is not included in the provided flowchart. To meet the requirements of this experiment, we have added the time sink to the flowchart. The resulting flowchart is shown in Figure \ref{fig::gnu_radio_loopback_flowchart}.
+We can perform a similar loopback experiment using GNU Radio instead of MATLAB. For this test, we use the provided \texttt{PlutoTestSine.grc} flowchart. The lab assignment also mentions a ``QT GUI Time Sink", which is not included in the provided flowchart. To meet the requirements of this experiment, we have added the time sink to the flowchart. The resulting flowchart is shown in Figure \ref{fig::gnu_radio_loopback_flowchart}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{gnu_radio_loopback_flowchart.png}}}
@@ -73,9 +73,9 @@ We can perform a similar loopback experiment using GNU Radio instead of MATLAB. 
 	\label{fig::gnu_radio_loopback_flowchart}
 \end{figure}
 
-Before we run the flowchart, we review the properties of the PlutoSDR blocks. We specifically review the RF bandwidth and its impact on performance. Then, we describe what the "Cyclic" option does in the PlutoSDR sink. Finally, we discuss the effects of Manual Gain control in the Pluto SDR and review alternative gain control strategies.
+Before we run the flowchart, we review the properties of the PlutoSDR blocks. We specifically investigate the RF bandwidth and its impact on performance. Then, we describe what the ``Cyclic" option does in the PlutoSDR sink. Finally, we discuss the effects of Manual Gain control in the Pluto SDR and review alternative gain control strategies.
 
-After reviewing the PlutoSDR blocks, we run the flowchart and determine the receiver gain where the signal distorts (or clips). Next, we replace the "QT Time Sink" and "QT Frequency Sink" blocks with a "QT GUI Sink" block. Using the updated block, we examine the impacts of increasing the number of averages and changing the window function. Then, we determine the transmitted RF frequency and explain how our transmitter configuration resulted in this frequency.
+After reviewing the PlutoSDR blocks, we run the flowchart and determine the receiver gain where the signal distorts (or clips). Next, we replace the ``QT Time Sink" and ``QT Frequency Sink" blocks with a ``QT GUI Sink" block. Using the updated flowchart, we examine the impacts of increasing the number of averages and changing the window function. Then, we determine the transmitted RF frequency and explain how our transmitter configuration results in this frequency.
 
 \subsection{GNU Radio as a libIIO Client}
 
