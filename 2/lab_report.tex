@@ -103,7 +103,7 @@ We perform this computation for data collected with \textit{Manual} AGC at varyi
 
 \section{Results}
 
-In this section, we provide results to each of the experiments outlined in the previous section. We start by discussing the result of IIO commands. Next, we display the loopback test results captured in MATLAB and GNU Radio. Then, we create a custom PlutoSDR using generic IIO blocks and prove the functionality of our design. Finally, we measure the SNR with different gain and AGC settings.
+In this section, we provide the results for each of the experiments outlined in the previous section. We start by discussing the result of IIO commands. Next, we display the loopback test results captured in MATLAB and GNU Radio. Then, we create a custom PlutoSDR using generic IIO blocks and prove the functionality of these blocks. Finally, we measure the SNR with different gain and AGC settings.
 
 \subsection{Industrial Input/Output (IIO)}
 
@@ -115,7 +115,7 @@ Here we display the results from the industrial input/output commands provided i
 	\label{fig::iio_info_putty}
 \end{figure}
 
-We compare the outputs displayed in the SSH terminal to the outputs of the same command executed in command prompt, a local PC terminal. These updated results are shown in Figure \ref{fig::iio_info_cmd}.
+We compare the outputs displayed in the SSH terminal to the outputs of the same command executed in command prompt, a local PC terminal. The output of the updated commanded is shown in Figure \ref{fig::iio_info_cmd}.
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.9\textwidth]{iio_info_cmd.png}}
@@ -123,7 +123,7 @@ We compare the outputs displayed in the SSH terminal to the outputs of the same 
 	\label{fig::iio_info_cmd}
 \end{figure}
 
-Compared to the outputs shown in Figure \ref{fig::iio_info_putty}, the command prompt output returns very similar URIs. Both outputs contain two ip:pluto.local URIs. One of these outputs is exactly the same with an IP address of 192.169.2.1, and the other is nearly identical. The biggest difference between the terminal outputs is their third and final URI. The final SSH URI is a local URI (local:), while the command prompt URI is a USB URI (usb:1.31.5). We note that command prompt also contains an additional warning message, which says ``Unable to create Local IIO context: Function not implemented (40)." This warning message is described in more detail in \cite{analog_devices_libiio_error}. However, it is an expected warning in Windows operating systems. For comparison, we run the same command on the Virtual Machine. The results of this command are displayed in Figure \ref{fig::iio_info_vm}.
+The command prompt output contains very similar URIs to the SSH output shown in Figure \ref{fig::iio_info_putty}. Both sets of outputs contain two \texttt{ip:pluto.local} URIs. The printout for one of these local URIs is exactly the same and is associated with an IP address of 192.169.2.1. The other local URI printout is nearly the same. The biggest difference we observe in the SSH and PC terminal outputs is in the final URI. In the ssh terminal, the URI is a local URI (\texttt{local:}). while the command prompt URI is a USB URI (\texttt{usb:1.31.5}). We note that command prompt output also contains an additional warning message, which says ``Unable to create Local IIO context: Function not implemented (40)." This warning message is described in more detail in \cite{analog_devices_libiio_error}. However, it is an expected warning in Windows operating systems. For comparison, we run the same command on the Virtual Machine. The results of this command are displayed in Figure \ref{fig::iio_info_vm}.
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.9\textwidth]{iio_info_vm.png}}
@@ -131,7 +131,7 @@ Compared to the outputs shown in Figure \ref{fig::iio_info_putty}, the command p
 	\label{fig::iio_info_vm}
 \end{figure}
 
-Compared to the results of Figure \ref{fig::iio_info_cmd}, we see that the IIO context warning message is no longer present. Next, we use the \texttt{iio\_attr -d} command without a device to list all the devices in the PlutoSDR. The output of this command is listed in Figure \ref{fig::iio_devices}.
+Compared to the results of Figure \ref{fig::iio_info_cmd}, we see that the IIO context warning message is no longer present. Next, we use the \texttt{iio\_attr -d} command without a device to list all the devices in the PlutoSDR. The output of this command is included in Figure \ref{fig::iio_devices}.
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.75\textwidth]{iio_devices.png}}
@@ -139,8 +139,7 @@ Compared to the results of Figure \ref{fig::iio_info_cmd}, we see that the IIO c
 	\label{fig::iio_devices}
 \end{figure}
 
-
-Examining the command output, we find that \textit{ad9361-phy} corresponds to iio:device0. Using the following command, we confirm the name of iio:device0.
+Examining the command output, we find that \textit{ad9361-phy} corresponds to \texttt{iio:device0}. Using the following command, we confirm the name of \texttt{iio:device0}.
 
 \begin{center}
 \texttt{cat /sys/bus/iio/devices/iio:device0/name}
@@ -154,7 +153,7 @@ The outputs of this command are given in Figure \ref{fig::iio_device0_name}.
 	\label{fig::iio_device0_name}
 \end{figure}
 
-Examining the command outputs, we find that the name of iio:device0 is \textit{ad9361-phy} as expected. We can pass the name of the device as an argument to the \text{iio\_attr -d} command to list the attributes of the device. The results of this command are given in Figure \ref{fig::iio_raw_attributes}.
+Examining the command outputs, we find that the name of \texttt{iio:device0} is \textit{ad9361-phy} as expected. We can pass the name of the device as an argument to the \texttt{iio\_attr -d} command to list the attributes of the device. The results of this command are given in Figure \ref{fig::iio_raw_attributes}.
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.9\textwidth]{iio_raw_attributes.png}}
@@ -170,7 +169,7 @@ Note that this command gives the device attributes and their values. However, is
 	\label{fig::iio_filtered_attributes}
 \end{figure}
 
-The \textit{ad9361-phy} device controls the physical (PHY) layer of the transceiver and is responsible for device configuration. In addition to the properties shown above, the ad9361-phy device contains multiple channels, which provide access to critical device properties. For example, the \texttt{altvoltage0} and \texttt{altvoltage1} channels provide access to the LO frequencies of the transmitter and receiver, and the \texttt{voltage0} channels provides access to the sample rate, RF bandwidth, and gain control mode. All these parameters will be explored later in the lab.
+The \textit{ad9361-phy} device controls the physical (PHY) layer of the transceiver and is responsible for device configuration. In addition to the properties shown above, the \textit{ad9361-phy} device contains multiple channels, which provide access to critical device properties. For example, the \texttt{altvoltage0} and \texttt{altvoltage1} channels provide access to the LO frequencies of the transmitter and receiver, and the \texttt{voltage0} channels provides access to the sample rate, RF bandwidth, and gain control mode. All these parameters will be explored later in the lab.
 
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
