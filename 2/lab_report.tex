@@ -182,7 +182,7 @@ In this section, we perform a loopback test with MATLAB. To prevent discontinuit
 	\frac{f_o}{f_s} = \frac{M}{N}
 \end{equation} 
 
-In the script, $f_o = 300\ \text{Hz}$ and $f_s = 1\ \text{MHz}$. Reducing, we find that $M = 3k$ and $N = 10000k$ where $k$ is any positive integer. We choose $k=3$ to get a buffer size $N = 30000$. We, then, perform a baseline data collect with \textit{Manual} AGC and 24 dB of \textit{Gain}. The resulting frequency response is shown in Figure \ref{fig::matlab_loopback_baseline}.
+In the script, $f_o = 300\ \text{Hz}$ and $f_s = 1\ \text{MHz}$. Reducing, we find that $M = 3k$ and $N = 10000k$ where $k$ is any positive integer. We choose $k=3$ to get a buffer size $N = 30000$. We, then, perform a baseline data collect with \textit{Manual} AGC and 24 dB of receive gain. The resulting data is shown in Figure \ref{fig::matlab_loopback_baseline}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{matlab_loopback_baseline.png}}}
@@ -190,7 +190,7 @@ In the script, $f_o = 300\ \text{Hz}$ and $f_s = 1\ \text{MHz}$. Reducing, we fi
 	\label{fig::matlab_loopback_baseline}
 \end{figure}
 
-We compare the data collected with \textit{Manual} AGC to the data with collected using the \textit{AGC Slow Attack} and \textit{AGC Fast Attack} settings. The data collected with the updated AGC settings is shown in Figures \ref{fig::matlab_loopback_agc_slow_attack} and \ref{fig::matlab_loopback_agc_fast_attack} respectively.
+We compare the data collected with \textit{Manual} AGC to data collected using the \textit{AGC Slow Attack} and \textit{AGC Fast Attack} settings. The data collected with the updated AGC settings is shown in Figures \ref{fig::matlab_loopback_agc_slow_attack} and \ref{fig::matlab_loopback_agc_fast_attack}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{matlab_loopback_agc_slow_attack.png}}}
@@ -200,13 +200,13 @@ We compare the data collected with \textit{Manual} AGC to the data with collecte
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{matlab_loopback_agc_fast_attack.png}}}
-	\caption{BLoopback Collect using \textit{AGC Fast Attack}}
+	\caption{Loopback Collect using \textit{AGC Fast Attack}}
 	\label{fig::matlab_loopback_agc_fast_attack}
 \end{figure}
 
 Looking at the data collected with the \textit{Slow AGC Attack} setting, we observe that the first few sinusoid periods are saturated. However, with the \textit{AGC Fast Attack} setting, we don't observe any saturation. This is because the \textit{Slow AGC Attack} algorithm takes more time to reach steady state compared to the \textit{Fast AGC Attack} algorithm.
 
-By adding zeros to the data, we can observe the step response of each AGC algorithm. For these collected, we configure the data to have a duty cycle of 75\% (i.e. the first 75\% of the data is untouched, while the last 25\% is replaced with zeros). The resulting data with the \textit{Manual} AGC setting is shown in Figure \ref{fig::matlab_loopback_agc_manual_75p_duty_cycle}.
+By adding zeros to the data, we can observe the step response of each AGC algorithm. For these collects, we configure the data to have a duty cycle of 75\% (i.e. the first 75\% of the data is untouched, while the last 25\% is replaced with zeros). The resulting data collected with the \textit{Manual} AGC setting is shown in Figure \ref{fig::matlab_loopback_agc_manual_75p_duty_cycle}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{matlab_loopback_agc_manual_75p_duty_cycle.png}}}
@@ -214,24 +214,24 @@ By adding zeros to the data, we can observe the step response of each AGC algori
 	\label{fig::matlab_loopback_agc_manual_75p_duty_cycle}
 \end{figure}
 
-We perform similar collects with the \textit{AGC Slow Attack} and \textit{AGC Fast Attack} settings. The resulting data is shown in Figures \ref{fig::matlab_loopback_agc_slow_attack_75p_duty_cycle} and \ref{fig::matlab_loopback_agc_fast_attack_75p_duty_cycle} respectively.
+We perform similar collects with the \textit{AGC Slow Attack} and \textit{AGC Fast Attack} settings. The results with the updated AGC settings is shown in Figures \ref{fig::matlab_loopback_agc_slow_attack_75p_duty_cycle} and \ref{fig::matlab_loopback_agc_fast_attack_75p_duty_cycle}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{matlab_loopback_agc_slow_attack_75p_duty_cycle.png}}}
-	\caption{75\% Duty Cycle Loopback Collect with \textit{AGC Slow Attack} Setting}
+	\caption{75\% Duty Cycle Loopback Collected with \textit{AGC Slow Attack} Setting}
 	\label{fig::matlab_loopback_agc_slow_attack_75p_duty_cycle}
 \end{figure}
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{matlab_loopback_agc_fast_attack_75p_duty_cycle.png}}}
-	\caption{75\% Duty Cycle Loopback Collect with \textit{AGC Fast Attack} Setting}
+	\caption{75\% Duty Cycle Loopback Collected with \textit{AGC Fast Attack} Setting}
 	\label{fig::matlab_loopback_agc_fast_attack_75p_duty_cycle}
 \end{figure}
 
 Observing the collected data, we see that the \textit{AGC Fast Attack} Setting quickly converges to the correct headroom, while the 
-\textit{AGC Slow Attack} setting takes longer to do so.
+\textit{AGC Slow Attack} setting takes longer to converge.
 
-Next, we measure the \textit{Gain} setting which results in signal clipping. We find that the signal begins to clip at 34 dB of receive gain. We show the resulting data in Figure \ref{fig::matlab_loopback_agc_manual_34db_gain}. As we increase the \textit{Gain} more, the effects of clipping become more severe resulting in a square wave. We illustrate this in Figure \ref{fig::matlab_loopback_agc_manual_45db_gain}, which shows the results with 45 dB of receive gain.
+Next, we measure the \textit{Gain} setting which results in signal clipping. We find that the signal begins to clip at 34 dB of receive gain. We show the resulting data in Figure \ref{fig::matlab_loopback_agc_manual_34db_gain}. As we increase the gain more, the effects of clipping become more severe resulting in a square wave. We illustrate this in Figure \ref{fig::matlab_loopback_agc_manual_45db_gain}, which shows the results with 45 dB of receive gain.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{matlab_loopback_agc_manual_34db_gain.png}}}
