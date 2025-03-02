@@ -53,12 +53,24 @@ In this section, we use Fosphor to create spectrum waterfall plots of data recei
 
 \subsection{Identifying Signals in the RF Spectrum}
 
+For our first modulation technique, we looked at the FM radio band. We specifically captured data with a center frequency of 96.1 MHz and a bandwidth of 1 MHz. Our resulting collect is shown in Figure \ref{fig::hd_radio_spectrum}.
+
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{hd_radio_spectrum_cropped.png}}}
-	\caption{Setup for Sampling Rate Experiment}
+	\caption{HD Radio Spectrum}
 	\label{fig::hd_radio_spectrum}
 \end{figure}
 
+Note that FM radio channel we collected includes HD radio sidebands. The HD radio sidebands are digital copies of the data transmitted using OFDM modulation. The analog radio spectrum is encoded with FM modulation and rapidly oscillates in frequency with maintaining a constant amplitude. For comparison, the OFDM digital sidebands occupy fixed bandwidth and peak at approximately constant values. This is expected because OFDM encodes data into each of its subcarriers using QAM, a fixed amplitude modulation scheme. 
+
+For our next collect, we looked at the spectrum for TV modulated with 8VSB. We specifically captured data at 485 MHz with a bandwidth of 10 MHz. Our collect is shown in Figure \ref{fig::8vsb_spectrum}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{8vsb_spectrum_cropped.png}}}
+	\caption{Channel 16 TV Spectrum}
+	\label{fig::8vsb_spectrum}
+\end{figure}
+ 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
