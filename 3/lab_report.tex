@@ -73,6 +73,16 @@ For our next collect, we looked at the spectrum for TV modulated with 8VSB. We s
 
 8VSB uses 8 discrete levels of amplitude modulation applied digitally. It also employs a steep filter with steep cutoff to remove the sidelobes associated with the zero-order hold in the transition from discrete time to continuous time. This filter leads to a significant spectral savings.
  
+Then, we looked at the LTE spectrum in the 700 MHz A spectrum. To do this, we set our center frequency to 731.5 MHz and our bandwidth to 8 MHz. The resulting spectrum is shown in Figure \ref{fig::lte_spectrum}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{lte_spectrum_cropped.png}}}
+	\caption{LTE Spectrum for 700 MHz A Channel}
+	\label{fig::lte_spectrum}
+\end{figure}
+
+Comparing the results to Figure \ref{fig::8vsb_spectrum}, the spectrum has much more ripple. This is expected because we are outputting tones on each of the OFDM subcarriers. Looking at time axis, we also see a lot more variation in the data due to rapidly changing symbols.
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
