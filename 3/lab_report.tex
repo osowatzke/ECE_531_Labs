@@ -46,7 +46,11 @@
 \subsection{Identifying Signals in the RF Spectrum}
 
 In this section, we use Fosphor to create spectrum waterfall plots of data received with the PlutoSDR. Using \url{sigidwiki.com} as a reference, we identify at least 4 different modulation techniques in received over-the-air transmissions. For each of the received signals, we describe the time and frequency characteristics that reveal the modulation technique.
- 
+
+\subsection{Sweeping the Spectrum: Receiving from 60 MHz to 6 GHz}
+
+In this experiment, we perform multiple collects of the spectrum while sweeping the center frequency in steps of $F_s$. Even though our instantaneous bandwidth is limited to 56 MHz we can stitch together each of our collects to get a picture of the entire spectrum from 60 MHz to 6 GHz. For this experiment, we specifically choose a sampling rate $F_s = 20\ \text{MHz}$. This enables us to sample the spectrum at 60 MHz with a minimum LO frequency of 70 MHz.
+
 \section{Results}
 
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
