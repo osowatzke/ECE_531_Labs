@@ -49,7 +49,13 @@ In this section, we use Fosphor to create spectrum waterfall plots of data recei
 
 \subsection{Sweeping the Spectrum: Receiving from 60 MHz to 6 GHz}
 
-In this experiment, we perform multiple collects of the spectrum while sweeping the center frequency in steps of $F_s$. Even though our instantaneous bandwidth is limited to 56 MHz we can stitch together each of our collects to get a picture of the entire spectrum from 60 MHz to 6 GHz. For this experiment, we specifically choose a sampling rate $F_s = 20\ \text{MHz}$. This enables us to sample the spectrum at 60 MHz with a minimum LO frequency of 70 MHz.
+In this experiment, we perform multiple collects of the spectrum while sweeping the center frequency in steps of $F_s$. Even though our instantaneous bandwidth is limited to 56 MHz we can stitch together each of our collects to get a picture of the entire spectrum from 60 MHz to 6 GHz. This procedure is illustrated in Figure \ref{fig::sweeping_the_spectrum}. For the experiment, we specifically choose a sampling rate $F_s = 20\ \text{MHz}$. This enables us to capture the spectrum at 60 MHz even though our minimum LO frequency is 70 MHz. 
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sweeping_the_spectrum.png}}}
+	\caption{HD Radio Spectrum}
+	\label{fig::sweeping_the_spectrum}
+\end{figure}
 
 \section{Results}
 
