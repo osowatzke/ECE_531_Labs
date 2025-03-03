@@ -105,7 +105,15 @@ Motorola Type II Communications leverage multiple channels that are 12.5 kHz wid
 
 \subsection{Sweeping the Spectrum: Receiving from 60 MHz to 6 GHz}
 
-In this section, we stitch together multiple collects of the PlutoSDR with different center frequencies to get a picture of the frequency response from 60 MHz to 6 GHz. As previously stated, we sweep the LO frequency in 20 MHz steps. In between each collect, we call the \texttt{release} method of the \texttt{sdrrx} object. This prevents us from looking at stale data in the Pluto receive buffers. To ensure that are transmitted signal doesn't corrupt our received data, we set the LO frequency far from our collect, max-out the attenuation, and transmit zeros.
+In this section, we stitch together multiple collects of the PlutoSDR with different center frequencies to get a picture of the frequency response from 60 MHz to 6 GHz. As previously stated, we sweep the LO frequency in 20 MHz steps. In between each collect, we call the \texttt{release} method of the \texttt{sdrrx} object. This prevents us from looking at stale data in the Pluto receive buffers. To ensure that are transmitted signal doesn't corrupt our received data, we set the LO frequency far from our collect, max-out the attenuation, and transmit zeros. After stitching together each of our collects, we get a picture of the full PlutoSDR spectrum, which we have included in Figure \ref{fig::full_spectrum_labeled}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{full_spectrum_labeled.png}}}
+	\caption{Full Pluto SDR Spectrum with Key Bands Labeled}
+	\label{fig::full_spectrum_labeled}
+\end{figure}
+
+We have also labeled the key bands in the spectrum. These include FM Radio, TV, Mobile, and Wi-Fi bands. The TV bands primarily use 8VSB modulation, the Wi-Fi bands leverage OFDM in accordance with the 802.11a standard, and the mobile bands leverage mostly LTE and 5G NR.
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
