@@ -115,6 +115,19 @@ In this section, we stitch together multiple collects of the PlutoSDR with diffe
 
 We have also labeled the key bands in the spectrum. These include FM Radio, TV, Mobile, and Wi-Fi bands. The TV bands primarily use 8VSB modulation, the Wi-Fi bands leverage OFDM in accordance with the 802.11a standard, and the mobile bands leverage mostly LTE and 5G NR.
 
+\subsection{Understanding Your Wireless Device}
+
+For this experiment, I examined the spectrum of my 2022 Honda Civic Car Key. My car key has an FCC ID of KR5TP-4 and transmits at 433.92 MHz. In Fosphor, I captured the spectrum of a lock button press, which is shown in Figure \ref{fig::car_key_spectrum}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{car_key_spectrum.png}}}
+	\caption{2022 Honda Civic Key Fob Spectrum}
+	\label{fig::car_key_spectrum}
+\end{figure}
+
+Using Fosphor, I saved the collected key presses to a file, which I parsed offline in MATLAB for further analysis.
+
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
