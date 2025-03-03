@@ -103,6 +103,10 @@ For the final modulation scheme, we looked at Motorola Type II communications in
 
 Motorola Type II Communications leverage multiple channels that are 12.5 kHz wide. Each of these channels use a 4 FSK modulator, which maps bits to 4 discrete frequencies. Looking at the spectrum, we see that each of these channels appear almost fixed in frequency. This is because they rapidly oscillate between each of the available frequencies.
 
+\subsection{Sweeping the Spectrum: Receiving from 60 MHz to 6 GHz}
+
+In this section, we stitch together multiple collects of the PlutoSDR with different center frequencies to get a picture of the frequency response from 60 MHz to 6 GHz. As previously stated, we sweep the LO frequency in 20 MHz steps. In between each collect, we call the \texttt{release} method of the \texttt{sdrrx} object. This prevents us from looking at stale data in the Pluto receive buffers. To ensure that are transmitted signal doesn't corrupt our received data, we set the LO frequency far from our collect, max-out the attenuation, and transmit zeros.
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
