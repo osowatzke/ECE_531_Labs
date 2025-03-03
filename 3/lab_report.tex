@@ -125,9 +125,32 @@ For this experiment, I examined the spectrum of my 2022 Honda Civic Car Key. My 
 	\label{fig::car_key_spectrum}
 \end{figure}
 
-Using Fosphor, I saved the collected key presses to a file, which I parsed offline in MATLAB for further analysis.
+Using Fosphor, I saved the collected key presses to a file, which I parsed offline in MATLAB for further analysis. In MATLAB, I was able to reconstruct the spectrogram of the data, which is shown in Figure \ref{fig::car_key_spectrogram}.
 
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{car_key_spectrogram.png}}}
+	\caption{Spectrogram of Key Fob Data Generated in MATLAB}
+	\label{fig::car_key_spectrogram}
+\end{figure}
 
+Each lock press generates 8 pulses, alternating between 2 high frequency pulses and 2 low frequency pulses. Each of these pulses use FSK modulation, which can be see in Figure \ref{fig::car_key_spectrogram_focus}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{car_key_spectrogram_focus.png}}}
+	\caption{Closeup of FSK Modulation Present in Pulses}
+	\label{fig::car_key_spectrogram_focus}
+\end{figure}
+
+The keyfob data can be decoded using a Short-Time Fourier Transform (STFT), with an FFT size tuned to a fraction of the bit duration. If the power ratio between frequency bins is large enough, for a long enough duration of time, we can declare a 1 or a 0. For a more efficient hardware implementation, we can also use the Goertzel algorithm, which only computes the FFT output for select bins. 
+
+For security reasons, the sequence of bits also changes each time the key is pressed. We can see this when we look at subsequent key presses. Figure \ref{fig::car_key_spectrogram_repeat} shows the same portion of the FSK pulse as Figure \ref{fig::car_key_spectrogram_focus}. Comparing the two, we can tell that the duration and ordering of the high and low frequency periods has changing, which is indicative of a changing sequences of bits.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{car_key_spectrogram_repeat.png}}}
+	\caption{Repeated Collect Showing Sequence of Bits Has Changed}
+	\label{fig::car_key_spectrogram_repeat}
+\end{figure}
+ 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
