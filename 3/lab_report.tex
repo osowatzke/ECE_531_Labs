@@ -115,21 +115,19 @@ In this section, we display the spectrograms and waterfall plots we collected wh
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{2.412g_wifi_spectrum.png}}}
-	\caption{Spectrum of 802.11 Wi-Fi Signal Captured in 40MHz Spectrum Centered at 2.412 GHz}
+	\caption{Spectrum of 802.11 Wi-Fi Signal Captured in 2.4 GHz Band}
 	\label{fig::2_412_wifi_spectrum}
 \end{figure}
 
-Examining the collected data, we see that the Wi-Fi signal has a bandwidth of 20 MHz and a center frequency of 2.417 GHz. This corresponds to channel 2. Examining the spectrum, we see a null on the DC subcarrier and approximately even energy across all the remaining non-zero subcarriers.
-
-We can perform similar analysis for a 5 GHz Wi-Fi signal, whose spectrum we display in Figure \ref{fig::5_180g_wifi_spectrum}.
+Examining the collected data, we see that the Wi-Fi signal has a bandwidth of 20 MHz and a center frequency of 2.417 GHz. This corresponds to channel 2 in the 2.4 GHz band. The 802.11a Wi-Fi signal we captured uses OFDM. We can see artifacts of this modulation scheme in the spectrum. For instance, we see a null DC subcarrier at the center frequency and approximately even energy across all the remaining non-zero subcarriers. We can perform similar analysis for a 5 GHz Wi-Fi signal. Figure \ref{fig::5_180g_wifi_spectrum} displays 40 MHz of the 5 GHz Wi-Fi spectrum centered at 5.18 GHz.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{5.180g_wifi_spectrum_3.png}}}
-	\caption{40 MHz Spectrum containing 802.11 Wi-Fi Signal Centered at 5.180 GHz}
+	\caption{Spectrum of 802.11 Wi-Fi Signal Captured in 5 GHz Band}
 	\label{fig::5_180g_wifi_spectrum}
 \end{figure}
 
-Examining the spectrum, we see a 20 MHz wide signal centered at 5.180 GHz, which corresponds to channel 36. We also see energy in the adjacent channel (channel 40), which is centered at 5.20 GHz.
+Examining the spectrum, we see a 20 MHz wide signal centered at 5.180 GHz, which corresponds to channel 36 in the 5 GHz band. We also see energy in the adjacent channel (channel 40), which is centered at 5.20 GHz.
 
 \subsection{Sweeping the Spectrum: Receiving from 60 MHz to 6 GHz}
 
