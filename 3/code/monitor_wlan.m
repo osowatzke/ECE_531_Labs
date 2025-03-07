@@ -1,5 +1,5 @@
 % Center frequency (2.412e9 for 2.4 GHz band and 5.18e9 for 5GHz band)
-centerFreq = 5.180e9;
+centerFreq = 2.412e9;
 
 % Sample rate for scope. Want larger than 20 MHz signal bandwidth
 sampleRate = 40e6;

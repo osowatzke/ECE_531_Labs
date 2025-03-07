@@ -109,6 +109,28 @@ For the final modulation scheme, we looked at Motorola Type II communications in
 
 Motorola Type II Communications leverage multiple channels that are 12.5 kHz wide. Each of these channels use a 4 FSK modulator, which maps bits to 4 discrete frequencies. Looking at the spectrum, we see that each of these channels appear almost fixed in frequency. This is because they rapidly oscillate between each of the available frequencies.
 
+\subsection{IEEE 802.11 Wireless Local Area Network}
+
+In this section, we display the spectrograms and waterfall plots we collected while observing the Wi-Fi bands at 2.4 GHz and 5 GHz. Figure \ref{fig::2_412_wifi_spectrum} shows a portion of the 2.4 GHz Wi-Fi spectrum, centered at 2.412 MHz with a bandwidth of 40 MHz.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{2.412g_wifi_spectrum.png}}}
+	\caption{Spectrum of 802.11 Wi-Fi Signal Captured in 40MHz Spectrum Centered at 2.412 GHz}
+	\label{fig::2_412_wifi_spectrum}
+\end{figure}
+
+Examining the collected data, we see that the Wi-Fi signal has a bandwidth of 20 MHz and a center frequency of 2.417 GHz. This corresponds to channel 2. Examining the spectrum, we see a null on the DC subcarrier and approximately even energy across all the remaining non-zero subcarriers.
+
+We can perform similar analysis for a 5 GHz Wi-Fi signal, whose spectrum we display in Figure \ref{fig::5_180g_wifi_spectrum}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{5.180g_wifi_spectrum_3.png}}}
+	\caption{40 MHz Spectrum containing 802.11 Wi-Fi Signal Centered at 5.180 GHz}
+	\label{fig::5_180g_wifi_spectrum}
+\end{figure}
+
+Examining the spectrum, we see a 20 MHz wide signal centered at 5.180 GHz, which corresponds to channel 36. We also see energy in the adjacent channel (channel 40), which is centered at 5.20 GHz.
+
 \subsection{Sweeping the Spectrum: Receiving from 60 MHz to 6 GHz}
 
 In this section, we stitch together multiple collects of the PlutoSDR with different center frequencies to get a picture of the frequency response from 60 MHz to 6 GHz. As previously stated, we sweep the LO frequency in 20 MHz steps. In between each collect, we call the \texttt{release} method of the \texttt{sdrrx} object. This prevents us from looking at stale data in the Pluto receive buffers. To ensure that are transmitted signal doesn't corrupt our received data, we set the LO frequency far from our collect, max-out the attenuation, and transmit zeros. After stitching together each of our collects, we get a picture of the full PlutoSDR spectrum, which we have included in Figure \ref{fig::full_spectrum_labeled}.
