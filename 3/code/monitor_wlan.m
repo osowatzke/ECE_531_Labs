@@ -46,7 +46,3 @@ data = rx();
 
 % Plot spectrum
 scope(data);
-
-figure(1)
-clf;
-imagesc(fftshift(db(fft(reshape(data,8192,[]).*blackmanharris(8192))),1));
