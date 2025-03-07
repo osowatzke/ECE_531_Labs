@@ -47,6 +47,12 @@
 
 In this section, we use Fosphor to create spectrum waterfall plots of data received with the PlutoSDR. Using \url{sigidwiki.com} as a reference, we identify at least 4 different modulation techniques in received over-the-air transmissions. For each of the received signals, we describe the time and frequency characteristics that reveal the modulation technique.
 
+\subsection{IEEE 802.11 Wireless Local Area Network}
+
+In this experiment, we examine the spectrum and waterfall plots of wireless local area networks (WLANs). We specifically capture the spectrum of the 802.11 Wi-Fi channels in the 2.4 GHz and 5 GHz band. In the 2.4 GHz band, we concentrate on data collected Channel 1, which is centered at 2.412 GHz. In the 5 GHz channel, we concentrate on data collected in Channel 36, which is centered at 5.18 GHz.
+
+In MATLAB, we use the \texttt{sdrrx} object to collect data, and the \texttt{dsp.SpectrumAnalyzer} object to plot it. For our collects, we also turn on \texttt{PlotMaxHoldTrace} and choose a sample rate larger than the width of a 20 MHz channel. To ensure our collect is contiguous, we collect a single large buffer of samples. This contiguous collect ensures that the time axis in our waterfall plots is valid.
+ 
 \subsection{Sweeping the Spectrum: Receiving from 60 MHz to 6 GHz}
 
 In this experiment, we perform multiple collects of the spectrum while sweeping the center frequency in steps of $F_s$. Even though our instantaneous bandwidth is limited to 56 MHz we can stitch together each of our collects to get a picture of the entire spectrum from 60 MHz to 6 GHz. This procedure is illustrated in Figure \ref{fig::sweeping_the_spectrum}. For the experiment, we specifically choose a sampling rate $F_s = 20\ \text{MHz}$. This enables us to capture the spectrum at 60 MHz even though our minimum LO frequency is 70 MHz. 
