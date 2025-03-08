@@ -95,7 +95,7 @@ For our next collect, we looked at the spectrum for ATSC digital TV, which uses 
 
 8VSB is a form of amplitude modulation, which uses 8 discrete amplitude levels. For 8VSB, we are effectively zero-order holding 3 bit noise and modulating with a carrier. This creates a flat spectrum with sinc sidelobes centered at the carrier frequency. After filtering, we end up with the flat bandlimited spectrum shown.
  
-Next, we looked at the LTE spectrum in the 700 MHz A spectrum. To do this, we set our center frequency to 731.5 MHz and our bandwidth to 8 MHz. The resulting spectrum is shown in Figure \ref{fig::lte_spectrum}.
+Next, we looked at the LTE, which uses OFDM modulation. We specifically examined the 700 MHz A spectrum. To do this, we set our center frequency to 731.5 MHz and our bandwidth to 8 MHz. The resulting spectrum is shown in Figure \ref{fig::lte_spectrum}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{lte_spectrum_cropped.png}}}
@@ -105,7 +105,7 @@ Next, we looked at the LTE spectrum in the 700 MHz A spectrum. To do this, we se
 
 Comparing the results to Figure \ref{fig::8vsb_spectrum}, the spectrum has much more ripple. This is expected because we are outputting tones on each of the OFDM subcarriers. Looking at time axis, we also see a lot more variation in the data due to rapidly changing symbols.
 
-For the final modulation scheme, we examined the private carrier paging (PCP) networks, which lie between 929 and 930 MHz. 
+For the final modulation scheme, we examined the private carrier paging (PCP) networks, which lie between 929 and 930 MHz and use FSK modulation. Figure \ref{fig::930MHz_fsk_spectrum} shows our collected data, which is centered at 929.5 MHz with a bandwidth of 1 MHz.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{930MHz_FSK.png}}}
@@ -113,7 +113,7 @@ For the final modulation scheme, we examined the private carrier paging (PCP) ne
 	\label{fig::930MHz_fsk_spectrum}
 \end{figure}
 
-Examining the spectrum, we see that it alternates between 2 discrete frequencies and maintains a constant power when it is on. As such, we conclude that the PCP network uses FSK modulation.
+Examining the spectrum, we see that it alternates between 2 discrete frequencies and maintains a constant power when it is on. This is consistent with 2-FSK modulation, which is prevalent in PCP networks.
 
 % For the final modulation scheme, we looked at Motorola Type II communications in the 851 MHz - 869 MHz band, which uses FSK modulation according to \url{sigidwiki.com}. We referred to this modulation scheme instead of AM or GSM modulation because AM radio is out of band for the PlutoSDR and GSM is end of life. The resulting spectrum is shown in Figure \ref{fig::police_radio_spectrum}. It was captured with a center frequency of 851.4 MHz and a sample rate of 1 MHz.
 
