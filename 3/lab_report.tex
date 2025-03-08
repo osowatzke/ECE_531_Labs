@@ -105,15 +105,25 @@ Then, we looked at the LTE spectrum in the 700 MHz A spectrum. To do this, we se
 
 Comparing the results to Figure \ref{fig::8vsb_spectrum}, the spectrum has much more ripple. This is expected because we are outputting tones on each of the OFDM subcarriers. Looking at time axis, we also see a lot more variation in the data due to rapidly changing symbols.
 
-For the final modulation scheme, we looked at Motorola Type II communications in the 851 MHz - 869 MHz band, which uses FSK modulation according to \url{sigidwiki.com}. We referred to this modulation scheme instead of AM or GSM modulation because AM radio is out of band for the PlutoSDR and GSM is end of life. The resulting spectrum is shown in Figure \ref{fig::police_radio_spectrum}. It was captured with a center frequency of 851.4 MHz and a sample rate of 1 MHz.
+For the final modulation scheme, we examined the private carrier paging (PCP) networks, which lie between 929 and 930 MHz. 
 
 \begin{figure}[H]
-	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{police_radio_spectrum_cropped.png}}}
-	\caption{Motorola Type II Spectrum}
-	\label{fig::police_radio_spectrum}
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{930MHz_FSK.png}}}
+	\caption{PCP Spectrum Centered at 929.5 MHz}
+	\label{fig::930MHz_fsk_spectrum}
 \end{figure}
 
-Motorola Type II Communications leverage multiple channels that are 12.5 kHz wide. Each of these channels use a 4 FSK modulator, which maps bits to 4 discrete frequencies. Looking at the spectrum, we see that each of these channels appear almost fixed in frequency. This is because they rapidly oscillate between each of the available frequencies.
+Examining the spectrum, we see that it alternates between 2 discrete frequencies and maintains a constant power when it is on. As such, we conclude that the PCP network uses FSK modulation.
+
+% For the final modulation scheme, we looked at Motorola Type II communications in the 851 MHz - 869 MHz band, which uses FSK modulation according to \url{sigidwiki.com}. We referred to this modulation scheme instead of AM or GSM modulation because AM radio is out of band for the PlutoSDR and GSM is end of life. The resulting spectrum is shown in Figure \ref{fig::police_radio_spectrum}. It was captured with a center frequency of 851.4 MHz and a sample rate of 1 MHz.
+
+%\begin{figure}[H]
+%	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{police_radio_spectrum_cropped.png}}}
+%	\caption{Motorola Type II Spectrum}
+%	\label{fig::police_radio_spectrum}
+%\end{figure}
+
+%Motorola Type II Communications leverage multiple channels that are 12.5 kHz wide. Each of these channels use a 4 FSK modulator, which maps bits to 4 discrete frequencies. Looking at the spectrum, we see that each of these channels appear almost fixed in frequency. This is because they rapidly oscillate between each of the available frequencies.
 
 \subsection{IEEE 802.11 Wireless Local Area Network}
 
