@@ -47,7 +47,7 @@ In this lab, we use the PlutoSDR to explore the RF spectrum. In the first part o
 
 \subsection{Identifying Signals in the RF Spectrum}
 
-In this section, we use Fosphor to create spectrum waterfall plots of data received with the PlutoSDR. Using \url{sigidwiki.com} as a reference, we identify at least 4 different modulation techniques in received over-the-air transmissions. For each of the received signals, we describe the time and frequency characteristics that reveal the modulation technique.
+In this experiment, we use Fosphor to create spectrum waterfall plots of data received with the PlutoSDR. Using \url{sigidwiki.com} as a reference, we identify at least 4 different modulation techniques in received over-the-air transmissions. For each of the received signals, we describe the time and frequency characteristics that reveal the modulation technique.
 
 \subsection{IEEE 802.11 Wireless Local Area Network}
 
@@ -59,7 +59,7 @@ In this experiment, we examine the spectrum and waterfall plots of wireless loca
 	\label{fig::802_11_channels}
 \end{figure}
 
-In MATLAB, we use the \texttt{sdrrx} object to collect data, and the \texttt{dsp.SpectrumAnalyzer} object to plot it. For our collects, we also turn on \texttt{PlotMaxHoldTrace} and choose a sample rate larger than the 20 MHz channel width. To ensure our collect is contiguous, we collect a single large buffer of samples. This contiguous collect ensures that the time-axis of the resulting waterfall plots is valid.
+In MATLAB, we use the \texttt{sdrrx} object to collect data, and the \texttt{dsp.SpectrumAnalyzer} object to plot it. For our collects, we also turn on \texttt{PlotMaxHoldTrace} and choose a sample rate larger than the 20 MHz channel width. To ensure our collect is contiguous, we collect a single large buffer of samples. This contiguous collect ensures that we have a valid time-axis in our waterfall plots.
  
 \subsection{Sweeping the Spectrum: Receiving from 60 MHz to 6 GHz}
 
@@ -104,7 +104,7 @@ For our next collect, we looked at the spectrum for ATSC digital TV, which uses 
 
 % 8 VSB is a form of amplitude modulation with 8 discrete values. The sinc sidelobes that result from amplitude modulation are remove with a steep filter, resulting in a moslty flat spectrum.
 
-8VSB is a form of amplitude modulation, which uses 8 discrete amplitude levels. For 8VSB, we are effectively zero-order holding 3 bit noise and modulating with a carrier. This creates a flat spectrum with sinc sidelobes centered at the carrier frequency. After filtering, we end up with the flat bandlimited spectrum shown.
+8VSB is a form of amplitude modulation, which uses 8 discrete amplitude levels. In 8VSB modulation, we are effectively zero-order holding 3 bit noise and modulating with a carrier. This creates a flat spectrum with sinc sidelobes centered at the carrier frequency. After filtering, we end up with the flat band-limited spectrum shown above.
  
 Next, we looked at the LTE, which uses OFDM modulation. We specifically examined the 700 MHz A spectrum. To do this, we set our center frequency to 731.5 MHz and our bandwidth to 8 MHz. The resulting spectrum is shown in Figure \ref{fig::lte_spectrum}.
 
@@ -158,7 +158,7 @@ Examining the spectrum, we see a 20 MHz wide signal centered at 5.180 GHz, which
 
 \subsection{Sweeping the Spectrum: Receiving from 60 MHz to 6 GHz}
 
-In this section, we stitch together multiple collects of the PlutoSDR with different center frequencies to get a picture of the frequency response from 60 MHz to 6 GHz. As previously stated, we sweep the LO frequency in 20 MHz steps. In between each collect, we call the \texttt{release} method of the \texttt{sdrrx} object. This prevents us from looking at stale data in the Pluto receive buffers. To ensure that are transmitted signal doesn't corrupt our received data, we set the LO frequency far from our collect, max-out the attenuation, and transmit zeros. After stitching together each of our collects, we get a picture of the full PlutoSDR spectrum, which we have included in Figure \ref{fig::full_spectrum_labeled}.
+In this section, we stitch together multiple collects of the PlutoSDR with different center frequencies to get a picture of the frequency response from 60 MHz to 6 GHz. As previously stated, we sweep the LO frequency in 20 MHz steps. This allows us to see the spectrum at 60 MHz even though our minimum LO frequency is 70 MHz. In between each collect, we call the \texttt{release} method of the \texttt{sdrrx} object. This prevents us from looking at stale data in the PlutoSDR receive buffers. To ensure that our transmitted signal doesn't corrupt our received data, we set the LO frequency far from our collect, max-out the attenuation, and transmit zeros. After stitching together each of our collects, we get a picture of the full PlutoSDR spectrum, which we have included in Figure \ref{fig::full_spectrum_labeled}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{full_spectrum_labeled.png}}}
@@ -166,7 +166,7 @@ In this section, we stitch together multiple collects of the PlutoSDR with diffe
 	\label{fig::full_spectrum_labeled}
 \end{figure}
 
-We have also labeled the key bands in the spectrum. These include FM Radio, TV, Mobile, and Wi-Fi bands. The TV bands primarily use 8VSB modulation, the Wi-Fi bands leverage OFDM in accordance with the 802.11a standard, and the mobile bands leverage mostly LTE and 5G NR.
+We have also labeled the key bands in the spectrum. These include FM Radio, TV, Mobile, and Wi-Fi bands. The TV bands primarily use 8VSB modulation. The Wi-Fi bands leverage OFDM in accordance with the 802.11 standard. And the mobile bands leverage mostly LTE and 5G NR.
 
 \subsection{Understanding Your Wireless Device}
 
