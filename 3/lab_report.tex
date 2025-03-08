@@ -83,7 +83,7 @@ In this experiment, we captured the spectrum of 4 RF signals - each of which use
 
 Note that FM radio channel we collected includes HD radio sidebands. The HD radio sidebands are digital copies of the data transmitted using OFDM modulation. The analog radio spectrum is encoded with FM modulation and rapidly oscillates in frequency with maintaining a constant amplitude. For comparison, the OFDM digital sidebands occupy fixed bandwidth and peak at approximately constant values. This is expected because the OFDM modulation distributes power evenly across its subcarriers.
 
-For our next collect, we looked at the spectrum for TV modulated with 8VSB. We specifically captured data at 485 MHz with a bandwidth of 10 MHz. Our collect is shown in Figure \ref{fig::8vsb_spectrum}.
+For our next collect, we looked at the spectrum for ATSC digital TV, which uses 8VSB. We specifically captured data at 485 MHz with a bandwidth of 10 MHz. This corresponds to Channel 16. Our collect is shown in Figure \ref{fig::8vsb_spectrum}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{8vsb_spectrum_cropped.png}}}
@@ -93,9 +93,9 @@ For our next collect, we looked at the spectrum for TV modulated with 8VSB. We s
 
 % 8 VSB is a form of amplitude modulation with 8 discrete values. The sinc sidelobes that result from amplitude modulation are remove with a steep filter, resulting in a moslty flat spectrum.
 
-8VSB uses 8 discrete levels of amplitude modulation applied digitally. It also employs a steep filter with steep cutoff to remove the sidelobes associated with the zero-order hold in the transition from discrete time to continuous time. This filter leads to a significant spectral savings.
+8VSB is a form of amplitude modulation, which uses 8 discrete amplitude levels. For 8VSB, we are effectively zero-order holding 3 bit noise and modulating with a carrier. This creates a flat spectrum with sinc sidelobes centered at the carrier frequency. After filtering, we end up with the flat bandlimited spectrum shown.
  
-Then, we looked at the LTE spectrum in the 700 MHz A spectrum. To do this, we set our center frequency to 731.5 MHz and our bandwidth to 8 MHz. The resulting spectrum is shown in Figure \ref{fig::lte_spectrum}.
+Next, we looked at the LTE spectrum in the 700 MHz A spectrum. To do this, we set our center frequency to 731.5 MHz and our bandwidth to 8 MHz. The resulting spectrum is shown in Figure \ref{fig::lte_spectrum}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{lte_spectrum_cropped.png}}}
