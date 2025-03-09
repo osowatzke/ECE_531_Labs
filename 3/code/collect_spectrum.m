@@ -3,7 +3,7 @@
 collectData = false;
 
 % Frequencies to sweep over
-f = 60e6:20e6:5.8e9;
+f = 60e6:20e6:5.98e9;
 
 % Determine center frequency
 f = f+10e6;
@@ -60,7 +60,7 @@ if collectData
 
 % Load old data instead of rerunning
 else
-    load('data_old.mat','data');
+    load('data.mat','data');
 end
 
 % Perform an FFT of the data
