@@ -40,12 +40,12 @@
 \section{Introduction}
 %Introduction to the laboratory experiment, including a brief description of the objectives and goals.
 
-In this lab, we use the PlutoSDR to explore the RF spectrum. In the first part of the experiment, we use Fosphor to analyze the spectrum of 4 signals, each of which use different modulation schemes. Then, we focus specifically on 802.11 Wi-Fi, which we observe in the 2.4 GHz and 5 GHz bands. Next, we stitch together multiple collects with different center frequencies to form a picture of the full PlutoSDR spectrum, from 60 MHz to 6 GHz. Finally, we use the PlutoSDR to capture the spectrum of a personal RF device. For this part of the experiment, we specifically analyze a 2022 Honda Civic key fob. Using the spectrum, we determine the modulation scheme and propose a way to demodulate it. Finally, we determine whether the sequence of ``bits" changes between subsequent key presses.
+In this lab, we use the PlutoSDR to explore the RF spectrum. In the first part of the experiment, we use Fosphor to analyze the spectrum of 4 signals, each of which use different modulation schemes. Then, we focus specifically on 802.11 Wi-Fi, which we observe in the 2.4 GHz and 5 GHz bands. Next, we stitch together multiple collects with different center frequencies to form a picture of the full PlutoSDR spectrum, from 60 MHz to 6 GHz. Finally, we use the PlutoSDR to capture the spectrum of a personal RF device. For this part of the experiment, we specifically analyze a 2022 Honda Civic key fob. Using the spectrum, we determine the modulation scheme and propose a way to demodulate it. Finally, we determine whether the sequence of bits changes between subsequent key presses.
 
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
-In this section, we outline the procedures for each of the experiments that we performed. In our first experiment, we find 4 different modulation schemes in the RF spectrum. Next, we look at the spectrum of 802.11 Wi-Fi signals collected in the 2.4 GHz and 5 GHz bands. Then, we capture the full PlutoSDR spectrum from 60 MHz to 6 GHz. Finally, we analyze the spectrum of a 2022 Honda Civic key fob.
+In this section, we outline the procedures for each of the experiments that we performed. In our first experiment, we capture the spectrum of RF signals that use 4 different modulation schemes. Next, we look at the spectrum of 802.11 Wi-Fi signals collected in the 2.4 GHz and 5 GHz bands. Then, we capture the full PlutoSDR spectrum from 60 MHz to 6 GHz. Finally, we analyze the spectrum of a 2022 Honda Civic key fob and determine a method for demodulating its transmission. We also determine whether the transmitted bits change between subsequent key presses.
 
 \subsection{Identifying Signals in the RF Spectrum}
 
@@ -75,13 +75,12 @@ In this experiment, we perform multiple collects of the spectrum while sweeping 
 
 \subsection{Understanding Your Wireless Device}
 
-In this experiment, we capture the RF spectrum of a 2022 Honda Civic key fob. 
-We start by finding its FCC ID. Then, using the FCC ID, we determine the operating key fob's operating frequency. Then with the PlutoSDR, we capture the spectrum from "lock" presses on the key fob. Using the collected data, we determine the modulation scheme and propose a technique to demodulate the signal. Finally, we analyze the sequence of transmitted bits. We determine whether the sequence of bits remains consistent when holding down the "lock" button and whether it changes after new button presses.
+In this experiment, we capture the RF spectrum of a personal RF device. We specifically choose to analyze a 2022 Honda Civic key fob. We start by finding its FCC ID. Next, using the FCC ID, we determine the key fob's operating frequency. Then, with the PlutoSDR, we capture the spectrum that results from pressing the lock button. Using the collected data, we determine the modulation scheme and propose a technique to demodulate the signal. Finally, we analyze the sequence of transmitted bits. We determine whether the sequence of bits remains consistent when holding down the lock button and whether it changes after new button presses.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
-In this section, we highlight the results for each of the experiments that we performed. We start by identifying signals with 4 different modulation techniques in the RF spectrum. Next, we examine the spectrum of the 802.11 Wi-Fi bands. Then, we stitch together multiple collects of the PlutoSDR to create a picture of the full spectrum from 60 MHz to 6 GHz. Finally, we examine the spectrum of a 2022 Honda Civic key fob. 
+In this section, we highlight the results for each of the experiments that we performed. We start by identifying signals with 4 different modulation techniques in the RF spectrum. Next, we examine the spectrum of signal in the 802.11 Wi-Fi bands. Then, we stitch together multiple collects of the PlutoSDR to create a picture of the full spectrum from 60 MHz to 6 GHz. Finally, we analyze the spectrum of personal RF device and determine a method for demodulating the signals we receive. We also determine whether the transmitted ``bits" change between subsequent key presses.
 
 
 \subsection{Identifying Signals in the RF Spectrum}
