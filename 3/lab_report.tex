@@ -79,8 +79,10 @@ In this experiment, we capture the RF spectrum of a 2022 Honda Civic key fob.
 We start by finding its FCC ID. Then, using the FCC ID, we determine the operating key fob's operating frequency. Then with the PlutoSDR, we capture the spectrum from "lock" presses on the key fob. Using the collected data, we determine the modulation scheme and propose a technique to demodulate the signal. Finally, we analyze the sequence of transmitted bits. We determine whether the sequence of bits remains consistent when holding down the "lock" button and whether it changes after new button presses.
 
 \section{Results}
-
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
+
+In this section, we highlight the results for each of the experiments that we performed. We start by identifying signals with 4 different modulation techniques in the RF spectrum. Next, we examine the spectrum of the 802.11 Wi-Fi bands. Then, we stitch together multiple collects of the PlutoSDR to create a picture of the full spectrum from 60 MHz to 6 GHz. Finally, we examine the spectrum of a 2022 Honda Civic key fob. 
+
 
 \subsection{Identifying Signals in the RF Spectrum}
 
@@ -126,7 +128,7 @@ For the final modulation scheme, we examined the private carrier paging (PCP) ne
 	\label{fig::930MHz_fsk_spectrum}
 \end{figure}
 
-Examining the spectrum, we see that it alternates between 2 discrete frequencies and maintains a constant power when it is on. This is consistent with 2-FSK modulation, which is prevalent in PCP networks.
+Examining the spectrum, we see that the page alternates between 2 discrete frequencies and maintains a constant power when it is on. This is consistent with 2-FSK modulation, which is prevalent in PCP networks.
 
 % For the final modulation scheme, we looked at Motorola Type II communications in the 851 MHz - 869 MHz band, which uses FSK modulation according to \url{sigidwiki.com}. We referred to this modulation scheme instead of AM or GSM modulation because AM radio is out of band for the PlutoSDR and GSM is end of life. The resulting spectrum is shown in Figure \ref{fig::police_radio_spectrum}. It was captured with a center frequency of 851.4 MHz and a sample rate of 1 MHz.
 
