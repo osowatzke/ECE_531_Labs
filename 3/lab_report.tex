@@ -170,7 +170,7 @@ We have also labeled the key bands in the spectrum. These include FM Radio, TV, 
 
 \subsection{Understanding Your Wireless Device}
 
-For this experiment, I examined the spectrum of my 2022 Honda Civic Car Key. My car key has an FCC ID of KR5TP-4 and transmits at 433.92 MHz. In Fosphor, I captured the spectrum of a lock button press, which is shown in Figure \ref{fig::car_key_spectrum}.
+For this experiment, I examined the spectrum of my 2022 Honda Civic car key. My car key has an FCC ID of KR5TP-4. According to \url{http://fcc.io/}, this means that it transmits at 433.92 MHz. In Fosphor, I was able to tune the PlutoSDR to this operating frequency and capture the spectrum of a lock button press, which is shown in Figure \ref{fig::car_key_spectrum}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{car_key_spectrum.png}}}
@@ -178,7 +178,7 @@ For this experiment, I examined the spectrum of my 2022 Honda Civic Car Key. My 
 	\label{fig::car_key_spectrum}
 \end{figure}
 
-Using Fosphor, I saved the collected key presses to a file, which I parsed offline in MATLAB for further analysis. In MATLAB, I was able to reconstruct the spectrogram of the data, which is shown in Figure \ref{fig::car_key_spectrogram}.
+Using Fosphor, I also saved the collected key presses to a file, which I parsed offline in MATLAB for further analysis. In MATLAB, I was able to construct a spectrogram of the data, which is shown in Figure \ref{fig::car_key_spectrogram}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{car_key_spectrogram.png}}}
@@ -194,9 +194,9 @@ Each lock press generates 8 pulses, alternating between 2 high frequency pulses 
 	\label{fig::car_key_spectrogram_focus}
 \end{figure}
 
-The keyfob data can be decoded using a Short-Time Fourier Transform (STFT), with an FFT size tuned to a fraction of the bit duration. If the power ratio between frequency bins is large enough, for a long enough duration of time, we can declare a 1 or a 0. For a more efficient hardware implementation, we can also use the Goertzel algorithm, which only computes the FFT output for select bins. 
+The keyfob data we collected can be decoded using a Short-Time Fourier Transform (STFT). To decode correctly, we need to choose an FFT size which is a fraction of the bit duration. Then, if the power of the low or high frequency components is high enough above the noise floor, we know that a signal is present. Additionally, based on which FFT bin is stronger, we can declare bits to be 1's or 0's. For a more efficient hardware implementations, we can also use the Goertzel algorithm, which only computes the FFT output for select bins. 
 
-For security reasons, the sequence of bits also changes each time the key is pressed. We can see this when we look at subsequent key presses. Figure \ref{fig::car_key_spectrogram_repeat} shows the same portion of the FSK pulse as Figure \ref{fig::car_key_spectrogram_focus}. Comparing the two, we can tell that the duration and ordering of the high and low frequency periods has changing, which is indicative of a changing sequences of bits.
+The sequence of bits we receive remains constant when holding down the "lock" button. However, after some duration of time, the key fob stops transmitting and requires another button press to continue transmitting. For security reasons, the sequence of bits transmitted bits changes with new presses of the lock button. We can see this when observing multiple key presses. Figure \ref{fig::car_key_spectrogram_repeat} shows the same portion of an FSK pulse as Figure \ref{fig::car_key_spectrogram_focus}. Comparing the two, we can tell that the duration and ordering of the high and low frequency periods has changing. This indicates that the sequence of bits has changed.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{car_key_spectrogram_repeat.png}}}
@@ -205,6 +205,10 @@ For security reasons, the sequence of bits also changes each time the key is pre
 \end{figure}
  
 \section{Conclusion}
+
+In this lab, we used the PlutoSDR to explore the RF spectrum. We started by capturing data which used 4 different modulation schemes. For this first experiment, we captured FM radio with HD radio sidebands. This demonstrated FM modulation and OFDM for the HD radio sidebands. The FM modulation had a constant amplitude and varied in frequency, while the OFDM modulation we observed was band-limited and had a nearly constant amplitude. Next, we captured ASTC digital TV, which used 8VSB modulation. This modulation scheme generated a fixed roughly flat bandwidth. Then, we captured LTE, which demonstrated OFDM modulation. In the LTE band, we had a much larger bandwidth than the HD radio sidebands which allowed us to visualize the data on individual OFDM subarriers. Finally, we observed a private carrier paging network in the 929-930 MHz band, which used FSK modulation. In the waterfall plots, this resulted in a constant amplitude signal, which hopped between two discrete frequencies.
+
+ 
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
 %\nocite{analog_devices_libiio_error}
