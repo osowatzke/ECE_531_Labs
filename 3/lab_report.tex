@@ -208,7 +208,8 @@ The sequence of bits we receive remains constant when holding down the "lock" bu
 
 In this lab, we used the PlutoSDR to explore the RF spectrum. We started by capturing data which used 4 different modulation schemes. For this first experiment, we captured FM radio with HD radio sidebands. This demonstrated FM modulation and OFDM for the HD radio sidebands. The FM modulation had a constant amplitude and varied in frequency, while the OFDM modulation we observed was band-limited and had a nearly constant amplitude. Next, we captured ASTC digital TV, which used 8VSB modulation. This modulation scheme generated a fixed roughly flat bandwidth. Then, we captured LTE, which demonstrated OFDM modulation. In the LTE band, we had a much larger bandwidth than the HD radio sidebands which allowed us to visualize the data on individual OFDM subarriers. Finally, we observed a private carrier paging network in the 929-930 MHz band, which used FSK modulation. In the waterfall plots, this resulted in a constant amplitude signal, which hopped between two discrete frequencies.
 
- 
+After capturing different modulation techniques, we took a closer look at the 802.11 Wi-Fi bands, which leveraged OFDM modulation. We examined the spectrums in both the 2.4 GHz and 5 GHz bands and we are to capture spectral data in channel 2 (2.417 MHz) and channel 36 (5.18 GHz). In our Wi-Fi spectrums, we observed a null DC subcarrier, which is present in the 802.11 standards, and relatively constant power levels across the remaining subcarriers.
+
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
 %\nocite{analog_devices_libiio_error}
