@@ -212,12 +212,12 @@ After capturing different modulation techniques, we took a closer look at the 80
 
 Next, we captured the full PlutoSDR spectrum from 60 MHz to 6 GHz. The PlutoSDR had a limited bandwidth of 56 MHz. However, we worked around this by sweeping the LO in steps of the sampling frequency. At each step of the sampling frequency, we captured the spectrum. Then, once we finished collected all the data, we concatenated each of our spectral measurements to get a picture of the full PlutoSDR spectrum. In the resulting spectrum, we also labeled some of the major bands, which included FM radio, TV, mobile, and Wi-Fi bands.
 
-% Finally, we used the PlutoSDR to measure the spectrum of a 2022 Honda Civic key 
+Finally, we used the PlutoSDR to understand the spectrum of a 2022 Honda Civic key fob. We specifically used its FCC ID to determine its center frequency of 433.92 Mhz. Then, we tuned the PlutoSDR to this center frequency and collected data. Doing so, we found that the car key used FSK modulation. We proposed using the short-time Fourier transform (STFT) to decode the FSK modulation. However, for the scope of this lab, we were able to infer differences in bits simply by examining the spectrum. Using this approach, we found that the 2022 Honda Civic Key used rolling codes (i.e. it varied codes after each key press).
+
 %We did this by piecing together the spectrum from multiple collects. Each of our collects captured 20 MHz of the spectrum with a different LO frequency.
 
 %by piecing together the spectrum from multiple collects, which each used a different LO frequency. Each collect used 20 MHz of bandwidth and a different LO frequency.
 
- data in the 
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
 %\nocite{analog_devices_libiio_error}
