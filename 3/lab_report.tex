@@ -80,7 +80,7 @@ In this experiment, we capture the RF spectrum of a personal RF device. We speci
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
-In this section, we highlight the results for each of the experiments that we performed. We start by identifying signals with 4 different modulation techniques in the RF spectrum. Next, we examine the spectrum of signal in the 802.11 Wi-Fi bands. Then, we stitch together multiple collects of the PlutoSDR to create a picture of the full spectrum from 60 MHz to 6 GHz. Finally, we analyze the spectrum of personal RF device and determine a method for demodulating the signals we receive. We also determine whether the transmitted ``bits" change between subsequent key presses.
+In this section, we highlight the results for each of the experiments that we performed. We start by identifying signals with 4 different modulation techniques in the RF spectrum. Next, we examine the spectrum of signal in the 802.11 Wi-Fi bands. Then, we stitch together multiple collects of the PlutoSDR to create a picture of the full spectrum from 60 MHz to 6 GHz. Finally, we analyze the spectrum of a 2022 Honda Civic key fob and determine a method for demodulating its transmission. We also determine whether the transmitted bits change between subsequent key presses.
 
 
 \subsection{Identifying Signals in the RF Spectrum}
@@ -149,7 +149,7 @@ In this section, we display the spectrograms and waterfall plots we collected wh
 	\label{fig::2_412_wifi_spectrum}
 \end{figure}
 
-Examining the collected data, we see that the Wi-Fi signal has a bandwidth of 20 MHz and a center frequency of 2.417 GHz. This corresponds to channel 2 in the 2.4 GHz band. The 802.11a Wi-Fi signal we captured uses OFDM. We can see artifacts of this modulation scheme in the spectrum. For instance, we see a null DC subcarrier at the center frequency and approximately even energy across all the remaining non-zero subcarriers. We can perform similar analysis for a 5 GHz Wi-Fi signal. Figure \ref{fig::5_180g_wifi_spectrum} displays 40 MHz of the 5 GHz Wi-Fi spectrum centered at 5.18 GHz.
+Examining the collected data, we see that the Wi-Fi signal has a bandwidth of 20 MHz and a center frequency of 2.417 GHz. This corresponds to channel 2 in the 2.4 GHz band, which is a different channel than we were aiming to collect. The 802.11a Wi-Fi signal we captured uses OFDM. We can see artifacts of this modulation scheme in the spectrum. For instance, we see a null DC subcarrier at the center frequency and approximately even energy across all the remaining non-zero subcarriers. We can perform similar analysis for a 5 GHz Wi-Fi signal. Figure \ref{fig::5_180g_wifi_spectrum} displays 40 MHz of the 5 GHz Wi-Fi spectrum centered at 5.18 GHz.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{5.180g_wifi_spectrum_3.png}}}
