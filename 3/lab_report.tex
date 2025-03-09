@@ -25,7 +25,7 @@
 	{\huge Lab 3 - Exploring the RF Spectrum}\\[0.25 in]
 	\includegraphics[width=0.6\textwidth]{ua_logo.png}\\[0.25 in]
 	{\large \textbf{ECE 531 - Software Defined Radio\\[0.25 in]
-	March 5, 2025\\[0.25 in]}}
+	March 10, 2025\\[0.25 in]}}
 	{\large Owen Sowatzke, osowatzke@arizona.edu\\[0.05 in]
 	Department of Electrical \& Computer Engineering\\[0.05 in]
 	University of Arizona, Tucson, AZ 85721\\[0.5 in]}
@@ -69,7 +69,7 @@ In this experiment, we perform multiple collects of the spectrum while sweeping 
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{sweeping_the_spectrum.png}}}
-	\caption{Procedure for Sweeping the Spectrum}
+	\caption{Generating a Picture of the Full PlutoSDR Spectrum using Data from Multiple Collects}
 	\label{fig::sweeping_the_spectrum}
 \end{figure}
 
@@ -80,7 +80,7 @@ In this experiment, we capture the RF spectrum of a personal RF device. We speci
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
-In this section, we highlight the results for each of the experiments that we performed. We start by identifying signals with 4 different modulation techniques in the RF spectrum. Next, we examine the spectrum of 802.11 Wi-Fi signals in the 2.4 GHz and 5 GHz bands. Then, we stitch together multiple PlutoSDR collects with different LO frequencies to create a picture of the full spectrum from 60 MHz to 6 GHz. Finally, we analyze the spectrum of a 2022 Honda Civic key fob and determine a method for demodulating its transmission. We also determine whether the transmitted bits change between subsequent key presses.
+In this section, we highlight the results for each of the experiments that we performed. We start by identifying signals with 4 different modulation techniques in the RF spectrum. Next, we examine the spectrum of the 802.11 Wi-Fi signals in the 2.4 GHz and 5 GHz bands. Then, we stitch together multiple PlutoSDR collects with different LO frequencies to create a picture of the full spectrum from 60 MHz to 6 GHz. Finally, we analyze the spectrum of a 2022 Honda Civic key fob and determine a method for demodulating its transmission. We also determine whether the transmitted bits change between subsequent key presses.
 
 
 \subsection{Identifying Signals in the RF Spectrum}
@@ -161,7 +161,7 @@ Examining the spectrum, we see a 20 MHz wide signal centered at 5.180 GHz, which
 
 \subsection{Sweeping the Spectrum: Receiving from 60 MHz to 6 GHz}
 
-In this section, we stitch together multiple collects of the PlutoSDR with LO frequencies to get a picture of the spectrum from 60 MHz to 6 GHz. As previously stated, we sweep the LO frequency in 20 MHz steps. This allows us to see the spectrum at 60 MHz even though our minimum LO frequency is 70 MHz. In between each collect, we call the \texttt{release} method of the \texttt{sdrrx} object. This prevents us from looking at stale data in the PlutoSDR receive buffers. To ensure that our transmitted signal doesn't corrupt our received data, we set the transmit LO frequency as far as possible from the receive LO frequency, max-out the attenuation, and transmit zeros. After stitching together each of our collects, we get a picture of the full PlutoSDR spectrum, which we have included in Figure \ref{fig::full_spectrum_labeled}.
+In this section, we stitch together multiple collects of the PlutoSDR with different LO frequencies to get a picture of the spectrum from 60 MHz to 6 GHz. As previously stated, we sweep the LO frequency in 20 MHz steps. This allows us to see the spectrum at 60 MHz even though our minimum LO frequency is 70 MHz. In between each collect, we call the \texttt{release} method of the \texttt{sdrrx} object. This prevents us from looking at stale data in the PlutoSDR receive buffers. To ensure that our transmitted signal doesn't corrupt our received data, we set the transmit LO frequency as far as possible from the receive LO frequency, max-out the attenuation, and transmit zeros. After stitching together each of our collects, we get a picture of the full PlutoSDR spectrum, which we have included in Figure \ref{fig::full_spectrum_labeled}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{full_spectrum_labeled.png}}}
@@ -199,7 +199,7 @@ Each lock press generates 8 pulses, alternating between 2 high frequency pulses 
 
 The keyfob data we collected can be decoded using a Short-Time Fourier Transform (STFT). To decode correctly, we need to choose an FFT size which is a fraction of the bit duration. Then, if the power of the low or high frequency components is high enough above the noise floor, we know that a signal is present. Additionally, based on which FFT bin is stronger, we can declare individual bits to be 1's or 0's. For a more efficient hardware implementation, we can also use the Goertzel algorithm, which only computes the FFT output for select bins. 
 
-The sequence of bits we receive remains constant when holding down the lock button. For security reasons, the sequence of transmitted bits changes with new presses of the lock button. We can see this if we observe the spectrum across multiple key presses. Figure \ref{fig::car_key_spectrogram_repeat} shows the same portion of an FSK pulse as Figure \ref{fig::car_key_spectrogram_focus}. However, it comes from a different key press. Comparing the two, we can tell that the duration and ordering of the high and low frequency periods has changing. This indicates that the sequence of bits has changed.
+The sequence of bits we receive remains constant when holding down the lock button. For security reasons, the sequence of transmitted bits changes with new presses of the lock button. We can see this if we observe the spectrum across multiple key presses. Figure \ref{fig::car_key_spectrogram_repeat} shows the same portion of an FSK pulse as Figure \ref{fig::car_key_spectrogram_focus}. However, it comes from a different key press. Comparing the two, we can tell that the duration and ordering of the high and low frequency periods has changed. This indicates that the sequence of bits has changed.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{car_key_spectrogram_repeat.png}}}
@@ -215,7 +215,7 @@ After capturing different modulation techniques, we took a closer look at the 80
 
 Next, we captured the full PlutoSDR spectrum from 60 MHz to 6 GHz. The PlutoSDR had a limited bandwidth of 56 MHz. However, we worked around this by sweeping the LO in steps of the sampling frequency. At each step of the sampling frequency, we captured the spectrum. Then, once we finished collecting all the data, we concatenated each of our individual spectrums to get a picture of the full PlutoSDR spectrum. In the resulting spectrum, we also labeled some of the major bands, which were used for FM radio, TV, mobile communication, and Wi-Fi.
 
-Finally, we used the PlutoSDR to understand the spectrum of a 2022 Honda Civic key fob. We used the key fob's FCC ID to determine its center frequency of 433.92 MHz. Then, we tuned the PlutoSDR to this center frequency and collected data. Doing so, we found that the car key used FSK modulation. We proposed using the short-time Fourier transform (STFT) to decode the FSK modulation. However, for the scope of this lab, we were able to infer differences in bits by examining spectrograms. Using this approach, we found that the 2022 Honda Civic Key used rolling codes (i.e. it varied codes after each key press).
+Finally, we used the PlutoSDR to understand the modulation and inner-workings of a 2022 Honda Civic key fob. We used the key fob's FCC ID to determine its center frequency of 433.92 MHz. Then, we tuned the PlutoSDR to this center frequency and collected data. Doing so, we found that the car key used FSK modulation. We proposed using the short-time Fourier transform (STFT) to decode the FSK modulation. However, for the scope of this lab, we were able to infer differences in bits by examining spectrograms. Using this approach, we found that the 2022 Honda Civic Key used rolling codes (i.e. it varied codes after each key press).
 
 %We did this by piecing together the spectrum from multiple collects. Each of our collects captured 20 MHz of the spectrum with a different LO frequency.
 
