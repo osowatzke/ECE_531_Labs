@@ -16,7 +16,7 @@ data = data(1:(end-numTrunc));
 data = reshape(data,winSize,[]);
 
 % Perform a STFT on the data
-Fdata = fft(data.*hann(winSize),fftSize);
+Fdata = fft(data.*blackmanharris(winSize),fftSize);
 
 % FFT shift the data for viewing
 Fdata = fftshift(Fdata,1);
