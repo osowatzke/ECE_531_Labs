@@ -210,6 +210,14 @@ In this lab, we used the PlutoSDR to explore the RF spectrum. We started by capt
 
 After capturing different modulation techniques, we took a closer look at the 802.11 Wi-Fi bands, which leveraged OFDM modulation. We examined the spectrums in both the 2.4 GHz and 5 GHz bands and we are to capture spectral data in channel 2 (2.417 MHz) and channel 36 (5.18 GHz). In our Wi-Fi spectrums, we observed a null DC subcarrier, which is present in the 802.11 standards, and relatively constant power levels across the remaining subcarriers.
 
+Next, we captured the full PlutoSDR spectrum from 60 MHz to 6 GHz. The PlutoSDR had a limited bandwidth of 56 MHz. However, we worked around this by sweeping the LO in steps of the sampling frequency. At each step of the sampling frequency, we captured the spectrum. Then, once we finished collected all the data, we concatenated each of our spectral measurements to get a picture of the full PlutoSDR spectrum. In the resulting spectrum, we also labeled some of the major bands, which included FM radio, TV, mobile, and Wi-Fi bands.
+
+% Finally, we used the PlutoSDR to measure the spectrum of a 2022 Honda Civic key 
+%We did this by piecing together the spectrum from multiple collects. Each of our collects captured 20 MHz of the spectrum with a different LO frequency.
+
+%by piecing together the spectrum from multiple collects, which each used a different LO frequency. Each collect used 20 MHz of bandwidth and a different LO frequency.
+
+ data in the 
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
 %\nocite{analog_devices_libiio_error}
