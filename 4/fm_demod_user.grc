@@ -33,6 +33,27 @@ options:
     state: enabled
 
 blocks:
+- name: deviation
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Frequency Deviation
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '10000'
+    stop: '1000000'
+    value: '25000'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [400, 8.0]
+    rotation: 0
+    state: enabled
 - name: fm_station
   id: variable_qtgui_range
   parameters:
@@ -72,7 +93,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    gain: 1/(2*math.pi)
+    gain: (2*math.pi*deviation)/(samp_rate/6)
     maxoutbuf: '0'
     minoutbuf: '0'
   states:
@@ -158,7 +179,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [552, 8.0]
+    coordinate: [712, 8.0]
     rotation: 0
     state: enabled
 - name: low_pass_filter_0
@@ -483,7 +504,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [400, 8.0]
+    coordinate: [560, 8.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0
