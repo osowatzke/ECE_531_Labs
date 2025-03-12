@@ -70,7 +70,7 @@ There are two decimation filters within the block diagram. One is before the FM 
 
 A rational resampler block would be needed instead of decimating FIRs if the input sampling rate is not a multiple of the audio sink sampling rate. In Figure \ref{fig::fm_radio_flowchart}, the input sampling rate is a multiple of the audio sink sampling rate (i.e. $48\ \text{kHz} \times 48 = 2.304\ \text{MHz}$).
 
-The resulting audio quality is not bad. However, the audio contains noise and occasional gaps due to the USB having trouble keeping up with the input data rates. To improve the SNR, we can decrease the RF bandwidth. FM radio channels have a bandwidth of 200 kHz, so we want a bandwidth larger than this and less than the sample rate of 2.304 MHz.
+The resulting audio quality is not bad. However, the audio contains noise and occasional gaps due to the USB having trouble keeping up with the input data rates. All the noise at frequencies outside of the interval $[-f_s/2, +f_s/2) = [-1.652\ \text{MHz}, 1.652\ \text{MHz})$ will alias back into the baseband spectrum - degrading the SNR. To improve the SNR, we can decrease the RF bandwidth. FM radio channels have a bandwidth of 200 kHz, so we want a bandwidth larger than this and less than the sample rate of 2.304 MHz. 
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
