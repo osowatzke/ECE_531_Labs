@@ -68,6 +68,8 @@ At 99.5 FM:
 
 There are two decimation filters within the block diagram. One is before the FM demodulation block and limits the bandwidth of the signal to the width of the RF channel. The second filter is included with the FM demodulation block, and it limits the frequency of the audio output for the audio sink. The first filter provides a decimation rate of 6, and the second filter provides a decimation rate of 8. As a result, our sample rate falls from 2.304 MHz to 48 kHz, which is exactly the sample rate we need for the audio source.
 
+A rational resampler block would be needed instead of decimating FIRs if the input sampling rate is not a multiple of the audio sink sampling rate. In Figure \ref{fig::fm_radio_flowchart}, the input sampling rate is a multiple of the audio sink sampling rate (i.e. $48\ \text{kHz} \times 48 = 2.304\ \text{MHz}$).
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
