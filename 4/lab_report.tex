@@ -117,6 +117,12 @@ The resulting audio quality is not bad. However, the audio contains noise and oc
 	\label{fig::fm_radio_user_demod_spectrum}
 \end{figure}
 
+\subsection{Questions}
+
+In this section, we answer questions about AM modulation. Note that we cannot demodulate AM radio in the PlutoSDR, without additional hardware such as an upconverter. This is because the AM radio band (530 kHz - 1700 kHz) is outside of the Pluto's operating frequencies (70 MHz - 6 GHz). Car stereos, on the other hand, are specifically designed to receive signals in this band and do not require additional hardware.
+
+Due to these deficiencies, we simply discuss the demodulation that we would perform if we had the additional hardware. The "AM Demod" block in GNU radio, is typically used to perform this demodulation. However, we can instead use a "Complex to Mag" block followed by a bandpass filter. Note that we use a bandpass filter instead of a low-pass filter to remove the carrier signal that is transmitted with the AM signal.
+  
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
