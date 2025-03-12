@@ -33,6 +33,27 @@ options:
     state: enabled
 
 blocks:
+- name: deviation
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Frequency Deviation
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '10000'
+    stop: '1000000'
+    value: '25000'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [400, 8.0]
+    rotation: 0
+    state: enabled
 - name: fm_station
   id: variable_qtgui_range
   parameters:
@@ -66,26 +87,20 @@ blocks:
     coordinate: [168, 8.0]
     rotation: 0
     state: enabled
-- name: analog_fm_demod_cf_0
-  id: analog_fm_demod_cf
+- name: analog_quadrature_demod_cf_0
+  id: analog_quadrature_demod_cf
   parameters:
     affinity: ''
     alias: ''
-    audio_decim: '8'
-    audio_pass: '15000'
-    audio_stop: '16000'
-    chan_rate: '384000'
     comment: ''
-    deviation: '75000'
-    gain: '1.0'
+    gain: (2*math.pi*deviation)/(samp_rate/6)
     maxoutbuf: '0'
     minoutbuf: '0'
-    tau: 75e-6
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [472, 164.0]
+    coordinate: [480, 216.0]
     rotation: 0
     state: enabled
 - name: audio_sink_0
@@ -102,7 +117,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [936, 216.0]
+    coordinate: [1160, 216.0]
     rotation: 0
     state: enabled
 - name: blocks_multiply_const_vxx_0
@@ -120,7 +135,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [696, 216.0]
+    coordinate: [920, 216.0]
     rotation: 0
     state: enabled
 - name: iio_pluto_source_0
@@ -130,7 +145,7 @@ blocks:
     alias: ''
     bandwidth: '20000000'
     bbdc: 'True'
-    buffer_size: '32768'
+    buffer_size: '131072'
     comment: ''
     filter: ''
     filter_source: '''Auto'''
@@ -152,6 +167,19 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [8, 140.0]
+    rotation: 0
+    state: enabled
+- name: import_0
+  id: import
+  parameters:
+    alias: ''
+    comment: ''
+    imports: import math
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [712, 8.0]
     rotation: 0
     state: enabled
 - name: low_pass_filter_0
@@ -176,6 +204,30 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [264, 164.0]
+    rotation: 0
+    state: enabled
+- name: low_pass_filter_1
+  id: low_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: ''
+    cutoff_freq: '15000'
+    decim: '8'
+    gain: '1'
+    interp: '1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate/6
+    type: fir_filter_fff
+    width: '1000'
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [720, 164.0]
     rotation: 0
     state: enabled
 - name: qtgui_freq_sink_x_0
@@ -418,7 +470,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [936, 104.0]
+    coordinate: [1160, 104.0]
     rotation: 0
     state: enabled
 - name: qtgui_tab_widget_0
@@ -452,7 +504,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [400, 8.0]
+    coordinate: [560, 8.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0
@@ -549,19 +601,20 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [936, 296.0]
+    coordinate: [1160, 296.0]
     rotation: 0
     state: enabled
 
 connections:
-- [analog_fm_demod_cf_0, '0', blocks_multiply_const_vxx_0, '0']
+- [analog_quadrature_demod_cf_0, '0', low_pass_filter_1, '0']
 - [blocks_multiply_const_vxx_0, '0', audio_sink_0, '0']
 - [blocks_multiply_const_vxx_0, '0', qtgui_freq_sink_x_0_0_0, '0']
 - [blocks_multiply_const_vxx_0, '0', qtgui_time_sink_x_0, '0']
 - [iio_pluto_source_0, '0', low_pass_filter_0, '0']
 - [iio_pluto_source_0, '0', qtgui_freq_sink_x_0, '0']
-- [low_pass_filter_0, '0', analog_fm_demod_cf_0, '0']
+- [low_pass_filter_0, '0', analog_quadrature_demod_cf_0, '0']
 - [low_pass_filter_0, '0', qtgui_freq_sink_x_0_0, '0']
+- [low_pass_filter_1, '0', blocks_multiply_const_vxx_0, '0']
 
 metadata:
   file_format: 1
