@@ -45,11 +45,15 @@
 
 \subsection{FM Demodulation using GNU Radio}
 
+In this experiment, we use the GNU radio flowchart shown in Figure \ref{fig::fm_radio_flowchart} to perform FM demodulation.
+
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{fm_radio_flowchart.png}}}
 	\caption{Flowchart for FM Demodulation}
 	\label{fig::fm_radio_flowchart}
 \end{figure}
+
+Using the flowchart, we capture images of the spectrum before and and after demodulation. We also turn on averaging to reduce the variance of the noise floor. This allows us to better visualize the FM spectrum. Next, we list the decimation blocks in the flowchart and explain why they are needed. Then, we discuss when a rational resampler block is needed and why it is not needed for the flowchart shown in Figure \ref{fig::fm_radio_flowchart}. Using the flowchart, we analyze the quality of the audio output and describe what modifications can be made to improve the audio quality. Finally, we justify the 100 kHz cutoff frequency of the low-pass filter (LPF).
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
