@@ -66,7 +66,7 @@ At 99.5 FM:
 	\label{fig::spectrum_after_demodulation}
 \end{figure}
 
-There are two decimation filters within the block diagram. One is before the FM demodulation block and limits the bandwidth of the signal to the width of the RF channel. The second filter is included with the FM demodulation block, and it limits the frequency of the audio output for the audio sink.
+There are two decimation filters within the block diagram. One is before the FM demodulation block and limits the bandwidth of the signal to the width of the RF channel. The second filter is included with the FM demodulation block, and it limits the frequency of the audio output for the audio sink. The first filter provides a decimation rate of 6, and the second filter provides a decimation rate of 8. As a result, our sample rate falls from 2.304 MHz to 48 kHz, which is exactly the sample rate we need for the audio source.
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
