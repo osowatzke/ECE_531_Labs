@@ -90,7 +90,7 @@ In this section, we use the flowchart shown in Figure \ref{fig::fm_radio_flowcha
 	\label{fig::fm_radio_demod_spectrum}
 \end{figure}
 
-\noindent Note that the spectrum of the demodulated signal is very different than the input spectrum. This is because the demodulation block returns a filtered copy of the signal phase. Note that the filter cutoff frequency is approximately 15 kHz, which is sufficient for audio signals. The filtering also prevents aliasing when we decimate the signal to the 48 kHZ audio output rate.
+\noindent Note that the spectrum of the demodulated signal is very different than the input spectrum. This is because the demodulation block computes the phase difference between adjacent samples and filters the resulting signal. Note that the filter cutoff frequency is approximately 15 kHz, which is sufficient for audio signals. The filtering also prevents aliasing when we decimate the signal to the 48 kHZ audio output rate.
 
 As hinted at above, there are two decimating filters within the block diagram. One is before the FM demodulation block and limits the bandwidth of the signal to the width of the RF channel. The second filter is included with the FM demodulation block, and it limits the frequency of the audio output for the audio sink. The first filter includes a decimate by 6, and the second filter includes a decimate by 8. As a result, our sample rate falls from 2.304 MHz to 48 kHz. Note that this decimation is important because we must feed the audio source at a rate of 48 kHz.
 
@@ -100,23 +100,33 @@ The FM radio sound quality from our flowchart is pretty good. However, we can im
 
 \subsection{Manual RF Demodulation}
 
+In this section, we perform FM radio demodulation without using the built-in FM demodulation block. We instead use the Quadrature demodulation following by a low-pass filter. Our resulting flowchart is shown in Figure \ref{fig::fm_radio_user_flowchart}.
+
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{fm_radio_user_flowchart.png}}}
 	\caption{FM Radio Flowchart with Custom Blocks}
 	\label{fig::fm_radio_user_flowchart}
 \end{figure}
 
+\noindent In this flowchart, the quadrature demodulation block computes the phase difference between adjacent samples, which is an instantaneous measurement of the frequency.This phase difference is then scaled to produce an amplitude in range $[0, 1)$. The phase difference between adjacent samples is then passed through a low-pass filter to limit to frequency of the output signal to $\pm 15\ \text{kHZ}$. The low-pass filter also decimates the signal to get to the audio rate of 48 kHZ.
+
+As we did above, we look at the spectrum of the signal before and after demodulation. Figure \ref{fig::fm_radio_user_input_spectrum}, shows the spectrum of the received FM radio signal.
+ 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{fm_radio_user_input_spectrum.png}}}
 	\caption{FM Radio Input Spectrum}
 	\label{fig::fm_radio_user_input_spectrum}
 \end{figure}
 
+\noindent Note the input spectrum is identical to what was shown in Figure \ref{fig::fm_radio_input_spectrum} because the flowchart through this point is the same.  We also attach the spectrum at the output of the low-pass filter, which is shown in Figure \ref{fig::fm_radio_user_lpf_spectrum}.
+
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{fm_radio_user_lpf_spectrum.png}}}
 	\caption{FM Radio LPF Spectrum}
 	\label{fig::fm_radio_user_lpf_spectrum}
 \end{figure}
+
+\noindent Again, we note that the spectrum is roughly the same as our prior results, which are shown in Figure \ref{fig::fm_radio_lpf_spectrum}. Next, we capture the spectrum of the signal after demodulation, which is shown in Figure \ref{fig::fm_radio_user_demod_spectrum}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{fm_radio_user_demod_spectrum.png}}}
