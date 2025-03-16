@@ -134,6 +134,8 @@ As we did above, we look at the spectrum of the signal before and after demodula
 	\label{fig::fm_radio_user_demod_spectrum}
 \end{figure}
 
+\noindent Compared to the spectrum shown in Figure \ref{fig::fm_radio_demod_spectrum}, the demodulated signal spectrum does not have a gradual roll-off starting at DC. This is because the flowchart does not implement FM de-emphasis.
+
 \subsection{Questions}
 
 In this section, we answer questions about AM modulation. Note that we cannot demodulate AM radio in the PlutoSDR, without additional hardware such as an upconverter. This is because the AM radio band (530 kHz - 1700 kHz) is outside of the Pluto's operating frequencies (70 MHz - 6 GHz). Car stereos, on the other hand, are specifically designed to receive signals in this band and do not require additional hardware.
