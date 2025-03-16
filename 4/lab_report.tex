@@ -136,6 +136,10 @@ As we did above, we look at the spectrum of the signal before and after demodula
 
 \noindent Compared to the spectrum shown in Figure \ref{fig::fm_radio_demod_spectrum}, the demodulated signal spectrum does not have a gradual roll-off starting at DC. This is because the flowchart does not implement FM de-emphasis.
 
+The updated flowchart shown in Figure \ref{fig::fm_radio_user_flowchart} contains the same decimation blocks as the flowchart shown in Figure \ref{fig::fm_radio_flowchart}. The first low-pass filter includes a decimate by 6, which results in a sample rate just greater than the bandwidth of the FM radio signal. The second filter decimates the demodulated signal output. This results in a signal with a sample rate of 48 kHz, exactly the rate that the audio sink needs.
+
+The audio quality of the updated flowchart is comparable to that of the initial flowchart. However, a couple modifications would improve the audio quality. First, the flowchart has an RF bandwidth of 20 MHz. As discussed above, reducing the RF bandwidth, will improve the signal-to-noise ratio of the sampled signal. Another modification that would improve the audio quality is adding FM de-emphasis, which complements the FM pre-emphasis present in the transmitter. FM pre-emphasis amplifies the high frequency components of the signal before modulation to improve signal-to-noise ratio. FM de-emphasis inverts the frequency response of the pre-emphasis filter. We can add an FM de-emphasis block in GNU radio to implement the required de-emphasis filter.
+
 \subsection{Questions}
 
 In this section, we answer questions about AM modulation. Note that we cannot demodulate AM radio in the PlutoSDR, without additional hardware such as an upconverter. This is because the AM radio band (530 kHz - 1700 kHz) is outside of the Pluto's operating frequencies (70 MHz - 6 GHz). Car stereos, on the other hand, are specifically designed to receive signals in this band and do not require additional hardware.
