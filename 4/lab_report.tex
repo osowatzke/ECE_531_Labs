@@ -65,7 +65,7 @@ In this experiment, we repeat the analysis from Section \ref{section::fm_demod_g
 
 \subsection{FM Demodulation using GNU Radio}
 
-At 99.5 FM:
+In this section, we use the flowchart shown in Figure \ref{fig::fm_radio_flowchart} to receive, demodulate, and play audio from FM radio signals. We specifically tune the flowchart to 99.5 MHz (99.5 FM) and capture the spectrum before and after demodulation. The input spectrum is captured in Figure \ref{fig::fm_radio_input_spectrum}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{fm_radio_input_spectrum.png}}}
@@ -73,11 +73,15 @@ At 99.5 FM:
 	\label{fig::fm_radio_input_spectrum}
 \end{figure}
 
+Looking at the input spectrum, we see that FM radio signal is centered at the middle of the band. We also see that the signal is sampled at a rate much higher than the input bandwidth. Next, we analyze the spectrum after the LPF and a decimation of 6. The resulting spectrum is shown in Figure \ref{fig::fm_radio_lpf_spectrum}.
+
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{fm_radio_lpf_spectrum.png}}}
 	\caption{FM Radio LPF Spectrum}
 	\label{fig::fm_radio_lpf_spectrum}
 \end{figure}
+
+Examining the low pass filter output, we see that we have passed most of the FM radio spectrum. We also see that we have properly band-limited our signal to prevent aliasing during decimation. Finally, we examine the spectrum of the demodulated signal, which is shown in Figure \ref{fig::fm_radio_demod_spectrum}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{fm_radio_demod_spectrum.png}}}
