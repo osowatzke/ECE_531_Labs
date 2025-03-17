@@ -165,19 +165,8 @@ Next, to understand the FM demodulation, we replaced the FM demodulator block in
 
 We examined the performance of our custom demodulator in the same manner as the built-in demodulator. We observed that the spectrum of the demodulated signal was distorted with respect to the built-in demodulator. This is because our custom demodulator did not implement FM de-emphasis. By adding an GNU radio FM de-emphasis block to the output of our FM demodulator, we could better replicate the behavior of the built-in FM demodulator and in turn improve audio quality.
 
-After evaluating our initial flowchart, we 
+Finally, we investigated AM demodulation. The PlutoSDR was not able to demodulate AM radio signals directly because they were out of band for the PlutoSDR. AM radio signals specifically lie between 530 kHz - 1700 kHz, while the PlutoSDR can only tune to frequencies between 70 MHz - 6 GHz. As a result, we were only able to discuss AM radio demodulation. Typically, we would use an "AM Demod" block. However, we theorized that we could also use a "Complex to Mag" block followed by a bandpass filter. Note that we use a band-pass filter instead of a low-pass filter to remove the carrier signal that is transmitted with the AM signal.
 
-In the input spectrum, we saw that the spectrum of the FM radio signal was about 200 kHz wide. To remove the out-of-band noise prior to FM demodulation, we processed the signal with a low-pass filter that had a 100 kHz cutoff frequency (200 kHz bandwidth) and a decimation rate of 6. We then passed the low-pass filter output into an FM demodulation block. This block measured the instantaneous frequency by computing the phase difference between adjacent samples. It then filtered the resulted signal with a 15 kHz cutoff frequency to remove noise outside of the audio band. Finally  
-
-The spectrum 
-
-- FM Radio spectrum about 200 kHz wide
-- Filter signal before demodulation to remove out-of-band noise prior to demodulation
-- Need to decimate demodulated signal to rate of audio sink.
-- Can avoid using rational resampler block if our input sampling rate is a multiple of the audio sink rate.
-- Limit RF bandwidth below the sampling rate to improve SNR.
-- Replace FM demodulation block with quadrature demodulation block and low pass filter.
-- Missing FM de-emphasis block
 %\nocite{analog_devices_libiio_error}
 %\bibliographystyle{IEEEtran}
 %\bibliography{sources}{}
