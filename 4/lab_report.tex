@@ -155,8 +155,21 @@ Due to these deficiencies, we discuss the demodulation that we would perform if 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
-In this lab, we investigated analog demodulation with GNU radio. We specifically implemented GNU radio flowcharts to perform FM demodulation. In our first flowchart, we used the built-in FM demodulation block. Then, we examined the spectrum before and after demodulation. In the first stage of logic, we learned how to propert  
+In this lab, we investigated analog demodulation with GNU radio. We specifically implemented GNU radio flowcharts to perform FM demodulation. In our first flowchart, we used the built-in FM demodulation block. Then, we examined the spectrum before and after demodulation. The output spectrum was distinct from the input spectrum because the demodulator returned the instantaneous frequency of the signal bandlimited to $\pm 15\ \text{kHz}$.
 
+To get to the audio rate, we had to decimate the signal by a factor of 48. We performed this decimation in 2 stages. First, we decimated the signal by a factor of 6 to get a sampling rate of 384 kHz. This decimated rate was just large enough to represent the FM radio signal, which had a bandwidth of 200 kHz. Then, after computing the instantaneous frequency, we decimated the resulting signal to match the rate of the audio sink. We were able to avoid using a rational resampler block because our sampling rate was a multiple of the audio rate. Avoiding unnecessary interpolation allowed us to avoid a bunch of unnecessary processing.
+
+In the input spectrum, we saw that the spectrum of the FM radio signal was about 200 kHz wide. To remove the out-of-band noise prior to FM demodulation, we processed the signal with a low-pass filter that had a 100 kHz cutoff frequency (200 kHz bandwidth) and a decimation rate of 6. We then passed the low-pass filter output into an FM demodulation block. This block measured the instantaneous frequency by computing the phase difference between adjacent samples. It then filtered the resulted signal with a 15 kHz cutoff frequency to remove noise outside of the audio band. Finally  
+
+The spectrum 
+
+- FM Radio spectrum about 200 kHz wide
+- Filter signal before demodulation to remove out-of-band noise prior to demodulation
+- Need to decimate demodulated signal to rate of audio sink.
+- Can avoid using rational resampler block if our input sampling rate is a multiple of the audio sink rate.
+- Limit RF bandwidth below the sampling rate to improve SNR.
+- Replace FM demodulation block with quadrature demodulation block and low pass filter.
+- Missing FM de-emphasis block
 %\nocite{analog_devices_libiio_error}
 %\bibliographystyle{IEEEtran}
 %\bibliography{sources}{}
