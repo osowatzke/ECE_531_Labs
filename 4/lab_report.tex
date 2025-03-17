@@ -46,6 +46,8 @@ In this lab, we perform analog demodulation with GNU Radio. We specifically conc
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
+In this section, we provide the procedures for each of our experiments. We start by evaluating FM demodulation with GNU Radio's built-in FM demodulation block. Then, we perform manual demodulation using a custom demodulation block. In each flowchart, we analyze the use of resampling blocks. Then, we analyze the spectrum and audio quality of the resulting signals.
+
 \subsection{FM Demodulation using GNU Radio}
 \label{section::fm_demod_gnu_radio}
 
@@ -61,7 +63,7 @@ In this experiment, we use the GNU radio flowchart shown in Figure \ref{fig::fm_
 
 \subsection{Manual RF Demodulation}
 
-In this experiment, we repeat the analysis from Section \ref{section::fm_demod_gnu_radio} using a quadrature demodulator and low-pass filter instead of a FM demodulator block. Using the flowchart, we specifically capture images of the spectrum before and after demodulation. We also enable spectral averaging as we did above. Then, we examine the role of decimation, interpolation, and resampling blocks in our flowchart. We also compare the audio quality to the audio quality in the above flowchart and describe how we might improve the audio output.
+In this experiment, we repeat the analysis from Section \ref{section::fm_demod_gnu_radio} using a quadrature demodulator and low-pass filter instead of an FM demodulator block. Using the flowchart, we specifically capture images of the spectrum before and after demodulation. We also enable spectral averaging as we did above. Next, we examine the role of decimation, interpolation, and resampling blocks in our flowchart. Then, we compare the audio quality with custom demodulation blocks to the audio quality of the flowchart shown in Figure \ref{fig::fm_radio_flowchart}. Finally, we describe how we might improve the audio quality.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
