@@ -2,12 +2,15 @@
 mode = 'compare';
 
 % Symbol period
-Ts = 0.25;
+% Results appear independent of this value
+% Some weirdness when Ts can't be exactly represented as float (ex: Ts=0.1).
+Ts = 1;
 
 % Choices of beta
 beta = [0, 0.1, 0.25, 0.5, 1];
 
 % Time values
+% Limit to same number of samples as MATLAB built-in
 t = (-5*Ts):Ts/8:(5*Ts);
 
 % Loop for each value of beta
@@ -37,13 +40,20 @@ for i = 1:length(beta)
 
     % Plot frequency response
     freqz(h);
-    subplot(2,1,1);
-    hold on;
-    subplot(2,1,2);
-    hold on;
+
+    % Plot time-domain samples
+    figure(i+10); clf;
+    plot(h);
 
     % Compare to MATLAB's built-in routine
     if strcmp(mode,'compare')
+
+        % Plot on top of existing data
+        figure(i);
+        subplot(2,1,1);
+        hold on;
+        subplot(2,1,2);
+        hold on;
 
         % MATLAB creates filter with unit energy
         % Scale to match formulas from class
