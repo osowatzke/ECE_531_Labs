@@ -1,15 +1,10 @@
-classdef loopFilter < matlab.System
-    properties(Access=protected)
+classdef loopFilter < keyValueInitializer
+    properties
         ProportionalGain = 0;
         IntegratorGain = 0;
-        eAccum = 0;
     end
-    methods
-        function self = loopFilter(varargin)
-            for i = 1:2:nargin
-                self.(varargin{i}) = varargin{i+1};
-            end
-        end
+    properties(Access=protected)
+        eAccum = 0;
     end
     methods(Access=protected)
         function resetImpl(self)

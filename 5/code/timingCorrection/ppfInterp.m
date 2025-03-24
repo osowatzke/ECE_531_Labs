@@ -1,4 +1,4 @@
-classdef ppfInterp < matlab.System
+classdef ppfInterp < keyValueInitializer
     properties(Constant)
         alpha = 0.5;
     end

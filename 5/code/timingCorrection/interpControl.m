@@ -1,15 +1,10 @@
-classdef interpControl < matlab.System
+classdef interpControl < keyValueInitializer
+    properties
+        N;
+    end
     properties(Access=protected)
-        N = 2;
         mu;
         Counter;
-    end
-    methods
-        function self = interpControl(varargin)
-            for i = 1:2:nargin
-                self.(varargin{i}) = varargin{i+1};
-            end
-        end
     end
     methods(Access=protected)
         function resetImpl(self)

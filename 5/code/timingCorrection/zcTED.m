@@ -1,21 +1,18 @@
-classdef zcTED < matlab.System
-    properties(Access=protected)
+classdef zcTED < keyValueInitializer
+    properties
         N;
-        TEDBuffer;
     end
-    methods
-        function self = zcTED(varargin)
-            for i = 1:2:nargin
-                self.(varargin{i}) = varargin{i+1};
-            end
-        end
+    properties(Access=protected)
+        TEDBuffer;
+        TriggerHistory;
     end
     methods(Access=protected)
         function resetImpl(self)
             self.TEDBuffer = zeros(1,self.N);
+            self.TriggerHistory = zeros(1,self.N);
         end
-        function e = stepImpl(self,filtOut,Trigger,TriggerHistory)
-           if Trigger && all(~TriggerHistory(2:end))
+        function e = stepImpl(self,filtOut,Trigger)
+           if Trigger && all(~self.TriggerHistory(2:end))
                 % Calculate the midsample point for odd or even samples per symbol
                 t1 = self.TEDBuffer(end/2 + 1 - rem(self.N,2));
                 t2 = self.TEDBuffer(end/2 + 1);
@@ -26,7 +23,7 @@ classdef zcTED < matlab.System
                 e = 0;
             end
             % Update TED buffer to manage symbol stuffs
-            switch sum([TriggerHistory(2:end) Trigger])
+            switch sum([self.TriggerHistory(2:end) Trigger])
                 case 0
                   % No update required
                 case 1
@@ -36,6 +33,8 @@ classdef zcTED < matlab.System
                   % Stuff a missing sample if TWO triggers across N samples
                   self.TEDBuffer = [self.TEDBuffer(3:end), 0, filtOut];
             end
+            % Update trigger history
+            self.TriggerHistory = [self.TriggerHistory(2:end), Trigger];
         end
     end
 end

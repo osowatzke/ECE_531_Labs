@@ -1,54 +1,88 @@
-classdef SymbolSynchronizer < matlab.System
+classdef SymbolSynchronizer < keyValueInitializer
+
+    % Public class properties
+    properties
+        SamplesPerSymbol = 2;
+        NormalizedLoopBandwidth = 0.01;
+        DetectorGain = 5.4;
+        DampingFactor = 1;
+    end
+
+    % Protected class properties
     properties(Access=protected)
-        N = 2;
-        zeta = 1;
-        Bloop = 0.01;
-        GD = 2.7;
+        % Subobjects
         interp = [];
         TED = [];
         loopFilt = [];
         interpCtrl = [];
+
+        % Class properties from processing loop
         mu;
         Trigger;
-        TriggerHistory;
     end
+
+    % Public class methods
     methods
+
+        % Class constructor
         function self = SymbolSynchronizer(varargin)
-            for i = 1:2:nargin
-                self.(varargin{i}) = varargin{i+1};e
-            end
-            theta = self.Bloop/(self.N*(self.zeta+0.25/self.zeta));
-            Delta = 1+2*self.zeta*theta+theta^2;
-            G1 = -4*self.zeta*theta/(self.GD*self.N*Delta);
-            G2 = -4*theta^2/(self.GD*self.N*Delta);
+
+            % Call parent class constructor
+            self@keyValueInitializer(varargin{:});
+            
+            % Map class properties to formula variables
+            N = self.SamplesPerSymbol;
+            Bloop = self.NormalizedLoopBandwidth;
+            GD = self.DetectorGain/N;
+            zeta = self.DampingFactor;
+
+            % Solve for the loop filter coefficients
+            theta = Bloop/(N*(zeta+0.25/zeta));
+            Delta = 1+2*zeta*theta+theta^2;
+            G1 = -4*zeta*theta/(GD*N*Delta);
+            G2 = -4*theta^2/(GD*N*Delta);
+
+            % Initialize subobjects
             self.interp = ppfInterp;
-            self.TED = zcTED('N',self.N);
+            self.TED = zcTED('N',N);
             self.loopFilt = loopFilter(...
                 'ProportionalGain',G1,...
                 'IntegratorGain',G2);
-            self.interpCtrl = interpControl('N',self.N);
+            self.interpCtrl = interpControl('N',N);
         end
     end
+
+    % Protected class methods
     methods(Access=protected)
+
+        % Reset class properties
         function resetImpl(self)
-            self.mu = 0;
-            self.Trigger = 0;
-            self.TriggerHistory = zeros(1,self.N);
+
+            % Reset subobjects
             reset(self.interp);
             reset(self.TED);
             reset(self.loopFilt);
             reset(self.interpCtrl);
+
+            % Clear class properties
+            self.mu = 0;
+            self.Trigger = 0;
         end
+
+        % Class update method
         function [filtOut,e,muLog] = stepImpl(self,x)
+
+            % Initialize output arrays
             e = zeros(size(x));
             muLog = zeros(size(x));
             filtOut = zeros(size(x));
+
+            % Loop for each input
             for i = 1:length(x)
                 muLog(i) = self.mu;
                 filtOut(i) = self.interp(x(i), self.mu);
-                e(i) = self.TED(filtOut(i),self.Trigger,self.TriggerHistory);
+                e(i) = self.TED(filtOut(i),self.Trigger);
                 g = self.loopFilt(e(i));
-                self.TriggerHistory = [self.TriggerHistory(2:end), self.Trigger];
                 [self.mu,self.Trigger] = self.interpCtrl(g);
             end
         end
