@@ -6,6 +6,7 @@ classdef SymbolSynchronizer < keyValueInitializer
         NormalizedLoopBandwidth = 0.01;
         DetectorGain = 5.4;
         DampingFactor = 1;
+        TimingErrorDetector = 'Zero-Crossing (decision-directed)';
     end
 
     % Protected class properties
@@ -44,7 +45,16 @@ classdef SymbolSynchronizer < keyValueInitializer
 
             % Initialize subobjects
             self.interp = ppfInterp;
-            self.TED = zcTED('N',N);
+            if strcmp(self.TimingErrorDetector, 'Zero-Crossing (decision-directed)')
+                self.TED = zcTED('N',N);
+            elseif strcmp(self.TimingErrorDetector, 'Gardner (non-data-aided)')
+                self.TED = gardenerTED('N',N);
+            elseif strcmp(self.TimingErrorDetector, 'Mueller-Muller (decision-directed)')
+                self.TED = mmTED('N',N);
+            else
+                error('''%s'' is an unsupported timing error detector method',...
+                    self.TimingErrorDetector);
+            end
             self.loopFilt = loopFilter(...
                 'ProportionalGain',G1,...
                 'IntegratorGain',G2);

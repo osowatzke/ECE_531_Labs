@@ -18,7 +18,8 @@ symbolSync = comm.SymbolSynchronizer(...
     SamplesPerSymbol=2,...
     NormalizedLoopBandwidth=0.01, ...
     DetectorGain=5.4,...
-    DampingFactor=1.0);
+    DampingFactor=1.0,...
+    TimingErrorDetector="Mueller-Muller (decision-directed)");
 [rxSync, timingErr] = symbolSync(filteredRXData);
 
 addpath('./textbook')
@@ -26,7 +27,8 @@ addpath('./textbook')
 rmpath('./textbook')
 
 addpath('./timingCorrection')
-symbolSync = SymbolSynchronizer();
+symbolSync = SymbolSynchronizer(...
+    'TimingErrorDetector',"Mueller-Muller (decision-directed)");
 [rxSync2, ~, timingErr2] = symbolSync(filteredRXData);
 rmpath('./timingCorrection')
 
@@ -34,12 +36,12 @@ figure(1);
 clf;
 plot(rxSync);
 hold on;
-plot(rxSync1);
+% plot(rxSync1);
 plot(rxSync2);
 
 figure(2);
 clf;
 plot(timingErr);
 hold on;
-plot(timingErr1);
+% plot(timingErr1);
 plot(timingErr2);
