@@ -47,6 +47,12 @@
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
+\subsection{Pulse Shaping and Matched Filtering}
+
+Type I Nyquist filters are defined by a rectangular pulse in the frequency domain and a sinc pulse in the time domain. The sinc pulse has zero crossings at $nT$, which produces zero ISI. Because Type I Nyquist filters are a rectangular pulse in the frequency-domain, they have the minimum bandwidth and maximize spectral efficiency. However, there are a couple problems with type I Nyquist filters. First, they are infinite in time. Second, accurate sampling is required. Small timing errors can result in large ISI because the impulse response of a sinc filter decays with $1/t$, which does not converge.
+
+Type II Nyquist filters also have zero crossing at $nT$. However, they have a bandwidth larger than the minimum bandwidth, which allows them to achieve lower ISI sensitivity than type I Nyquist filters. The raised cosine filter is an example of a type II Nyquist filter. Its impulse responses decays with $1/t^3$, which quickly converges in the presence of timing errors.
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 	
