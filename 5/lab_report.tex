@@ -123,6 +123,24 @@ Finally, we examine how different rolloff factors affect timing recovering perfo
 
 \noindent The received filter outputs (shown in solid blue) allow us to visualize the effect of various timing offsets. For small values of $\beta$, the receive filter output overshoots the demodulated points more than it does for large values of $\beta$. Given a small timing offset, smaller values of $\beta$ will result in greater timing errors.
 
+\subsection{Timing Error}
+
+In this section, we capture a QPSK constellation with the PlutoSDR. Our captured constellation is shown in Figure \ref{fig::pluto_constellation_raw}.
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=0.5\textwidth]{pluto_constellation_raw.png}}
+	\caption{QPSK Constellation Captured with Pluto SDR}
+	\label{fig::pluto_constellation_raw}
+\end{figure}
+
+\noindent We also leverage code from \texttt{plutoLoopback.m} to sweep timing offsets. If we sweep the timing offsets, we can perform a manual timing compensation. With the best timing compensation, we get the constellation shown in Figure \ref{fig::pluto_constellation_best}.
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=0.5\textwidth]{pluto_constellation_best.png}}
+	\caption{QPSK Constellation After Manual Timing Compensation}
+	\label{fig::pluto_constellation_best}
+\end{figure}
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 	
