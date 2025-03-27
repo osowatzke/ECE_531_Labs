@@ -1,5 +1,5 @@
 % Mode flag ('compare','standalone')
-mode = 'compare';
+mode = 'standalone';
 
 % Symbol period
 % Results appear independent of this value
@@ -36,7 +36,10 @@ for i = 1:length(beta)
     end
 
     % Create figure
-    figure(i); clf;
+    figure(i); clf;    
+    sgtitle(sprintf('Frequency Response for \\beta = %.1f', beta(i)),...
+        'FontSize',12,'FontWeight','bold');
+    hold on;
 
     % Plot frequency response
     freqz(h);
@@ -44,6 +47,7 @@ for i = 1:length(beta)
     % Plot time-domain samples
     figure(i+10); clf;
     plot(h);
+    title(sprintf('Impulse Response for \\beta = %.1f', beta(i)));
 
     % Compare to MATLAB's built-in routine
     if strcmp(mode,'compare')
