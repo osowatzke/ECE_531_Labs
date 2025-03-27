@@ -23,7 +23,7 @@ for i = 1:length(beta)
     t1 = (0:20).';
     
     % Create random symbols
-    bits = randi([0 1], size(t));
+    bits = randi([0 1], size(t1));
     txSymbols = real(pskmod(bits,2));
     
     % Run TX pulse-shaping FIR

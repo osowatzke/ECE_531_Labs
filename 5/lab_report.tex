@@ -101,6 +101,27 @@ Next, we compare the frequency response of the SRRC filters for $\beta \in [0,0.
 
 \noindent Comparing the two impulses responses, we see that the impulse response with $\beta=1$ converges much faster than the impulse response with $\beta=0$. This allows us to truncate the impulse response sooner, which in turn reduces the filter length and complexity.
 
+Finally, we examine how different rolloff factors affect timing recovering performance. To do this we analyze the received filter output for $\beta \in [0.1, 0.5, 0.9]$. Our results are captured in Figures \ref{fig::timing_recovery_beta_0_1} - \ref{fig::timing_recovery_beta_0_9}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{timing_recovery_beta_0_1.png}}}
+	\caption{Timing Recovery with $\beta=0.1$}
+	\label{fig::timing_recovery_beta_0_1}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{timing_recovery_beta_0_5.png}}}
+	\caption{Timing Recovery with $\beta=0.5$}
+	\label{fig::timing_recovery_beta_0_5}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{timing_recovery_beta_0_9.png}}}
+	\caption{Timing Recovery with $\beta=0.9$}
+	\label{fig::timing_recovery_beta_0_9}
+\end{figure}
+
+\noindent The received filter outputs (shown in solid blue) allow us to visualize the effect of various timing offsets. For small values of $\beta$, the receive filter output overshoots the demodulated points more than it does for large values of $\beta$. Given a small timing offset, smaller values of $\beta$ will result in greater timing errors.
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
