@@ -15,6 +15,8 @@ filteredTXData = TxFlt(modulatedData);
 offsetData = varDelay(filteredTXData, 4);
 filteredRXData = RxFlt(offsetData);
 
+%% Test Each Symbol Sychronizer
+% MATLAB built-in
 symbolSync = comm.SymbolSynchronizer(...
     SamplesPerSymbol=2,...
     NormalizedLoopBandwidth=0.01, ...
@@ -23,16 +25,19 @@ symbolSync = comm.SymbolSynchronizer(...
     TimingErrorDetector="Zero-Crossing (decision-directed)");
 [rxSync, timingErr] = symbolSync(filteredRXData);
 
+% Using provided functions
 addpath('./textbook')
 [rxSync1, timingErr1] = timingSync(filteredRXData);
 rmpath('./textbook')
 
+% With system objects
 addpath('./timingCorrection')
 symbolSync = SymbolSynchronizer(...
     'TimingErrorDetector',"Zero-Crossing (decision-directed)");
 [rxSync2, timingErr2] = symbolSync(filteredRXData);
 rmpath('./timingCorrection')
 
+% Plot results
 figure(1);
 clf;
 plot(real(rxSync));
