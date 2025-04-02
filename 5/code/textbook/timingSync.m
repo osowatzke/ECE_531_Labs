@@ -1,7 +1,7 @@
-function [filtOutArr, eArr, muArr] = timingSync(y)
+function [rxSync, timingErr] = timingSync(y)
     mu = 0;
     InterpFilterState = zeros(3,1); %#ok 
-    Trigger = false; %#ok
+    Trigger = false;
     LoopPreviousInput = 0; %#ok
     LoopFilterState = 0; %#ok
     N = 2;
@@ -17,23 +17,21 @@ function [filtOutArr, eArr, muArr] = timingSync(y)
     TriggerHistory = false(1,N); %#ok
     TEDBuffer = zeros(1,N); %#ok
     Counter = 0; %#ok
-    muArr = zeros(size(y));
-    eArr = zeros(size(y));
-    filtOutArr = zeros(size(y));
+    rxSync = zeros(size(y));
+    timingErr = zeros(size(y));
     warning('off')
-    idx = 0; %#ok
+    idx = 0;
     for i = 1:length(y)
-        muArr(i) = mu;
+        timingErr(i) = mu;
         interpFilter;
         if Trigger
-            idx = idx + Trigger; %#ok
-            filtOutArr(idx) = filtOut;
+            idx = idx + 1; %#ok
+            rxSync(idx) = filtOut;
         end
         zcTED;
-        eArr(i) = e;
         loopFilter;
         interpControl;
     end
     warning('on')
-    filtOutArr = filtOutArr(1:idx);
+    rxSync = rxSync(1:idx);
 end

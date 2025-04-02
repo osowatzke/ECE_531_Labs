@@ -24,7 +24,7 @@ symbolSync = comm.SymbolSynchronizer(...
 [rxSync, timingErr] = symbolSync(filteredRXData);
 
 addpath('./textbook')
-[rxSync1, ~, timingErr1] = timingSync(filteredRXData);
+[rxSync1, timingErr1] = timingSync(filteredRXData);
 rmpath('./textbook')
 
 addpath('./timingCorrection')
