@@ -80,21 +80,30 @@ classdef SymbolSynchronizer < keyValueInitializer
         end
 
         % Class update method
-        function [filtOut,e,muLog] = stepImpl(self,x)
+        function [rxSync,timingErr] = stepImpl(self,x)
 
             % Initialize output arrays
-            e = zeros(size(x));
-            muLog = zeros(size(x));
-            filtOut = zeros(size(x));
+            rxSync = zeros(size(x));
+            timingErr = zeros(size(x));
+
+            % Initialize output Index
+            outIdx = 0;
 
             % Loop for each input
             for i = 1:length(x)
-                muLog(i) = self.mu;
-                filtOut(i) = self.interp(x(i), self.mu);
-                e(i) = self.TED(filtOut(i),self.Trigger);
-                g = self.loopFilt(e(i));
+                timingErr(i) = self.mu;
+                filtOut = self.interp(x(i), self.mu);
+                if self.Trigger
+                    outIdx = outIdx + 1;
+                    rxSync(outIdx) = filtOut;
+                end
+                e = self.TED(filtOut,self.Trigger);
+                g = self.loopFilt(e);
                 [self.mu,self.Trigger] = self.interpCtrl(g);
             end
+
+            % Keep only samples with triggers
+            rxSync = rxSync(1:outIdx);
         end
     end
 end

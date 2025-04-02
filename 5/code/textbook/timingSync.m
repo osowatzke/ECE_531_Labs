@@ -21,14 +21,19 @@ function [filtOutArr, eArr, muArr] = timingSync(y)
     eArr = zeros(size(y));
     filtOutArr = zeros(size(y));
     warning('off')
+    idx = 0; %#ok
     for i = 1:length(y)
         muArr(i) = mu;
         interpFilter;
-        filtOutArr(i) = filtOut;
+        if Trigger
+            idx = idx + Trigger; %#ok
+            filtOutArr(idx) = filtOut;
+        end
         zcTED;
         eArr(i) = e;
         loopFilter;
         interpControl;
     end
     warning('on')
+    filtOutArr = filtOutArr(1:idx);
 end
