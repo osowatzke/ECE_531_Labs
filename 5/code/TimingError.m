@@ -4,6 +4,7 @@ frameSize = 2^10; numFrames = 200;
 numSamples = numFrames*frameSize; % Samples to simulate
 modulationOrder = 2; filterSymbolSpan = 4;
 showConstellations = true;
+phaseOffset = pi/8;
 %% Visuals
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband');
@@ -52,6 +53,7 @@ for k=1:frameSize:(numSamples - frameSize)
     noisyData = chan(filteredTXData);
     % Time delay signal
     offsetData = varDelay(noisyData, k/frameSize*timingOffset);
+    offsetData = offsetData*exp(1i*phaseOffset);
     % Filter signal
     filteredData = RxFlt(offsetData);
     filteredDataRef = RxFltRef(noisyData);
