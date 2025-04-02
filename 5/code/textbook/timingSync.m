@@ -1,9 +1,6 @@
 function [rxSync, timingErr] = timingSync(y)
-    mu = 0;
-    InterpFilterState = zeros(3,1); %#ok 
-    Trigger = false;
-    LoopPreviousInput = 0; %#ok
-    LoopFilterState = 0; %#ok
+
+    % Loop Filter Parameters
     N = 2;
     zeta = 1;
     Bloop = 0.01;
@@ -14,24 +11,45 @@ function [rxSync, timingErr] = timingSync(y)
     G2 = -4*theta^2/(GD*N*Delta);
     ProportionalGain = G1+G2; %#ok
     IntegratorGain = G2; %#ok
+
+    % Interpolator state
+    InterpFilterState = zeros(3,1); %#ok 
+
+    % TED State
     TriggerHistory = false(1,N); %#ok
     TEDBuffer = zeros(1,N); %#ok
+
+    % Loop filter state
+    LoopPreviousInput = 0; %#ok
+    LoopFilterState = 0; %#ok
+
+    % Controller state
     Counter = 0; %#ok
+
+    % Initialize outputs arrays
     rxSync = zeros(size(y));
     timingErr = zeros(size(y));
+
+    % Loop outputs
+    mu = 0;
+    Trigger = false;
+
+    % Loop for each input sample
     warning('off')
-    idx = 0;
+    outIdx = 0;
     for i = 1:length(y)
         timingErr(i) = mu;
         interpFilter;
         if Trigger
-            idx = idx + 1; %#ok
-            rxSync(idx) = filtOut;
+            outIdx = outIdx + 1; %#ok
+            rxSync(outIdx) = filtOut;
         end
         zcTED;
         loopFilter;
         interpControl;
     end
     warning('on')
-    rxSync = rxSync(1:idx);
+
+    % Keep only samples with triggers
+    rxSync = rxSync(1:outIdx);
 end
