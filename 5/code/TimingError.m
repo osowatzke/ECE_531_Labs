@@ -1,10 +1,13 @@
+% Clear workspace
+clear; clc;
 %% General system details
 sampleRateHz = 1e6; samplesPerSymbol = 8;
 frameSize = 2^10; numFrames = 200;
 numSamples = numFrames*frameSize; % Samples to simulate
 modulationOrder = 2; filterSymbolSpan = 4;
-showConstellations = true;
-phaseOffset = pi/8;
+showConstellations = false;
+txSymbolReference = false;
+phaseOffset = 0; %pi/8;
 %% Visuals
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband');
@@ -77,13 +80,17 @@ for k=1:frameSize:(numSamples - frameSize)
 end
 rmpath('timingCorrection');
 %% Aggregate data
-refSym = cell2mat(refSym);
+if txSymbolReference
+    refSym = modulatedData;
+else
+    refSym = cell2mat(refSym);
+end
 rxSym = cell2mat(rxSym);
 symErr = cell2mat(symErr);
 % Determine delay of data
-ccOut = xcorr(refSym,rxSym,2);
+ccOut = xcorr(refSym,rxSym,32);
 [~, maxIdx] = max(abs(ccOut));
-dly = 3 - maxIdx;
+dly = 33 - maxIdx
 % Compensate for delay differences
 if dly >= 0
     rxSym = rxSym((dly+1):end);
@@ -97,7 +104,8 @@ refSym = refSym(1:minSize);
 rxSym = rxSym(1:minSize);
 symErr = symErr(1:minSize);
 %% Display EVM
-evm(refSym(2000:end),rxSym(2000:end))
+e = evm(refSym(2000:end),rxSym(2000:end));
+20*log10(e/100)
 %% Plot data
 figure(1);
 clf;
