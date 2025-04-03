@@ -4,11 +4,12 @@ clear; clc;
 numSamples = 10000;
 modulationOrder = 2;
 snr = 5:5:40;
-delay = 0.25;
-phaseOffset = 0;
+delay = 0;
+phaseOffset = pi/8;
 N = 8;
 NF = 4;
-useIdealRef = false;
+showConstellations = true;
+useIdealRef = true;
 useDspkMod = true;
 %% Visuals
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
@@ -24,7 +25,7 @@ for i = 1:length(snr)
     %% Generate symbols
     rng(0);
     data = randi([0 modulationOrder-1], numSamples*2, 1);
-    mod = comm.DBPSKModulator(); modulatedData = real(mod(data));
+    mod = comm.DBPSKModulator(); modulatedData = mod(data);
     %% Add TX/RX Filters
     TxFlt = comm.RaisedCosineTransmitFilter('OutputSamplesPerSymbol',N);
     RxFlt = comm.RaisedCosineReceiveFilter('DecimationFactor',NF);
@@ -72,10 +73,16 @@ for i = 1:length(snr)
     evm = comm.EVM();
     e = evm(rxRef(1000:end), rxSync(1000:end));
     evm_dB(i) = 20*log10(e/100);
+    % Plot constellations
+    if showConstellations
+        filteredRXData = filteredRXData(1:2:end);
+        cdPre(filteredRXData(1000:end));
+        cdPost(rxSync(1000:end));
+    end
 end
 % Plot EVM
 figure(1);
-hold on; %clf;
+clf;
 plot(snr,evm_dB,'LineWidth',1.5);
 grid on;
 xlabel('SNR (dB)');
