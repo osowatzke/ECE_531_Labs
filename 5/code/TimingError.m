@@ -1,5 +1,5 @@
 % Clear workspace
-clear; clc;
+% clear; clc;
 %% General system details
 sampleRateHz = 1e6; samplesPerSymbol = 8;
 frameSize = 2^10; numFrames = 200;
@@ -7,19 +7,19 @@ numSamples = numFrames*frameSize; % Samples to simulate
 modulationOrder = 2; filterSymbolSpan = 4;
 showConstellations = false;
 txSymbolReference = false;
-debugPlots = false;
-phaseOffset = pi/8;
+debugPlots = true;
+phaseOffset = 0;
 %% Visuals
-cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
-    'Name','Baseband');
-cdPost = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
-    'Name','Baseband with Timing Offset');
-cdCorr = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
-    'Name','Baseband with Timing Correction');
-cdPre.Position(1) = 50;
-cdPost.Position(1) = cdPre.Position(1)+cdPre.Position(3)+10;% Place side by side
+% cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
+%     'Name','Baseband');
+% cdPost = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
+%     'Name','Baseband with Timing Offset');
+% cdCorr = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
+%     'Name','Baseband with Timing Correction');
+% cdPre.Position(1) = 50;
+% cdPost.Position(1) = cdPre.Position(1)+cdPre.Position(3)+10;% Place side by side
 %% Impairments
-snr = 5:5:20; timingOffset = samplesPerSymbol*0.01; % Samples
+snr = 20; timingOffset = samplesPerSymbol*0.01; % Samples
 %% Generate symbols
 data = randi([0 modulationOrder-1], numSamples*2, 1);
 mod = comm.DBPSKModulator(); modulatedData = mod(data);
@@ -99,7 +99,6 @@ for i = 1:length(snr)
     % Compensate for delay differences
     if dly >= 0
         rxSym = rxSym((dly+1):end);
-        symErr = symErr((dly+1):end);
     else
         refSym = refSym((-dly+1):end);
     end
@@ -107,7 +106,6 @@ for i = 1:length(snr)
     minSize = min(length(refSym), length(rxSym));
     refSym = refSym(1:minSize);
     rxSym = rxSym(1:minSize);
-    symErr = symErr(1:minSize);
     % Error Vector Measurement
     evm = comm.EVM();
     e = evm(refSym(1000:end),rxSym(1000:end));
@@ -116,12 +114,17 @@ for i = 1:length(snr)
     if debugPlots
         figure(1);
         clf;
-        plot(real(symErr));        
+        plot(real(symErr));
+        xlabel('Sample')
+        ylabel('Fractional Delay')
         figure(2);
         clf;
         plot(real(refSym));
         hold on;
         plot(real(rxSym));
+        xlabel('Sample')
+        ylabel('Sychronized Symbol')
+        legend('Reference','Measured')
     end
 end
 % Plot EVM

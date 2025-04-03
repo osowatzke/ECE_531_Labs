@@ -219,6 +219,14 @@ A better indication of the PLL performance is the fractional delay error (i.e. t
 
 \noindent Comparing each of the figures, we see that the timing compensation is dependent on the SNR of the received signal (better SNR leads to better timing compensation). Additionally, the custom routines produce identical results to the MATLAB \texttt{comm.SymbolSynchronizer} object across different values of SNR.
 
+Next, we analyze the performance of the timing compensation logic when we apply a slowly changing timing offset. For this experiment, we specifically allow the timing offset to drift by a hundredth of symbol every 1024 symbols. The fractional delay calculated by the timing compensation logic when the input signal has a 20 dB SNR is shown in Figure \ref{fig::fractional_delay_timing_offset}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{fractional_delay_timing_offset.png}}}
+	\caption{Fractional Delay Measured for Data with Slowly Varying Timing Delay}
+	\label{fig::fractional_delay_timing_offset}
+\end{figure}
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 	
