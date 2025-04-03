@@ -2,18 +2,19 @@
 numSamples = 10000;
 modulationOrder = 2;
 snr = 5:5:40;
-delay = 0:0.05:0.5;
+delay = 0; %:0.05:0.5;
+phaseOffset = 0:pi/32:pi/4;
 N = 8;
 NF = 4;
 clear mod;
-evm_dB = zeros(length(snr),length(delay));
+evm_dB = zeros(length(snr),length(phaseOffset));
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband');
 cdPost = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband with Timing Offset');
 cdPre.Position(1) = 50;
 cdPost.Position(1) = cdPre.Position(1)+cdPre.Position(3)+10;% Place side by side
-for j = 1:length(delay)
+for j = 1:length(phaseOffset)
 %% Loop for each SNR
 for i = 1:length(snr)
     %% Generate symbols
@@ -31,7 +32,8 @@ for i = 1:length(snr)
     varDelay = dsp.VariableFractionalDelay;
     filteredTXData = TxFlt(modulatedData);
     noisyData = chan(filteredTXData);
-    offsetData = varDelay(noisyData, delay(j)*N);
+    offsetData = varDelay(noisyData, delay*N);
+    offsetData = offsetData*exp(1i*phaseOffset(j));
     filteredRXData = RxFlt(offsetData);
     filteredRxDataRef = RxFltRef(filteredTXData);
     %% Test Each Symbol Sychronizer

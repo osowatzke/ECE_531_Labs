@@ -1,25 +1,26 @@
 % Clear workspace
-% clear; clc;
+clear; clc;
 %% General system details
 sampleRateHz = 1e6; samplesPerSymbol = 8;
 frameSize = 2^10; numFrames = 200;
 numSamples = numFrames*frameSize; % Samples to simulate
 modulationOrder = 2; filterSymbolSpan = 4;
-showConstellations = true;
-txSymbolReference = false;
+showConstellations = false;
+txSymbolReference = true;
 debugPlots = false;
+useDspkMod = true;
 phaseOffset = pi/8;
 %% Visuals
-% cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
-%     'Name','Baseband');
-% cdPost = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
-%     'Name','Baseband with Timing Offset');
-% cdCorr = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
-%     'Name','Baseband with Timing Correction');
-% cdPre.Position(1) = 50;
-% cdPost.Position(1) = cdPre.Position(1)+cdPre.Position(3)+10;% Place side by side
+cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
+    'Name','Baseband');
+cdPost = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
+    'Name','Baseband with Timing Offset');
+cdCorr = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
+    'Name','Baseband with Timing Correction');
+cdPre.Position(1) = 50;
+cdPost.Position(1) = cdPre.Position(1)+cdPre.Position(3)+10;% Place side by side
 %% Impairments
-snr = 20; timingOffset = samplesPerSymbol*0.01; % Samples
+snr = 5:5:40; timingOffset = samplesPerSymbol*0.01; % Samples
 %% Generate symbols
 data = randi([0 modulationOrder-1], numSamples*2, 1);
 mod = comm.DBPSKModulator(); modulatedData = mod(data);
@@ -111,6 +112,10 @@ for i = 1:length(snr)
     refSym = refSym(1:minSize);
     rxSym = rxSym(1:minSize);
     % Error Vector Measurement
+    if useDspkMod
+        rxSym = rxSym(1:(end-1)).*exp(-1i*angle(rxSym(2:end)));
+        refSym = refSym(1:(end-1)).*exp(-1i*angle(refSym(2:end)));
+    end
     evm = comm.EVM();
     e = evm(refSym(1000:end),rxSym(1000:end));
     evm_dB(i) = 20*log10(e/100);
@@ -130,16 +135,19 @@ for i = 1:length(snr)
     dlyErr = mod(refDly - symErr + 0.5, 1) - 0.5;
     % Plot data
     if debugPlots
+        % Plot fractional delay
         figure(1);
         clf;
         plot(real(symErr));
         xlabel('Sample')
         ylabel('Fractional Delay')
+        % Plot fractional delay error
         figure(2);
         clf;
         plot(dlyErr);
         xlabel('Sample')
         ylabel('Fractional Delay Error')
+        % Plot symbols
         figure(3);
         clf;
         plot(real(refSym));
