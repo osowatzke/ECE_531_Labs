@@ -33,7 +33,7 @@ RxFlt = comm.RaisedCosineReceiveFilter(...
 RxFltRef = clone(RxFlt);
 %% Symbol Synchronizer
 addpath('timingCorrection')
-symbolSync = comm.SymbolSynchronizer();
+symbolSync = SymbolSynchronizer();
 %% Error Vector Measurement
 evm = comm.EVM();
 %% Add noise source
@@ -87,6 +87,7 @@ else
 end
 rxSym = cell2mat(rxSym);
 symErr = cell2mat(symErr);
+tedOut = cell2mat(tedOut);
 % Determine delay of data
 ccOut = xcorr(refSym,rxSym,32);
 [~, maxIdx] = max(abs(ccOut));

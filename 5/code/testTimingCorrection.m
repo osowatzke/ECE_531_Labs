@@ -1,20 +1,24 @@
 %% General system details
-numSamples = 1000;
+numSamples = 2000;
 modulationOrder = 2;
+snr = 20;
+delay = 2;
 %% Generate symbols
 rng(0);
 data = randi([0 modulationOrder-1], numSamples*2, 1);
 mod = comm.DBPSKModulator(); modulatedData = real(mod(data));
-clear mod;
 %% Add TX/RX Filters
 TxFlt = comm.RaisedCosineTransmitFilter;
 RxFlt = comm.RaisedCosineReceiveFilter('DecimationFactor',4);
+%% Add noise source
+chan = comm.AWGNChannel('NoiseMethod','Signal to noise ratio (SNR)','SNR',snr, ...
+    'SignalPower',1,'RandomStream', 'mt19937ar with seed');
 %% Add delay
 varDelay = dsp.VariableFractionalDelay;
 filteredTXData = TxFlt(modulatedData);
-offsetData = varDelay(filteredTXData, 4);
+noisyData = chan(filteredTXData);
+offsetData = varDelay(noisyData, delay);
 filteredRXData = RxFlt(offsetData);
-
 %% Test Each Symbol Sychronizer
 % MATLAB built-in
 symbolSync = comm.SymbolSynchronizer(...
@@ -44,6 +48,9 @@ plot(real(rxSync));
 hold on;
 plot(real(rxSync1));
 plot(real(rxSync2));
+xlabel('Sample')
+ylabel('Sychronized Symbols');
+legend('comm.SymbolSynchronizer','Textbook Implementation','Custom Implementation');
 
 figure(2);
 clf;
@@ -51,15 +58,24 @@ plot(timingErr);
 hold on;
 plot(timingErr1);
 plot(timingErr2);
+xlabel('Sample')
+ylabel('Symbol Delay');
+legend('comm.SymbolSynchronizer','Textbook Implementation','Custom Implementation');
 
 figure(3);
 clf;
 plot(real(rxSync-rxSync1));
 hold on;
 plot(real(rxSync-rxSync2));
+xlabel('Sample')
+ylabel('Sychronized Symbol Error');
+legend('Textbook Implementation','Custom Implementation');
 
 figure(4);
 clf;
 plot(abs(timingErr - timingErr1))
 hold on;
 plot(abs(timingErr - timingErr2))
+xlabel('Sample');
+ylabel('Symbol Delay Error');
+legend('Textbook Implementation','Custom Implementation');
