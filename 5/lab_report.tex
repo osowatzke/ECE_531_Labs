@@ -159,7 +159,7 @@ In this section, we perform symbol timing compensation in MATLAB. To do this, we
 	[N, \zeta, B_{loop}, G_D] = [2, 1, 0.01, 2.7]
 \end{equation*}
 
-\noindent To characterize our timing recovery circuits, we create noise-free data with a fixed timing error. We then run the custom implementations and MATLAB's \texttt{comm.SymbolSynchronizer} on the same generated data. In Figure \ref{fig::symbol_sync_no_noise} and \ref{fig::fractional_error_no_noise}, we plot the synchronized symbols and the fractional delay ($\mu(n)$) output by each routine on the same axes.
+\noindent To characterize our timing recovery circuits, we create noise-free data with a fixed timing error. We then run the custom implementations and MATLAB's \texttt{comm.SymbolSynchronizer} on the same generated data. In Figure \ref{fig::symbol_sync_no_noise} and \ref{fig::fractional_delay_no_noise}, we plot the synchronized symbols and the fractional delay ($\mu(n)$) output by each routine on the same axes.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{symbol_sync_no_noise.png}}}
@@ -168,16 +168,35 @@ In this section, we perform symbol timing compensation in MATLAB. To do this, we
 \end{figure}
 
 \begin{figure}[H]
-	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{fractional_error_no_noise.png}}}
-	\caption{Comparison of Fractional Error}
-	\label{fig::fractional_error_no_noise}
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{fractional_delay_no_noise.png}}}
+	\caption{Comparison of Fractional Delay}
+	\label{fig::fractional_delay_no_noise}
 \end{figure}
 
-\noindent Comparing the outputs of each routine, we see that the routine outputs are approximately the same, indicating a correct implementation. We also see that the loop filter parameters cause the fractional delay to converge. For completeness, we also plot the error between the \texttt{comm.SymbolSynchronizer} outputs and the custom routine outputs. 
+\noindent Comparing the outputs of each routine, we see that the routine outputs are approximately the same, indicating a correct implementation. We also see that the loop filter parameters cause the fractional delay to converge. For completeness, we also plot the error between the \texttt{comm.SymbolSynchronizer} outputs and the custom routine outputs, which we have included in Figures \ref{fig::symbol_sync_error} and \ref{fig::fractional_delay_error}.
 
-  first implementation we create from the textbook-provided scripts
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{symbol_sync_error.png}}}
+	\caption{Comparison of Synchronized Symbols}
+	\label{fig::symbol_sync_error}
+\end{figure}
 
-. For our timing compensation, we  timing error correction in MATLAB. We do this in this in two 
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{fractional_delay_error.png}}}
+	\caption{Comparison of Fractional Delay}
+	\label{fig::fractional_delay_error}
+\end{figure}
+
+\noindent With respect to the signal amplitudes, the errors are effectively zero. Therefore, we conclude that our custom implementations are implemented correctly. We also examine the timing offset ($e(n)$) output by the ZC TED. This value is not output by the \texttt{comm.SymbolSynchronizer}. However, we can examine this timing offset for each of our implementations. These timing offsets are included in Figure \ref{fig::timing_offset}. 
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{timing_offset.png}}}
+	\caption{Timing Offset Output by ZC TED}
+	\label{fig::timing_offset}
+\end{figure}
+
+\noindent Examining the timing offsets, we see that the both routines output the same values. We can also draw a few other conclusions. First we see that the timing offset alternates between zero and non-zero values. This is expected because the timing error detector only outputs non-zero values when it receives a trigger, which happens roughly every other cycle. Additionally, we see that the timing offset rapidly oscillates even after the fractional delay has converged. However, we have shown that this is not an error because the fractional delay converges and because the results are consistent with the \texttt{comm.SymbolSynchronizer} object.
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 	
