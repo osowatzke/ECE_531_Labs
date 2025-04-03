@@ -2,17 +2,18 @@
 numSamples = 10000;
 modulationOrder = 2;
 snr = 5:5:40;
-delay = 0.25;
+delay = 0:0.05:0.5;
 N = 8;
 NF = 4;
 clear mod;
-evm_dB = zeros(size(snr));
+evm_dB = zeros(length(snr),length(delay));
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband');
 cdPost = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband with Timing Offset');
 cdPre.Position(1) = 50;
 cdPost.Position(1) = cdPre.Position(1)+cdPre.Position(3)+10;% Place side by side
+for j = 1:length(delay)
 %% Loop for each SNR
 for i = 1:length(snr)
     %% Generate symbols
@@ -30,7 +31,7 @@ for i = 1:length(snr)
     varDelay = dsp.VariableFractionalDelay;
     filteredTXData = TxFlt(modulatedData);
     noisyData = chan(filteredTXData);
-    offsetData = varDelay(noisyData, delay*N);
+    offsetData = varDelay(noisyData, delay(j)*N);
     filteredRXData = RxFlt(offsetData);
     filteredRxDataRef = RxFltRef(filteredTXData);
     %% Test Each Symbol Sychronizer
@@ -43,6 +44,7 @@ for i = 1:length(snr)
         TimingErrorDetector="Zero-Crossing (decision-directed)");
     [rxSync, timingErr] = symbolSync(filteredRXData);
     rxRef = filteredRxDataRef(1:2:end);
+    rxRef = modulatedData;
     % Align data
     ccOut = xcorr(rxRef,rxSync,32);
     [~, maxIdx] = max(abs(ccOut));
@@ -55,12 +57,12 @@ for i = 1:length(snr)
     % Compute EVM
     evm = comm.EVM();
     e = evm(rxRef(1000:end), rxSync(1000:end));
-    evm_dB(i) = 20*log10(e/100);
+    evm_dB(i,j) = 20*log10(e/100);
     % Plots
-    cdPre(rxRef(1000:end));
-    cdPost(rxSync(1000:end));
+    % cdPre(rxRef(1000:end));
+    % cdPost(rxSync(1000:end));
 end
-
+end
 figure(1);
 clf;
 plot(snr,evm_dB,'LineWidth',1.5);
