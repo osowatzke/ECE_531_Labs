@@ -197,6 +197,28 @@ In this section, we perform symbol timing compensation in MATLAB. To do this, we
 
 \noindent Examining the timing offsets, we see that the both routines output the same values. We can also draw a few other conclusions. First we see that the timing offset alternates between zero and non-zero values. This is expected because the timing error detector only outputs non-zero values when it receives a trigger, which happens roughly every other cycle. Additionally, we see that the timing offset rapidly oscillates even after the fractional delay has converged. However, we have shown that this is not an error because the fractional delay converges and because the results are consistent with the \texttt{comm.SymbolSynchronizer} object.
 
+A better indication of the PLL performance is the fractional delay error (i.e. the difference between the measured fractional delay and configured fractional delay). Figure \ref{fig::delay_error_no_noise} display this error for a noise-free signal, and Figures \ref{fig::delay_error_20dB_snr} and \ref{fig::delay_error_10dB_snr} display this error for 20dB and 10dB SNR respectively. 
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{delay_error_no_noise.png}}}
+	\caption{Fractional Delay Error for Noise Free Signal}
+	\label{fig::delay_error_no_noise}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{delay_error_20dB_snr.png}}}
+	\caption{Fractional Delay Error for Signal with 20dB SNR}
+	\label{fig::delay_error_20dB_snr}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{delay_error_10dB_snr.png}}}
+	\caption{Fractional Delay Error for Signal with 10dB SNR}
+	\label{fig::delay_error_10dB_snr}
+\end{figure}
+
+\noindent Comparing each of the figures, we see that the timing compensation is dependent on the SNR of the received signal (better SNR leads to better timing compensation). Additionally, the custom routines produce identical results to the MATLAB \texttt{comm.SymbolSynchronizer} object across different values of SNR.
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 	

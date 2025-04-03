@@ -1,7 +1,7 @@
 %% General system details
 numSamples = 2000;
 modulationOrder = 2;
-snr = inf;
+snr = 10;
 delay = 2;
 %% Generate symbols
 rng(0);
@@ -88,3 +88,13 @@ plot(tedOut2)
 xlabel('Sample');
 ylabel('Timing Offset');
 legend('Textbook Implementation','Custom Implementation');
+
+figure(6)
+clf;
+plot(timingErr - delay/4);
+hold on;
+plot(timingErr1 - delay/4);
+plot(timingErr2 - delay/4);
+xlabel('Sample');
+ylabel('Fractional Delay Error');
+legend('comm.SymbolSynchronizer','Textbook Implementation','Custom Implementation');
