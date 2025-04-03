@@ -6,8 +6,8 @@ frameSize = 2^10; numFrames = 200;
 numSamples = numFrames*frameSize; % Samples to simulate
 modulationOrder = 2; filterSymbolSpan = 4;
 showConstellations = false;
-txSymbolReference = true;
 debugPlots = false;
+useIdealRef = true;
 useDspkMod = true;
 phaseOffset = pi/8;
 %% Visuals
@@ -90,7 +90,7 @@ for i = 1:length(snr)
     end
     rmpath('timingCorrection');
     % Select reference data    
-    if txSymbolReference
+    if useIdealRef
         refSym = modulatedData;
     else
         refSym = cell2mat(refSym);
@@ -124,7 +124,7 @@ for i = 1:length(snr)
     refDly = repmat(refDly.',2*frameSize,1);
     refDly = refDly(:);
     dly = 2*dly;
-    if ~txSymbolReference
+    if ~useIdealRef
         dly = dly + (TxFltGd + RxFltGd)/4;
     end
     symErr = symErr((dly+1):end);

@@ -1,20 +1,24 @@
+%% Clean workspace
+clear; clc;
 %% General system details
 numSamples = 10000;
 modulationOrder = 2;
 snr = 5:5:40;
-delay = 0; %:0.05:0.5;
-phaseOffset = 0:pi/32:pi/4;
+delay = 0.25;
+phaseOffset = 0;
 N = 8;
 NF = 4;
-clear mod;
-evm_dB = zeros(length(snr),length(phaseOffset));
+useIdealRef = false;
+useDspkMod = true;
+%% Visuals
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband');
 cdPost = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband with Timing Offset');
 cdPre.Position(1) = 50;
 cdPost.Position(1) = cdPre.Position(1)+cdPre.Position(3)+10;% Place side by side
-for j = 1:length(phaseOffset)
+% Initialize output array
+evm_dB = zeros(length(snr),1);
 %% Loop for each SNR
 for i = 1:length(snr)
     %% Generate symbols
@@ -33,11 +37,10 @@ for i = 1:length(snr)
     filteredTXData = TxFlt(modulatedData);
     noisyData = chan(filteredTXData);
     offsetData = varDelay(noisyData, delay*N);
-    offsetData = offsetData*exp(1i*phaseOffset(j));
+    offsetData = offsetData*exp(1i*phaseOffset);
     filteredRXData = RxFlt(offsetData);
     filteredRxDataRef = RxFltRef(filteredTXData);
-    %% Test Each Symbol Sychronizer
-    % MATLAB built-in
+    %% Perform timing synchronization
     symbolSync = comm.SymbolSynchronizer(...
         SamplesPerSymbol=2,...
         NormalizedLoopBandwidth=0.01, ...
@@ -45,8 +48,12 @@ for i = 1:length(snr)
         DampingFactor=1.0,...
         TimingErrorDetector="Zero-Crossing (decision-directed)");
     [rxSync, timingErr] = symbolSync(filteredRXData);
-    rxRef = filteredRxDataRef(1:2:end);
-    rxRef = modulatedData;
+    % Dcimation
+    if useIdealRef    
+        rxRef = modulatedData;
+    else
+        rxRef = filteredRxDataRef(1:2:end);
+    end
     % Align data
     ccOut = xcorr(rxRef,rxSync,32);
     [~, maxIdx] = max(abs(ccOut));
@@ -56,17 +63,19 @@ for i = 1:length(snr)
     minSize = min(length(rxSync),length(rxRef));
     rxSync = rxSync(1:minSize);
     rxRef = rxRef(1:minSize);
+    % Perform differential decoding
+    if useDspkMod
+        rxSync = rxSync(2:end).*exp(-1i*angle(rxSync(1:(end-1))));
+        rxRef = rxRef(2:end).*exp(-1i*angle(rxRef(1:(end-1))));
+    end
     % Compute EVM
     evm = comm.EVM();
     e = evm(rxRef(1000:end), rxSync(1000:end));
-    evm_dB(i,j) = 20*log10(e/100);
-    % Plots
-    % cdPre(rxRef(1000:end));
-    % cdPost(rxSync(1000:end));
+    evm_dB(i) = 20*log10(e/100);
 end
-end
+% Plot EVM
 figure(1);
-clf;
+hold on; %clf;
 plot(snr,evm_dB,'LineWidth',1.5);
 grid on;
 xlabel('SNR (dB)');
