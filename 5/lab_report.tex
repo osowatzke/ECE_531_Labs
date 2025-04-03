@@ -222,7 +222,7 @@ A better indication of the PLL performance is the fractional delay error (i.e. t
 Next, we analyze the performance of the timing compensation logic when we apply a slowly-changing timing offset. For this experiment, we specifically allow the timing offset to drift by a hundredth of symbol every 1024 symbols. In Figure \ref{fig::fractional_delay_timing_offset}, we show the measured fractional delay with a 20 dB SNR, and, in Figure \ref{fig::fractional_delay_error_timing_offset}, we show the fractional delay error.
 
 \begin{figure}[H]
-	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{constellations_with_timing_correction.png}}}
+	\centerline{\includegraphics[width=0.8\textwidth]{constellations_with_timing_correction.png}}
 	\caption{Constellations Before Timing Compensation (Left) and After Timing Compensation (Right)}
 	\label{fig::constellations_with_timing_correction}
 \end{figure}
@@ -237,6 +237,24 @@ Next, we analyze the performance of the timing compensation logic when we apply 
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{fractional_delay_error_timing_offset.png}}}
 	\caption{Fractional Delay Error Measured for Data with Slowly Varying Timing Delay}
 	\label{fig::fractional_delay_error_timing_offset}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr.png}}}
+	\caption{Plot of EVM vs SNR}
+	\label{fig::evm_vs_snr}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr_with_phase_offset.png}}}
+	\caption{Plot of EVM vs SNR with Symbol Phase Offset}
+	\label{fig::evm_vs_snr_with_phase_offset}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=0.8\textwidth]{constellations_with_timing_correction_phase_offset.png}}
+	\caption{Constellations with Phase Offset Before and After Timing Compensation}
+	\label{fig::constellations_with_timing_correction_phase_offset}
 \end{figure}
 
 \section{Conclusion}

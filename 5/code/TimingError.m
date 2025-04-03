@@ -5,10 +5,10 @@ sampleRateHz = 1e6; samplesPerSymbol = 8;
 frameSize = 2^10; numFrames = 200;
 numSamples = numFrames*frameSize; % Samples to simulate
 modulationOrder = 2; filterSymbolSpan = 4;
-showConstellations = false;
+showConstellations = true;
 txSymbolReference = false;
 debugPlots = false;
-phaseOffset = 0;
+phaseOffset = pi/8;
 %% Visuals
 % cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
 %     'Name','Baseband');
