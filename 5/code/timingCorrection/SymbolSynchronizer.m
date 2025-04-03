@@ -80,11 +80,12 @@ classdef SymbolSynchronizer < keyValueInitializer
         end
 
         % Class update method
-        function [rxSync,timingErr] = stepImpl(self,x)
+        function [rxSync,timingErr, tedOut] = stepImpl(self,x)
 
             % Initialize output arrays
             rxSync = zeros(size(x));
             timingErr = zeros(size(x));
+            tedOut = zeros(size(x));
 
             % Initialize output Index
             outIdx = 0;
@@ -97,8 +98,8 @@ classdef SymbolSynchronizer < keyValueInitializer
                     outIdx = outIdx + 1;
                     rxSync(outIdx) = filtOut;
                 end
-                e = self.TED(filtOut,self.Trigger);
-                g = self.loopFilt(e);
+                tedOut(i) = self.TED(filtOut,self.Trigger);
+                g = self.loopFilt(tedOut(i));
                 [self.mu,self.Trigger] = self.interpCtrl(g);
             end
 

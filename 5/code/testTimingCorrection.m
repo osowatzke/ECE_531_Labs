@@ -1,7 +1,7 @@
 %% General system details
 numSamples = 2000;
 modulationOrder = 2;
-snr = 20;
+snr = inf;
 delay = 2;
 %% Generate symbols
 rng(0);
@@ -31,17 +31,17 @@ symbolSync = comm.SymbolSynchronizer(...
 
 % Using provided functions
 addpath('./textbook')
-[rxSync1, timingErr1] = timingSync(filteredRXData);
+[rxSync1, timingErr1, tedOut1] = timingSync(filteredRXData);
 rmpath('./textbook')
 
 % With system objects
 addpath('./timingCorrection')
 symbolSync = SymbolSynchronizer(...
     'TimingErrorDetector',"Zero-Crossing (decision-directed)");
-[rxSync2, timingErr2] = symbolSync(filteredRXData);
+[rxSync2, timingErr2, tedOut2] = symbolSync(filteredRXData);
 rmpath('./timingCorrection')
 
-% Plot results
+%% Plot Results
 figure(1);
 clf;
 plot(real(rxSync));
@@ -59,7 +59,7 @@ hold on;
 plot(timingErr1);
 plot(timingErr2);
 xlabel('Sample')
-ylabel('Symbol Delay');
+ylabel('Fractional Delay');
 legend('comm.SymbolSynchronizer','Textbook Implementation','Custom Implementation');
 
 figure(3);
@@ -77,5 +77,14 @@ plot(abs(timingErr - timingErr1))
 hold on;
 plot(abs(timingErr - timingErr2))
 xlabel('Sample');
-ylabel('Symbol Delay Error');
+ylabel('Fractional Delay Error');
+legend('Textbook Implementation','Custom Implementation');
+
+figure(5);
+clf;
+plot(tedOut1)
+hold on;
+plot(tedOut2)
+xlabel('Sample');
+ylabel('Timing Offset');
 legend('Textbook Implementation','Custom Implementation');

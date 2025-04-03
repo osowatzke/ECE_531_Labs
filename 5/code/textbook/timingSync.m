@@ -1,4 +1,4 @@
-function [rxSync, timingErr] = timingSync(y)
+function [rxSync, timingErr, tedOut] = timingSync(y)
 
     % Loop Filter Parameters
     N = 2;
@@ -29,6 +29,7 @@ function [rxSync, timingErr] = timingSync(y)
     % Initialize outputs arrays
     rxSync = zeros(size(y));
     timingErr = zeros(size(y));
+    tedOut = zeros(size(y));
 
     % Loop outputs
     mu = 0;
@@ -45,6 +46,7 @@ function [rxSync, timingErr] = timingSync(y)
             rxSync(outIdx) = filtOut;
         end
         zcTED;
+        tedOut(i) = e; % Save timing error detecter output for debugging
         loopFilter;
         interpControl;
     end

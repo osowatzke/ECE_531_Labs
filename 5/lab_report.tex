@@ -143,6 +143,41 @@ In this section, we capture a QPSK constellation with the PlutoSDR. Our captured
 
 \noindent Before timing compensation, the signal is sampled at non-ideal points, resulting in increased constellation point errors. These increased errors create large clustering patterns in the constellation. After correcting for these timing errors, the errors in the constellation are reduced. However, our constellation remains titled. This titled occurs due to a phase offset in the transmit and receive oscillators. Regardless of what we do with the timing compensation, this phase offset will still be present.
 
+\section{Symbol Timing Compensation}
+
+In this section, we perform symbol timing compensation in MATLAB. To do this, we implement two custom MATLAB implementations, which we benchmark against MATLAB's \texttt{comm.SymbolSynchronizer}. For the first implementation, we connect the textbook-provided routines together following the structure shown in Figure \ref{fig::timing_recovery_block_diagram}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{timing_recovery_block_diagram.png}}}
+	\caption{Structure of Timing Recovery PLL}
+	\label{fig::timing_recovery_block_diagram}
+\end{figure}
+
+\noindent For the second implementation, we create custom system objects for each of the blocks in the timing recovery PLL and then connect them in the appropriate manner. In each implementation, we use a zero-crossing (ZC) timing detector and the following loop filter parameters:
+
+\begin{equation*}
+	[N, \zeta, B_{loop}, G_D] = [2, 1, 0.01, 2.7]
+\end{equation*}
+
+\noindent To characterize our timing recovery circuits, we create noise-free data with a fixed timing error. We then run the custom implementations and MATLAB's \texttt{comm.SymbolSynchronizer} on the same generated data. In Figure \ref{fig::symbol_sync_no_noise} and \ref{fig::fractional_error_no_noise}, we plot the synchronized symbols and the fractional delay ($\mu(n)$) output by each routine on the same axes.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{symbol_sync_no_noise.png}}}
+	\caption{Comparison of Synchronized Symbols}
+	\label{fig::symbol_sync_no_noise}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{fractional_error_no_noise.png}}}
+	\caption{Comparison of Fractional Error}
+	\label{fig::fractional_error_no_noise}
+\end{figure}
+
+\noindent Comparing the outputs of each routine, we see that the routine outputs are approximately the same, indicating a correct implementation. We also see that the loop filter parameters cause the fractional delay to converge. For completeness, we also plot the error between the \texttt{comm.SymbolSynchronizer} outputs and the custom routine outputs. 
+
+  first implementation we create from the textbook-provided scripts
+
+. For our timing compensation, we  timing error correction in MATLAB. We do this in this in two 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 	
