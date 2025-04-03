@@ -23,6 +23,7 @@ snr = 20; timingOffset = samplesPerSymbol*0.01; % Samples
 %% Generate symbols
 data = randi([0 modulationOrder-1], numSamples*2, 1);
 mod = comm.DBPSKModulator(); modulatedData = mod(data);
+clear mod;
 %% Create EVM output arrays
 evm_dB = zeros(size(snr));
 %% Loop for each SNR
@@ -31,10 +32,12 @@ for i = 1:length(snr)
     TxFlt = comm.RaisedCosineTransmitFilter(...
         'OutputSamplesPerSymbol', samplesPerSymbol,...
         'FilterSpanInSymbols', filterSymbolSpan);
+    TxFltGd = grpdelay(TxFlt.coeffs.Numerator,1,1);
     RxFlt = comm.RaisedCosineReceiveFilter(...
         'InputSamplesPerSymbol', samplesPerSymbol,...
         'FilterSpanInSymbols', filterSymbolSpan,...
         'DecimationFactor', samplesPerSymbol/2);
+    RxFltGd = grpdelay(RxFlt.coeffs.Numerator,1,1);
     RxFltRef = clone(RxFlt);
     % Symbol Synchronizer
     addpath('timingCorrection')
@@ -52,6 +55,7 @@ for i = 1:length(snr)
     % Model of error
     % Add timing offset to baseband signal
     frameIdx = 1;
+    refDly = zeros(numFrames,1);
     for k=1:frameSize:(numSamples - frameSize)
         timeIndex = (k:k+frameSize-1).';
         % Filter signal
@@ -59,7 +63,8 @@ for i = 1:length(snr)
         % Pass through channel
         noisyData = chan(filteredTXData);
         % Time delay signal
-        offsetData = varDelay(noisyData, k/frameSize*timingOffset);
+        refDly(frameIdx) = k/frameSize*timingOffset;
+        offsetData = varDelay(noisyData, refDly(frameIdx));
         offsetData = offsetData*exp(1i*phaseOffset);
         % Filter signal
         filteredData = RxFlt(offsetData);
@@ -91,7 +96,6 @@ for i = 1:length(snr)
     end
     % Aggregate data
     rxSym = cell2mat(rxSym);
-    symErr = cell2mat(symErr);
     % Determine delay of data
     ccOut = xcorr(refSym,rxSym,32);
     [~, maxIdx] = max(abs(ccOut));
@@ -110,6 +114,20 @@ for i = 1:length(snr)
     evm = comm.EVM();
     e = evm(refSym(1000:end),rxSym(1000:end));
     evm_dB(i) = 20*log10(e/100);
+    % Aggregate Timing Error
+    symErr = cell2mat(symErr);
+    refDly = repmat(refDly.',2*frameSize,1);
+    refDly = refDly(:);
+    dly = 2*dly;
+    if ~txSymbolReference
+        dly = dly + (TxFltGd + RxFltGd)/4;
+    end
+    symErr = symErr((dly+1):end);
+    % Ensure arrays are the same size
+    minSize = min(length(refDly), length(symErr));
+    refDly = refDly(1:minSize)/4;
+    symErr = symErr(1:minSize);
+    dlyErr = mod(refDly - symErr + 0.5, 1) - 0.5;
     % Plot data
     if debugPlots
         figure(1);
@@ -118,6 +136,11 @@ for i = 1:length(snr)
         xlabel('Sample')
         ylabel('Fractional Delay')
         figure(2);
+        clf;
+        plot(dlyErr);
+        xlabel('Sample')
+        ylabel('Fractional Delay Error')
+        figure(3);
         clf;
         plot(real(refSym));
         hold on;
@@ -128,7 +151,7 @@ for i = 1:length(snr)
     end
 end
 % Plot EVM
-figure(3);
+figure(4);
 clf;
 plot(snr,evm_dB,'LineWidth',1.5);
 grid on;
