@@ -7,7 +7,7 @@ numSamples = numFrames*frameSize; % Samples to simulate
 modulationOrder = 2; filterSymbolSpan = 4;
 showConstellations = false;
 txSymbolReference = false;
-debugPlots = true;
+debugPlots = false;
 phaseOffset = 0;
 %% Visuals
 % cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
