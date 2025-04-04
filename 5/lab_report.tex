@@ -295,6 +295,20 @@ Examining the figure, we see that the EVM is approximately the same as the SNR f
 	\label{fig::evm_pi_8_phase_offset}
 \end{figure}
 
+Comparing the results of Figure \ref{fig::evm_pi_8_phase_offset} to Figures \ref{fig::evm_no_timing_offset} and \ref{fig::evm_0p25_symbol_offset}, we see that the EVM is degraded substantially. We can make sense of this value by computing the error between a unit-power constellation point and a constellation point without noise and a phase error of $\pi/8$. Doing so, we find:
+
+\begin{equation}
+	\text{error} = (1 - \cos\pi/8)^2 + \sin^2\pi/8 = 1 - 2\cos\pi/8 + \cos^2\pi/8 + \sin^2\pi/8 = 2 - 2\cos\pi/8 \approx 0.15224 
+\end{equation}
+
+\noindent which corresponds to an EVM of 
+
+\begin{equation}
+	\text{EVM}_{\text{dB}} = 10\log_{10}\left(\text{error}\right) \approx 10\log_{10}(0.15224) \approx -8.17\ \text{dB}
+\end{equation}
+
+\noindent Note that this value is consistent with our high-SNR EVM measurement.
+
 (i.e. noise with respect to the ideal constellation point) 
 
 Then, we measure the EVM when a fixed timing offsets of $0.25T_s$ is applied. Finally, we measure 
