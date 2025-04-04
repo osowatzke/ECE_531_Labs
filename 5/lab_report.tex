@@ -249,24 +249,45 @@ Next, we analyze the performance of the timing compensation logic when we apply 
 \end{figure}
 
 \noindent Before timing compensation, the constellation does not match closely with our expectations for BPSK modulation. However, after timing compensation, all the received data is clustered around $\pm 1$ as expected.
- 
+
+Next, we plot the error vector magnitude (EVM) against SNR and include the results in Figure \ref{fig::evm_vs_snr}. Examining the plot, we see that the error magnitude vector fall linearly with SNR for low values of SNR before converging to a final value.
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr.png}}}
 	\caption{Plot of EVM vs SNR}
 	\label{fig::evm_vs_snr}
 \end{figure}
 
+\noindent We can perform similar analysis with a phase offset instead of a timing offset. For this analysis, we use a phase error of $\pi/8$ radians. Our results are illustrated in Figure \ref{fig::evm_vs_snr_with_phase_offset}.
+
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr_with_phase_offset.png}}}
-	\caption{Plot of EVM vs SNR with Symbol Phase Offset}
+	\caption{Plot of EVM vs SNR for $\protect\pi/8$ Phase Offset}
 	\label{fig::evm_vs_snr_with_phase_offset}
 \end{figure}
+
+\noindent Compared to Figure \ref{fig::evm_vs_snr}, the EVM is almost 10 dB worse in steady state. This occurs because the phase error has become the limiting factor for the EVM measurement. With an added phase offset of $\pi/8$, we again display the constellation before and after modulation.
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.8\textwidth]{constellations_with_timing_correction_phase_offset.png}}
 	\caption{Constellations with Phase Offset Before and After Timing Compensation}
 	\label{fig::constellations_with_timing_correction_phase_offset}
 \end{figure}
+
+\noindent Examining Figure \ref{fig::constellations_with_timing_correction_phase_offset}, we see that the timing compensation correctly clusters each of the received symbols. However, the symbols have been rotated due to phase error. To account for the phase error, we can use differential modulation (DBPSK vs BPSK). For our DBPSK demodulation, we use the phase difference between adjacent samples to determine the transmitted symbols. We leverage the following equation to find the phase different between samples:
+
+\begin{equation}
+	y[n] = A[n]e^{j\phi[n]}*e^{-j\phi[n-1]}
+\end{equation}
+
+\noindent Then, we compute the resulting EVM, which is plotted against SNR in Figure \ref{fig::evm_vs_snr_dbpsk}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr_dbpsk.png}}}
+	\caption{EVM vs SNR for DBPSK Modulation with a $\protect\pi/8$ Phase Offset}
+	\label{fig::evm_vs_snr_dbpsk}
+\end{figure}
+
+Compared to Figure \ref{fig::constellations_with_timing_correction_phase_offset}, we see that the EVM has substantially improved. However, it does deviate slightly from our EVM plots when we use BPSK with no phase offset. This occurs because noisy samples are used to find phase differences.
 
 \section{Adding Pieces Together}
 
