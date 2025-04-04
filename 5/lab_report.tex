@@ -62,6 +62,10 @@ In this experiment, we analyze the effects of pulse shaping and matched filterin
 
 \noindent In the above formula, $T_s$ is the symbol period and $\beta \in [0,1]$ is the roll-off factor. The SRRC filter belongs to a subset of filters called Nyquist filters, which have zero ISI when sampled at the correct instances. As part of our work in this section, we explain the differences between type I and type II Nyquist filters. Then, we generate frequency response plots for SRRC filters with $\beta \in [0, 0.1, 0.25, 0.5, 0.1]$ and discuss how the roll-off factor affects spectral efficiency and filter complexity. Next, we generate transmit and receive plots following the template included in the lab description and on page 196 of the textbook. Using these plots, we analyze how the roll-off factor affects timing recovery performance.
 
+\subsection{Timing Error}
+
+In this experiment, we analyze the impact of timing errors (when the transmitter and receiver are not sampling at the same time instances). For this experiment, we transmit QPSK symbols on the Pluto SDR loopback cable and examine the resulting constellations. We then highlight the effects of timing offsets and explain any rotation we observe in the constellation.
+
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
