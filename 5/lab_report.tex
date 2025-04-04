@@ -164,6 +164,10 @@ The interpolator applies fractional delays to the input signal. It specifically 
 \end{split}
 \end{equation}
 
+\subsubsection{Implementation}
+
+Following the flowchart shown in Figure \ref{fig::timing_recovery_block_diagram_1}, we implement timing compensation in MATLAB and compare the behavior of our implementation to MATLAB's \texttt{comm.SymbolSychronizer} object. Next, we use our custom implementation to perform timing compensation on an input with a slowly-changing timing offset. We perform error vector magnitude (EVM) measurements of the signal before and after timing compensation at different SNR levels using MATLAB's \texttt{comm.EVM} object. Then, we add a fixed phase offset of $\pi/8$ radians and repeat the EVM measurements. We compare the EVM before and after adding the phase offset and explain how it affects timing recovery performance.
+
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
