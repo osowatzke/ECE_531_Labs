@@ -26,7 +26,7 @@
 	{\huge Lab 5 - Digital Modulation: Symbol Synchronization}\\[0.25 in]
 	\includegraphics[width=0.6\textwidth]{ua_logo.png}\\[0.25 in]
 	{\large \textbf{ECE 531 - Software Defined Radio\\[0.25 in]
-	April 4, 2025\\[0.25 in]}}
+	April 7, 2025\\[0.25 in]}}
 	{\large Owen Sowatzke, osowatzke@arizona.edu\\[0.05 in]
 	Department of Electrical \& Computer Engineering\\[0.05 in]
 	University of Arizona, Tucson, AZ 85721\\[0.5 in]}
@@ -57,7 +57,10 @@ In this experiment, we analyze the effects of pulse shaping and matched filterin
 		\frac{\beta}{\sqrt{2T_s}}\left[\left(1 + \frac{2}{\pi}\right)\sin\left(\frac{\pi}{4\beta}\right)+ \left(1-\frac{2}{\pi}\right)\cos\left(\frac{\pi}{4\beta}\right)\right], & t = \pm\frac{T_s}{4\beta} \\
 		\frac{1}{\sqrt{T_s}}\frac{\sin\left[\pi\frac{t}{T_s}(1-\beta)\right]+4\beta\frac{t}{T_s}\cos\left[\pi\frac{t}{T_s}(1+\beta)\right]}{\pi\frac{t}{T_s}\left[1 - \left(4\beta\frac{t}{T_s}\right)^2\right]}, & \text{otherwise}
 	\end{cases}
+	\label{eq::srrc_filter}
 \end{equation}
+
+\noindent In the above formula, $T_s$ is the symbol period and $\beta \in [0,1]$ is the roll-off factor. The SRRC filter belongs to a subset of filters called Nyquist filters, which have zero ISI when sampled at the correct instances. As part of our work in this section, we explain the differences between type I and type II Nyquist filters. Then, we generate frequency response plots for SRRC filters with $\beta \in [0, 0.1, 0.25, 0.5, 0.1]$ and discuss how the roll-off factor affects spectral efficiency and filter complexity. Next, we generate transmit and receive plots following the template included in the lab description and on page 196 of the textbook. Using these plots, we analyze how the roll-off factor affects timing recovery performance.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
