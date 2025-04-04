@@ -287,17 +287,18 @@ Examining the figure output, we see that the EVM is roughly the same as the inpu
 	\label{fig::evm_0p25_symbol_offset}
 \end{figure}
 
-Examining the figure, we see that the EVM is approximately the same as the SNR for low SNR but converges to a constant value as the SNR gets large. At these high SNR points, the timing recovery circuit is the limiting factor for the EVM.
-
-(i.e. noise with respect to the ideal constellation point) 
-
-Then, we measure the EVM when a fixed timing offsets of $0.25T_s$ is applied. Finally, we measure 
+Examining the figure, we see that the EVM is approximately the same as the SNR for low SNR but converges to a constant value as the SNR gets large. At these high SNR points, the timing recovery circuit is the limiting factor for the EVM. Next, we examine the performance when we apply a phase offset of $\pi/8$ instead of a timing error. These results are included in \ref{fig::evm_pi_8_phase_offset}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_pi_8_phase_offset.png}}}
 	\caption{EVM with $\protect\pi/8$ Phase Offset}
 	\label{fig::evm_pi_8_phase_offset}
 \end{figure}
+
+(i.e. noise with respect to the ideal constellation point) 
+
+Then, we measure the EVM when a fixed timing offsets of $0.25T_s$ is applied. Finally, we measure 
+
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_dpsk_modulation.png}}}
