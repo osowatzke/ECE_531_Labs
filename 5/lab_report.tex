@@ -168,6 +168,28 @@ The interpolator applies fractional delays to the input signal. It specifically 
 
 Following the flowchart shown in Figure \ref{fig::timing_recovery_block_diagram_1}, we implement timing compensation in MATLAB and compare the behavior of our implementation to MATLAB's \texttt{comm.SymbolSychronizer} object. Next, we use our custom implementation to perform timing compensation on an input with a slowly-changing timing offset. We perform error vector magnitude (EVM) measurements of the signal before and after timing compensation at different SNR levels using MATLAB's \texttt{comm.EVM} object. Then, we add a fixed phase offset of $\pi/8$ radians and repeat the EVM measurements. We compare the EVM before and after adding the phase offset and explain how it affects timing recovery performance.
 
+\subsection{Adding Pieces Together}
+
+In this section, we investigate how the timing compensation logic can be integrated into the overall system.  Figure \ref{fig::timing_recovery_integration} shows the data flow from transmitter to receiver.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{timing_recovery_integration.png}}}
+	\caption{Integration of Timing Recovery Logic into Overall System}
+	\label{fig::timing_recovery_integration}
+\end{figure}
+
+\noindent The modulator generates symbols at the symbol rate, and the transmit filter increases the samples rate by a factor of $N$. The data then flows through the channel which applies a delay and noise. This data then passes through the receive filter, which downsamples the data by a factor of $N_F$ with $N_F \leq N$. Finally, the timing recovery circuit removes the timing offset and generates symbols at the symbol rate.
+
+	In this experiment, we expand on the timing recovery block shown in Figure \ref{fig::timing_recovery_integration}. We detail each of its subblocks and discuss the number of samples per symbol that each of them process. Finally, we use the timing recovery block to perform to perform timing compensation under a variety of conditions:
+	
+	\begin{itemize}
+		\item No offsets (ideal baseline case)
+		\item A fixed timing offset of $0.25T_s$
+		\item A fixed phase offset of $\pi/4$ radians.
+	\end{itemize}	
+	
+	\noindent For each case we measure the resulting EVM over a range of SNR values.
+	
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
