@@ -78,12 +78,70 @@ In this experiment, we learn how to perform symbol timing compensation. The algo
 
 \noindent In the above figure, the interpolator applies a fractional delay. The timing error detector (TED) measures the time offsets. The loop filter stabilizes error correction, and the interpolator controller manages the interpolation process.
 
+\subsubsection{Timing Error Detector}
 For the timing error detector, three common algorithms are the zero-crossing (ZC) method, the Gardner method, and the M\"{u}ller and Mueller method. For the the experiments, in this lab, we use the zero-crossing method which operates as follows:
 
 \begin{align}
 	e(k) = &\text{Re}(x((k-1/2)T_s + \tau))\left[\text{sgn}\{\text{Re}(x((k-1)T_s+\tau))\} - text{sgn}\{\text{Re}(x(kT_s+\tau))\}\right] + \\
 	&\text{Im}(x((k-1/2)T_s + \tau))\left[\text{sgn}\{\text{Im}(x((k-1)T_s+\tau))\} - text{sgn}\{\text{Im}(x(kT_s+\tau))\}\right]
 \end{align}
+
+\subsubsection{Loop Filter}
+The timing error detector output is then fed into the loop filter, which produces a stable signal for the controller. The loop filter is a proportional integral (PI) filter and is defined as follows:
+
+\begin{equation}
+	y(n) = G_1x(n) + G_2\sum_{k=0}^{n}{x(k)}
+\end{equation}
+
+\noindent $G_1$ and $G2$ are constants defined as follows:
+
+\begin{align}
+	G_1 = \frac{-4\zeta\theta}{G_DN\Delta} && G_2 = \frac{4\theta^2}{G_DN\Delta}
+\end{align}
+
+\noindent and $\theta$ and $\Delta$ are further defined follows:
+
+\begin{align}
+	\theta = \frac{B_{\text{Loop}}}{M(\zeta + 0.25/\zeta)} && \Delta = 1 + 2\zeta\theta + \theta^2
+\end{align}
+
+\noindent In the above equations:
+
+\begin{itemize}
+	\item $B_{\text{Loop}}$ is the normalized loop bandwidth
+	\item $\zeta$ is the damping factor
+	\item $N$ is the samples per symbol
+	\item $G_D$ is the detector gain (scaling factor for correction)
+\end{itemize}
+
+\subsubsection{Interpolation Controller}
+
+The loop filter output is then fed into an interpolation controller, which computes a fractional delay and a strobe which indicates when the delay should be applied. The strobes occur on average once per symbol. The counter decrement value can be computed with the loop filter output $v(n)$ as follows:
+
+\begin{equation}
+	W(n) = v(n) + \frac{1}{N}
+\end{equation}
+
+\noindent Using the decrement, the counter is updated as follows:
+
+\begin{equation}
+	c(n + 1) = (c(n) - W(n))\ \text{mod}\ 1
+\end{equation}
+
+\noindent Strobes occur whenever the counter wraps.
+
+\begin{equation}
+	\text{Strobe} = \begin{cases}
+		\text{True}, & \text{if}\ c(n) < W(n)\\
+		\text{False}, & \text{otherwise}
+	\end{cases}
+\end{equation}
+
+\noindent Finally, on each strobe, we update the factional delay parameter as follows:
+
+\begin{equation}
+	\mu(k) = \frac{c(n)}{W(n)}
+\end{equation}
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
