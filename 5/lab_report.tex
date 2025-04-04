@@ -82,9 +82,11 @@ In this experiment, we learn how to perform symbol timing compensation. The algo
 For the timing error detector, three common algorithms are the zero-crossing (ZC) method, the Gardner method, and the M\"{u}ller and Mueller method. For the the experiments, in this lab, we use the zero-crossing method which operates as follows:
 
 \begin{align}
-	e(k) = &\text{Re}(x((k-1/2)T_s + \tau))\left[\text{sgn}\{\text{Re}(x((k-1)T_s+\tau))\} - text{sgn}\{\text{Re}(x(kT_s+\tau))\}\right] + \\
-	&\text{Im}(x((k-1/2)T_s + \tau))\left[\text{sgn}\{\text{Im}(x((k-1)T_s+\tau))\} - text{sgn}\{\text{Im}(x(kT_s+\tau))\}\right]
+	e(k) = &\text{Re}(x((k-1/2)T_s + \tau))\left[\text{sgn}\{\text{Re}(x((k-1)T_s+\tau))\} - \text{sgn}\{\text{Re}(x(kT_s+\tau))\}\right] + \\
+	&\text{Im}(x((k-1/2)T_s + \tau))\left[\text{sgn}\{\text{Im}(x((k-1)T_s+\tau))\} - \text{sgn}\{\text{Im}(x(kT_s+\tau))\}\right]
 \end{align}
+
+\noindent To ensure only one update per symbol, the timing error detector only outputs an error when it receives a strobe. Otherwise, it outputs a 0.
 
 \subsubsection{Loop Filter}
 The timing error detector output is then fed into the loop filter, which produces a stable signal for the controller. The loop filter is a proportional integral (PI) filter and is defined as follows:
@@ -141,6 +143,25 @@ The loop filter output is then fed into an interpolation controller, which compu
 
 \begin{equation}
 	\mu(k) = \frac{c(n)}{W(n)}
+\end{equation}
+
+\subsubsection{Interpolator}
+
+The interpolator applies fractional delays to the input signal. It specifically using a piecewise polynomial filter (PPF) which approximates the required delays. The filter output is given by
+
+\begin{equation}
+	x(kT_s + \mu(k)T_s) = \sum_{n=-2}^{1}{h(n)x((k-n)T_s)}
+\end{equation}
+
+\noindent And the filter taps $h(n)$ are given as
+
+\begin{equation}
+\begin{split}
+	h = [&\alpha\mu(k)(\mu(k) - 1), \\
+	&-\alpha\mu(k)^2 - (1-\alpha)\mu(k) + 1,\\
+	&-\alpha\mu(k)^2 + (1+\alpha)\mu(k),\\
+	&\alpha\mu(k)(\mu(k) - 1)]
+\end{split}
 \end{equation}
 
 \section{Results}
