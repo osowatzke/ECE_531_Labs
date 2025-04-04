@@ -66,6 +66,25 @@ In this experiment, we analyze the effects of pulse shaping and matched filterin
 
 In this experiment, we analyze the impact of timing errors (when the transmitter and receiver are not sampling at the same time instances). For this experiment, we transmit QPSK symbols on the Pluto SDR loopback cable and examine the resulting constellations. We then highlight the effects of timing offsets and explain any rotation we observe in the constellation.
 
+\subsection{Symbol Timing Compensation}
+
+In this experiment, we learn how to perform symbol timing compensation. The algorithm we implement specifically follows the structure shown in Figure \ref{fig::timing_recovery_block_diagram_1}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{timing_recovery_block_diagram.png}}}
+	\caption{Structure of Timing Recovery PLL}
+	\label{fig::timing_recovery_block_diagram_1}
+\end{figure}
+
+\noindent In the above figure, the interpolator applies a fractional delay. The timing error detector (TED) measures the time offsets. The loop filter stabilizes error correction, and the interpolator controller manages the interpolation process.
+
+For the timing error detector, three common algorithms are the zero-crossing (ZC) method, the Gardner method, and the M\"{u}ller and Mueller method. For the the experiments, in this lab, we use the zero-crossing method which operates as follows:
+
+\begin{align}
+	e(k) = &\text{Re}(x((k-1/2)T_s + \tau))\left[\text{sgn}\{\text{Re}(x((k-1)T_s+\tau))\} - text{sgn}\{\text{Re}(x(kT_s+\tau))\}\right] + \\
+	&\text{Im}(x((k-1/2)T_s + \tau))\left[\text{sgn}\{\text{Im}(x((k-1)T_s+\tau))\} - text{sgn}\{\text{Im}(x(kT_s+\tau))\}\right]
+\end{align}
+
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
