@@ -307,18 +307,29 @@ Comparing the results of Figure \ref{fig::evm_pi_8_phase_offset} to Figures \ref
 	\text{EVM}_{\text{dB}} = 10\log_{10}\left(\text{error}\right) \approx 10\log_{10}(0.15224) \approx -8.17\ \text{dB}
 \end{equation}
 
-\noindent Note that this value is consistent with our high-SNR EVM measurement.
+\noindent Note that this value is consistent with our high-SNR EVM measurement. We can visualize the timing error detector performance in the presence of phase error by examining the constellation, which is shown in Figure \ref{fig::evm_pi_8_phase_offset}.
 
-(i.e. noise with respect to the ideal constellation point) 
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{constellation_phase_error.png}}}
+	\caption{Constellation after Timing Compensation with 20 dB SNR and a $\protect\pi/8$ Phase Offset}
+	\label{fig::constellation_phase_error}
+\end{figure}
 
-Then, we measure the EVM when a fixed timing offsets of $0.25T_s$ is applied. Finally, we measure 
+\noindent Examining the Figure we see that the phase error creates a rotation in the complex plane, which artificially distorts our EVM metric. One way to handle this phase error is to use differential modulation. We specifically can use DBPSK modulation instead of BPSK modulation. Then, we compute the resulting constellation points as follows:
 
+\begin{equation}
+	y[n] = A[n]e^{j\phi[n]}*e^{-j\phi[n-1]}
+\end{equation}
+
+\noindent The results of this experiment are shown in Figure \ref{fig::evm_dpsk_modulation}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_dpsk_modulation.png}}}
 	\caption{EVM with $\protect\pi/8$ Phase Offset After Differential Demodulation}
 	\label{fig::evm_dpsk_modulation}
 \end{figure}
+
+\noindent Examining the Figure output, we note that it is close to the result shown in Figure \ref{fig::evm_no_timing_offset}. However, the EVMs are slightly worse because our phase offset is computed based from a noisy input, which leads to more noise in the output.
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
