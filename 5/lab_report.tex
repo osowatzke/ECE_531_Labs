@@ -47,6 +47,18 @@ In this report, we will examine time offset errors and their impact on sampling 
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
+\subsection{Pulse Shaping and Matched Filtering}
+
+In this experiment, we analyze the effects of pulse shaping and matched filtering. Pulse shaping and match filtering together serve 3 purposes: limiting signal bandwidth, maximizing SNR, and minimizing ISI. In this experiment, we use an SRRC filter which is defined as follows:
+
+\begin{equation}
+	h(t) = \begin{cases}
+		\frac{1}{\sqrt{T_s}}\left(1 - \beta + 4\frac{\beta}{\pi}\right), & t = 0 \\
+		\frac{\beta}{\sqrt{2T_s}}\left[\left(1 + \frac{2}{\pi}\right)\sin\left(\frac{\pi}{4\beta}\right)+ \left(1-\frac{2}{\pi}\right)\cos\left(\frac{\pi}{4\beta}\right)\right], & t = \pm\frac{T_s}{4\beta} \\
+		\frac{1}{\sqrt{T_s}}\frac{\sin\left[\pi\frac{t}{T_s}(1-\beta)\right]+4\beta\frac{t}{T_s}\cos\left[\pi\frac{t}{T_s}(1+\beta)\right]}{\pi\frac{t}{T_s}\left[1 - \left(4\beta\frac{t}{T_s}\right)^2\right]}, & \text{otherwise}
+	\end{cases}
+\end{equation}
+
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
