@@ -555,7 +555,7 @@ Comparing the results of both Figures, we see that the timing compensation logic
 	\label{fig::evm_dpsk_modulation}
 \end{figure}
 
-\noindent Examining the figures, we note that we note that it is close to the result shown in Figure \ref{fig::evm_no_timing_offset}. However, the EVMs are slightly worse because our phase offset is computed based from a noisy input, which leads to more noise in the output.
+\noindent Examining the figures, we note that both get close in performance to the baseline case shown in Figures \ref{fig::evm_no_timing_offset_no_comp} and \ref{fig::evm_no_timing_offset}. However, there is some slight degradation in performance because we use noisy samples in our differential demodulation. 
 
 \subsection{Testing on Hardware}
 
