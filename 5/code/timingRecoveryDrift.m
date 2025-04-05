@@ -8,8 +8,8 @@ modulationOrder = 2; filterSymbolSpan = 4;
 showConstellations = false;
 debugPlots = false;
 useIdealRef = true;
-useDspkMod = true;
-phaseOffset = pi/8;
+useDspkMod = false;
+phaseOffset = false;
 %% Visuals
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband');
@@ -27,6 +27,7 @@ mod = comm.DBPSKModulator(); modulatedData = mod(data);
 clear mod;
 %% Create EVM output arrays
 evm_dB = zeros(size(snr));
+raw_evm_dB = zeros(size(snr));
 %% Loop for each SNR
 for i = 1:length(snr)
     % Add TX/RX Filters
@@ -52,6 +53,7 @@ for i = 1:length(snr)
     % Create Output Arrays
     refSym = cell(numFrames,1);
     rxSym = cell(numFrames,1);
+    rawSym = cell(numFrames,1);
     symErr = cell(numFrames,1);
     % Model of error
     % Add timing offset to baseband signal
@@ -77,6 +79,7 @@ for i = 1:length(snr)
         filteredDataRef = filteredDataRef(1:2:end);
         % Save data for post processing
         refSym{frameIdx} = filteredDataRef;
+        rawSym{frameIdx} = filteredData;
         rxSym{frameIdx} = syncData;
         symErr{frameIdx} = timingErr;
         frameIdx = frameIdx + 1;
@@ -89,36 +92,48 @@ for i = 1:length(snr)
         end
     end
     rmpath('timingCorrection');
+    % Determine delay of reference constellation
+    refSym = cell2mat(refSym);
+    ccOut = xcorr(modulatedData,refSym,32);
+    [~, maxIdx] = max(abs(ccOut));
+    refDly = 33 - maxIdx;
     % Select reference data    
     if useIdealRef
         refSym = modulatedData;
-    else
-        refSym = cell2mat(refSym);
     end
     % Aggregate data
     rxSym = cell2mat(rxSym);
+    rawSym = cell2mat(rawSym);
     % Determine delay of data
     ccOut = xcorr(refSym,rxSym,32);
     [~, maxIdx] = max(abs(ccOut));
     dly = 33 - maxIdx;
     % Compensate for delay differences
-    if dly >= 0
-        rxSym = rxSym((dly+1):end);
+    rxSym = rxSym((dly+1):end);
+    % Determine delay of raw symbols
+    if useIdealRef
+        dly = refDly;
     else
-        refSym = refSym((-dly+1):end);
+        dly = 0;
     end
+    % Compensate for delay differences
+    rawSym = rawSym((dly+1):end);
     % Ensure arrays are the same size
-    minSize = min(length(refSym), length(rxSym));
+    minSize = min([length(refSym), length(rxSym), length(rawSym)]);
     refSym = refSym(1:minSize);
     rxSym = rxSym(1:minSize);
+    rawSym = rawSym(1:minSize);
     % Error Vector Measurement
     if useDspkMod
         rxSym = rxSym(1:(end-1)).*exp(-1i*angle(rxSym(2:end)));
+        rawSym = rawSym(1:(end-1)).*exp(-1i*angle(rawSym(2:end)));
         refSym = refSym(1:(end-1)).*exp(-1i*angle(refSym(2:end)));
     end
     evm = comm.EVM();
     e = evm(refSym(1000:end),rxSym(1000:end));
     evm_dB(i) = 20*log10(e/100);
+    e = evm(refSym(1000:end),rawSym(1000:end));
+    raw_evm_dB(i) = 20*log10(e/100);
     % Aggregate Timing Error
     symErr = cell2mat(symErr);
     refDly = repmat(refDly.',2*frameSize,1);
@@ -162,6 +177,12 @@ end
 figure(4);
 clf;
 plot(snr,evm_dB,'LineWidth',1.5);
+grid on;
+xlabel('SNR (dB)');
+ylabel('EVM (dB)')
+figure(5);
+clf;
+plot(snr,raw_evm_dB,'LineWidth',1.5);
 grid on;
 xlabel('SNR (dB)');
 ylabel('EVM (dB)')

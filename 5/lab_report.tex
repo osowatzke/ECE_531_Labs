@@ -392,12 +392,21 @@ Next, we analyze the performance of the timing compensation logic when we apply 
 
 \noindent Before timing compensation, the constellation does not match closely with our expectations for BPSK modulation. However, after timing compensation, all the received data is clustered around $\pm 1$ as expected.
 
-Next, we plot the error vector magnitude (EVM) against SNR and include the results in Figure \ref{fig::evm_vs_snr}. Examining the plot, we see that the error magnitude vector fall linearly with SNR for low values of SNR before converging to a final value.
+We can quantify how closely our constellation matches the desired constellation by examining the error vector magnitude (EVM). In Figures \ref{fig::evm_vs_snr_no_correction} and \ref{fig::evm_vs_snr}, we plot the EVM of the data against SNR. Figure \ref{fig::evm_vs_snr_no_correction} shows the EVM prior to timing correction, Figure \ref{fig::evm_vs_snr}, shows the EVM after timing correction. 
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr_no_correction.png}}}
+	\caption{Plot of EVM vs SNR before Timing Compensation}
+	\label{fig::evm_vs_snr_no_correction}
+\end{figure}
+
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr.png}}}
-	\caption{Plot of EVM vs SNR}
+	\caption{Plot of EVM vs SNR after Timing Compensation}
 	\label{fig::evm_vs_snr}
 \end{figure}
+
+Comparing the plots, we see that the EVM is substantially lower after timing compensation. This is consistent with out qualitative analysis of the constellation. Additionally, we find that the EVM falls with SNR. This is also an expected result because the spread of the constellation points reduces as the SNR increases. With timing compensation, our minimum EVM is about -16 dB. This value is limited by the drift of the timing offset in our simulation.
 
 \noindent We can perform similar analysis with a phase offset instead of a timing offset. For this analysis, we use a phase error of $\pi/8$ radians. Our results are illustrated in Figure \ref{fig::evm_vs_snr_with_phase_offset}.
 
