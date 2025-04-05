@@ -478,43 +478,61 @@ In this section, we review the timing recovery circuit and the sample rates of e
 	\label{fig::timing_recovery_block_diagram_2}
 \end{figure}
 
-We evaluate the performance of the timing recovery block by measuring the EVM under a couple different conditions. First we measure the EVM with no timing offsets (i.e. the ideal base case). These results are included in Figure \ref{fig::evm_no_timing_offset}.
+We evaluate the performance of the timing recovery block by measuring the EVM under a couple different conditions. First we measure the EVM with no timing offsets (i.e. the ideal base case). These results are included in Figures \ref{fig::evm_no_timing_offset} and \ref{fig::evm_no_timing_offset}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_no_timing_offset_no_comp.png}}}
+	\caption{Plot of EVM vs SNR with No Timing Offsets or Timing Compensation}
+	\label{fig::evm_no_timing_offset_no_comp}
+\end{figure}
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_no_timing_offset.png}}}
-	\caption{EVM with No Timing Offsets}
+	\caption{Plot of EVM vs SNR with No Timing Offsets and Timing Compensation}
 	\label{fig::evm_no_timing_offset}
 \end{figure}
 
-Examining the figure output, we see that the EVM is roughly the same as the input SNR. This is the expected result because the EVM is the ratio of the error power to the reference constellation power. The reference constellation power is the signal power and the error power is the power of the additive noise. Therefore EVM and input SNR are the same for this case. Next, we consider the EVM when we apply a fixed timing offset of $0.25T_s$. These results are included in Figure \ref{fig::evm_0p25_symbol_offset}.
+Examining the figure output, we see that the EVM is roughly the same as the input SNR. This is the expected result because the EVM is the ratio of the error power to the reference constellation power. The reference constellation power is the signal power and the error power is the power of the additive noise. Therefore EVM and input SNR are the same for this case. Next, we consider the EVM when we apply a fixed timing offset of $0.25T_s$. These results are included in Figures \ref{fig::evm_0p25_symbol_offset_no_comp} and \ref{fig::evm_0p25_symbol_offset}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_0p25_symbol_offset_no_comp.png}}}
+	\caption{Plot of EVM vs SNR with $\protect{0.25T_s}$ Symbol Offset and No Timing Compensation}
+	\label{fig::evm_0p25_symbol_offset_no_comp}
+\end{figure}
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_0p25_symbol_offset.png}}}
-	\caption{EVM with $\protect{0.25T_s}$ Symbol Offset}
+	\caption{Plot of EVM vs SNR with $\protect{0.25T_s}$ Symbol Offset and Timing Compensation}
 	\label{fig::evm_0p25_symbol_offset}
 \end{figure}
 
-Examining the figure, we see that the EVM is approximately the same as the SNR for low SNR but converges to a constant value as the SNR gets large. At these high SNR points, the timing recovery circuit is the limiting factor for the EVM. Next, we examine the performance when we apply a phase offset of $\pi/8$ instead of a timing error. These results are included in \ref{fig::evm_pi_8_phase_offset}.
+Examining the figure, we see that the EVM is approximately the same as the SNR for low SNR but converges to a constant value as the SNR gets large. At these high SNR points, the timing recovery circuit is the limiting factor for the EVM. Next, we examine the performance when we apply a phase offset of $\pi/8$ instead of a timing error. These results are included in \ref{fig::evm_pi_4_phase_offset}.
 
 \begin{figure}[H]
-	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_pi_8_phase_offset.png}}}
-	\caption{EVM with $\protect\pi/8$ Phase Offset}
-	\label{fig::evm_pi_8_phase_offset}
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_pi_4_phase_offset.png}}}
+	\caption{Plot of EVM vs SNR with $\protect\pi/4$ Phase Offset and No Timing Compensation}
+	\label{fig::evm_pi_4_phase_offset_no_comp}
 \end{figure}
 
-Comparing the results of Figure \ref{fig::evm_pi_8_phase_offset} to Figures \ref{fig::evm_no_timing_offset} and \ref{fig::evm_0p25_symbol_offset}, we see that the EVM is degraded substantially. We can make sense of this value by computing the error between a unit-power constellation point and a constellation point without noise and a phase error of $\pi/8$. Doing so, we find:
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_pi_4_phase_offset.png}}}
+	\caption{Plot of EVM vs SNR with $\protect\pi/4$ Phase Offset and Timing Compensation}
+	\label{fig::evm_pi_4_phase_offset}
+\end{figure}
+
+Comparing the results of Figure \ref{fig::evm_pi_4_phase_offset} to Figures \ref{fig::evm_no_timing_offset} and \ref{fig::evm_0p25_symbol_offset}, we see that the EVM is degraded substantially. We can make sense of this value by computing the error between a unit-power constellation point and a constellation point without noise and a phase error of $\pi/4$. Doing so, we find:
 
 \begin{equation}
-	\text{error} = (1 - \cos\pi/8)^2 + \sin^2\pi/8 = 1 - 2\cos\pi/8 + \cos^2\pi/8 + \sin^2\pi/8 = 2 - 2\cos\pi/8 \approx 0.15224 
+	\text{error} = (1 - \cos\pi/4)^2 + \sin^2\pi/4 = 1 - 2\cos\pi/4 + \cos^2\pi/4 + \sin^2\pi/4 = 2 - 2\cos\pi/4 \approx 0.58578 
 \end{equation}
 
 \noindent which corresponds to an EVM of 
 
 \begin{equation}
-	\text{EVM}_{\text{dB}} = 10\log_{10}\left(\text{error}\right) \approx 10\log_{10}(0.15224) \approx -8.17\ \text{dB}
+	\text{EVM}_{\text{dB}} = 10\log_{10}\left(\text{error}\right) \approx 10\log_{10}(0.58578) \approx -2.32\ \text{dB}
 \end{equation}
 
-\noindent Note that this value is consistent with our high-SNR EVM measurement. We can visualize the timing error detector performance in the presence of phase error by examining the constellation, which is shown in Figure \ref{fig::evm_pi_8_phase_offset}.
+\noindent Note that this value is consistent with our high-SNR EVM measurement. We can visualize the timing error detector performance in the presence of phase error by examining the constellation, which is shown in Figure \ref{fig::constellation_phase_error}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{constellation_phase_error.png}}}
@@ -531,8 +549,14 @@ Comparing the results of Figure \ref{fig::evm_pi_8_phase_offset} to Figures \ref
 \noindent The results of this experiment are shown in Figure \ref{fig::evm_dpsk_modulation}.
 
 \begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_dpsk_modulation_no_comp.png}}}
+	\caption{EVM with $\protect\pi/4$ Phase Offset After Differential Demodulation}
+	\label{fig::evm_dpsk_modulation_no_comp}
+\end{figure}
+
+\begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_dpsk_modulation.png}}}
-	\caption{EVM with $\protect\pi/8$ Phase Offset After Differential Demodulation}
+	\caption{EVM with $\protect\pi/4$ Phase Offset After Differential Demodulation}
 	\label{fig::evm_dpsk_modulation}
 \end{figure}
 
