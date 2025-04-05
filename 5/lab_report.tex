@@ -278,7 +278,7 @@ Finally, we examine how different rolloff factors affect timing recovering perfo
 
 \subsection{Timing Error}
 
-In this section, we capture a QPSK constellation with the PlutoSDR. Our captured constellation is shown in Figure \ref{fig::pluto_constellation_raw}.
+In this section, we examine the effect of timing error. We specifically capture a QPSK constellation with the PlutoSDR. Our captured constellation is shown in Figure \ref{fig::pluto_constellation_raw} and contains both phase and timing offsets.
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.5\textwidth]{pluto_constellation_raw.png}}
@@ -294,7 +294,7 @@ In this section, we capture a QPSK constellation with the PlutoSDR. Our captured
 	\label{fig::pluto_constellation_best}
 \end{figure}
 
-\noindent Before timing compensation, the signal is sampled at non-ideal points, resulting in increased constellation point errors. These increased errors create large clustering patterns in the constellation. After correcting for these timing errors, the errors in the constellation are reduced. However, our constellation remains titled. This titled occurs due to a phase offset in the transmit and receive oscillators. Regardless of what we do with the timing compensation, this phase offset will still be present.
+\noindent Before timing compensation, the signal is sampled at non-ideal points, resulting in increased constellation point errors. These increased errors create large clustering patterns in the constellation. After correcting for these timing errors, the errors in the constellation are reduced. However, our constellation remains titled. This tilt occurs due to a phase offset in the transmit and receive oscillators. Regardless of what we do with the timing compensation, this phase offset will persist.
 
 \section{Symbol Timing Compensation}
 
