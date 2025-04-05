@@ -446,6 +446,7 @@ Comparing the plots, we see that the EVM is substantially lower after timing com
 
 \begin{equation}
 	y[n] = A[n]e^{j\phi[n]}*e^{-j\phi[n-1]}
+	\label{eq::dbpsk}
 \end{equation}
 
 \noindent Using the updated constellation points, we compute the EVM before and after timing compensation. We plot these results in Figures \ref{fig::evm_vs_snr_dbpsk_no_comp} and \ref{fig::evm_vs_snr_dbpsk}.
@@ -540,13 +541,7 @@ Comparing the results of both Figures, we see that the timing compensation logic
 	\label{fig::constellation_phase_error}
 \end{figure}
 
-\noindent Examining the Figure we see that the phase error creates a rotation in the complex plane, which artificially distorts our EVM metric. One way to handle this phase error is to use differential modulation. We specifically can use DBPSK modulation instead of BPSK modulation. Then, we compute the resulting constellation points as follows:
-
-\begin{equation}
-	y[n] = A[n]e^{j\phi[n]}*e^{-j\phi[n-1]}
-\end{equation}
-
-\noindent The results of this experiment are shown in Figure \ref{fig::evm_dpsk_modulation}.
+\noindent Examining the Figure we see that the phase error creates a rotation in the complex plane, which artificially distorts our EVM metric. One way to handle this phase error is to use differential modulation. We specifically can use DBPSK modulation instead of BPSK modulation. We can specifically use Equation \ref{eq::dbpsk} to access the EVM after DBPSK modulation. The results of this experiment are included in Figures \ref{fig::evm_dpsk_modulation_no_comp} and \ref{fig::evm_dpsk_modulation}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_dpsk_modulation_no_comp.png}}}
@@ -560,7 +555,7 @@ Comparing the results of both Figures, we see that the timing compensation logic
 	\label{fig::evm_dpsk_modulation}
 \end{figure}
 
-\noindent Examining the Figure output, we note that it is close to the result shown in Figure \ref{fig::evm_no_timing_offset}. However, the EVMs are slightly worse because our phase offset is computed based from a noisy input, which leads to more noise in the output.
+\noindent Examining the figures, we note that we note that it is close to the result shown in Figure \ref{fig::evm_no_timing_offset}. However, the EVMs are slightly worse because our phase offset is computed based from a noisy input, which leads to more noise in the output.
 
 \subsection{Testing on Hardware}
 
