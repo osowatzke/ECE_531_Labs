@@ -3,14 +3,14 @@ clear; clc;
 %% General system details
 numSamples = 10000;
 modulationOrder = 2;
-snr = 5:5:40;
+snr = 20; %5:5:40;
 delay = 0;
 phaseOffset = pi/4;
 N = 8;
 NF = 4;
-showConstellations = false;
+showConstellations = true;
 useIdealRef = true;
-useDspkMod = true;
+useDspkMod = false;
 %% Visuals
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband');
