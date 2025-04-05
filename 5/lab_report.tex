@@ -506,7 +506,7 @@ Comparing both figures, we see that the EVM is roughly the same with and without
 	\label{fig::evm_0p25_symbol_offset}
 \end{figure}
 
-Examining the figure, we see that the EVM is approximately the same as the SNR for low SNR but converges to a constant value as the SNR gets large. At these high SNR points, the timing recovery circuit is the limiting factor for the EVM. Next, we examine the performance when we apply a phase offset of $\pi/8$ instead of a timing error. These results are included in \ref{fig::evm_pi_4_phase_offset}.
+Examining the figures, we see that the EVM without timing compensation is substantially degraded. However, after timing compensation, the EVM improves significantly. At low SNR's it is approximately, the no timing error case. However, as the SNR increases, the timing recovery circuit limits the minimum EVM to about -25 dB. This is slightly better than the results shown in Figure \ref{fig::evm_vs_snr} because the timing offset does not drift with time. Next, we examine the performance when we apply a phase offset of $\pi/4$ radians instead of a timing error. These results are included in Figures \ref{fig::evm_pi_4_phase_offset_no_comp} and \ref{fig::evm_pi_4_phase_offset}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_pi_4_phase_offset.png}}}
