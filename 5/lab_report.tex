@@ -79,14 +79,14 @@ In this experiment, we learn how to perform symbol timing compensation. The algo
 \noindent In the above figure, the interpolator applies a fractional delay. The timing error detector (TED) measures the time offsets. The loop filter stabilizes error correction, and the interpolator controller manages the interpolation process.
 
 \subsubsection{Timing Error Detector}
-For the timing error detector, three common algorithms are the zero-crossing (ZC) method, the Gardner method, and the M\"{u}ller and Mueller method. For the the experiments, in this lab, we use the zero-crossing method which operates as follows:
+For the timing error detector, three common algorithms are the zero-crossing (ZC) method, the Gardner method, and the M\"{u}ller and Mueller method. For the experiments in this lab, we use the zero-crossing method which operates as follows:
 
 \begin{align}
 	e(k) = &\text{Re}(x((k-1/2)T_s + \tau))\left[\text{sgn}\{\text{Re}(x((k-1)T_s+\tau))\} - \text{sgn}\{\text{Re}(x(kT_s+\tau))\}\right] + \\
 	&\text{Im}(x((k-1/2)T_s + \tau))\left[\text{sgn}\{\text{Im}(x((k-1)T_s+\tau))\} - \text{sgn}\{\text{Im}(x(kT_s+\tau))\}\right]
 \end{align}
 
-\noindent To ensure only one update per symbol, the timing error detector only outputs an error when it receives a strobe. Otherwise, it outputs a 0.
+\noindent To ensure only one update per symbol, the timing error detector only outputs an error when it receives a strobe. Otherwise, it outputs a zero.
 
 \subsubsection{Loop Filter}
 The timing error detector output is then fed into the loop filter, which produces a stable signal for the controller. The loop filter is a proportional integral (PI) filter and is defined as follows:
@@ -95,7 +95,7 @@ The timing error detector output is then fed into the loop filter, which produce
 	y(n) = G_1x(n) + G_2\sum_{k=0}^{n}{x(k)}
 \end{equation}
 
-\noindent $G_1$ and $G2$ are constants defined as follows:
+\noindent In the above equation, $G_1$ and $G2$ are constants defined as follows:
 
 \begin{align}
 	G_1 = \frac{-4\zeta\theta}{G_DN\Delta} && G_2 = \frac{4\theta^2}{G_DN\Delta}
@@ -179,9 +179,9 @@ In this section, we investigate how the timing compensation logic can be integra
 	\label{fig::timing_recovery_integration}
 \end{figure}
 
-\noindent The modulator generates symbols at the symbol rate, and the transmit filter increases the samples rate by a factor of $N$. The data then flows through the channel which applies a delay and noise. This data then passes through the receive filter, which downsamples the data by a factor of $N_F$ with $N_F \leq N$. Finally, the timing recovery circuit removes the timing offset and generates symbols at the symbol rate.
+\noindent The modulator generates symbols at the symbol rate, and the transmit filter increases the sample rate by a factor of $N$. The data then flows through the channel which applies a delay and noise. Next, the data passes through the receive filter, which downsamples the data by a factor of $N_F$ where $N_F \leq N$. Finally, the timing recovery circuit removes the timing offset and generates symbols at the symbol rate.
 
-	In this experiment, we expand on the timing recovery block shown in Figure \ref{fig::timing_recovery_integration}. We detail each of its subblocks and discuss the number of samples per symbol that each of them process. Finally, we use the timing recovery block to perform to perform timing compensation under a variety of conditions:
+	In this experiment, we expand on the timing recovery block shown in Figure \ref{fig::timing_recovery_integration}. We detail each of its subblocks and discuss the number of samples per symbol that each of them process. Finally, we use the timing recovery block to perform timing compensation under a variety of conditions:
 	
 	\begin{itemize}
 		\item No offsets (ideal baseline case)
@@ -193,7 +193,7 @@ In this section, we investigate how the timing compensation logic can be integra
 	
 \subsection{Testing on Hardware}
 
-In this experiment, we performing timing correction on data captured with the PlutoSDR. We specifically transmit a DBPSK or QPSK reference signal in a loopback configuration and perform timing correction on the received signal. Using our collected data we compute the error vector magnitude (EVM) before and after timing correction. We compare these results to the simulation results captured in Section \ref{section::sim_procedure}. Using the comparison results, we highlight any differences in performance. Then, we discuss challenges in the hardware implementation and any algorithm modifications needed when moving from simulation to hardware.
+In this experiment, we performing timing correction on data captured with the PlutoSDR. We specifically transmit a DBPSK or QPSK reference signal in a loopback configuration and perform timing correction on the received signal. Using our collected data we compute the error vector magnitude (EVM) before and after timing correction. We compare these results to the simulation results captured in Section \ref{section::sim_procedure}. Using the comparison results, we highlight any differences in performance. Then, we discuss challenges in the hardware implementation and any algorithm modifications that we needed to make when moving from simulation to hardware.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
