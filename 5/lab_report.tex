@@ -448,15 +448,21 @@ Comparing the plots, we see that the EVM is substantially lower after timing com
 	y[n] = A[n]e^{j\phi[n]}*e^{-j\phi[n-1]}
 \end{equation}
 
-\noindent Then, we compute the resulting EVM, which is plotted against SNR in Figure \ref{fig::evm_vs_snr_dbpsk}.
+\noindent Using the updated constellation points, we compute the EVM before and after timing compensation. We plot these results in Figures \ref{fig::evm_vs_snr_dbpsk_no_comp} and \ref{fig::evm_vs_snr_dbpsk}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr_dbpsk_no_comp.png}}}
+	\caption{Plot of EVM vs SNR with DBPSK Modulation and no Timing Compensation}
+	\label{fig::evm_vs_snr_dbpsk_no_comp}
+\end{figure}
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr_dbpsk.png}}}
-	\caption{EVM vs SNR for DBPSK Modulation with a $\protect\pi/8$ Phase Offset}
+	\caption{Plot of EVM vs SNR with DPSK Modulation and Timing Compensation}
 	\label{fig::evm_vs_snr_dbpsk}
 \end{figure}
 
-Compared to Figure \ref{fig::constellations_with_timing_correction_phase_offset}, we see that the EVM has substantially improved. However, it does deviate slightly from our EVM plots when we use BPSK with no phase offset. This occurs because noisy samples are used to find phase differences.
+Compared to our results with BPSK modulation, we see that the EVM with timing compensation has substantially improved, getting close to the no phase offset case. At low SNRs, the EVM is slightly worse because we use noisy samples in our differential demodulation.
 
 \section{Adding Pieces Together}
 

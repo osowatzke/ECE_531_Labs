@@ -8,7 +8,7 @@ modulationOrder = 2; filterSymbolSpan = 4;
 showConstellations = false;
 debugPlots = false;
 useIdealRef = true;
-useDspkMod = false;
+useDspkMod = true;
 phaseOffset = pi/8;
 %% Visuals
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
