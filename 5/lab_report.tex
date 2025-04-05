@@ -296,9 +296,9 @@ In this section, we examine the effect of timing error. We specifically capture 
 
 \noindent Before timing compensation, the signal is sampled at non-ideal points, resulting in increased constellation point errors. These increased errors create large clustering patterns in the constellation. After correcting for these timing errors, the errors in the constellation are reduced. However, our constellation remains titled. This tilt occurs due to a phase offset in the transmit and receive oscillators. Regardless of what we do with the timing compensation, this phase offset will persist.
 
-\section{Symbol Timing Compensation}
+\subsection{Symbol Timing Compensation}
 
-\subsection{Custom Implementation}
+\subsubsection{Custom Implementation}
 
 In this section, we perform symbol timing compensation in MATLAB. For this effort, we implement two custom MATLAB implementations and benchmark them against MATLAB's \texttt{comm.SymbolSynchronizer} object. For the first implementation, we connect the textbook-provided routines together following the structure shown in Figure \ref{fig::timing_recovery_block_diagram}. For the second implementation, we replace the textbook-provided routines with custom system objects. In each implementation, we use a zero-crossing (ZC) timing detector and the following loop filter parameters:
 
@@ -366,7 +366,7 @@ A better indication of the PLL performance is the fractional delay error (i.e. t
 
 \noindent Comparing each of the figures, we see that the timing compensation is dependent on the SNR of the received signal (better SNR leads to better timing compensation). Additionally, across a range of SNRs, the custom routines produce results that are consistent with MATLAB's \texttt{comm.SymbolSynchronizer}.
 
-\subsection{Performance}
+\subsubsection{Performance}
 
 Next, we analyze the performance of the timing compensation logic when we apply a slowly-changing timing offset. For this experiment, we specifically allow the timing offset to drift by a hundredth of symbol every 1024 symbols. In Figure \ref{fig::fractional_delay_timing_offset}, we show the measured fractional delay with a 20 dB SNR, and in Figure \ref{fig::fractional_delay_error_timing_offset}, we show the fractional delay error.
 
@@ -464,7 +464,7 @@ Comparing the plots, we see that the EVM is substantially lower after timing com
 
 Compared to our results with BPSK modulation, we see that the EVM with timing compensation has substantially improved, getting close to the no phase offset case. At low SNRs, the EVM is slightly worse because we use noisy samples in our differential demodulation.
 
-\section{Adding Pieces Together}
+\subsection{Adding Pieces Together}
 
 In this section, we review the timing recovery circuit and the sample rates of each of its blocks. A block diagram of the timing recovery circuit is included in Figure \ref{fig::timing_recovery_block_diagram_2}. Our timing recovery circuit (with the exception of the "asynchronous FIFO" interface) runs at a sample rate of $2/T_s$, where $T_s$ is the symbol duration. As a result, our receive filter must output samples at twice the symbol rate.
 
@@ -538,7 +538,7 @@ Comparing the results of Figure \ref{fig::evm_pi_8_phase_offset} to Figures \ref
 
 \noindent Examining the Figure output, we note that it is close to the result shown in Figure \ref{fig::evm_no_timing_offset}. However, the EVMs are slightly worse because our phase offset is computed based from a noisy input, which leads to more noise in the output.
 
-\section{Testing on Hardware}
+\subsection{Testing on Hardware}
 
 In this section, we perform timing compensation with the PlutoSDR. We start by transmitting a DBPSK reference signal, so we do not have to worry about the phase offset that we observed in Figure \ref{fig::pluto_constellation_raw}.
 
