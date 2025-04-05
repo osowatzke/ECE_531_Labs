@@ -406,17 +406,35 @@ We can quantify how closely our constellation matches the desired constellation 
 	\label{fig::evm_vs_snr}
 \end{figure}
 
-Comparing the plots, we see that the EVM is substantially lower after timing compensation. This is consistent with out qualitative analysis of the constellation. Additionally, we find that the EVM falls with SNR. This is also an expected result because the spread of the constellation points reduces as the SNR increases. With timing compensation, our minimum EVM is about -16 dB. This value is limited by the drift of the timing offset in our simulation.
+Comparing the plots, we see that the EVM is substantially lower after timing compensation. This is consistent with out qualitative analysis of the constellation. Additionally, we find that the EVM falls with SNR. This is also an expected result because the spread of the constellation points reduces as the SNR increases. Additionally, for low SNRs, we see that the EVM after timing compensation is approximately the same as the SNR. This phenomenon occurs because the constellation error at low SNRs is dominated by the noise. As the SNR increases, our EVM with timing compensation converges to about -16 dB. In this simulation, the minimum EVM is primarily limited by the drift of our timing offset.
 
-\noindent We can perform similar analysis with a phase offset instead of a timing offset. For this analysis, we use a phase error of $\pi/8$ radians. Our results are illustrated in Figure \ref{fig::evm_vs_snr_with_phase_offset}.
+	We can perform similar analysis after adding a phase offset of $\pi/8$ radians. The EVMs before and after timing compensation are included in Figures \ref{fig::evm_vs_snr_with_phase_offset} and \ref{fig::evm_vs_snr_with_phase_offset} respectively.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr_with_phase_offset_no_comp.png}}}
+	\caption{Plot of EVM vs SNR with $\protect\pi/8$ Phase Offset and no Timing Compensation}
+	\label{fig::evm_vs_snr_with_phase_offset_no_comp}
+\end{figure}
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr_with_phase_offset.png}}}
-	\caption{Plot of EVM vs SNR for $\protect\pi/8$ Phase Offset}
+	\caption{Plot of EVM vs SNR with $\protect\pi/8$ Phase Offset and Timing Compensation}
 	\label{fig::evm_vs_snr_with_phase_offset}
 \end{figure}
 
-\noindent Compared to Figure \ref{fig::evm_vs_snr}, the EVM is almost 10 dB worse in steady state. This occurs because the phase error has become the limiting factor for the EVM measurement. With an added phase offset of $\pi/8$, we again display the constellation before and after modulation.
+\noindent Comparing both of our Figures, we see that the EVM of the constellation prior to timing compensation is worse than the EVM after timing compensation. Additionally, compared to our results without a phase offset, we see that our EVM has increased. For the constellation with timing correction, our EVM is almost 10 dB worse in steady state. Our minimum EVM is now limited by the phase offset. With perfect timing compensation and no noise our minimum error with a $\pi/8$ phase offset is limited to
+
+\begin{equation}
+	\text{error} = (1 - \cos\pi/8)^2 + \sin^2\pi/8 = 1 - 2\cos\pi/8 + \cos^2\pi/8 + \sin^2\pi/8 = 2 - 2\cos\pi/8 \approx 0.15224 
+\end{equation}
+
+\noindent which corresponds to an EVM of 
+
+\begin{equation}
+	\text{EVM}_{\text{dB}} = 10\log_{10}\left(\text{error}\right) \approx 10\log_{10}(0.15224) \approx -8.17\ \text{dB}
+\end{equation}
+
+\noindent Note that our EVM curve does not hit this minimum value because of timing drift, which leads to timing errors (even after compensation). We can look at the constellations shown in Figure \ref{fig::constellations_with_timing_correction_phase_offset}, to visualize the effects of the phase offset.
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.8\textwidth]{constellations_with_timing_correction_phase_offset.png}}
@@ -424,7 +442,7 @@ Comparing the plots, we see that the EVM is substantially lower after timing com
 	\label{fig::constellations_with_timing_correction_phase_offset}
 \end{figure}
 
-\noindent Examining Figure \ref{fig::constellations_with_timing_correction_phase_offset}, we see that the timing compensation correctly clusters each of the received symbols. However, the symbols have been rotated due to phase error. To account for the phase error, we can use differential modulation (DBPSK vs BPSK). For our DBPSK demodulation, we use the phase difference between adjacent samples to determine the transmitted symbols. We leverage the following equation to find the phase different between samples:
+\noindent Examining the figure, we see that the timing compensation correctly clusters each of the received symbols. However, the symbols have been rotated due to phase error. To account for the phase error, we can use differential modulation (DBPSK vs BPSK). For our DBPSK demodulation, we use the phase difference between adjacent samples to determine the transmitted symbols. We can use the following equation to examine the constellation points after differential demodulation:
 
 \begin{equation}
 	y[n] = A[n]e^{j\phi[n]}*e^{-j\phi[n-1]}

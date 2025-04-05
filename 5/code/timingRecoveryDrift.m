@@ -9,7 +9,7 @@ showConstellations = false;
 debugPlots = false;
 useIdealRef = true;
 useDspkMod = false;
-phaseOffset = false;
+phaseOffset = pi/8;
 %% Visuals
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband');
