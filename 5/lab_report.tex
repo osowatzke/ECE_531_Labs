@@ -172,7 +172,7 @@ The interpolator applies fractional delays to the input signal. It specifically 
 
 \subsubsection{Implementation}
 
-Following the flowchart shown in Figure \ref{fig::timing_recovery_block_diagram}, we implement timing compensation in MATLAB and compare the behavior of our implementation to MATLAB's \texttt{comm.SymbolSychronizer} object. Next, we use our custom implementation to perform timing compensation on an input with a slowly-changing timing offset. We perform error vector magnitude (EVM) measurements of the signal before and after timing compensation at different SNR levels using MATLAB's \texttt{comm.EVM} object. Then, we add a fixed phase offset of $\pi/8$ radians and repeat the EVM measurements. We compare the EVM before and after adding the phase offset and explain how it affects timing recovery performance.
+Following the flowchart shown in Figure \ref{fig::timing_recovery_block_diagram}, we implement timing compensation in MATLAB and compare the behavior of our implementation to MATLAB's \texttt{comm.SymbolSychronizer} object. Next, we use our custom implementation to perform timing compensation on an input with a slowly-changing timing offset. We specifically perform error vector magnitude (EVM) measurements of the signal before and after timing compensation at different SNR levels using MATLAB's \texttt{comm.EVM} object. Then, we add a fixed phase offset of $\pi/8$ radians and repeat the EVM measurements. We compare the EVM before and after adding the phase offset and explain how it affects timing recovery performance.
 
 \subsection{Adding Pieces Together}
 \label{section::sim_procedure}
@@ -199,7 +199,7 @@ In this section, we investigate how the timing compensation logic can be integra
 	
 \subsection{Testing on Hardware}
 
-In this experiment, we performing timing correction on data captured with the PlutoSDR. We specifically transmit a DBPSK or QPSK reference signal in a loopback configuration and perform timing correction on the received signal. Using our collected data we compute the error vector magnitude (EVM) before and after timing correction. We compare these results to the simulation results captured in Section \ref{section::sim_procedure}. Using the comparison results, we highlight any differences in performance. Then, we discuss challenges in the hardware implementation and any algorithm modifications that we needed to make when moving from simulation to hardware.
+In this experiment, we performing timing correction on data captured with the PlutoSDR. We specifically transmit a DBPSK reference signal in a loopback configuration and perform timing correction on the received signal. Using our collected data we compute the error vector magnitude (EVM) before and after timing correction. We compare these results to the simulation results captured in Section \ref{section::sim_procedure}. Using the comparison results, we highlight any differences in performance. Then, we discuss challenges in the hardware implementation and any algorithm modifications that were needed when moving from simulation to hardware.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
