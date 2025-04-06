@@ -40,7 +40,11 @@
 
 \section{Introduction}
 %Introduction to the laboratory experiment, including a brief description of the objectives and goals.
-In this report, we will examine time offset errors and their impact on sampling and recovery in digital communications systems. We will implement three timing compensation methods: Zero crossing, Gardner, and Muller and Mueller method. To evaluate signal quality with these methods, we will derive EVM measurements before and after time correction. 
+
+In this lab, we focus on pulse shaping/matched filtering, timing errors, and symbol timing compensation. We start by analyzing pulse shaping and matched filtering and review the differences between type I and type II Nyquist filters. For our analysis, we specifically focus on SRRC filters (a type II Nyquist filter). Next, we discuss timing errors and examine captured PlutoSDR data for a practical example of them. Then, we learn how to perform symbol timing compensation using the Zero Crossing, Garnder, and M\"{u}ller and Mueller methods. Using what we learned, we implement one of the timing compensation methods in MATLAB. To show the validity of our implementation, we perform timing compensation on data captured with a slowly-drifing timing offset and examine the EVM before and after timing compensation. We also introduce a phase offset and remeasure the EVM. Then, we examine how our timing compensation logic can be integrated into the receiver and analyze the data rates of each of its sub-components. Similar to our previous analysis, we measure the EVM with no timing offsets, a fixed timing offset, and a fixed phase offset. Finally, we perform timing compensation in the PlutoSDR and measure the EVM before and after timing compensation. We compare our hardware results to data we previously collected in simulation.  
+
+%Introduction to the laboratory experiment, including a brief description of the objectives and goals.
+% In this report, we will examine time offset errors and their impact on sampling and recovery in digital communications systems. We will implement three timing compensation methods: Zero crossing, Gardner, and Muller and Mueller method. To evaluate signal quality with these methods, we will derive EVM measurements before and after time correction. 
 
 % Next, we will assess the impact of phase offsets on reference constellations which may cause EVM degradation. Finally, we will determine the ideal recovery block placement for time and phase alignment for improved performance across different SNR conditions.
 
@@ -611,5 +615,8 @@ In this section, we perform timing compensation with the PlutoSDR. We start by t
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
-	
+
+In this lab, we analyze the effects of timing offsets and learn how to perform timing synchronization. We start by analyze the effects of pulse shaping and matched filtering. 
+
+
 \end{document}
