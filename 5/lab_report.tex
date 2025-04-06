@@ -383,17 +383,17 @@ Next, we analyze the performance of the timing compensation logic when we apply 
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{fractional_delay_timing_offset.png}}}
-	\caption{Fractional Delay Measured for Data with Slowly Varying Timing Delay}
+	\caption{Fractional Delay Measured for Data with a Slowly Varying Timing Delay}
 	\label{fig::fractional_delay_timing_offset}
 \end{figure}
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{fractional_delay_error_timing_offset.png}}}
-	\caption{Fractional Delay Error Measured for Data with Slowly Varying Timing Delay}
+	\caption{Fractional Delay Error Measured for Data with a Slowly Varying Timing Delay}
 	\label{fig::fractional_delay_error_timing_offset}
 \end{figure}
 
-\noindent Examining the figure outputs, we see that the fractional delay increases linearly with time as expected. Additionally, we see that the timing error converges to zero. However, compared to the outputs shown in Figures \ref{fig::delay_error_no_noise}, the fractional delay error oscillates at steady state. In Figure \ref{fig::constellations_with_timing_correction}, we show the constellations before and after timing compensation. For this analysis, we use BPSK modulation.
+\noindent Examining the figure outputs, we see that the fractional delay increases linearly with time as expected. Additionally, we see that the timing error converges to zero. However, compared to the outputs shown in Figure \ref{fig::delay_error_no_noise}, the fractional delay error oscillates even at steady state. For this analysis, our transmitter and receiver are configured to use BPSK modulation. In Figure \ref{fig::constellations_with_timing_correction}, we show the constellations before and after timing compensation.
  
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.8\textwidth]{constellations_with_timing_correction.png}}
@@ -403,7 +403,7 @@ Next, we analyze the performance of the timing compensation logic when we apply 
 
 \noindent Before timing compensation, the constellation does not match closely with our expectations for BPSK modulation. However, after timing compensation, all the received data is clustered around $\pm 1$ as expected.
 
-We can quantify how closely our constellation matches the desired constellation by examining the error vector magnitude (EVM). In Figures \ref{fig::evm_vs_snr_no_correction} and \ref{fig::evm_vs_snr}, we plot the EVM of the data against SNR. Figure \ref{fig::evm_vs_snr_no_correction} shows the EVM prior to timing correction, Figure \ref{fig::evm_vs_snr}, shows the EVM after timing correction. 
+We can quantify how closely our constellation matches the desired constellation by examining the error vector magnitude (EVM). In Figures \ref{fig::evm_vs_snr_no_correction} and \ref{fig::evm_vs_snr}, we plot the EVM of the data against SNR. Figure \ref{fig::evm_vs_snr_no_correction} shows the EVM prior to timing correction, and Figure \ref{fig::evm_vs_snr} shows the EVM after timing correction. 
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_vs_snr_no_correction.png}}}
