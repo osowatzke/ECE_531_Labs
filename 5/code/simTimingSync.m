@@ -15,12 +15,12 @@ filterSymbolSpan = 10;
 snr_dB = 5:5:40;
 delay = 0;
 delayDrift = 0.01;
-phaseOffset = 0;
+phaseOffset = pi/8;
 %% Simulation Flags
 showConstellations = false;
 debugControlSystem = false;
 useIdealRef = true;
-useDspkMod = false;
+useDspkMod = true;
 useBuiltInSync = true;
 %% Select Symbol Synchronizer
 if useBuiltInSync
