@@ -481,9 +481,9 @@ Comparing the plots, we see that the EVM is substantially lower after timing com
 
 In this section, we review the timing recovery circuit and the sample rates of each of its blocks. A block diagram of the timing recovery circuit is included in Figure \ref{fig::timing_recovery_block_diagram_2}. Our timing recovery circuit (with the exception of the "asynchronous FIFO" interface) runs at a sample rate of $2/T_s$, where $T_s$ is the symbol duration. As a result, our receive filter must output samples at twice the symbol rate.
 
-	The interpolator receives a fractional delay, which is updated each trigger. It outputs the signal with fractional delay and delayed-version of the trigger to an "asynchronous FIFO" interface. This FIFO stores the filter output every time it receives a trigger and outputs 1 sample per symbol. Triggers occur on average once per cycle as well, so there is little risk of overflow. To the ensure the design is resilient, we may clear the FIFO if it starts to overflow. However, this feature is not included in our implementation.
+	The interpolator receives a fractional delay, which is updated each trigger. It outputs the signal with a fractional delay and a delayed-version of the trigger to an "asynchronous FIFO" interface. This FIFO stores the filter output every time it receives a trigger and outputs 1 sample per symbol. Triggers occur on average once per cycle as well, so there is little risk of overflow. To the ensure the design is resilient, we may clear the FIFO if it starts to overflow. However, this feature is not included in our implementation.
 	
-	The timing error detector implements the zero-crossing algorithm. As such, it requires an additional interpolator, which is not shown. The timing error detector outputs an error every time it receives a trigger. When it does not receive a trigger, the timing error detector outputs a zero. The loop filter uses a PI filter and provides stimulus to the interpolation controller, which, in turn, creates triggers and updates the fractional delay parameter.
+	The timing error detector implements the zero-crossing algorithm. As such, it requires an additional interpolator, which is not shown. This interpolator is a linear interpolator and upsamples the data by a factor of 2. The timing error detector outputs an error every time it receives a trigger. When it does not receive a trigger, the timing error detector outputs a zero. The loop filter uses a PI filter and provides stimulus to the interpolation controller, which, in turn, creates triggers and updates the fractional delay parameter.
 	
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{timing_recovery_block_diagram_2.png}}}
@@ -491,7 +491,7 @@ In this section, we review the timing recovery circuit and the sample rates of e
 	\label{fig::timing_recovery_block_diagram_2}
 \end{figure}
 
-We evaluate the performance of the timing recovery block by measuring the EVM under a couple different conditions. First we measure the EVM with no timing offsets (i.e. the ideal base case). These results are included in Figures \ref{fig::evm_no_timing_offset} and \ref{fig::evm_no_timing_offset}.
+We evaluate the performance of the timing recovery block by measuring the EVM under a couple different conditions. First we measure the EVM with no timing offsets (i.e. the ideal base case). These results are included in Figures \ref{fig::evm_no_timing_offset_no_comp} and \ref{fig::evm_no_timing_offset}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_no_timing_offset_no_comp.png}}}
