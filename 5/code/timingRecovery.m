@@ -3,12 +3,12 @@ clear; clc;
 %% General system details
 numSamples = 10000;
 modulationOrder = 2;
-snr = 20; %5:5:40;
+snr = 5:5:40;
 delay = 0;
-phaseOffset = pi/4;
+phaseOffset = 0;
 N = 8;
 NF = 4;
-showConstellations = true;
+showConstellations = false;
 useIdealRef = true;
 useDspkMod = false;
 %% Visuals

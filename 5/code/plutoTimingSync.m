@@ -5,6 +5,7 @@ useDspkMod = true;
 % Gain on transmitter
 txGain = -65:5:-20;
 evm_dB = zeros(size(txGain));
+raw_evm_dB = zeros(size(txGain));
 for i = 1:length(txGain)
     %% System set up
     % Set up radio
@@ -39,6 +40,13 @@ for i = 1:length(txGain)
     OSR = samplesPerSymbol/decimation;
     % Run a zero-gain boxcar filter prior to decimation
     rxRaw = data(1:2:end);
+    ccOut = xcorr(modData, rxRaw);
+    [~, maxIdx] = max(abs(ccOut));
+    refDly = floor(length(ccOut)/2) + 1 - maxIdx;
+    if refDly < 0
+        refDly = refDly + length(rxSync);
+    end
+    rxRaw = rxRaw((dly+1):end);
     % o = sum(reshape(data,OSR,[]))/OSR;
     % Plot data with no delay
     symbolSync = comm.SymbolSynchronizer();
@@ -55,17 +63,22 @@ for i = 1:length(txGain)
     rxSync = rxSync(2000:end);
     modData = modData(2000:end);
     if useDspkMod
-        % rxRaw = rxRaw(2:end).*exp(-1i*angle(rxRaw(1:(end-1))));
+        rxRaw = rxRaw(2:end).*exp(-1i*angle(rxRaw(1:(end-1))));
         rxSync = rxSync(2:end).*exp(-1i*angle(rxSync(1:(end-1))));
         modData = modData(2:end).*exp(-1i*angle(modData(1:(end-1))));
     end
-    minSize = min(length(rxSync),length(modData));
+    minSize = min([length(rxSync),length(rxRaw),length(modData)]);
     rxSync = rxSync(1:minSize);
+    rxRaw = rxRaw(1:minSize);
     modData = modData(1:minSize);
     % cdPre(rxRaw(:));
     % cdPost(rxSync(:));
     evm = comm.EVM();
     evm_dB(i) = 20*log10(evm(modData,rxSync)/100);
+    if evm_dB(i) > -3
+        keyboard;
+    end
+    raw_evm_dB(i) = 20*log10(evm(modData,rxRaw)/100);
     % %% Process received data for timing offset
     % for index = 0:300
     %     % Delay signal
@@ -81,6 +94,12 @@ end
 figure(1);
 clf;
 plot(txGain, evm_dB,'LineWidth',1.5);
+grid on;
+xlabel('Tx Gain (dB)');
+ylabel('EVM (dB)')
+figure(2);
+clf;
+plot(txGain, raw_evm_dB,'LineWidth',1.5);
 grid on;
 xlabel('Tx Gain (dB)');
 ylabel('EVM (dB)')

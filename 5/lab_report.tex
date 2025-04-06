@@ -561,6 +561,18 @@ Comparing the results of both Figures, we see that the timing compensation logic
 
 In this section, we perform timing compensation with the PlutoSDR. We start by transmitting a DBPSK reference signal, so we do not have to worry about the phase offset that we observed in Figure \ref{fig::pluto_constellation_raw}.
 
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{pluto_evm_no_comp.png}}}
+	\caption{Plot of PlutoSDR EVM vs TX Gain before Timing Compensation}
+	\label{fig::pluto_evm_no_comp}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{pluto_evm.png}}}
+	\caption{Plot of PlutoSDR EVM vs TX Gain after Timing Compensation}
+	\label{fig::pluto_evm}
+\end{figure}
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 	
