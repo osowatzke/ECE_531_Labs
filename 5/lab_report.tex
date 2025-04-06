@@ -55,7 +55,7 @@ In this section, we review the procedure for each of our experiments. We start b
 
 \subsection{Pulse Shaping and Matched Filtering}
 
-In this experiment, we analyze the effects of pulse shaping and matched filtering. Pulse shaping and match filtering together serve 3 purposes: limiting signal bandwidth, maximizing SNR, and minimizing ISI. In this experiment, we use an SRRC filter which is defined as follows:
+In this experiment, we analyze the effects of pulse shaping and matched filtering. Pulse shaping and matched filtering together serve 3 purposes: limiting signal bandwidth, maximizing SNR, and minimizing ISI. In this experiment, we use an SRRC filter which is defined as follows:
 
 \begin{equation}
 	h(t) = \begin{cases}
@@ -82,10 +82,10 @@ In this experiment, we learn how to perform symbol timing compensation. The algo
 	\label{fig::timing_recovery_block_diagram}
 \end{figure}
 
-\noindent In the above figure, the interpolator applies a fractional delay. The timing error detector (TED) measures the time offsets. The loop filter stabilizes error correction, and the interpolator controller manages the interpolation process.
+\noindent In the above figure, the interpolator applies a fractional delay. The timing error detector (TED) measures the timing offsets. The loop filter stabilizes error correction, and the interpolator controller manages the interpolation process.
 
 \subsubsection{Timing Error Detector}
-For the timing error detector, three common algorithms are the zero-crossing (ZC) method, the Gardner method, and the M\"{u}ller and Mueller method. For the experiments in this lab, we use the zero-crossing method which operates as follows:
+For the timing error detector, three algorithms are typically employed: the zero-crossing (ZC) method, the Gardner method, and the M\"{u}ller and Mueller method. For the experiments in this lab, we use the zero-crossing method, which operates as follows:
 
 \begin{align}
 	e(k) = &\text{Re}(x((k-1/2)T_s + \tau))\left[\text{sgn}\{\text{Re}(x((k-1)T_s+\tau))\} - \text{sgn}\{\text{Re}(x(kT_s+\tau))\}\right] + \\
@@ -104,7 +104,7 @@ The timing error detector output is then fed into the loop filter, which produce
 \noindent In the above equation, $G_1$ and $G2$ are constants defined as follows:
 
 \begin{align}
-	G_1 = \frac{-4\zeta\theta}{G_DN\Delta} && G_2 = \frac{4\theta^2}{G_DN\Delta}
+	G_1 = \frac{-4\zeta\theta}{G_DN\Delta} && G_2 = \frac{-4\theta^2}{G_DN\Delta}
 \end{align}
 
 \noindent and $\theta$ and $\Delta$ are further defined follows:
