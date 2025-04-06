@@ -214,7 +214,7 @@ Type I Nyquist filters are defined by a rectangular pulse in the frequency domai
 
 Type II Nyquist filters also have zero crossing at $nT$. However, they have a bandwidth larger than the minimum bandwidth, which allows them to achieve lower ISI sensitivity than type I Nyquist filters. The raised cosine filter is an example of a type II Nyquist filter. Its impulse responses decays with $1/t^3$, which quickly converges in the presence of timing errors.
 
-Next, we compare the frequency response of the SRRC filters for $\beta \in [0,0.1,0.25,0.5,1]$. These frequency responses for these filters are captured in Figures \ref{fig::srrc_freq_response_beta_0} - \ref{fig::srrc_freq_response_beta_1}.
+Next, we compare the frequency response of the SRRC filters for $\beta \in [0,0.1,0.25,0.5,1]$. The frequency responses for these filters are captured in Figures \ref{fig::srrc_freq_response_beta_0} - \ref{fig::srrc_freq_response_beta_1}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{srrc_freq_response_beta_0.png}}}
@@ -246,7 +246,7 @@ Next, we compare the frequency response of the SRRC filters for $\beta \in [0,0.
 	\label{fig::srrc_freq_response_beta_1}
 \end{figure}
 
-\noindent Examining the frequency response of each of the filters, we see that the spectral efficiency is maximized for small values of the rolloff factor, $\beta$. However, the sharp filter transitions required for small $\beta$ increase the complexity of the filter. We can confirm this by the filter's impulse response for $\beta=0$ and $\beta=1$.
+\noindent Examining the frequency response of each filter, we see that the spectral efficiency is maximized for small values of the rolloff factor, $\beta$. However, the sharp filter transitions required for small $\beta$ increase the complexity of the filter. We can confirm this by examining the filter's impulse response for $\beta=0$ and $\beta=1$.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{srrc_impulse_response_beta_0.png}}}
@@ -262,7 +262,7 @@ Next, we compare the frequency response of the SRRC filters for $\beta \in [0,0.
 
 \noindent Comparing the two impulses responses, we see that the impulse response with $\beta=1$ converges much faster than the impulse response with $\beta=0$. This allows us to truncate the impulse response sooner, which in turn reduces the filter length and complexity.
 
-Finally, we examine how different rolloff factors affect timing recovering performance. To do this we analyze the received filter output for $\beta \in [0.1, 0.5, 0.9]$. Our results are captured in Figures \ref{fig::timing_recovery_beta_0_1} - \ref{fig::timing_recovery_beta_0_9}.
+Finally, we examine how different rolloff factors affect timing recovering performance. To do this, we analyze the received filter output for $\beta \in [0.1, 0.5, 0.9]$. Our results are captured in Figures \ref{fig::timing_recovery_beta_0_1} - \ref{fig::timing_recovery_beta_0_9}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{timing_recovery_beta_0_1.png}}}
