@@ -624,6 +624,14 @@ In this lab, we learned about pulse shaping, matched filtering, timing errors, a
 
 Next, we captured QPSK-modulated data with the PlutoSDR to visualize the impacts of timing error. In this experiment, we saw that timing error increased the cluster size of our constellation points, resulting in error. We also observed phase offsets, which tilted our constellation. The constellation tilt and phase error persisted even after performing timing compensation.
 
+Then, we learned how to perform timing compensation. Our algorithm for timing compensation included 4 main components: the timing error detector, the loop filter, the interpolation controller, and the interpolator. The timing error detector measured the timing offset. The loop filter stabilized the error correction. The interpolation controller managed the interpolation process, and the interpolator applied a fractional delay to the input samples. To reinforce what we learned, we implemented a custom timing compensation block, which had comparable performance to MATLAB's \texttt{comm.SymbolSychronizer}.
+
+For a slowly varying timing offset, we measured the EVM before and after timing compensation. With timing compensation, we found that the EVM was approximately -SNR at low SNR values. As the SNR increased, we found that the EVM was limited by the drift of the timing offset and imperfections in the system such as our truncated Nyquist filter. With a phase offset, we found that the EVM was significantly degraded, and was at best $10\log_{10}(2 - 2\cos\theta)$. In other words, we required phase compensation in addition to timing compensation.
+
+One technique we explored for phase compensation was differential modulation/demodulation, specifically DBPSK. Using this modulation, we were able to achieve similar results to our data without a phase shift. However, there was some slight degradation because we used a noisy samples for our differential demodulation.
+
+ 
+
 Type I Nyquist filters have an infinite impulse response and small timing errors input to a type I Nyquist filter result in large ISI because their impulse response decays with 1/t, which does not converge.
 
 
