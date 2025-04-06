@@ -307,15 +307,17 @@ In this section, we examine the effect of timing error. We specifically capture 
 \subsection{Symbol Timing Compensation}
 \label{section::symbol_timing_compensation}
 
+In this section, we implement custom timing compensation logic in MATLAB, which produces results comparable to the \texttt{comm.SymbolSynchronizer} object. We then examine the performance of this logic when we have a slowing-drifting timing offset. We specifically measure the error vector magnitude (EVM) before and after timing compensation. We also add phase errors on top of the timing errors and analyze their impact on our EVM measurements.
+
 \subsubsection{Custom Implementation}
 
-In this section, we perform symbol timing compensation in MATLAB. For this effort, we implement two custom MATLAB implementations and benchmark them against MATLAB's \texttt{comm.SymbolSynchronizer} object. For the first implementation, we connect the textbook-provided routines together following the structure shown in Figure \ref{fig::timing_recovery_block_diagram}. For the second implementation, we replace the textbook-provided routines with custom system objects. In each implementation, we use a zero-crossing (ZC) timing detector and the following loop filter parameters:
+To perform symbol timing compensation, we implement two custom MATLAB implementations and benchmark them against MATLAB's \texttt{comm.SymbolSynchronizer}. For the first implementation, we connect the textbook-provided routines together following the structure shown in Figure \ref{fig::timing_recovery_block_diagram}. For the second implementation, we replace the textbook-provided routines with custom system objects. In each implementation, we use a zero-crossing (ZC) timing detector and the following loop filter parameters:
 
 \begin{equation*}
 	[N, \zeta, B_{loop}, G_D] = [2, 1, 0.01, 2.7]
 \end{equation*}
 
-\noindent To characterize our timing recovery circuits, we create noise-free data with a fixed timing error. We then run the custom implementations and MATLAB's \texttt{comm.SymbolSynchronizer} on the same generated data. In Figure \ref{fig::symbol_sync_no_noise}, we plot the synchronized symbols output by each routine on the same axis. Similarly, in Figure \ref{fig::fractional_delay_no_noise}, we plot the fractional delay ($\mu(n)$) output by each routine on the same axis.
+\noindent To characterize our timing recovery circuits, we create noise-free data with a fixed timing error. Then, we run the custom implementations and MATLAB's \texttt{comm.SymbolSynchronizer} on the same generated data. In Figure \ref{fig::symbol_sync_no_noise}, we plot the synchronized symbols output by each routine on the same axis. Similarly, in Figure \ref{fig::fractional_delay_no_noise}, we plot the fractional delay ($\mu(n)$) output by each routine on the same axis.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{symbol_sync_no_noise.png}}}
@@ -351,13 +353,13 @@ In this section, we perform symbol timing compensation in MATLAB. For this effor
 	\label{fig::timing_offset}
 \end{figure}
 
-\noindent Examining the timing offsets, we see that the both routines output the same values. We can also draw a few other conclusions. First, we see that the error signal alternates between zero and non-zero values. This is expected because the timing error detector only outputs non-zero values when it receives a trigger, which happens roughly every other cycle. Additionally, we see that the timing offset rapidly oscillates even after the fractional delay has converged. However, we have previously shown that this is not an error because the fractional delay converges and because the results are consistent with the \texttt{comm.SymbolSynchronizer}.
+\noindent Examining the timing offsets, we see that both routines output the same values. We can also draw a few other conclusions. First, we see that the error signal alternates between zero and non-zero values. This is expected because the timing error detector only outputs non-zero values when it receives a trigger, which happens roughly every other cycle. Additionally, we see that the timing offset rapidly oscillates even after the fractional delay has converged. However, there is not an error in our implementation. Our results are consistent with the \texttt{comm.SymbolSynchronizer} object, and our fractional delay converges.
 
 A better indication of the PLL performance is the fractional delay error (i.e. the difference between the measured fractional delay and configured fractional delay). Figure \ref{fig::delay_error_no_noise} display this error for a noise-free signal, and Figures \ref{fig::delay_error_20dB_snr} and \ref{fig::delay_error_10dB_snr} display this error for 20dB and 10dB SNR respectively. 
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{delay_error_no_noise.png}}}
-	\caption{Fractional Delay Error for Noise Free Signal}
+	\caption{Fractional Delay Error for Noise-Free Signal}
 	\label{fig::delay_error_no_noise}
 \end{figure}
 
