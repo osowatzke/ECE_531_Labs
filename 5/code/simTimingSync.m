@@ -1,6 +1,8 @@
 %% Clean Workspace
 clear;
 clc;
+%% Setup path
+addpath('./timingCorrection')
 %% Generate System Details
 % Section 4: numFrames=200, frameSize=1024
 % Section 5: numFrames=1, frameSize=10000
@@ -19,6 +21,13 @@ showConstellations = false;
 debugControlSystem = false;
 useIdealRef = true;
 useDspkMod = false;
+useBuiltInSync = true;
+%% Select Symbol Synchronizer
+if useBuiltInSync
+    SymbolSynchronizer = @comm.SymbolSynchronizer;
+else
+    SymbolSynchronizer = @SymbolSynchronizer;
+end
 %% Visuals
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband before Timing Offset');
@@ -48,7 +57,7 @@ for i = 1:length(snr_dB)
     RxFltGd = grpdelay(RxFlt.coeffs.Numerator,1,1);
     RxFltRef = clone(RxFlt);
     %% Symbol Synchronizer
-    symbolSync = comm.SymbolSynchronizer(...
+    symbolSync = SymbolSynchronizer(...
         SamplesPerSymbol=2,...
         NormalizedLoopBandwidth=0.01, ...
         DetectorGain=5.4,...
@@ -190,3 +199,5 @@ grid on;
 title('Plot of EVM vs SNR after Timing Compensation')
 xlabel('SNR (dB)');
 ylabel('EVM (dB)')
+%% Reset path
+rmpath('./timingCorrection')
