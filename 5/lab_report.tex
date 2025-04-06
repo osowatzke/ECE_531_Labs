@@ -599,6 +599,16 @@ In this section, we perform timing compensation with the PlutoSDR. We start by t
 	\label{fig::pluto_evm}
 \end{figure}
 
+\noindent The EVM after timing compensation closely matches the EVM captured in Figure \ref{fig::evm_0p25_symbol_offset}. However, the EVM without timing compensation is very different from the EVM captured in Figure \ref{fig::evm_0p25_symbol_offset_no_comp}. This is because the timing offset varies widely across each of the collected data points. We can visualize this by examining the fractional delay, which is included in Figure \ref{fig::pluto_fractional_delay}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{pluto_fractional_delay.png}}}
+	\caption{Plot of Fractional Delay Measured from PlutoSDR Data}
+	\label{fig::pluto_fractional_delay}
+\end{figure}
+
+\noindent Note that the fractional delays are given at twice the symbol rate. As a result, delays close to 0 or 1 may correspond to a half symbol or full symbol delay, which correspond to the worst and best EVMs respectively.
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 	
