@@ -6,8 +6,8 @@ addpath('./timingCorrection')
 %% Generate System Details
 % Section 4: numFrames=200, frameSize=1024
 % Section 5: numFrames=1, frameSize=10000
-numFrames = 1;
-frameSize = 10000;
+numFrames = 200;
+frameSize = 1024;
 numSamples = numFrames*frameSize;
 samplesPerSymbol = 8;
 filterSymbolSpan = 10;
@@ -15,12 +15,12 @@ filterSymbolSpan = 10;
 snr_dB = 5:5:40;
 delay = 0;
 delayDrift = 0.01;
-phaseOffset = pi/4;
+phaseOffset = 0;
 %% Simulation Flags
 showConstellations = false;
 debugControlSystem = false;
 useIdealRef = true;
-useDspkMod = true;
+useDspkMod = false;
 useBuiltInSync = true;
 %% Select Symbol Synchronizer
 if useBuiltInSync
