@@ -297,6 +297,7 @@ In this section, we examine the effect of timing error. We specifically capture 
 \noindent Before timing compensation, the signal is sampled at non-ideal points, resulting in increased constellation point errors. These increased errors create large clustering patterns in the constellation. After correcting for these timing errors, the errors in the constellation are reduced. However, our constellation remains titled. This tilt occurs due to a phase offset in the transmit and receive oscillators. Regardless of what we do with the timing compensation, this phase offset will persist.
 
 \subsection{Symbol Timing Compensation}
+\label{section::symbol_timing_compensation}
 
 \subsubsection{Custom Implementation}
 
@@ -466,6 +467,7 @@ Comparing the plots, we see that the EVM is substantially lower after timing com
 Compared to our results with BPSK modulation, we see that the EVM with timing compensation has substantially improved, getting close to the no phase offset case. At low SNRs, the EVM is slightly worse because we use noisy samples in our differential demodulation.
 
 \subsection{Adding Pieces Together}
+\label{section::adding_pieces_together}
 
 In this section, we review the timing recovery circuit and the sample rates of each of its blocks. A block diagram of the timing recovery circuit is included in Figure \ref{fig::timing_recovery_block_diagram_2}. Our timing recovery circuit (with the exception of the "asynchronous FIFO" interface) runs at a sample rate of $2/T_s$, where $T_s$ is the symbol duration. As a result, our receive filter must output samples at twice the symbol rate.
 
@@ -559,7 +561,31 @@ Comparing the results of both Figures, we see that the timing compensation logic
 
 \subsection{Testing on Hardware}
 
-In this section, we perform timing compensation with the PlutoSDR. We start by transmitting a DBPSK reference signal, so we do not have to worry about the phase offset that we observed in Figure \ref{fig::pluto_constellation_raw}.
+In this section, we perform timing compensation with the PlutoSDR. We start by transmitting BPSK symbols. The resulting constellations before and after timing compensation are included in Figure \ref{fig::pluto_constellations_no_comp}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{pluto_constellations_no_comp.png}}}
+	\caption{Constellations Collected with PlutoSDR before and after Timing Compensation}
+	\label{fig::pluto_constellations_no_comp}
+\end{figure}
+
+\noindent Examining the constellations, we observe time, phase, and frequency offsets. The timing compensation only corrects for the timing offsets. However, the phase and frequency offsets still persist. We can use DBPSK modulation to get rid of the phase offsets. The constellations after differential demodulation are shown in Figure \ref{fig::pluto_constellations_dbpsk}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{pluto_constellations_dbpsk.png}}}
+	\caption{Constellations Collected with PlutoSDR using Differential Demodulation}
+	\label{fig::pluto_constellations_dbpsk}
+\end{figure}
+
+\noindent Compared to Figure \ref{fig::pluto_constellations_no_comp}, we see that the differential demodulation resolve the phase offsets. Because our frequency offsets are small, the differential demodulation effectively handles them as well. One additional problem, we observe on hardware but not in simulation is the amplitude of our signal being less than 1. For phase demodulation, this has no impact on the BER. However, it can significantly distort our EVM metric. To compensate for this, we scale our receive data, so it has an average power of 1. Our constellations after performing this scaling are shown in Figure \ref{fig::pluto_constellations_dbpsk_amp_comp}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.7\textwidth]{pluto_constellations_dbpsk_amp_comp.png}}}
+	\caption{Constellations Collected with PlutoSDR after Amplitude Correction}
+	\label{fig::pluto_constellations_dbpsk_amp_comp}
+\end{figure}
+
+\noindent With amplitude correction, differential demodulation, and timing compensation, the constellation looks as we would expect. We can now measure the EVM. To produce results comparable to Sections \ref{section::symbol_timing_compensation} and \ref{section::adding_pieces_together}, we can sweep the PlutoSDR transmitter gain to modify the SNR of the signal. The EVM before timing compensation is shown in Figure \ref{fig::pluto_evm_no_comp} and the EVM after timing compensation is shown in Figure \ref{fig::pluto_evm}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{pluto_evm_no_comp.png}}}

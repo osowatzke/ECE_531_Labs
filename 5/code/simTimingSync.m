@@ -34,7 +34,7 @@ cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
 cdPost = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband after Timing Offset');
 cdPre.Position(1) = 50;
-cdPost.Position(1) = cdPre.Position(1)+cdPre.Position(3)+10;
+cdPost.Position(1) = cdPre.Position(1)+cdPre.Position(3)+10; % Place side by side
 %% Generate symbols
 data = randi([0 1], numSamples, 1);
 mod = comm.DBPSKModulator();

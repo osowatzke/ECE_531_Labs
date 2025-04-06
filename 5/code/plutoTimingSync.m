@@ -1,105 +1,130 @@
-% User tunable (samplesPerSymbol>=decimation)
-samplesPerSymbol = 8; decimation = 4;
-frameSize = 2^16;
-useDspkMod = true;
-% Gain on transmitter
+%% Clean Workspace
+clear;
+clc;
+%% Setup path
+addpath('./timingCorrection')
+%% System Parameters
+samplesPerSymbol = 8;
+decimation = 4;
+frameSize = 2^14;
+samplesPerFrame = frameSize*samplesPerSymbol;
 txGain = -65:5:-20;
-evm_dB = zeros(size(txGain));
-raw_evm_dB = zeros(size(txGain));
+%% Synchronizer Configuration
+useBuiltInSync = true;
+correctAmplitude = true;
+showConstellations = false;
+useDspkMod = true;
+%% Select Symbol Synchronizer
+if useBuiltInSync
+    SymbolSynchronizer = @comm.SymbolSynchronizer;
+else
+    SymbolSynchronizer = @SymbolSynchronizer;
+end
+%% Visuals
+cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
+    'Name','Baseband');
+cdPost = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
+    'Name','Baseband after Timing Sync');
+cdPre.Position(1) = 50;
+cdPost.Position(1) = cdPre.Position(1)+cdPre.Position(3)+10; % Place side by side
+%% Initialize Output Arrays
+corrEvm_dB = zeros(size(txGain));
+initEvm_dB = zeros(size(txGain));
+timingErr = zeros(size(txGain));
 for i = 1:length(txGain)
     %% System set up
     % Set up radio
-    tx = sdrtx('Pluto','SamplesPerFrame',frameSize*8,'Gain',txGain(i));
-    rx = sdrrx('Pluto','SamplesPerFrame',frameSize*8,'OutputDataType','double','GainSource', 'Manual');
-    % Create binary data for 48, 2-bit symbols
-    data = randi([0 1],2^16,1);
-    % Modulate data
-    mod = comm.DBPSKModulator(); %QPSKModulator('BitInput',true);
+    tx = sdrtx('Pluto','SamplesPerFrame',samplesPerFrame,'Gain',txGain(i));
+    rx = sdrrx('Pluto','SamplesPerFrame',4*samplesPerFrame,...
+        'OutputDataType','double','GainSource', 'Manual');
+    %% Create binary data for symbols
+    data = randi([0 1],frameSize,1);
+    %% Modulate data
+    mod = comm.DBPSKModulator();
     modData = complex(mod(data));
-    % Set up filters
+    %% Set up filters
     rctFilt = comm.RaisedCosineTransmitFilter( ...
         'OutputSamplesPerSymbol', samplesPerSymbol);
     rcrFilt = comm.RaisedCosineReceiveFilter( ...
         'InputSamplesPerSymbol',  samplesPerSymbol, ...
         'DecimationFactor',       decimation);
-    % Pass data through radio
+    %% Pass data through radio
     tx.transmitRepeat(rctFilt(modData));
     data = rcrFilt(rx());
-    meanPwr = mean(data(4000:end).*conj(data(4000:end)));
-    10*log10(meanPwr)
-    data = data/sqrt(meanPwr);
-    % Set up visualization and delay objects
-    VFD = dsp.VariableFractionalDelay;
-    cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
-        'Name','Baseband');
-    cdPost = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
-        'Name','Baseband after Timing Sync');
-    cdPre.Position(1) = 50;
-    cdPost.Position(1) = cdPre.Position(1)+cdPre.Position(3)+10;% Place side by side
-    % Get the oversample rate
-    OSR = samplesPerSymbol/decimation;
-    % Run a zero-gain boxcar filter prior to decimation
-    rxRaw = data(1:2:end);
-    ccOut = xcorr(modData, rxRaw);
-    [~, maxIdx] = max(abs(ccOut));
-    refDly = floor(length(ccOut)/2) + 1 - maxIdx;
-    if refDly < 0
-        refDly = refDly + length(rxSync);
+    %% Perform amplitude correction
+    if correctAmplitude
+        agcIndex = (frameSize+1):(2*frameSize);
+        meanPwr = mean(data(agcIndex).*conj(data(agcIndex)));
+        data = data/sqrt(meanPwr);
     end
-    rxRaw = rxRaw((dly+1):end);
-    % o = sum(reshape(data,OSR,[]))/OSR;
-    % Plot data with no delay
-    symbolSync = comm.SymbolSynchronizer();
-    [rxSync,~] = symbolSync(data);
-    ccOut = xcorr(modData, rxSync);
-    [~, maxIdx] = max(abs(ccOut));
-    dly = floor(length(ccOut)/2) + 1 - maxIdx;
-    if dly < 0
-        dly = dly + length(rxSync);
-    end
+    %% Get data prior to timing sync
+    rxInit = data(1:2:end);
+    %% Match Delay of Signal
+    ccOut = xcorr(rxInit,modData);
+    midPoint = (length(ccOut)+1)/2;
+    ccOut = ccOut(midPoint:end);
+    searchIdx = (frameSize+1):(2*frameSize);
+    [~, maxIdx] = max(abs(ccOut(searchIdx)));
+    dly = maxIdx - 1;
+    rxInit = rxInit((dly+1):end);
+    %% Symbol Synchronizer
+    symbolSync = SymbolSynchronizer(...
+        SamplesPerSymbol=2,...
+        NormalizedLoopBandwidth=0.01, ...
+        DetectorGain=5.4,...
+        DampingFactor=1.0,...
+        TimingErrorDetector="Zero-Crossing (decision-directed)");
+    [rxSync,err] = symbolSync(data);
+    %% Save Timing Error
+    stableIdx = (length(err)/2+1):length(err);
+    timingErr(i) = mean(err(stableIdx));
+    %% Match Delay of Signal
+    ccOut = xcorr(rxSync,modData);
+    midPoint = (length(ccOut)+1)/2;
+    ccOut = ccOut(midPoint:end);
+    searchIdx = (frameSize+1):(2*frameSize);
+    [~, maxIdx] = max(abs(ccOut(searchIdx)));
+    dly = maxIdx - 1;
     rxSync = rxSync((dly+1):end);
-    % Grab end of data where AGC has converged
-    rxRaw = rxRaw(2000:end);
-    rxSync = rxSync(2000:end);
-    modData = modData(2000:end);
+    %% Extract Symbols from a Single Frame
+    rxSync = rxSync(1:frameSize);
+    rxInit = rxInit(1:frameSize);
+    modData = modData(1:frameSize);
+    %% Perform Differential Modulation
     if useDspkMod
-        rxRaw = rxRaw(2:end).*exp(-1i*angle(rxRaw(1:(end-1))));
+        rxInit = rxInit(2:end).*exp(-1i*angle(rxInit(1:(end-1))));
         rxSync = rxSync(2:end).*exp(-1i*angle(rxSync(1:(end-1))));
         modData = modData(2:end).*exp(-1i*angle(modData(1:(end-1))));
     end
-    minSize = min([length(rxSync),length(rxRaw),length(modData)]);
-    rxSync = rxSync(1:minSize);
-    rxRaw = rxRaw(1:minSize);
-    modData = modData(1:minSize);
-    % cdPre(rxRaw(:));
-    % cdPost(rxSync(:));
-    evm = comm.EVM();
-    evm_dB(i) = 20*log10(evm(modData,rxSync)/100);
-    if evm_dB(i) > -3
-        keyboard;
+    %% Display Constellation
+    if showConstellations
+        % Plot constellations
+        cdPre(rxInit);
+        cdPost(rxSync);
+        pause(0.1);
     end
-    raw_evm_dB(i) = 20*log10(evm(modData,rxRaw)/100);
-    % %% Process received data for timing offset
-    % for index = 0:300
-    %     % Delay signal
-    %     tau_hat = index/50;
-    %     delayedsig = VFD(data, tau_hat);
-    %     % Linear interpolation
-    %     o = sum(reshape(delayedsig,OSR,[]))/OSR;
-    %     % Visualize constellation
-    %     cd(o(:));
-    %     pause(0.1);
-    % end
+    %% Compute Error Vector Magnitude
+    evm = comm.EVM();
+    corrEvm_dB(i) = 20*log10(evm(modData,rxSync)/100);
+    initEvm_dB(i) = 20*log10(evm(modData,rxInit)/100);
 end
 figure(1);
 clf;
-plot(txGain, evm_dB,'LineWidth',1.5);
+plot(txGain, initEvm_dB, 'LineWidth',1.5);
 grid on;
 xlabel('Tx Gain (dB)');
 ylabel('EVM (dB)')
 figure(2);
 clf;
-plot(txGain, raw_evm_dB,'LineWidth',1.5);
+plot(txGain, corrEvm_dB, 'LineWidth',1.5);
 grid on;
 xlabel('Tx Gain (dB)');
 ylabel('EVM (dB)')
+figure(3);
+clf;
+plot(txGain, timingErr, 'LineWidth',1.5);
+grid on;
+xlabel('Tx Gain (dB)');
+ylabel('Fractional Delay');
+%% Reset path
+rmpath('./timingCorrection')
