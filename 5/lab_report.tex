@@ -505,7 +505,7 @@ We evaluate the performance of the timing recovery block by measuring the EVM un
 	\label{fig::evm_no_timing_offset}
 \end{figure}
 
-Comparing both figures, we see that the EVM is roughly the same with and without timing compensation. This is the expected result because there is no timing offset. Additionally, we see that EVM is approximately the same as -SNR in both cases. This is also an expected result because the EVM is measuring the error power (noise power) over the constellation power (signal power). Next, we consider the EVM when we apply a fixed timing offset of $0.25T_s$. These results are included in Figures \ref{fig::evm_0p25_symbol_offset_no_comp} and \ref{fig::evm_0p25_symbol_offset}.
+Comparing both figures, we see that the EVM is roughly the same with and without timing compensation. This is the expected result because there is no timing offset. Additionally, we see that EVM is approximately -SNR in both cases. This is also an expected result because the EVM is measuring the error power (noise power) over the constellation power (signal power). Next, we consider the EVM when we apply a fixed timing offset of $0.25T_s$. These results are included in Figures \ref{fig::evm_0p25_symbol_offset_no_comp} and \ref{fig::evm_0p25_symbol_offset}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_0p25_symbol_offset_no_comp.png}}}
@@ -519,7 +519,7 @@ Comparing both figures, we see that the EVM is roughly the same with and without
 	\label{fig::evm_0p25_symbol_offset}
 \end{figure}
 
-Examining the figures, we see that the EVM without timing compensation is substantially degraded. However, after timing compensation, the EVM improves significantly. At low SNR's it is approximately, the no timing error case. However, as the SNR increases, the timing recovery circuit limits the minimum EVM to about -25 dB. This is slightly better than the results shown in Figure \ref{fig::evm_vs_snr} because the timing offset does not drift with time. Next, we examine the performance when we apply a phase offset of $\pi/4$ radians instead of a timing error. These results are included in Figures \ref{fig::evm_pi_4_phase_offset_no_comp} and \ref{fig::evm_pi_4_phase_offset}.
+Examining the figures, we see that the EVM without timing compensation is substantially degraded. However, after timing compensation, the EVM improves significantly. At low SNRs it is approximatel the same as the no timing error case. However, as the SNR increases, the timing recovery circuit limits the minimum EVM to about -25 dB. This is slightly worse than the results shown in Figure \ref{fig::evm_vs_snr} because a timing offset of $0.25T_s$ is the worst case delay. Next, we examine the performance when we apply a phase offset of $\pi/4$ radians instead of a timing error. These results are included in Figures \ref{fig::evm_pi_4_phase_offset_no_comp} and \ref{fig::evm_pi_4_phase_offset}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_pi_4_phase_offset.png}}}
@@ -553,7 +553,7 @@ Comparing the results of both Figures, we see that the timing compensation logic
 	\label{fig::constellation_phase_error}
 \end{figure}
 
-\noindent Examining the Figure we see that the phase error creates a rotation in the complex plane, which artificially distorts our EVM metric. One way to handle this phase error is to use differential modulation. We specifically can use DBPSK modulation instead of BPSK modulation. We can specifically use Equation \ref{eq::dbpsk} to access the EVM after DBPSK modulation. The results of this experiment are included in Figures \ref{fig::evm_dpsk_modulation_no_comp} and \ref{fig::evm_dpsk_modulation}.
+\noindent Examining the Figure we see that the phase error creates a rotation in the complex plane, which artificially distorts our EVM metric. One way to handle this phase error is to use differential modulation (DBPSK modulation instead of BPSK modulation). We can specifically use Equation \ref{eq::dbpsk} to access the EVM after DBPSK modulation. The results of this experiment are included in Figures \ref{fig::evm_dpsk_modulation_no_comp} and \ref{fig::evm_dpsk_modulation}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{evm_dpsk_modulation_no_comp.png}}}
