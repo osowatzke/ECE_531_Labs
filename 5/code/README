@@ -1,0 +1,8 @@
+- srrcFreqResponse.m and pulseShaping.m generate the results for section 3.1
+- capturePlutoConstellation.m generates the results for section 3.2
+- custom symbol timing synchronization routines are included in the textbook and timingCorrection subfolders
+    - The textbook subfolder uses routines provided by the textbook
+    - The timingCorrection subfolder uses custom matlab.System objects
+- testTimingCorrection.m compares the outputs of the custom routines to MATLAB's comm.SymbolSynchronizer
+- simTimingSync.m generates the results for sections 3.3 and 3.4
+- plutoTimingSync.m generates the results for section 3.5
