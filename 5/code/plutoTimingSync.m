@@ -112,18 +112,21 @@ figure(1);
 clf;
 plot(txGain, initEvm_dB, 'LineWidth',1.5);
 grid on;
+title('Plot of EVM vs TX Gain before Timing Compensation')
 xlabel('Tx Gain (dB)');
 ylabel('EVM (dB)')
 figure(2);
 clf;
 plot(txGain, corrEvm_dB, 'LineWidth',1.5);
 grid on;
+title('Plot of EVM vs TX Gain after Timing Compensation')
 xlabel('Tx Gain (dB)');
 ylabel('EVM (dB)')
 figure(3);
 clf;
 plot(txGain, timingErr, 'LineWidth',1.5);
 grid on;
+title('Plot of Fractional Delay Error vs TX Gain')
 xlabel('Tx Gain (dB)');
 ylabel('Fractional Delay');
 %% Reset path
