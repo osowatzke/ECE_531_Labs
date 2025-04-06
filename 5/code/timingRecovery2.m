@@ -2,6 +2,8 @@
 clear;
 clc;
 %% Generate System Details
+% Section 4: numFrames=200, frameSize=1024
+% Section 5: numFrames=1, frameSize=10000
 numFrames = 200;
 frameSize = 1024;
 numSamples = numFrames*frameSize;
@@ -177,6 +179,7 @@ figure(4);
 clf;
 plot(snr_dB,initEvm_dB,'LineWidth',1.5);
 grid on;
+title('Plot of EVM vs SNR before Timing Compensation')
 xlabel('SNR (dB)');
 ylabel('EVM (dB)')
 %% Plot EVM After Timing Compensation
@@ -184,5 +187,6 @@ figure(5);
 clf;
 plot(snr_dB,corrEvm_dB,'LineWidth',1.5);
 grid on;
+title('Plot of EVM vs SNR after Timing Compensation')
 xlabel('SNR (dB)');
 ylabel('EVM (dB)')
