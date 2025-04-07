@@ -49,21 +49,31 @@
 
 \subsection{System and Error Models}
 
-In discrete time, when we multiply a signal by a complex exponential, it circular shifts the frequency response. If we have enough excess bandwidth, we can ensure that the significant portions of our frequency response do not wrap and in turn correctly model an analog frequency shift. If we change the `filterUpsample` in \texttt{lab6part1.m} to 1, we do have any excess bandwidth. The spectrum after a frequency shift of $0.1F_s$ is shown in Figure \ref{fig::psd_upsample_1}.
+In discrete time, when we multiply a signal by a complex exponential, it circular shifts the frequency response. If we have enough excess bandwidth, we can ensure that the significant portions of our frequency response do not wrap and in turn correctly model an analog frequency shift. If we change the `filterUpsample' in \texttt{lab6part1.m} to 1, we do have any excess bandwidth. The spectrum after a frequency shift of $0.1F_s$ is shown in Figure \ref{fig::psd_upsample_1}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_upsample_1.png}}}
-	\caption{Frequency Response with filterUpsample` Set to 1 and $\protect{0.1F_s}$ Frequency Shift}
+	\caption{Frequency Response with `filterUpsample' Set to 1 and a $\protect{0.1F_s}$ Frequency Shift}
 	\label{fig::psd_upsample_1}
 \end{figure}
 
-\noindent Examining the frequency response, we see that it does not correctly model a $0.1F_s$ analog frequency shift, which would have resulted in part of the spectrum being zero. Note that our updated frequency response is also not related to the original frequency response by a shift. This is because we are looking at the DFT, which is sampling the DTFT. With a frequency shift of $0.1F_s$, our updated sampling positions do not overlap with the original sampling positions, which results in a slightly different response. If we instead chose a frequency shift of $F_s/16$, our sampling positions align and our DFT's are related by a simple shift. These results are captured in Figure \ref{fig::psd_upsample_1_mod_shift}.
+\noindent Examining the frequency response, we see that it does not correctly model a $0.1F_s$ analog frequency shift, which would have resulted in part of the spectrum being zero. Note that our updated frequency response is also not exactly a shift of the original DFT samples. This is because the DFT is sampling the DTFT. With a frequency shift of $0.1F_s$, our updated sampling positions do not overlap with the original sampling positions, which results in a slightly different response. If we instead chose a frequency shift of $F_s/16$, our sampling positions align and our DFT's are related by a simple shift. These results are captured in Figure \ref{fig::psd_upsample_1_mod_shift}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_upsample_1_mod_shift.png}}}
-	\caption{Frequency Response with filterUpsample` Set to 1 and $\protect{F_s/16}$ Frequency Shift}
+	\caption{Frequency Response with `filterUpsample' Set to 1 and a $\protect{F_s/16}$ Frequency Shift}
 	\label{fig::psd_upsample_1_mod_shift}
 \end{figure}
+
+\noindent We also observe a similar effect when we step the frequency offset in steps of $0.1F_s$ from $0.1F_s$ to $1.0F_s$. As we increase the frequency offset, we see the frequency response wraps. In Figure \ref{fig::psd_freq_offset_05}, we specifically show the frequency response with a frequency offset of $0.5F_s$. 
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_freq_offset_05.png}}}
+	\caption{Frequency Response with a $\protect{0.5F_s}$ Frequency Shift}
+	\label{fig::psd_freq_offset_05}
+\end{figure}
+
+\noindent At this frequency offset, we see that the frequency response is circularly shifted by half the bandwidth of the signal. We can explain this with DTFT properties. However, we can equivalently treat this case as an analog frequency shift prior to decimation. This results in aliasing, which in turns causes our frequency response to wrap.
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
