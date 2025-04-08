@@ -79,11 +79,21 @@ In discrete time, when we multiply a signal by a complex exponential, it circula
 
 \subsection{Coarse Frequency Correction}
 
-In this section, we perform coarse frequency correction using an FFT. To remove the modulation from our constellation, we raise our received data up to a power equivalent to the modulation order. The maximum FFT bin then gives us an index that is proportional to our estimated carrier offset. For BPSK, the estimated carrier offset is specifically given by
+In this section, we perform coarse frequency correction using an FFT. To remove the modulation from our constellation, we raise our received data up to a power equivalent to the modulation order. The maximum FFT bin then gives us an index that is proportional to our estimated carrier offset. For DBPSK, the estimated carrier offset is specifically given by
 
 \begin{equation}
 	\hat{f}_0 = \frac{1}{2TK}\underset{f}{\text{argmax}}\left\vert\sum_{k=0}^{K-1}{r^2(k)e^{-j2{\pi}kT/K}}\right\vert
 \end{equation}
+	
+\noindent When we apply coarse frequency compensation to a DBPSK-modulation signal with a $0.1F_s$ frequency offset, we obtain the spectrum shown in Figure \ref{fig::psd_bpsk_with_cfc}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_bpsk_with_cfc.png}}}
+	\caption{DPSK Frequency Response Before and After Coarse Frequency Correction}
+	\label{fig::psd_bpsk_with_cfc}
+\end{figure}
+
+\noindent Examining the figure, we see that coarse frequency correction effectively removes the carrier offset. Our spectrum before and after compensation is essentially the same.
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
