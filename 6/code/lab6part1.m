@@ -10,7 +10,7 @@ filterSymbolSpan = 8;
 
 %% Impairments
 snr = 15;
-frequencyOffsetHz = 5*1e5; %sampleRateHz/16; % 1e5; % Offset in hertz
+frequencyOffsetHz = 1e5; %sampleRateHz/16; % 1e5; % Offset in hertz
 phaseOffset = 0; % Radians
 
 %% Generate symbols
@@ -33,8 +33,11 @@ sa = dsp.SpectrumAnalyzer('SampleRate',sampleRateHz,'ShowLegend',true);
 
 % Precalculate constant(s)
 normalizedOffset = 1i.*2*pi*frequencyOffsetHz./sampleRateHz;
+% coarseFrequencyComp = comm.CoarseFrequencyCompensator('Modulation','BPSK');
+coarseFrequencyComp = CoarseFrequencyCompensator('SampleRate',sampleRateHz,'ModOrder',2);
 
 offsetData = zeros(size(noisyData));
+compData = zeros(size(noisyData));
 for k=1:frameSize:numSamples*filterUpsample
 
     % Create phase accurate vector
@@ -43,9 +46,13 @@ for k=1:frameSize:numSamples*filterUpsample
     
     % Offset data and maintain phase between frames
     offsetData(timeIndex) = (noisyData(timeIndex).*freqShift);
- 
+    
+    % Data with CFO
+    % compData(timeIndex) = coarseFrequencyCompensator(offsetData(timeIndex), 2);
+    compData(timeIndex) = coarseFrequencyComp(offsetData(timeIndex));
+    
     % Visualize Error
-    step(sa,[noisyData(timeIndex),offsetData(timeIndex)]);pause(0.1); %#ok<*UNRCH>
+    % step(sa,[noisyData(timeIndex),offsetData(timeIndex),compData(timeIndex)]);pause(0.1); %#ok<*UNRCH>
 
 end
 %% Plot
@@ -53,7 +60,8 @@ df = sampleRateHz/frameSize;
 frequencies = -sampleRateHz/2:df:sampleRateHz/2-df;
 spec = @(sig) fftshift(10*log10(abs(fft(sig))));
 h = plot(frequencies, spec(noisyData(timeIndex)),...
-     frequencies, spec(offsetData(timeIndex)));
+     frequencies, spec(offsetData(timeIndex)),...
+     frequencies, spec(compData(timeIndex)));
 grid on;xlabel('Frequency (Hz)');ylabel('PSD (dB)');
 legend('Original','Offset','Location','Best');
 NumTicks = 5;L = h(1).Parent.XLim;
