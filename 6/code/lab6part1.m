@@ -8,9 +8,14 @@ modulationOrder = 2;
 filterUpsample = 4;
 filterSymbolSpan = 8;
 
+%% Simulation flags
+visualizeError = true;
+visualizeCfc = true;
+useBuiltInCfc = false;
+
 %% Impairments
 snr = 15;
-frequencyOffsetHz = 1e5; %sampleRateHz/16; % 1e5; % Offset in hertz
+frequencyOffsetHz = 1e5; % Offset in hertz
 phaseOffset = 0; % Radians
 
 %% Generate symbols
@@ -19,11 +24,12 @@ mod = comm.DBPSKModulator();
 modulatedData = mod.step(data);
 
 %% Add TX Filter
-TxFlt = comm.RaisedCosineTransmitFilter('OutputSamplesPerSymbol', filterUpsample, 'FilterSpanInSymbols', filterSymbolSpan);
+TxFlt = comm.RaisedCosineTransmitFilter('OutputSamplesPerSymbol', filterUpsample, ...
+    'FilterSpanInSymbols', filterSymbolSpan);
 filteredData = step(TxFlt, modulatedData);
 
 %% Add noise
-noisyData = awgn(filteredData,snr);%,'measured');
+noisyData = awgn(filteredData,snr);
 
 %% Setup visualization object(s)
 sa = dsp.SpectrumAnalyzer('SampleRate',sampleRateHz,'ShowLegend',true);
@@ -31,10 +37,15 @@ sa = dsp.SpectrumAnalyzer('SampleRate',sampleRateHz,'ShowLegend',true);
 %% Model of error
 % Add frequency offset to baseband signal
 
+% Coarse Frequency Compensation
+if useBuiltInCfc
+    coarseFrequencyComp = comm.CoarseFrequencyCompensator('Modulation','BPSK');
+else
+    coarseFrequencyComp = CoarseFrequencyCompensator('SampleRate',sampleRateHz,'ModOrder',2);
+end
+
 % Precalculate constant(s)
 normalizedOffset = 1i.*2*pi*frequencyOffsetHz./sampleRateHz;
-% coarseFrequencyComp = comm.CoarseFrequencyCompensator('Modulation','BPSK');
-coarseFrequencyComp = CoarseFrequencyCompensator('SampleRate',sampleRateHz,'ModOrder',2);
 
 offsetData = zeros(size(noisyData));
 compData = zeros(size(noisyData));
@@ -47,22 +58,33 @@ for k=1:frameSize:numSamples*filterUpsample
     % Offset data and maintain phase between frames
     offsetData(timeIndex) = (noisyData(timeIndex).*freqShift);
     
-    % Data with CFO
-    % compData(timeIndex) = coarseFrequencyCompensator(offsetData(timeIndex), 2);
+    % Coarse Frequency Compensation
     compData(timeIndex) = coarseFrequencyComp(offsetData(timeIndex));
     
     % Visualize Error
-    % step(sa,[noisyData(timeIndex),offsetData(timeIndex),compData(timeIndex)]);pause(0.1); %#ok<*UNRCH>
-
+    if visualizeError
+        plotData = [noisyData(timeIndex),offsetData(timeIndex)];
+        if visualizeCfc
+            plotData = [plotData, compData(timeIndex)];
+        end
+        step(sa,plotData); pause(0.1);
+    end
+    
 end
 %% Plot
 df = sampleRateHz/frameSize;
 frequencies = -sampleRateHz/2:df:sampleRateHz/2-df;
 spec = @(sig) fftshift(10*log10(abs(fft(sig))));
 h = plot(frequencies, spec(noisyData(timeIndex)),...
-     frequencies, spec(offsetData(timeIndex)),...
-     frequencies, spec(compData(timeIndex)));
+     frequencies, spec(offsetData(timeIndex)));
+legendText = {'Original','Offset'};
+if visualizeCfc
+    hold on;
+    plot(frequencies, spec(compData(timeIndex)));
+    legendText = [legendText, {'Corrected'}];
+    hold off;
+end
 grid on;xlabel('Frequency (Hz)');ylabel('PSD (dB)');
-legend('Original','Offset','Location','Best');
+legend(legendText,'Location','Best');
 NumTicks = 5;L = h(1).Parent.XLim;
 set(h(1).Parent,'XTick',linspace(L(1),L(2),NumTicks))
