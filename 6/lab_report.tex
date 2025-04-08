@@ -77,6 +77,14 @@ In discrete time, when we multiply a signal by a complex exponential, it circula
 
 	In simulation, we also increment the timing vector for each frame (\texttt{timeIndex = (k:k+frameSize-1).'}). This models back-to-back frames being fed into a continuous oscillator. The frequency offsets we observe are primarily caused by LO mismatches. However, another cause of the frequency offset is a doppler shift (which is caused by relative motion of the receiver with respect to the transmitter).
 
+\subsection{Coarse Frequency Correction}
+
+In this section, we perform coarse frequency correction using an FFT. To remove the modulation from our constellation, we raise our received data up to a power equivalent to the modulation order. The maximum FFT bin then gives us an index that is proportional to our estimated carrier offset. For BPSK, the estimated carrier offset is specifically given by
+
+\begin{equation}
+	\hat{f}_0 = \frac{1}{2TK}\underset{f}{\text{argmax}}\left\vert\sum_{k=0}^{K-1}{r^2(k)e^{-j2{\pi}kT/K}}\right\vert
+\end{equation}
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
