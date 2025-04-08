@@ -79,7 +79,7 @@ classdef CoarseFrequencyCompensator < matlab.System
             t = (0:(dataLen-1)).';
 
             % Remove CFO
-            data = data.*exp(-1i*2*pi*freqEst*t+self.phaseOffset);
+            data = data.*exp(-1i*(2*pi*freqEst*t+self.phaseOffset));
 
             % Update phase offset
             self.phaseOffset = mod(-2*pi*freqEst*self.fftSize + ...

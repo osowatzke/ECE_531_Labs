@@ -1,15 +1,14 @@
 %% General system details
 sampleRateHz = 1e6; % Sample rate
-samplesPerSymbol = 1;
+modulationOrder = 4;
 frameSize = 2^10;
 numFrames = 100;
 numSamples = numFrames*frameSize; % Samples to simulate
-modulationOrder = 2;
 filterUpsample = 4;
 filterSymbolSpan = 8;
 
 %% Simulation flags
-visualizeError = true;
+visualizeError = false;
 visualizeCfc = true;
 useBuiltInCfc = false;
 
@@ -19,8 +18,12 @@ frequencyOffsetHz = 1e5; % Offset in hertz
 phaseOffset = 0; % Radians
 
 %% Generate symbols
-data = randi([0 samplesPerSymbol], numSamples, 1);
-mod = comm.DBPSKModulator();
+data = randi([0 modulationOrder-1], numSamples, 1);
+if modulationOrder == 2
+    mod = comm.DBPSKModulator();
+else
+    mod = comm.QPSKModulator();
+end
 modulatedData = mod.step(data);
 
 %% Add TX Filter
@@ -39,9 +42,16 @@ sa = dsp.SpectrumAnalyzer('SampleRate',sampleRateHz,'ShowLegend',true);
 
 % Coarse Frequency Compensation
 if useBuiltInCfc
-    coarseFrequencyComp = comm.CoarseFrequencyCompensator('Modulation','BPSK');
+    if modulationOrder == 2
+        Modulation = 'BSPK';
+    else
+        Modulation = 'QPSK';
+    end
+    coarseFrequencyComp = comm.CoarseFrequencyCompensator(...
+        'SampleRate',sampleRateHz,'Modulation',Modulation);
 else
-    coarseFrequencyComp = CoarseFrequencyCompensator('SampleRate',sampleRateHz,'ModOrder',2);
+    coarseFrequencyComp = CoarseFrequencyCompensator('SampleRate',sampleRateHz,...
+        'ModOrder',modulationOrder);
 end
 
 % Precalculate constant(s)
