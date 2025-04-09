@@ -14,10 +14,10 @@ classdef CarrierSynchronizer < matlab.System
         proportionalLoopGain;
         integratorLoopGain;
         detectorGain;
-        eAccum;
-        fAccum;
         phaseCorr;
-        lastOut;
+        dataSyncLast;
+        phaseErrAccum;
+        phaseAccum;
     end
 
     % Public class methods
@@ -38,10 +38,11 @@ classdef CarrierSynchronizer < matlab.System
         % Setup method
         function setupImpl(self)
            
+
             % Compute the detector gain
             if self.ModulationOrder == 2
                 self.detectorGain = 1;
-            else
+            else % Assume QPSK
                 self.detectorGain = 2;
             end
 
@@ -57,54 +58,54 @@ classdef CarrierSynchronizer < matlab.System
 
         % Reset method
         function resetImpl(self)
-            self.eAccum = 0;
-            self.fAccum = 0;
             self.phaseCorr = 0;
-            self.lastOut = 0;
+            self.dataSyncLast = 0;
+            self.phaseErrAccum = 0;
+            self.phaseAccum = 0;
         end
 
         % Step method
-        function [dataCorr, phaseCorrection] = stepImpl(self, data)
+        function [dataSync, phaseEst] = stepImpl(self, data)
             
             % Initialize input arrays
-            phaseCorrection = zeros(size(data));
-            dataCorr = zeros(size(data));
+            dataSync = zeros(size(data));
+            phaseEst = zeros(size(data));
 
             % Loop for each input sample
             for i = 1:length(data)
                 
                 % Compute phase error
-                e = self.phaseError(self.lastOut);
+                phaseErr = self.computePhaseError(self.dataSyncLast);
 
                 % Apply fine carrier synchronization
-                dataCorr(i) = data(i)*exp(1i*self.phaseCorr);
+                dataSync(i) = data(i)*exp(1i*self.phaseCorr);
 
                 % Save last output
-                self.lastOut = dataCorr(i);
+                self.dataSyncLast = dataSync(i);
 
                 % Integrator in loop filter
-                self.eAccum = self.eAccum + e;
+                self.phaseErrAccum = self.phaseErrAccum + phaseErr;
 
-                % Compute phase correction
-                phaseCorrection(i) = self.fAccum;
+                % Compute phase estimate
+                phaseEst(i) = self.phaseAccum;
+
+                % Get phase correction
+                self.phaseCorr = -phaseEst(i);
 
                 % Perform loop filter
-                f = self.proportionalLoopGain*e + ...
-                    self.integratorLoopGain*self.eAccum;
+                phase = self.proportionalLoopGain*phaseErr + ...
+                    self.integratorLoopGain*self.phaseErrAccum;
 
                 % Perform integrator
-                self.fAccum = self.fAccum + f;
-
-                % Get phase estimate
-                self.phaseCorr = -phaseCorrection(i);
+                self.phaseAccum = self.phaseAccum + phase;
             end
         end
 
         % Function computes the phase error
-        function e = phaseError(self, y)
+        function e = computePhaseError(self, y)
             if self.ModulationOrder == 2
                 e = sign(real(y))*imag(y);
-            else
+            else % Assume QPSK
                 e = sign(real(y))*imag(y) - ...
                     sign(imag(y))*real(y);
             end
