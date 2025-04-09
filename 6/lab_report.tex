@@ -44,6 +44,8 @@
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
+In this section, we detail the procedures of each of our experiments. We specifically concentrate on modeling and correcting carrier frequency offsets. Our frequency compensation algorithm is divided into course and fine frequency correction, which are individually covered in this lab's experiments. Figure \ref{fig::receiver_block_diagram}, highlights the frequency compensation blocks in the receiver.
+
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{receiver_block_diagram.png}}}
 	\caption{Receiver Block Diagram}
@@ -112,7 +114,7 @@ F(z) = G_1 + \frac{G_2}{1-z^{-1}}
 \noindent where $M$ is the constellation order. The selection of $\zeta$ affects the responsive and stability of the PLL:
 
 \begin{equation}
-zeta = \begin{cases}
+\zeta = \begin{cases}
 < 1, & \text{Underdamped}\\
 = 1, & \text{Critically Damped}\\
 > 1, & \text{Overdamped}
