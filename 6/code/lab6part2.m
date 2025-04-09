@@ -2,17 +2,22 @@
 
 % Debugging flags
 visuals = false;
+useBuiltInObj = false;
 
 %% General system details
 sampleRateHz = 1e3; % Sample rate
 samplesPerSymbol = 1;
+modulationOrder = 4;
 frameSize = 2^10;
 numFrames = 300;
 numSamples = numFrames*frameSize; % Samples to simulate
 
 %% Setup objects
-mod = comm.DBPSKModulator();
-mod = comm.QPSKModulator();
+if modulationOrder == 2
+    mod = comm.DBPSKModulator();
+else % Assume QPSK
+    mod = comm.QPSKModulator();
+end
 cdPre = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
     'Name','Baseband');
 cdPost = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
@@ -26,36 +31,41 @@ ap.Title = 'Frequency Histogram';ap.XLabel = 'Hz';ap.YLabel = 'Magnitude';
 ap.XOffset = -sampleRateHz/2;
 ap.SampleIncrement = (sampleRateHz)/(2^10);
 
-cdOut = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
-    'Name','Baseband');
-cdPreOut = comm.ConstellationDiagram('ReferenceConstellation', [-1 1],...
-    'Name','Baseband');
-
 %% Impairments
 snr = 15;
 frequencyOffsetHz = sampleRateHz*0.02; % Offset in hertz
 phaseOffset = 0; % Radians
 
 %% Generate symbols
-rng(0);
+rng(0); % Fixing for repeatability
 data = randi([0 3], numSamples, 1);
 modulatedData = mod.step(data);
 
 %% Add noise
-noisyData = awgn(modulatedData,snr);%,'measured');
+noisyData = awgn(modulatedData,snr);
 
 %% Model of error
 % Add frequency offset to baseband signal
 
-% carrierSync = CarrierSynchronizer('ModulationOrder',4);
-carrierSync = comm.CarrierSynchronizer("SamplesPerSymbol",1,'Modulation','QAM');
+if useBuiltInObj
+    if modulationOrder == 2
+        modulation = 'BPSK';
+    else % Assume QPSK
+        modulation = 'QPSK'
+    end
+    carrierSync = comm.CarrierSynchronizer(...
+        'SamplesPerSymbol',1,'Modulation',modulation);
+else
+    carrierSync = CarrierSynchronizer(...
+        'SamplesPerSymbol',1,'ModulationOrder',4);
+end
 
 % Precalculate constants
 normalizedOffset = 1i.*2*pi*frequencyOffsetHz./sampleRateHz;
 
 offsetData = zeros(size(noisyData));
 syncData = zeros(size(noisyData));
-phaseError = zeros(size(noisyData));
+phaseEst = zeros(size(noisyData));
 for k=1:frameSize:numSamples
     
     timeIndex = (k:k+frameSize-1).';
@@ -63,23 +73,40 @@ for k=1:frameSize:numSamples
     
     % Offset data and maintain phase between frames
     offsetData(timeIndex) = noisyData(timeIndex).*freqShift;
-    for j = timeIndex(1):timeIndex(end)
-        [syncData(j), phaseError(j)] = carrierSync(offsetData(j));
-    end
-    % [syncData(timeIndex), phaseError(timeIndex)] = carrierSync(offsetData(timeIndex));
+
+    % Perform fine frequency synchronization
+    [syncData(timeIndex), phaseEst(timeIndex)] = carrierSync(offsetData(timeIndex));
     
     % Visualize Error
     if visuals
-        step(cdPre,noisyData(timeIndex));step(cdPost,offsetData(timeIndex));pause(0.1); %#ok<*UNRCH>
-        step(cdOut,syncData(timeIndex));
+        step(cdPre,offsetData(timeIndex));step(cdPost,syncData(timeIndex));pause(0.1); %#ok<*UNRCH>
     end
     
 end
 
-figure(1);
-hold on;
-plot(real(syncData));
+% Plot constellations
+figure(1); clf;
+subplot(1,2,1);
+scatter(real(offsetData(timeIndex)),imag(offsetData(timeIndex)));
+grid on;
+xlim([-1.5 1.5]);
+ylim([-1.5 1.5]);
+xlabel('In-phase')
+ylabel('In-phase')
+subplot(1,2,2)
+scatter(real(syncData(timeIndex)),imag(syncData(timeIndex)),'r')
+grid on;
+xlim([-1.5 1.5]);
+ylim([-1.5 1.5]);
+xlabel('In-phase')
+ylabel('In-phase')
 
-figure(2);
+% Plot PLL estimate
+figure(2); clf;
+plot(diff(phaseEst)/(2*pi)*sampleRateHz,'r');
 hold on;
-plot(phaseError);
+plot(frequencyOffsetHz*ones(size(phaseEst)),'b');
+grid on;
+xlabel('Estimate')
+ylabel('Offset (Hz)')
+legend('PLL Estimate','True Offset','Location','southeast')
