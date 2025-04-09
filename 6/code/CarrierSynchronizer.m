@@ -1,5 +1,5 @@
 % Class defines a fine carrier synchronizer object
-classdef CarrierSychronizer < matlab.System
+classdef CarrierSynchronizer < matlab.System
 
     % Public class properties
     properties
@@ -13,6 +13,7 @@ classdef CarrierSychronizer < matlab.System
     properties (Access=protected)
         proportionalLoopGain;
         integratorLoopGain;
+        detectorGain;
         eAccum;
         fAccum;
         phaseCorr;
@@ -24,7 +25,7 @@ classdef CarrierSychronizer < matlab.System
 
         % Class constructor. Allows properties to be set with key-value
         % pairs
-        function self = CoarseFrequencyCompensator(varargin)
+        function self = CarrierSynchronizer(varargin)
             for i = 1:2:nargin
                 self.(varargin{i}) = varargin{i+1};
             end
@@ -36,14 +37,22 @@ classdef CarrierSychronizer < matlab.System
 
         % Setup method
         function setupImpl(self)
+           
+            % Compute the detector gain
+            if self.ModulationOrder == 2
+                self.detectorGain = 1;
+            else
+                self.detectorGain = 2;
+            end
 
             % Compute proportional and integrator loop gain
             theta = self.NormalizedLoopBandwidth/(self.SamplesPerSymbol * ...
                 (self.DampingFactor + 0.25/self.DampingFactor));
             Delta = 1 + 2*self.DampingFactor*theta + theta^2;
-            self.proportionalLoopGain = 4*self.DampingFactor*theta/Delta;
+            self.proportionalLoopGain = 4*self.DampingFactor*theta/...
+                Delta/(self.SamplesPerSymbol*self.detectorGain);
             self.integratorLoopGain = (4/self.SamplesPerSymbol)*...
-                theta^2/Delta/self.SamplesPerSymbol;
+                theta^2/Delta/(self.SamplesPerSymbol*self.detectorGain);
         end
 
         % Reset method
@@ -95,6 +104,9 @@ classdef CarrierSychronizer < matlab.System
         function e = phaseError(self, y)
             if self.ModulationOrder == 2
                 e = sign(real(y))*imag(y);
+            else
+                e = sign(real(y))*imag(y) - ...
+                    sign(imag(y))*real(y);
             end
         end
     end
