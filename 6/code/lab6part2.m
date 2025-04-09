@@ -47,8 +47,8 @@ noisyData = awgn(modulatedData,snr);%,'measured');
 %% Model of error
 % Add frequency offset to baseband signal
 
-carrierSync = CarrierSynchronizer('ModulationOrder',4);
-% carrierSync = comm.CarrierSynchronizer("SamplesPerSymbol",1,'Modulation','QAM');
+% carrierSync = CarrierSynchronizer('ModulationOrder',4);
+carrierSync = comm.CarrierSynchronizer("SamplesPerSymbol",1,'Modulation','QAM');
 
 % Precalculate constants
 normalizedOffset = 1i.*2*pi*frequencyOffsetHz./sampleRateHz;

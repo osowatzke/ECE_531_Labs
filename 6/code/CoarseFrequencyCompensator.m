@@ -4,7 +4,7 @@ classdef CoarseFrequencyCompensator < matlab.System
     % Public class properties
     properties
         FrequencyResolution = 100;
-        ModOrder = 2;
+        ModulationOrder = 2;
         SampleRate = 1e6;
     end
 
@@ -38,7 +38,7 @@ classdef CoarseFrequencyCompensator < matlab.System
             % Have a higher modulation order increases the frequency
             % resolution
             self.fftSize = 2^ceil(log2(self.SampleRate/...
-                (self.FrequencyResolution*self.ModOrder)));
+                (self.FrequencyResolution*self.ModulationOrder)));
 
             % Initialize sample buffer
             self.sampleBuffer = zeros(self.fftSize,1);
@@ -55,7 +55,7 @@ classdef CoarseFrequencyCompensator < matlab.System
 
             % Raise data to modulation order
             % ^2 for BPSK and ^4 for QPSK
-            dataPwr = data.^self.ModOrder;
+            dataPwr = data.^self.ModulationOrder;
 
             % Create shift register for incoming data
             % Allows us to perform a STFT using multiple frames of data
@@ -73,7 +73,7 @@ classdef CoarseFrequencyCompensator < matlab.System
             [~, maxIdx] = max(Fdata.*conj(Fdata));
 
             % Estimate normalized frequency
-            freqEst = (maxIdx-1)/(self.ModOrder*self.fftSize);
+            freqEst = (maxIdx-1)/(self.ModulationOrder*self.fftSize);
 
             % Create time array
             t = (0:(dataLen-1)).';

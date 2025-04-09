@@ -51,7 +51,7 @@ if useBuiltInCfc
         'SampleRate',sampleRateHz,'Modulation',Modulation);
 else
     coarseFrequencyComp = CoarseFrequencyCompensator('SampleRate',sampleRateHz,...
-        'ModOrder',modulationOrder);
+        'ModulationOrder',modulationOrder);
 end
 
 % Precalculate constant(s)
