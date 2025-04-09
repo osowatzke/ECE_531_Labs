@@ -125,7 +125,25 @@ zeta = \begin{cases}
 	\Delta_{f,\text{lock}} = \frac{4(2\pi\sqrt{2}\zeta{B_\text{Loop}})^2}{B_\text{Loop}^3}
 \end{equation}
 
-Using the provided equations as template, we implement fine frequency compensation (FFC) in MATLAB. We use data from \texttt{lab6part2.m} to validate our design. Next, we evaluate how the convergence times for our function are affected by different damping factors $\zeta$ and loop bandwidths $B_\text{Loop}$.
+Using the provided equations as template, we implement fine frequency compensation (FFC) in MATLAB. We use data from \texttt{lab6part2.m} to validate our design. Next, we evaluate how the convergence times for our function are affected by different damping factors $\zeta$ and loop bandwidths $B_\text{Loop}$. Then, we compare the phase-corrected constellation to the ideal constellation using an error vector magnitude (EVM) metric, which can be computed as follows:
+
+\begin{equation}
+	\text{EVM}_\text{RMS} = 100 \times \sqrt{\frac{\frac{1}{N}\sum_{k=0}^{N-1}{e_\text{const}(k)}}{\frac{1}{N}\sum_{k=0}^{N-1}{(\text{Re}(y(k))^2 + \text{Im}(y(k))^2)}}}
+\end{equation}
+
+\noindent with
+
+\begin{equation}
+	e_\text{const}(k) = (\text{Re}(y(k)) - \text{Re}(\tilde{y}(k))^2 + (\text{Im}(y(k)) - \text{Im}(\tilde{y}(k)))^2
+\end{equation}
+
+\noindent and $\tilde{y}(k)$ defined as the reference symbol for $y(k)$. Note that we also can express the EVM in decibels as follows:
+
+\begin{equation}
+	\text{EVM}_\text{dB} = 20\text{log}_{10}(\text{EVM}_\text{RMS}/100)
+\end{equation}
+
+\noindent Finally, once we complete our EVM measurements, we figure out how the PED would have to change to support QPSK modulation.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
