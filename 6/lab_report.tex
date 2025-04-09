@@ -44,6 +44,26 @@
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{receiver_block_diagram.png}}}
+	\caption{Receiver Block Diagram}
+	\label{fig::receiver_block_diagram}
+\end{figure}
+
+\subsection{System and Error Models}
+
+In this experiment, we analyze a model of the receiver included in \texttt{lab6part1.m}. In this script, we model the addition of a carrier offset, $f_o$, as follows:
+
+\begin{equation}
+	r(k) = s(k)e^{j(2{\pi}f_okT+\theta)}+n(k) = s(k)e^{j(\omega_okT+\theta)}+n(k)
+\end{equation}
+
+\noindent The model generates power spectral density (PSDs) of the signal before and after the carrier offset.
+
+Using the model, we specifically examine the effects of changing the `filterUpsample` variable, which sets the "analog" model rate, to 1. Next, with the original value of `filterUpsample`, we increase the frequency offset in unit steps of $0.1F_s$ from $0.1F_s$ to $1.0F_s$ and explain any observed effects. Then, we examine the code in \texttt{lab6part1.m} and state the reasoning behind incrementing the time vector when applying a frequency offset. Finally, we identify sources of the frequency offset besides LO mismatches.
+
+
+
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
