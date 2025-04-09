@@ -93,6 +93,40 @@ The error signal output by the PED is dependent on the modulation scheme. For DB
 e(k) = \text{sign}(\text{Re}(y(k))) \times \text{Im}(y(k))
 \end{equation}
 
+\noindent The loop filter is a proportional-plus-integrator (PI) filter of the following form:
+
+\begin{equation}
+F(z) = G_1 + \frac{G_2}{1-z^{-1}}
+\end{equation}
+
+\noindent The gain values $G_1$ and $G_2$ are chosen based on a damping factor $\zeta$ and a loop bandwidth $B_\text{Loop}$:
+
+\begin{align}
+	\theta = \frac{B_{\text{Loop}}}{M(\zeta + 0.25/\zeta)} && \Delta = 1 + 2\zeta\theta + \theta^2
+\end{align}
+
+\begin{align}
+	G_1 = \frac{4\zeta\theta/\Delta}{M} && G_2 = \frac{(4/M)\theta^2/\Delta}{M}
+\end{align}
+
+\noindent where $M$ is the constellation order. The selection of $\zeta$ affects the responsive and stability of the PLL:
+
+\begin{equation}
+zeta = \begin{cases}
+< 1, & \text{Underdamped}\\
+= 1, & \text{Critically Damped}\\
+> 1, & \text{Overdamped}
+\end{cases}
+\end{equation}
+
+\noindent $B_\text{Loop}$ is then chosen based on the maximum desired frequency locking range $\Delta_{f,\text{lock}}$ as follows:
+
+\begin{equation}
+	\Delta_{f,\text{lock}} = \frac{4(2\pi\sqrt{2}\zeta{B_\text{Loop}})^2}{B_\text{Loop}^3}
+\end{equation}
+
+Using the provided equations as template, we implement fine frequency compensation (FFC) in MATLAB. We use data from \texttt{lab6part2.m} to validate our design. Next, we evaluate how the convergence times for our function are affected by different damping factors $\zeta$ and loop bandwidths $B_\text{Loop}$.
+
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
