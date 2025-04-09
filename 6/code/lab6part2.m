@@ -2,12 +2,12 @@
 
 % Debugging flags
 visuals = false;
-useBuiltInObj = false;
+useBuiltInObj = true;
 
 %% General system details
 sampleRateHz = 1e3; % Sample rate
 samplesPerSymbol = 1;
-modulationOrder = 4;
+modulationOrder = 2;
 frameSize = 2^10;
 numFrames = 300;
 numSamples = numFrames*frameSize; % Samples to simulate
@@ -38,7 +38,7 @@ phaseOffset = 0; % Radians
 
 %% Generate symbols
 rng(0); % Fixing for repeatability
-data = randi([0 3], numSamples, 1);
+data = randi([0 modulationOrder-1], numSamples, 1);
 modulatedData = mod.step(data);
 
 %% Add noise
@@ -51,10 +51,12 @@ if useBuiltInObj
     if modulationOrder == 2
         modulation = 'BPSK';
     else % Assume QPSK
-        modulation = 'QPSK'
+        modulation = 'QPSK';
     end
     carrierSync = comm.CarrierSynchronizer(...
-        'SamplesPerSymbol',1,'Modulation',modulation);
+        'SamplesPerSymbol',1,'Modulation',modulation,...
+        'NormalizedLoopBandwidth',0.01,...
+        'DampingFactor',0.25);
 else
     carrierSync = CarrierSynchronizer(...
         'SamplesPerSymbol',1,'ModulationOrder',4);
@@ -83,6 +85,11 @@ for k=1:frameSize:numSamples
     end
     
 end
+
+% Display EVM
+evm = comm.EVM();
+evm_dB = 20*log10(evm(modulatedData(timeIndex),syncData(timeIndex))/100);
+fprintf('EVM(dB) = %.2f dB\n\n', evm_dB);
 
 % Plot constellations
 figure(1); clf;

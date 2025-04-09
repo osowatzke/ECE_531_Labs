@@ -109,6 +109,56 @@ In this section, we perform coarse frequency correction using an FFT. To remove 
 
 \noindent Examining the resulting figure, we see that our updated equation correctly compensates for a coarse frequency offset in QPSK-modulated data.
 
+\subsection{Fine Frequency Correction}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_sqrt_2.png}}}
+	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.01$ and $\protect{\zeta = 1/\sqrt{2}}$}
+	\label{fig::convergence_Bloop_0p01_damp_sqrt_2}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p02_damp_sqrt_2.png}}}
+	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.02$ and $\protect{\zeta = 1/\sqrt{2}}$}
+	\label{fig::convergence_Bloop_0p02_damp_sqrt_2}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p005_damp_sqrt_2.png}}}
+	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.005$ and $\protect{\zeta = 1/\sqrt{2}}$}
+	\label{fig::convergence_Bloop_0p005_damp_sqrt_2}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_0p5.png}}}
+	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.01$ and $\protect{\zeta = 0.5}$}
+	\label{fig::convergence_Bloop_0p01_damp_0p5}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_0p25.png}}}
+	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.01$ and $\protect{\zeta = 0.25}$}
+	\label{fig::convergence_Bloop_0p01_damp_0p25}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_1.png}}}
+	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.01$ and $\protect{\zeta = 1}$}
+	\label{fig::convergence_Bloop_0p01_damp_1}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_2.png}}}
+	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.01$ and $\protect{\zeta = 2}$}
+	\label{fig::convergence_Bloop_0p01_damp_2}
+\end{figure}
+
+\noindent The QPSK PED is slightly different than the BPSK PED and is given as follows:
+
+\begin{equation}
+	\text{sign}(\text{Re}(y(n))) \times \text{Im}(y(n)) - \text{sign}(\text{Im}(y(n))) \times \text{Re}(y(n))
+\end{equation}
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
