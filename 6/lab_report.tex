@@ -230,7 +230,7 @@ In this experiment, we perform fine frequency correction on a DPBPSK signal with
 
 \noindent Qualitatively examining the figure, we see that the frequency offset has been effectively removed. We can quantify the error before and after compensation using the error vector magnitude. However, before we do this, we must handle the phase ambiguity. Our correction algorithm only ensures that our received data lines up with a constellation point (not specific constellation points). For BPSK this means that our compensated data is ambiguous by $180^{\circ}$. For a first-pass implementation, we select the phase ambiguity that minimizes the EVM. This approach over the entire data set is not realizable. However, we can perform it on a smaller scale using code words. Other approaches include differential encoding and equalization. After compensating for the phase ambiguity, we find that our EVM before compensation is 3.09 dB and our EVM after compensation is -14.72 dB.
 
-  Doing so, we find that our initial EVM is 
+  The constellation and EVM illustrate the steady state response of the PLL. However, we can plot the frequency output of the PLL to evaluate convergence times.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_sqrt_2.png}}}
