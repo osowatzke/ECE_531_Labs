@@ -320,7 +320,7 @@ Interestingly, when we increase SNR, the EVM relationships remain approximately 
 	\label{fig::convergence_1Hz_drift_Bloop_0p005_damp_sqrt_2}
 \end{figure}
 
-\noindent Comparing the two figures, we see that the PLL has difficulty keeping up with the frequency drift when $B_\text{loop} = 0.005$. If we measures the EVM, we see that it is -14.68 dB for $B_\text{loop} = 0.01$ and 3.08 dB for $B_\text{loop} = 0.005$. We also increase the SNR to 60 dB to characterize the EVM for $B_\text{loop} = 0.01$ and $B_\text{loop} = 0.02$. Doing so, we measure an EVM of -34.93 dB for $B_\text{loop} = 0.01$ and -46.64 dB for $B_\text{loop} = 0.02$. Thus, our choice of control system parameters becomes more important as our input becomes more dynamic. We specifically note that with a faster-responding control system, we can better handle dynamic inputs with only marginal  performance hits for static frequency offsets.
+\noindent Comparing the two figures, we see that the PLL has difficulty keeping up with the frequency drift when $B_\text{loop} = 0.005$. If we measure the EVM, we see that it is -14.68 dB for $B_\text{loop} = 0.01$ and 3.08 dB for $B_\text{loop} = 0.005$. We also increase the SNR to 60 dB to characterize the EVM for $B_\text{loop} = 0.01$ and $B_\text{loop} = 0.02$. At this SNR, we measure an EVM of -34.93 dB for $B_\text{loop} = 0.01$ and -46.64 dB for $B_\text{loop} = 0.02$. Thus, our choice of control system parameters becomes more important as our input becomes more dynamic. We specifically note that with a faster-responding control system, we can better handle dynamic inputs with only marginal performance hits for static frequency offsets.
 
 We also examine how the loop filter parameters influence the maximum correctable frequency. For a 50 Hz offset with $B_{\text{loop}} = 0.01$ and $\zeta = 1/\sqrt{2}$, the PLL response is shown in Figure \ref{fig::convergence_Bloop_0p01_damp_sqrt_2_foff_50}.
 
@@ -338,7 +338,7 @@ We also examine how the loop filter parameters influence the maximum correctable
 	\label{fig::convergence_Bloop_0p05_damp_2_foff_50}
 \end{figure}
 
-\noindent Comparing the results to Figure \ref{fig::convergence_Bloop_0p01_damp_sqrt_2_foff_50}, we see that the PLL now converges. This is consistent with Equation \ref{eq::max_freq_correct}, which states that the maximum correctable frequency increases with increasing  $B_{\text{loop}}$ and $\zeta$. Note that our results did not seem to indicate a linear relationship between the maximum resolve frequency and $B_{\text{loop}}$ or $\zeta$. This is likely because Equation \ref{eq::max_freq_correct} makes some assumptions about the size of the frequency offset with respect to the signal bandwidth that do not hold in this case.
+\noindent Comparing the results to Figure \ref{fig::convergence_Bloop_0p01_damp_sqrt_2_foff_50}, we see that the PLL now converges. This is consistent with Equation \ref{eq::max_freq_correct}, which states that the maximum correctable frequency increases with increasing  $B_{\text{loop}}$ and $\zeta$. Note that our results did not seem to indicate a linear relationship between the maximum resolvable frequency and $B_{\text{loop}}$ or $\zeta$. This is likely because Equation \ref{eq::max_freq_correct} makes some assumptions about the size of the frequency offset with respect to the signal bandwidth that do not hold for our choice of parameters.
 
 We can modify our PED to support different modulation schemes. For example, to support QPSK modulation, we need to modify the PED to perform the following computation:
 
@@ -346,7 +346,7 @@ We can modify our PED to support different modulation schemes. For example, to s
 	e(k) = \text{sign}(\text{Re}(y(k))) \times \text{Im}(y(k)) - \text{sign}(\text{Im}(y(k))) \times \text{Re}(y(k))
 \end{equation}
 
-\noindent This modified equation tries to force $\text{Re}(y(k)) = \pm \text{Im}(y(k))$, which forces the data to a QPSK constellation point. Our constellation with a 20 Hz frequency offset and a 15 dB SNR is shown before and after fine frequency correction in Figure \ref{fig::fine_freq_comp_qpsk_const}. For our correction, we reuse our loop filter parameters $B_{\text{loop}}=0.01$ and $\zeta=1/\sqrt{2}$.
+\noindent This modified equation tries to force $\text{Re}(y(k)) = \pm \text{Im}(y(k))$, which, in turn, forces the data to a QPSK constellation point. Our constellation with a 20 Hz frequency offset and a 15 dB SNR is shown before and after fine frequency correction in Figure \ref{fig::fine_freq_comp_qpsk_const}. For our correction, we use the following loop filter parameters: $B_{\text{loop}}=0.01$ and $\zeta=1/\sqrt{2}$.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{fine_freq_comp_qpsk_const.png}}}
@@ -354,7 +354,7 @@ We can modify our PED to support different modulation schemes. For example, to s
 	\label{fig::fine_freq_comp_qpsk_const}
 \end{figure}
 
-\noindent After compensation, we see that our constellation points match our expected QPSK constellation. Additionally, we measure an EVM of 3.07 dB before compensation and -14.75 dB after compensation. Additionally, we show the PLL estimate after compensation, which converges to the correct frequency offset as expected.
+\noindent After compensation, we see that our constellation points match the expected QPSK constellation. Additionally, we measure an EVM of 3.07 dB before compensation and -14.75 dB after compensation. We also show the PLL frequency estimate, which converges to the correct frequency offset as expected.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_qpsk_Bloop_0p01_damp_sqrt_2.png}}}
