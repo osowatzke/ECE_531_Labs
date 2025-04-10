@@ -264,17 +264,21 @@ In this experiment, we perform fine frequency correction on a DPBPSK signal with
 
 \noindent Compared to results with $\zeta = 1$, we also do not observe ringing. However, the convergence time increases, which is expected for an underdamped system. Similar to our previous results, the EVM after compensation remains unchanged at -14.72 dB.
 
-\begin{figure}[H]
-	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p02_damp_sqrt_2.png}}}
-	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.02$ and $\protect{\zeta = 1/\sqrt{2}}$}
-	\label{fig::convergence_Bloop_0p02_damp_sqrt_2}
-\end{figure}
+Next, we can examine the response when we modify the loop bandwidth, $B_\text{loop}$ instead of the damping factor, $\zeta$. Our results for $B_\text{loop} = 0.005$ and $B_\text{loop} = 0.02$ are included in Figures \ref{fig::convergence_Bloop_0p005_damp_sqrt_2} and \ref{fig::convergence_Bloop_0p02_damp_sqrt_2} respectively.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p005_damp_sqrt_2.png}}}
 	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.005$ and $\protect{\zeta = 1/\sqrt{2}}$}
 	\label{fig::convergence_Bloop_0p005_damp_sqrt_2}
 \end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p02_damp_sqrt_2.png}}}
+	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.02$ and $\protect{\zeta = 1/\sqrt{2}}$}
+	\label{fig::convergence_Bloop_0p02_damp_sqrt_2}
+\end{figure}
+
+\noindent Comparing the responses to our previous response in Figure \ref{fig::convergence_Bloop_0p01_damp_sqrt_2}, we see that a lower loop bandwidth increases the convergence time, while a larger loop bandwidth decreases the convergence time. Additionally, we see that smaller loop bandwidths lead to less error in the response. Compared to our results with $B_{\text{loop}} = 0.01$, we achieve an error variance $\sigma_e=0.134348$ for $B_{\text{loop}} = 0.005$ and an error variance $\sigma_e=2.12314$ for $B_{\text{loop}} = 0.02$. In other words, our frequency estimate improves as we decrease the loop bandwidth. However, this error variance has minimal effects on our EVM because of the noise floor. With $B_{\text{loop}} = 0.005$, we measure an EVM of -14.74 dB, and with $B_{\text{loop}} = 0.02$, we measure an EVM of -14.67 dB.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_0p5.png}}}

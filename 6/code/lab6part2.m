@@ -2,7 +2,7 @@
 
 % Debugging flags
 visuals = false;
-useBuiltInObj = true;
+useBuiltInObj = false;
 
 %% General system details
 sampleRateHz = 1e3; % Sample rate
@@ -59,7 +59,9 @@ if useBuiltInObj
         'DampingFactor',sqrt(2));
 else
     carrierSync = CarrierSynchronizer(...
-        'SamplesPerSymbol',1,'ModulationOrder',4);
+        'SamplesPerSymbol',1,'ModulationOrder',modulationOrder, ...
+        'NormalizedLoopBandwidth',0.02,...
+        'DampingFactor',sqrt(2));
 end
 
 % Precalculate constants
@@ -108,6 +110,12 @@ evm_dB = 20*log10(evm(modulatedData(timeIndex),offsetData(timeIndex))/100);
 fprintf('EVM_pre (dB) = %.2f dB\n', evm_dB);
 evm_dB = 20*log10(evm(1*modulatedData(timeIndex),syncData(timeIndex))/100);
 fprintf('EVM_post (dB) = %.2f dB\n\n', evm_dB);
+
+% Display error variance
+freqEstHz = diff(phaseEst(timeIndex))/(2*pi)*sampleRateHz;
+freqErrHz = freqEstHz - frequencyOffsetHz;
+freqVar = var(freqErrHz);
+fprintf('Error Variance = %g\n', freqVar);
 
 % Plot constellations
 figure(1); clf;
