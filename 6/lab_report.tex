@@ -198,7 +198,7 @@ As long as the passband of our spectrum does not wrap when apply the frequency o
 
 \noindent At this frequency offset, we see that the frequency response is circularly shifted by half the bandwidth of the signal. We can explain this with DTFT properties as we did previously. However, another equivalent way of explaining these results is to treat the frequency shift as a continuous-time frequency shift followed by sampling. When the highest frequency of the continuous-time signal exceeds half the sample rate, this results in aliasing, which in turn, causes our frequency response to wrap.
 
-	In simulation, we also increment the timing vector for each frame (\texttt{timeIndex = (k:k+frameSize-1).'}). This models back-to-back frames being fed into a continuous oscillator. The frequency offsets we observe are primarily caused by LO mismatches. However, another cause of the frequency offset is a doppler shift (which is caused by relative motion of the receiver with respect to the transmitter).
+	In simulation, we also increment the timing vector for each frame (\texttt{timeIndex = (k:k+frameSize-1).'}). This models back-to-back frames being fed into a free-running oscillator. The frequency offsets we observe are primarily caused by LO mismatches. However, another cause of the frequency offset is a doppler shift (which is caused by relative motion of the receiver with respect to the transmitter).
 
 \subsection{Coarse Frequency Correction}
 
