@@ -172,7 +172,7 @@ In this experiment, we use Equation \ref{eq::carrier_freq_offset} to model our r
 
 \noindent Examining the equation, we see that multiplying the signal by a complex exponential results in a shift in the frequency domain. However, because the DTFT is periodic with a period of $2\pi$, it can be more insightful to treat the frequency shift as an circular shift in the frequency-domain. 
 
-In discrete time, when we multiply a signal by a complex exponential, it circular shifts the frequency response. If we have enough excess bandwidth, we can ensure that the significant portions of our frequency response do not wrap and in turn correctly model an analog frequency shift. If we change the `filterUpsample' in \texttt{lab6part1.m} to 1, we do have any excess bandwidth. The spectrum after a frequency shift of $0.1F_s$ is shown in Figure \ref{fig::psd_upsample_1}.
+As long as the passband of our spectrum does not wrap when apply the frequency offset, our model will generate a spectrum that is representative of a continuous-time frequency shift. Increasing the excess bandwidth allows us to support a larger range of frequency offsets. However, if we change the `filterUpsample' in \texttt{lab6part1.m} to 1, we do have any excess bandwidth. The spectrum after a frequency shift of $0.1F_s$ is shown in Figure \ref{fig::psd_upsample_1}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_upsample_1.png}}}
@@ -180,7 +180,7 @@ In discrete time, when we multiply a signal by a complex exponential, it circula
 	\label{fig::psd_upsample_1}
 \end{figure}
 
-\noindent Examining the frequency response, we see that it does not correctly model a $0.1F_s$ analog frequency shift, which would have resulted in part of the spectrum being zero. Note that our updated frequency response is also not exactly a shift of the original DFT samples. This is because the DFT is sampling the DTFT. With a frequency shift of $0.1F_s$, our updated sampling positions do not overlap with the original sampling positions, which results in a slightly different response. If we instead chose a frequency shift of $F_s/16$, our sampling positions align and our DFT's are related by a simple shift. These results are captured in Figure \ref{fig::psd_upsample_1_mod_shift}.
+\noindent Examining the frequency response, we see that it does not correctly model a $0.1F_s$ continuous-time frequency shift, which would have resulted in part of the spectrum being zero. Note that our updated frequency response is also not a shift of the original DFT samples. This is because the DFT is sampling the DTFT. With a frequency shift of $0.1F_s$, our updated sampling positions do not align with our initial sampling positions. This results in a a slightly different response. If we instead chose a frequency shift of $F_s/16$, our sampling positions will align and our DFTs will be related by a circular shift. These results are captured in Figure \ref{fig::psd_upsample_1_mod_shift}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_upsample_1_mod_shift.png}}}
