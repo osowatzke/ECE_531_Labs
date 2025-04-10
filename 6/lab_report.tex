@@ -41,12 +41,12 @@
 \section{Introduction}
 %Introduction to the laboratory experiment, including a brief description of the objectives and goals.
 
-In this lab, we learn how to model carrier frequency offsets and compensate for them using coarse and fine frequency correction. These frequency corrections in conjunction with the timing correction we learned about in the last lab are critical for communication performance. The work that follows is divided into two parts. One presents the procedures for each of the performed experiments, and the other presents the results.
+In this lab, we learn how to model carrier frequency offsets and compensate for them using coarse and fine frequency correction. These frequency corrections are performed in conjunction with timing correction and are critical for communication performance. The work that follows is divided into two parts. One presents the procedures for each of the performed experiments, and the other presents the results.
 
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
-In this section, we detail the procedures of each of our experiments. We specifically concentrate on modeling and correcting carrier frequency offsets. Our frequency compensation algorithm is divided into course and fine frequency correction, which are individually covered in this lab's experiments. Figure \ref{fig::receiver_block_diagram}, highlights the frequency compensation blocks in the receiver.
+In this section, we detail the procedures of each of our experiments. We specifically concentrate on modeling and correcting carrier frequency offsets. Our frequency compensation algorithm is divided into course and fine frequency correction, which are individually covered in this lab's experiments. Figure \ref{fig::receiver_block_diagram} shows where the frequency compensation blocks are located within the receiver.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{receiver_block_diagram.png}}}
@@ -62,9 +62,9 @@ In this experiment, we analyze a model of the receiver included in \texttt{lab6p
 	r(k) = s(k)e^{j(2{\pi}f_okT+\theta)}+n(k) = s(k)e^{j(\omega_okT+\theta)}+n(k)
 \end{equation}
 
-\noindent The model generates power spectral density (PSDs) of the signal before and after the carrier offset.
+\noindent The model also generates power spectral density (PSDs) of the signal before and after the carrier offset.
 
-Using the model, we specifically examine the effects of changing the `filterUpsample` variable, which sets the "analog" model rate, to 1. Next, with the original value of `filterUpsample`, we increase the frequency offset in unit steps of $0.1F_s$ from $0.1F_s$ to $1.0F_s$ and explain any observed effects. Then, we examine the code in \texttt{lab6part1.m} and state the reasoning behind incrementing the time vector when applying a frequency offset. Finally, we identify sources of the frequency offset besides LO mismatches.
+Using the model, we specifically examine the effects of changing the `filterUpsample` variable, which sets the "analog" oversample rate, to 1. Next, with the original value of `filterUpsample`, we increase the frequency offset in unit steps of $0.1F_s$ from $0.1F_s$ to $1.0F_s$ and explain any observed effects. Then, we examine the code in \texttt{lab6part1.m} and state the reasoning behind incrementing the time vector when applying a frequency offset. Finally, we identify sources of the frequency offset besides LO mismatches.
 
 \subsection{Coarse Frequency Correction}
 
