@@ -81,7 +81,7 @@ Using Equation \ref{eq::bpsk_coarse_freq_est} as reference, we implement a coars
 
 \subsection{Fine Frequency Correction}
 
-In this experiment, we perform fine frequency compensation. The block we implement is designed to compensate for any residual phase or frequency offsets remaining after coarse frequency compensation. The algorithm we implemented is specifically illustrated in Figure \ref{fig::fine_freq_comp_block_diagram}.
+In this experiment, we perform fine frequency compensation. The block we implement is designed to compensate for any residual phase or frequency offsets remaining after coarse frequency compensation. The algorithm we implement is specifically illustrated in Figure \ref{fig::fine_freq_comp_block_diagram}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{fine_freq_comp_block_diagram.png}}}
@@ -89,7 +89,7 @@ In this experiment, we perform fine frequency compensation. The block we impleme
 	\label{fig::fine_freq_comp_block_diagram}
 \end{figure}
 
-In the block diagram, the phase error detector (PED) measures the phase offset of the receive samples. The loop filter governs the dynamics of the PLL. It sets the operational frequency range, lock time, and dampness/responsiveness of the PLL. Finally, the direct digital synthesizer (DDS) generates the correction signal.
+In the block diagram, the phase error detector (PED) measures the phase offset of the received samples. The loop filter governs the dynamics of the PLL. It sets the operational frequency range, lock time, and dampness/responsiveness of the PLL. Finally, the direct digital synthesizer (DDS) generates the correction signal, which is applied by the phase rotator.
 
 The error signal output by the PED is dependent on the modulation scheme. For DBPSK modulation, it is specifically given by:
 
