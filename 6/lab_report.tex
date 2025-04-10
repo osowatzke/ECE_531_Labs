@@ -202,13 +202,15 @@ As long as the passband of our spectrum does not wrap when apply the frequency o
 
 \subsection{Coarse Frequency Correction}
 
-In this section, we perform coarse frequency correction using an FFT. To remove the modulation from our constellation, we raise our received data up to a power equivalent to the modulation order. The maximum FFT bin then gives us an index that is proportional to our estimated carrier offset. For DBPSK, the estimated carrier offset is specifically given by
+In this experiment, we perform coarse frequency correction using an FFT. To remove the modulation from our constellation, we raise our received data up to a power equivalent to the modulation order. The maximum FFT bin then gives us an index that is proportional to our estimated carrier offset. For DBPSK, the estimated carrier offset can be computed using Equation \ref{eq::bpsk_coarse_freq_est}. When we apply coarse frequency compensation to a DBPSK-modulated signal with a $0.1F_s$ frequency offset, we obtain the FFT output shown in Figure \ref{fig::bpsk_coarse_freq_estimate}.
 
-\begin{equation}
-	\hat{f}_0 = \frac{1}{2TK}\underset{f}{\text{argmax}}\left\vert\sum_{k=0}^{K-1}{r^2(k)e^{-j2{\pi}kT/K}}\right\vert
-\end{equation}
-	
-\noindent When we apply coarse frequency compensation to a DBPSK-modulated signal with a $0.1F_s$ frequency offset, we obtain the spectrum shown in Figure \ref{fig::psd_bpsk_with_cfc}.
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{bpsk_coarse_freq_estimate.png}}}
+	\caption{Output of Coarse Frequency Estimate FFT}
+	\label{fig::bpsk_coarse_freq_estimate}
+\end{figure}
+
+\noindent Note that the FFT peak corresponds to a frequency that is twice the carrier offset because we are squaring our received data before the FFT. The spectrum before and after correction is shown in Figure \ref{fig::psd_bpsk_with_cfc}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_bpsk_with_cfc.png}}}
