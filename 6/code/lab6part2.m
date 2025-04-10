@@ -7,7 +7,7 @@ useBuiltInObj = false;
 %% General system details
 sampleRateHz = 1e3; % Sample rate
 samplesPerSymbol = 1;
-modulationOrder = 2;
+modulationOrder = 4;
 frameSize = 2^10;
 numFrames = 300;
 numSamples = numFrames*frameSize; % Samples to simulate
@@ -33,7 +33,7 @@ ap.SampleIncrement = (sampleRateHz)/(2^10);
 
 %% Impairments
 snr = 15;
-frequencyOffsetHz = sampleRateHz*0.05; % Offset in hertz
+frequencyOffsetHz = sampleRateHz*0.02; % Offset in hertz
 frequencyDriftHz = sampleRateHz*0; %0.001;
 phaseOffset = 0; % Radians
 
