@@ -218,13 +218,13 @@ In this experiment, we perform coarse frequency correction using an FFT. To remo
 	\label{fig::psd_bpsk_with_cfc}
 \end{figure}
 
-\noindent Examining the figure, we see that coarse frequency correction effectively removes the carrier offset. Our spectrum before and after compensation is essentially the same. Next, we modify our frequency offset calculation to support QPSK instead of BPSK. The resulting equation is included below:
+\noindent Examining the figure, we see that coarse frequency correction effectively removes the carrier offset. Next, we modify our frequency offset calculation to support QPSK instead of BPSK. The resulting equation is included below:
 
 \begin{equation}
 	\hat{f}_0 = \frac{1}{4TK}\underset{f}{\text{argmax}}\left\vert\sum_{k=0}^{K-1}{r^4(k)e^{-j2{\pi}kT/K}}\right\vert
 \end{equation}
 
-\noindent Compared to our original equation, we raise our constellation points up to the 4th power instead of the 2nd power to remove the modulation. Next, we we compute our frequency offset, we have to scale the result by 1/4 instead of 1/2 to account for raising our received data to the 4th power instead of the 2nd power. When we apply coarse frequency compensation to a QPSK-modulated signal with a $0.1F_s$ frequency offset, we obtain the spectrum shown in Figure \ref{fig::psd_qpsk_with_cfc}.
+\noindent Compared to our prior equation, we raise our constellation points to the 4th power instead of the 2nd power to remove the modulation. Next, when we compute our frequency offset, we have to scale the result by 1/4 instead of 1/2 to account for raising our received data to the 4th power instead of the 2nd power. When we apply coarse frequency compensation to a QPSK-modulated signal with a $0.1F_s$ frequency offset, we obtain the spectrum shown in Figure \ref{fig::psd_qpsk_with_cfc}.
  
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_bpsk_with_cfc.png}}}
