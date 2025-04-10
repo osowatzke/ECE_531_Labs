@@ -32,8 +32,9 @@ ap.XOffset = -sampleRateHz/2;
 ap.SampleIncrement = (sampleRateHz)/(2^10);
 
 %% Impairments
-snr = 15;
+snr = 5;
 frequencyOffsetHz = sampleRateHz*0.02; % Offset in hertz
+frequencyDriftHz = sampleRateHz*0; %0.001;
 phaseOffset = 0; % Radians
 
 %% Generate symbols
@@ -61,11 +62,12 @@ else
     carrierSync = CarrierSynchronizer(...
         'SamplesPerSymbol',1,'ModulationOrder',modulationOrder, ...
         'NormalizedLoopBandwidth',0.01,...
-        'DampingFactor',2);
+        'DampingFactor',1/sqrt(2));
 end
 
 % Precalculate constants
 normalizedOffset = 1i.*2*pi*frequencyOffsetHz./sampleRateHz;
+normalizedDrift = 1i.*2*pi*frequencyDriftHz./sampleRateHz^2;
 
 offsetData = zeros(size(noisyData));
 syncData = zeros(size(noisyData));
@@ -73,7 +75,7 @@ phaseEst = zeros(size(noisyData));
 for k=1:frameSize:numSamples
     
     timeIndex = (k:k+frameSize-1).';
-    freqShift = exp(normalizedOffset*timeIndex + phaseOffset);
+    freqShift = exp(normalizedOffset*timeIndex + 1/2*normalizedDrift*timeIndex.^2 + phaseOffset);
     
     % Offset data and maintain phase between frames
     offsetData(timeIndex) = noisyData(timeIndex).*freqShift;
@@ -138,7 +140,7 @@ ylabel('In-phase')
 figure(2); clf;
 plot(diff(phaseEst)/(2*pi)*sampleRateHz,'r');
 hold on;
-plot(frequencyOffsetHz*ones(size(phaseEst)),'b');
+plot(frequencyOffsetHz+frequencyDriftHz.*(1:numSamples).'/sampleRateHz,'b');
 grid on;
 xlabel('Estimate')
 ylabel('Offset (Hz)')

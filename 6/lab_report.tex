@@ -278,7 +278,28 @@ Next, we can examine the response when we modify the loop bandwidth, $B_\text{lo
 	\label{fig::convergence_Bloop_0p02_damp_sqrt_2}
 \end{figure}
 
-\noindent Comparing the responses to our previous response in Figure \ref{fig::convergence_Bloop_0p01_damp_sqrt_2}, we see that a lower loop bandwidth increases the convergence time, while a larger loop bandwidth decreases the convergence time. Additionally, we see that smaller loop bandwidths lead to less error in the response. Compared to our results with $B_{\text{loop}} = 0.01$, we achieve an error variance $\sigma_e=0.134348$ for $B_{\text{loop}} = 0.005$ and an error variance $\sigma_e=2.12314$ for $B_{\text{loop}} = 0.02$. In other words, our frequency estimate improves as we decrease the loop bandwidth. However, this error variance has minimal effects on our EVM because of the high noise floor. With $B_{\text{loop}} = 0.005$, we measure an EVM of -14.74 dB, and with $B_{\text{loop}} = 0.02$, we measure an EVM of -14.67 dB.
+\noindent Comparing the responses to our previous response in Figure \ref{fig::convergence_Bloop_0p01_damp_sqrt_2}, we see that a lower loop bandwidth increases the convergence time, while a larger loop bandwidth decreases the convergence time. Additionally, we see that smaller loop bandwidths lead to less error in the response. Compared to our results with $B_{\text{loop}} = 0.01$, we achieve an error variance $\sigma_e=0.134348$ for $B_{\text{loop}} = 0.005$ and an error variance $\sigma_e=2.12314$ for $B_{\text{loop}} = 0.02$. In other words, our frequency estimate improves as we decrease the loop bandwidth. However, this error variance has minimal effects on our EVM because of the high noise floor. With $B_{\text{loop}} = 0.005$, we measure an EVM of -14.74 dB, and with $B_{\text{loop}} = 0.02$, we measure an EVM of -14.67 dB. 
+
+Interestingly, when we increase SNR, the EVM relationships remain approximately the same. At a 60 dB SNR for example, we measure an EVM of -59.74 dB with $B_{\text{loop}} = 0.005$, -59.72 dB with $B_{\text{loop}} = 0.01$, and -59.67 dB with $B_{\text{loop}} = 0.02$. Thus, our EVM is nearly independent of $B_{\text{loop}}$ for static frequency offsets. Our EVM results, however do to start to differ if we add a frequency drift. This is due to different convergence times for each selection $B_{\text{loop}}$. If we consider a 1Hz/s drift at 15 dB SNR, our response with $B_{\text{loop}} = 0.01$ and $\zeta = 1/\sqrt{2}$ is given below.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_1Hz_drift_Bloop_0p01_damp_sqrt_2.png}}}
+	\caption{Plot of PLL Estimate with 1 Hz/s drift, $\protect{B_\text{loop}} = 0.01$, and $\protect{\zeta = 1/\sqrt{2}}$}
+	\label{fig::convergence_1Hz_drift_Bloop_0p01_damp_sqrt_2}
+\end{figure}
+
+\noindent Similarly, we show the results with $B_{\text{loop}} = 0.005$ below:
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_1Hz_drift_Bloop_0p005_damp_sqrt_2.png}}}
+	\caption{Plot of PLL Estimate with 1 Hz/s drift, $\protect{B_\text{loop}} = 0.005$, and $\protect{\zeta = 1/\sqrt{2}}$}
+	\label{fig::convergence_1Hz_drift_Bloop_0p005_damp_sqrt_2}
+\end{figure}
+
+\noindent Comparing the two figures, we see that the PLL has difficulty keeping up with the frequency drift when $B_\text{loop} = 0.005$. If we measures the EVM, we see that it is -14.68 dB for $B_\text{loop} = 0.01$ and 3.08 dB for $B_\text{loop} = 0.005$. We also increase the SNR to 60 dB to characterize the EVM for $B_\text{loop} = 0.01$ and $B_\text{loop} = 0.02$. Doing so, we measure an EVM of -34.93 dB for $B_\text{loop} = 0.01$ and -46.64 dB for $B_\text{loop} = 0.02$. Thus, our choice of control system parameters becomes more important as our input becomes more dynamic. We specifically note that with a faster-responding control system, we can better handle dynamic inputs with only marginal  performance hits for static frequency offsets.
+
+
+   The results are more interesting if allow our input frequency with time. If we add a 1Hz drift, our EVMs are 
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_0p5.png}}}
