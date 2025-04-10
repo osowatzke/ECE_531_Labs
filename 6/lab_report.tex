@@ -206,7 +206,7 @@ In this experiment, we perform coarse frequency correction using an FFT. To remo
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{bpsk_coarse_freq_estimate.png}}}
-	\caption{Output of Coarse Frequency Estimate FFT}
+	\caption{Output of Coarse Frequency Estimate FFT for DBPSK-Modulated Data}
 	\label{fig::bpsk_coarse_freq_estimate}
 \end{figure}
 
@@ -224,7 +224,15 @@ In this experiment, we perform coarse frequency correction using an FFT. To remo
 	\hat{f}_0 = \frac{1}{4TK}\underset{f}{\text{argmax}}\left\vert\sum_{k=0}^{K-1}{r^4(k)e^{-j2{\pi}kT/K}}\right\vert
 \end{equation}
 
-\noindent Compared to our prior equation, we raise our constellation points to the 4th power instead of the 2nd power to remove the modulation. Next, when we compute our frequency offset, we have to scale the result by 1/4 instead of 1/2 to account for raising our received data to the 4th power instead of the 2nd power. When we apply coarse frequency compensation to a QPSK-modulated signal with a $0.1F_s$ frequency offset, we obtain the spectrum shown in Figure \ref{fig::psd_qpsk_with_cfc}.
+\noindent Compared to our prior equation, we raise our constellation points to the 4th power instead of the 2nd power to remove the modulation. Next, when we compute our frequency offset, we have to scale the result by 1/4 instead of 1/2 to account for raising our received data to the 4th power instead of the 2nd power. When we apply coarse frequency compensation to a QPSK-modulated signal with a $0.1F_s$ frequency offset, we obtain the FFT output shown in Figure \ref{fig::qpsk_coarse_freq_estimate}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{qpsk_coarse_freq_estimate.png}}}
+	\caption{Output of Coarse Frequency Estimate FFT for QPSK-Modulated Data}
+	\label{fig::qpsk_coarse_freq_estimate}
+\end{figure}
+
+\noindent Comparing the FFT peak to the peak shown in Figure \ref{eq::bpsk_coarse_freq_est}, we see that the peak frequency has been scaled by 2 as expected. However, the frequency estimate remain the same. The spectrum before and after compensation is shown in Figure \ref{fig::psd_qpsk_with_cfc}.
  
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_bpsk_with_cfc.png}}}
