@@ -105,7 +105,7 @@ modulatedData = modulatedData*symbolOffset;
 % Display EVM
 evm = comm.EVM();
 evm_dB = 20*log10(evm(modulatedData(timeIndex),offsetData(timeIndex))/100);
-fprintf('EVM_pre (dB) = %.2f dB\n\n', evm_dB);
+fprintf('EVM_pre (dB) = %.2f dB\n', evm_dB);
 evm_dB = 20*log10(evm(1*modulatedData(timeIndex),syncData(timeIndex))/100);
 fprintf('EVM_post (dB) = %.2f dB\n\n', evm_dB);
 
