@@ -121,12 +121,18 @@ F(z) = G_1 + \frac{G_2}{1-z^{-1}}
 \end{cases}
 \end{equation}
 
-\noindent $B_\text{Loop}$ is then chosen based on the maximum desired frequency locking range $\Delta_{f,\text{lock}}$ as follows:
+\noindent $B_\text{Loop}$ is then chosen to achieve a maximum frequency pull-in range, $\Delta_{f,\text{pull}}$, and a maximum frequency lock delay, $t_{\Delta,\text{Max}}$.
+
+%\begin{equation}
+%	\Delta_{f,\text{lock}} = \frac{4(2\pi\sqrt{2}\zeta{B_\text{Loop}})^2}{B_\text{Loop}^3}
+%\end{equation}
 
 \begin{equation}
-	\Delta_{f,\text{lock}} = \frac{4(2\pi\sqrt{2}\zeta{B_\text{Loop}})^2}{B_\text{Loop}^3}
-\end{equation}
+	\Delta_{f,\text{pull}} \sim 2\pi\sqrt{2}\zeta{B_\text{Loop}}\end{equation}
 
+\begin{equation}
+	t_{\Delta,\text{Max}} \sim \frac{32\zeta^2}{B_\text{Loop}}\end{equation}
+	
 Using the provided equations as template, we implement fine frequency compensation (FFC) in MATLAB. We use data from \texttt{lab6part2.m} to validate our design. Next, we evaluate how the convergence times for our function are affected by different damping factors $\zeta$ and loop bandwidths $B_\text{Loop}$. Then, we compare the phase-corrected constellation to the ideal constellation using an error vector magnitude (EVM) metric, which can be computed as follows:
 
 \begin{equation}
@@ -213,6 +219,16 @@ In this section, we perform coarse frequency correction using an FFT. To remove 
 \noindent Examining the resulting figure, we see that our updated equation correctly compensates for a coarse frequency offset in QPSK-modulated data.
 
 \subsection{Fine Frequency Correction}
+
+In this experiment, we perform fine frequency correction on a DPBPSK signal with a 20Hz frequency offset. With $B_\text{loop} = 0.01$ and $\zeta = 1/\sqrt{2}$, our constellation before and after correction is shown in Figure \ref{fig::fine_freq_comp_bpsk_const}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.8\textwidth]{fine_freq_comp_bpsk_const.png}}}
+	\caption{DBPSK Constellation Before and After Fine Frequency Compensation}
+	\label{fig::fine_freq_comp_bpsk_const}
+\end{figure}
+
+\noindent Qualitatively examining the figure, we see that the frequency offset has been effectively removed. We can examine the error vector magnitude to assess our error before and after compensation. 
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_sqrt_2.png}}}

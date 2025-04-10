@@ -56,7 +56,7 @@ if useBuiltInObj
     carrierSync = comm.CarrierSynchronizer(...
         'SamplesPerSymbol',1,'Modulation',modulation,...
         'NormalizedLoopBandwidth',0.01,...
-        'DampingFactor',0.25);
+        'DampingFactor',sqrt(2));
 else
     carrierSync = CarrierSynchronizer(...
         'SamplesPerSymbol',1,'ModulationOrder',4);
@@ -83,13 +83,31 @@ for k=1:frameSize:numSamples
     if visuals
         step(cdPre,offsetData(timeIndex));step(cdPost,syncData(timeIndex));pause(0.1); %#ok<*UNRCH>
     end
-    
 end
+
+% Compute EVM before and after compensation
+evm = comm.EVM();
+evm_pre_dB = 20*log10(evm(modulatedData(timeIndex),offsetData(timeIndex))/100);
+evm_post_dB = 100;
+symbolOffset = 1;
+for i = 0:(modulationOrder-1)
+    testOffset = exp(1i*2*pi*i/modulationOrder);
+    evm_test_dB = 20*log10(evm(modulatedData(timeIndex)*testOffset,syncData(timeIndex))/100);
+    if evm_test_dB < evm_post_dB
+        evm_post_dB = evm_test_dB;
+        symbolOffset = testOffset;
+    end
+end
+
+% Handle phase ambiguity
+modulatedData = modulatedData*symbolOffset;
 
 % Display EVM
 evm = comm.EVM();
-evm_dB = 20*log10(evm(modulatedData(timeIndex),syncData(timeIndex))/100);
-fprintf('EVM(dB) = %.2f dB\n\n', evm_dB);
+evm_dB = 20*log10(evm(modulatedData(timeIndex),offsetData(timeIndex))/100);
+fprintf('EVM_pre (dB) = %.2f dB\n\n', evm_dB);
+evm_dB = 20*log10(evm(1*modulatedData(timeIndex),syncData(timeIndex))/100);
+fprintf('EVM_post (dB) = %.2f dB\n\n', evm_dB);
 
 % Plot constellations
 figure(1); clf;
