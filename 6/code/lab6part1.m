@@ -69,7 +69,11 @@ for k=1:frameSize:numSamples*filterUpsample
     offsetData(timeIndex) = (noisyData(timeIndex).*freqShift);
     
     % Coarse Frequency Compensation
-    compData(timeIndex) = coarseFrequencyComp(offsetData(timeIndex));
+    if useBuiltInCfc
+        compData(timeIndex) = coarseFrequencyComp(offsetData(timeIndex));
+    else
+        [compData(timeIndex), ~, Fdata] = coarseFrequencyComp(offsetData(timeIndex));
+    end
     
     % Visualize Error
     if visualizeError
@@ -98,3 +102,19 @@ grid on;xlabel('Frequency (Hz)');ylabel('PSD (dB)');
 legend(legendText,'Location','Best');
 NumTicks = 5;L = h(1).Parent.XLim;
 set(h(1).Parent,'XTick',linspace(L(1),L(2),NumTicks))
+
+if visualizeCfc && ~useBuiltInCfc
+    figure(2);
+    clf;
+    Fdata = fftshift(db(Fdata));
+    [maxVal, maxIdx] = max(Fdata);
+    frequencies = (0:(length(Fdata)-1))/length(Fdata);
+    frequencies = frequencies - 0.5;
+    frequencies = frequencies*sampleRateHz;
+    plot(frequencies, Fdata);
+    hold on;
+    scatter(frequencies(maxIdx), maxVal, 'red', '*');
+    grid on;xlabel('Frequency (Hz)');ylabel('PSD (dB)');
+    title(sprintf('Max Frequency: %.f Hz, Frequency Est: %.f Hz',...
+        frequencies(maxIdx), frequencies(maxIdx)/modulationOrder));
+end

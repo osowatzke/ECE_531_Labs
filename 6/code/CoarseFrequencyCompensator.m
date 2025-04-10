@@ -51,7 +51,7 @@ classdef CoarseFrequencyCompensator < matlab.System
         end
 
         % Step method
-        function data = stepImpl(self, data)
+        function [data, freqEst, Fdata] = stepImpl(self, data)
 
             % Raise data to modulation order
             % ^2 for BPSK and ^4 for QPSK
