@@ -238,7 +238,7 @@ In this experiment, we perform fine frequency correction on a DPBPSK signal with
 	\label{fig::convergence_Bloop_0p01_damp_sqrt_2}
 \end{figure}
 
-\noindent At $\zeta = 1/sqrt{2}$, the response is underdamped, which leads to ringing. We can exacerbate this ringing by choosing $\zeta=0.25$. The response that results is shown in Figure \ref{fig::convergence_Bloop_0p01_damp_0p25}.
+\noindent At $\zeta = 1/\sqrt{2}$, the steady-state error variance $\sigma_e=0.307395$. Additionally, the response is underdamped, which leads to ringing. We can exacerbate this ringing by choosing $\zeta=0.25$. The response that results is shown in Figure \ref{fig::convergence_Bloop_0p01_damp_0p25}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_0p25.png}}}
@@ -246,7 +246,7 @@ In this experiment, we perform fine frequency correction on a DPBPSK signal with
 	\label{fig::convergence_Bloop_0p01_damp_0p25}
 \end{figure}
 
-\noindent Examining the figure, we see that ringing increases as expected. We also find that the convergence time increases by a factor of 5. However, examining the steady state EVM, we see that it remains at -14.74 dB (the same as before). We also examine the response for $\zeta = 1$, when the system is critically damped. The updated response is included in Figure \ref{fig::convergence_Bloop_0p01_damp_1}.
+\noindent Examining the figure, we see that ringing increases as expected. We also find that the convergence time increases by a factor of 5. At steady state, the error variance $\sigma_e=0.0303656$. The decrease in error variance, results in an EVM of -14.74 dB. However, this is nearly identical to our first measurement. This is because our error is dominated by the AWGN instead of the phase error. We also examine the response for $\zeta = 1$, when the system is critically damped. The updated response is included in Figure \ref{fig::convergence_Bloop_0p01_damp_1}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_1.png}}}
@@ -254,7 +254,7 @@ In this experiment, we perform fine frequency correction on a DPBPSK signal with
 	\label{fig::convergence_Bloop_0p01_damp_1}
 \end{figure}
 
-\noindent Examining the response, we see that the ringing is almost non-existent. The convergence time is also roughly the same as $\zeta = 1/sqrt{2}$. This is expected result because the system is critically damped at $\zeta = 1$. In other words, the response is as fast as possible without ringing. Similar to our previous results, the EVM after compensation is -14.72 dB. Next, we examine the response for $\zeta = 2$. Our results are shown in Figure \ref{fig::convergence_Bloop_0p01_damp_2}.
+\noindent Examining the response, we see that the ringing is almost non-existent. The convergence time is also roughly the same as $\zeta = 1/\sqrt{2}$. This is expected result because the system is critically damped at $\zeta = 1$. In other words, the response is as fast as possible without ringing. The error variance $\sigma_e=0.436734$. Similar to our previous results, the EVM after compensation is -14.72 dB because our error is dominated by the AWGN. Next, we examine the response for $\zeta = 2$. Our results are shown in Figure \ref{fig::convergence_Bloop_0p01_damp_2}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_2.png}}}
@@ -262,7 +262,7 @@ In this experiment, we perform fine frequency correction on a DPBPSK signal with
 	\label{fig::convergence_Bloop_0p01_damp_2}
 \end{figure}
 
-\noindent Compared to results with $\zeta = 1$, we also do not observe ringing. However, the convergence time increases, which is expected for an underdamped system. Similar to our previous results, the EVM after compensation remains unchanged at -14.72 dB.
+\noindent Compared to results with $\zeta = 1$, we also do not observe ringing. However, the convergence time increases, which is expected for an underdamped system. The error variance $\sigma_e$ increases to 0.596969. Because the error is dominated by the AWGN, our EVM remains unchanged at -14.72 dB.
 
 Next, we can examine the response when we modify the loop bandwidth, $B_\text{loop}$ instead of the damping factor, $\zeta$. Our results for $B_\text{loop} = 0.005$ and $B_\text{loop} = 0.02$ are included in Figures \ref{fig::convergence_Bloop_0p005_damp_sqrt_2} and \ref{fig::convergence_Bloop_0p02_damp_sqrt_2} respectively.
 
@@ -278,7 +278,7 @@ Next, we can examine the response when we modify the loop bandwidth, $B_\text{lo
 	\label{fig::convergence_Bloop_0p02_damp_sqrt_2}
 \end{figure}
 
-\noindent Comparing the responses to our previous response in Figure \ref{fig::convergence_Bloop_0p01_damp_sqrt_2}, we see that a lower loop bandwidth increases the convergence time, while a larger loop bandwidth decreases the convergence time. Additionally, we see that smaller loop bandwidths lead to less error in the response. Compared to our results with $B_{\text{loop}} = 0.01$, we achieve an error variance $\sigma_e=0.134348$ for $B_{\text{loop}} = 0.005$ and an error variance $\sigma_e=2.12314$ for $B_{\text{loop}} = 0.02$. In other words, our frequency estimate improves as we decrease the loop bandwidth. However, this error variance has minimal effects on our EVM because of the noise floor. With $B_{\text{loop}} = 0.005$, we measure an EVM of -14.74 dB, and with $B_{\text{loop}} = 0.02$, we measure an EVM of -14.67 dB.
+\noindent Comparing the responses to our previous response in Figure \ref{fig::convergence_Bloop_0p01_damp_sqrt_2}, we see that a lower loop bandwidth increases the convergence time, while a larger loop bandwidth decreases the convergence time. Additionally, we see that smaller loop bandwidths lead to less error in the response. Compared to our results with $B_{\text{loop}} = 0.01$, we achieve an error variance $\sigma_e=0.134348$ for $B_{\text{loop}} = 0.005$ and an error variance $\sigma_e=2.12314$ for $B_{\text{loop}} = 0.02$. In other words, our frequency estimate improves as we decrease the loop bandwidth. However, this error variance has minimal effects on our EVM because of the high noise floor. With $B_{\text{loop}} = 0.005$, we measure an EVM of -14.74 dB, and with $B_{\text{loop}} = 0.02$, we measure an EVM of -14.67 dB.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_0p5.png}}}

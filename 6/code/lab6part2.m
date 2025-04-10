@@ -56,12 +56,12 @@ if useBuiltInObj
     carrierSync = comm.CarrierSynchronizer(...
         'SamplesPerSymbol',1,'Modulation',modulation,...
         'NormalizedLoopBandwidth',0.01,...
-        'DampingFactor',sqrt(2));
+        'DampingFactor',1/sqrt(2));
 else
     carrierSync = CarrierSynchronizer(...
         'SamplesPerSymbol',1,'ModulationOrder',modulationOrder, ...
-        'NormalizedLoopBandwidth',0.02,...
-        'DampingFactor',sqrt(2));
+        'NormalizedLoopBandwidth',0.01,...
+        'DampingFactor',2);
 end
 
 % Precalculate constants
@@ -109,13 +109,13 @@ evm = comm.EVM();
 evm_dB = 20*log10(evm(modulatedData(timeIndex),offsetData(timeIndex))/100);
 fprintf('EVM_pre (dB) = %.2f dB\n', evm_dB);
 evm_dB = 20*log10(evm(1*modulatedData(timeIndex),syncData(timeIndex))/100);
-fprintf('EVM_post (dB) = %.2f dB\n\n', evm_dB);
+fprintf('EVM_post (dB) = %.2f dB\n', evm_dB);
 
 % Display error variance
 freqEstHz = diff(phaseEst(timeIndex))/(2*pi)*sampleRateHz;
 freqErrHz = freqEstHz - frequencyOffsetHz;
 freqVar = var(freqErrHz);
-fprintf('Error Variance = %g\n', freqVar);
+fprintf('Error Variance = %g\n\n', freqVar);
 
 % Plot constellations
 figure(1); clf;
