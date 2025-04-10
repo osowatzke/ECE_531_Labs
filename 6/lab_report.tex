@@ -344,4 +344,8 @@ We can modify our PED to support different modulation schemes. For example, to s
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
+In this lab, we learned how to model frequency offsets and compensate for them using coarse and fine frequency correction. We modeled frequency offsets in our data by applying a frequency offset in discrete time. Applying the frequency offset in discrete time circularly shifted our spectrum, which differed from an analog frequency shift when significant portions of our spectrum wrapped. This was especially a problem when our upsample rate was 1. Alternatively, we learned that we could treat the discrete frequency shift as an analog frequency shift without a low-pass filter prior to sampling. This resulted in aliasing (frequency wrapping) for large frequency shifts. In this part of the lab, we also learned that the frequency offsets were typically caused by LO mismatches but could also occur due to environmental factors such as doppler shifts.
+
+Unlike in continuous time, where are data was shifted, our data experienced 
+
 \end{document}
