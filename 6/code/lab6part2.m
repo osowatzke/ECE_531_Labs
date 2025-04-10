@@ -32,8 +32,8 @@ ap.XOffset = -sampleRateHz/2;
 ap.SampleIncrement = (sampleRateHz)/(2^10);
 
 %% Impairments
-snr = 5;
-frequencyOffsetHz = sampleRateHz*0.02; % Offset in hertz
+snr = 15;
+frequencyOffsetHz = sampleRateHz*0.05; % Offset in hertz
 frequencyDriftHz = sampleRateHz*0; %0.001;
 phaseOffset = 0; % Radians
 

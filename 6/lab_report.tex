@@ -128,6 +128,7 @@ F(z) = G_1 + \frac{G_2}{1-z^{-1}}
 %\end{equation}
 
 \begin{equation}
+	\label{eq::max_freq_correct}
 	\Delta_{f,\text{pull}} \sim 2\pi\sqrt{2}\zeta{B_\text{Loop}}\end{equation}
 
 \begin{equation}
@@ -288,7 +289,7 @@ Interestingly, when we increase SNR, the EVM relationships remain approximately 
 	\label{fig::convergence_1Hz_drift_Bloop_0p01_damp_sqrt_2}
 \end{figure}
 
-\noindent Similarly, we show the results with $B_{\text{loop}} = 0.005$ below:
+\noindent Similarly, we show the results with $B_{\text{loop}} = 0.005$ and $\zeta = 1/\sqrt{2}$ below:
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_1Hz_drift_Bloop_0p005_damp_sqrt_2.png}}}
@@ -298,14 +299,23 @@ Interestingly, when we increase SNR, the EVM relationships remain approximately 
 
 \noindent Comparing the two figures, we see that the PLL has difficulty keeping up with the frequency drift when $B_\text{loop} = 0.005$. If we measures the EVM, we see that it is -14.68 dB for $B_\text{loop} = 0.01$ and 3.08 dB for $B_\text{loop} = 0.005$. We also increase the SNR to 60 dB to characterize the EVM for $B_\text{loop} = 0.01$ and $B_\text{loop} = 0.02$. Doing so, we measure an EVM of -34.93 dB for $B_\text{loop} = 0.01$ and -46.64 dB for $B_\text{loop} = 0.02$. Thus, our choice of control system parameters becomes more important as our input becomes more dynamic. We specifically note that with a faster-responding control system, we can better handle dynamic inputs with only marginal  performance hits for static frequency offsets.
 
-
-   The results are more interesting if allow our input frequency with time. If we add a 1Hz drift, our EVMs are 
+We also examine how the loop filter parameters influence the maximum correctable frequency. For a 50 Hz offset with $B_{\text{loop}} = 0.01$ and $\zeta = 1/\sqrt{2}$, the PLL response is shown in Figure \ref{fig::convergence_Bloop_0p01_damp_sqrt_2_foff_50}.
 
 \begin{figure}[H]
-	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_0p5.png}}}
-	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.01$ and $\protect{\zeta = 0.5}$}
-	\label{fig::convergence_Bloop_0p01_damp_0p5}
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_sqrt_2_foff_50.png}}}
+	\caption{Plot of PLL Estimate with 50 Hz Frequency Offset, $\protect{B_\text{loop}} = 0.01$, and $\protect{\zeta = 1/\sqrt{2}}$}
+	\label{fig::convergence_Bloop_0p01_damp_sqrt_2_foff_50}
 \end{figure}
+
+\noindent Examining the response, we see that the PLL fails to lock. If we increase $B_{\text{loop}}$ to 0.05 and $\zeta$ to 2, we get the results shown in Figure \ref{fig::convergence_Bloop_0p05_damp_2_foff_50}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p05_damp_2_foff_50.png}}}
+	\caption{Plot of PLL Estimate with 50 Hz Frequency Offset, $\protect{B_\text{loop}} = 0.05$, and $\protect{\zeta = 2}$}
+	\label{fig::convergence_Bloop_0p05_damp_2_foff_50}
+\end{figure}
+
+\noindent Comparing the results to Figure \ref{fig::convergence_Bloop_0p01_damp_sqrt_2_foff_50}, we see that the PLL now converges. This is consistent with Equation \ref{eq::max_freq_correct}, which states that the maximum correctable frequency increases with increasing  $B_{\text{loop}}$ and $\zeta$. Note that our results did not seem to indicate a linear relationship between the maximum resolve frequency and $B_{\text{loop}}$ or $\zeta$. This is likely because Equation \ref{eq::max_freq_correct} makes some assumptions about the size of the frequency offset with respect to the signal bandwidth that do not hold in this case.
 
 \noindent The QPSK PED is slightly different than the BPSK PED and is given as follows:
 
