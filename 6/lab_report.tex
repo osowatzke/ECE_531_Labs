@@ -159,6 +159,8 @@ Using the provided equations as template, we implement fine frequency compensati
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
+In this section, we highlight the results from each of our experiments. We specifically model carrier frequency offsets. Then, we compensate for the frequency offsets using coarse and fine frequency correction.
+
 \subsection{System and Error Models}
 
 In discrete time, when we multiply a signal by a complex exponential, it circular shifts the frequency response. If we have enough excess bandwidth, we can ensure that the significant portions of our frequency response do not wrap and in turn correctly model an analog frequency shift. If we change the `filterUpsample' in \texttt{lab6part1.m} to 1, we do have any excess bandwidth. The spectrum after a frequency shift of $0.1F_s$ is shown in Figure \ref{fig::psd_upsample_1}.
