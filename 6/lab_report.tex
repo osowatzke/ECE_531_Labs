@@ -180,7 +180,7 @@ As long as the passband of our spectrum does not wrap when apply the frequency o
 	\label{fig::psd_upsample_1}
 \end{figure}
 
-\noindent Examining the frequency response, we see that it does not correctly model a $0.1F_s$ continuous-time frequency shift, which would have resulted in part of the spectrum being zero. Note that our updated frequency response is also not a shift of the original DFT samples. This is because the DFT is sampling the DTFT. With a frequency shift of $0.1F_s$, our updated sampling positions do not align with our initial sampling positions. This results in a a slightly different response. If we instead chose a frequency shift of $F_s/16$, our sampling positions will align and our DFTs will be related by a circular shift. These results are captured in Figure \ref{fig::psd_upsample_1_mod_shift}.
+\noindent Examining the frequency response, we see that it does not correctly model a $0.1F_s$ continuous-time frequency shift, which would have resulted in part of the spectrum being zero. Note that our updated frequency response is also not a shift of the original DFT samples. This is because the DFT is sampling the DTFT. With a frequency shift of $0.1F_s$, our updated sampling positions do not align with our initial sampling positions. This results in a a slightly different response. If we instead chose a frequency shift of $F_s/16$, our sampling positions will align, and our DFTs will be related by a circular shift. These results are captured in Figure \ref{fig::psd_upsample_1_mod_shift}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_upsample_1_mod_shift.png}}}
@@ -196,7 +196,7 @@ As long as the passband of our spectrum does not wrap when apply the frequency o
 	\label{fig::psd_freq_offset_05}
 \end{figure}
 
-\noindent At this frequency offset, we see that the frequency response is circularly shifted by half the bandwidth of the signal. We can explain this with DTFT properties. However, we can equivalently treat this case as an analog frequency shift prior to decimation. This results in aliasing, which in turns causes our frequency response to wrap.
+\noindent At this frequency offset, we see that the frequency response is circularly shifted by half the bandwidth of the signal. We can explain this with DTFT properties as we did previously. However, another equivalent way of explaining these results is to treat the frequency shift as a continuous-time frequency shift followed by sampling. When the highest frequency of the continuous-time signal exceeds half the sample rate, this results in aliasing, which in turn, causes our frequency response to wrap.
 
 	In simulation, we also increment the timing vector for each frame (\texttt{timeIndex = (k:k+frameSize-1).'}). This models back-to-back frames being fed into a continuous oscillator. The frequency offsets we observe are primarily caused by LO mismatches. However, another cause of the frequency offset is a doppler shift (which is caused by relative motion of the receiver with respect to the transmitter).
 
