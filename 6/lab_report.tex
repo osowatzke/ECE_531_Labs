@@ -230,13 +230,31 @@ In this experiment, we perform fine frequency correction on a DPBPSK signal with
 
 \noindent Qualitatively examining the figure, we see that the frequency offset has been effectively removed. We can quantify the error before and after compensation using the error vector magnitude. However, before we do this, we must handle the phase ambiguity. Our correction algorithm only ensures that our received data lines up with a constellation point (not specific constellation points). For BPSK this means that our compensated data is ambiguous by $180^{\circ}$. For a first-pass implementation, we select the phase ambiguity that minimizes the EVM. This approach over the entire data set is not realizable. However, we can perform it on a smaller scale using code words. Other approaches include differential encoding and equalization. After compensating for the phase ambiguity, we find that our EVM before compensation is 3.09 dB and our EVM after compensation is -14.72 dB.
 
-  The constellation and EVM illustrate the steady state response of the PLL. However, we can plot the frequency output of the PLL to evaluate convergence times.
+  The constellation and EVM illustrate the steady state response of the PLL. However, we can plot the frequency output of the PLL to evaluate convergence times. The PLL estimate for the default parameters of $B_\text{loop} = 0.01$ and $\zeta = 1/\sqrt{2}$ is included in Figure \ref{fig::convergence_Bloop_0p01_damp_sqrt_2}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_sqrt_2.png}}}
 	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.01$ and $\protect{\zeta = 1/\sqrt{2}}$}
 	\label{fig::convergence_Bloop_0p01_damp_sqrt_2}
 \end{figure}
+
+\noindent At $\zeta = 1/sqrt{2}$, the response is underdamped, which leads to ringing. We can exacerbate this ringing by choosing $\zeta=0.25$. The response that results is shown in Figure \ref{fig::convergence_Bloop_0p01_damp_0p25}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_0p25.png}}}
+	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.01$ and $\protect{\zeta = 0.25}$}
+	\label{fig::convergence_Bloop_0p01_damp_0p25}
+\end{figure}
+
+\noindent Examining the figure, we see that ringing increases as expected. We also find that the convergence time increases by a factor of 5. However, examining the steady state EVM, we see that it remains at -14.74 dB (the same as before). We also examine the response for $\zeta = 1$, when the system is critically damped. The updated response is included in Figure \ref{fig::convergence_Bloop_0p01_damp_1}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_1.png}}}
+	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.01$ and $\protect{\zeta = 1}$}
+	\label{fig::convergence_Bloop_0p01_damp_1}
+\end{figure}
+
+\noindent Examining the response, we see that the ringing is almost non-existent. The convergence time is also roughly the same as $\zeta = 1/sqrt{2}$. This is expected result because the system is critically damped at $\zeta = 1$. In other words, the response is as fast as possible without ringing.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p02_damp_sqrt_2.png}}}
@@ -256,17 +274,7 @@ In this experiment, we perform fine frequency correction on a DPBPSK signal with
 	\label{fig::convergence_Bloop_0p01_damp_0p5}
 \end{figure}
 
-\begin{figure}[H]
-	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_0p25.png}}}
-	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.01$ and $\protect{\zeta = 0.25}$}
-	\label{fig::convergence_Bloop_0p01_damp_0p25}
-\end{figure}
 
-\begin{figure}[H]
-	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_1.png}}}
-	\caption{Plot of PLL Estimate for $\protect{B_\text{loop}} = 0.01$ and $\protect{\zeta = 1}$}
-	\label{fig::convergence_Bloop_0p01_damp_1}
-\end{figure}
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{convergence_Bloop_0p01_damp_2.png}}}
