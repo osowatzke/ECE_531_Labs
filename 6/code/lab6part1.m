@@ -1,6 +1,6 @@
 %% General system details
 sampleRateHz = 1e6; % Sample rate
-modulationOrder = 4;
+modulationOrder = 2;
 frameSize = 2^10;
 numFrames = 100;
 numSamples = numFrames*frameSize; % Samples to simulate
@@ -43,7 +43,7 @@ sa = dsp.SpectrumAnalyzer('SampleRate',sampleRateHz,'ShowLegend',true);
 % Coarse Frequency Compensation
 if useBuiltInCfc
     if modulationOrder == 2
-        Modulation = 'BSPK';
+        Modulation = 'BPSK';
     else
         Modulation = 'QPSK';
     end
