@@ -63,13 +63,13 @@ In this experiment, we analyze a model of the receiver included in \texttt{lab6p
 	r(k) = s(k)e^{j(2{\pi}f_okT+\theta)}+n(k) = s(k)e^{j(\omega_okT+\theta)}+n(k)
 \end{equation}
 
-\noindent The script generates power spectral density (PSDs) of the signal before and after applying the carrier offset. These plots are useful for debugging and will be used throughout this experiment.
+\noindent \texttt{lab6part1.m} also generates power spectral density (PSDs) of the signal before and after applying the carrier offset. These plots are useful for debugging and will be used throughout this experiment.
 
 Using the script, we specifically examine the effects of changing the `filterUpsample` variable, which sets the "analog" oversample rate, to 1. Next, with the original value of `filterUpsample`, we increase the frequency offset in unit steps of $0.1F_s$ from $0.1F_s$ to $1.0F_s$ and explain any observed effects. Then, we examine the code in \texttt{lab6part1.m} and state the reasoning behind incrementing the time vector when applying a frequency offset. Finally, we identify sources of the frequency offset besides LO mismatches.
 
 \subsection{Coarse Frequency Correction}
 
-In this experiment, we use a non-data aided (NDA) FFT-based technique for coarse frequency compensation. In this algorithm, we remove the PSK modulation from our received data by raising it to a power that corresponding to the modulation order. If we take an FFT of this data, the peak FFT bin should give us the frequency offset multiplied by the modulation order. For BPSK, specifically, we can estimate the frequency offset as follows:
+In this experiment, we use a non-data aided (NDA) FFT-based technique for coarse frequency compensation. In this algorithm, we remove the PSK modulation from our received data by raising it to a power which corresponds to the modulation order. If we take an FFT of this data, the peak FFT bin should give us the frequency offset multiplied by the modulation order. For BPSK, specifically, we can estimate the frequency offset as follows:
 
 \begin{equation}
 	\label{eq::bpsk_coarse_freq_est}	
@@ -82,7 +82,7 @@ Using Equation \ref{eq::bpsk_coarse_freq_est} as reference, we implement a coars
 
 \subsection{Fine Frequency Correction}
 
-In this experiment, we perform fine frequency compensation. The block we implement is designed to compensate for any residual phase or frequency offsets remaining after coarse frequency compensation. The algorithm we implement is specifically illustrated in Figure \ref{fig::fine_freq_comp_block_diagram}.
+In this experiment, we perform fine frequency compensation. The block we implement is designed to compensate for any residual phase or frequency offsets that remain after coarse frequency compensation. The algorithm we implement is specifically illustrated in Figure \ref{fig::fine_freq_comp_block_diagram}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.6\textwidth]{fine_freq_comp_block_diagram.png}}}
@@ -104,7 +104,7 @@ e(k) = \text{sign}(\text{Re}(y(k))) \times \text{Im}(y(k))
 F(z) = G_1 + \frac{G_2}{1-z^{-1}}
 \end{equation}
 
-\noindent The gain values $G_1$ and $G_2$ are chosen based on a damping factor, $\zeta$, and a loop bandwidth, $B_\text{Loop}$:
+\noindent The gain values $G_1$ and $G_2$ are chosen based on the damping factor, $\zeta$, and the loop bandwidth, $B_\text{Loop}$:
 
 \begin{align}
 	\theta = \frac{B_{\text{Loop}}}{M(\zeta + 0.25/\zeta)} && \Delta = 1 + 2\zeta\theta + \theta^2
@@ -164,19 +164,19 @@ In this section, we highlight the results from each of our experiments. We speci
 
 \subsection{System and Error Models}
 
-In this experiment, we use Equation \ref{eq::carrier_freq_offset} to model our received signal with a carrier frequency offset. We can use the following DTFT property to examine the spectrum after multiplying the received signal by a complex exponential:
+In this experiment, we use Equation \ref{eq::carrier_freq_offset} to model a received signal with a carrier frequency offset. We can use the following DTFT property to examine the spectrum after multiplying the received signal by a complex exponential:
 
 \begin{equation}
-	h[n]e^{j\omega_on} = H\left(e^{j(\omega-\omega_o)}\right)
+	h[n]e^{j\omega_on} \leftrightarrow H\left(e^{j(\omega-\omega_o)}\right)
 \end{equation}
 
 \noindent Examining the equation, we see that multiplying the signal by a complex exponential results in a shift in the frequency domain. However, because the DTFT is periodic with a period of $2\pi$, it can be more insightful to treat the frequency shift as an circular shift in the frequency-domain. 
 
-As long as the passband of our spectrum does not wrap when apply the frequency offset, our model will generate a spectrum that is representative of a continuous-time frequency shift. Increasing the excess bandwidth allows us to support a larger range of frequency offsets. However, if we change the `filterUpsample' in \texttt{lab6part1.m} to 1, we do have any excess bandwidth. The spectrum after a frequency shift of $0.1F_s$ is shown in Figure \ref{fig::psd_upsample_1}.
+As long as the passband of our spectrum does not wrap when apply the frequency offset, our model will generate a spectrum that is representative of a continuous-time frequency shift. Increasing the excess bandwidth allows us to support a larger range of frequency offsets. However, if we change the `filterUpsample' in \texttt{lab6part1.m} to 1, we do have any excess bandwidth. The spectrum after a frequency shift of $0.1F_s$ with `filterUpsample' set to 1 is shown in Figure \ref{fig::psd_upsample_1}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_upsample_1.png}}}
-	\caption{Frequency Response with `filterUpsample' Set to 1 and a $\protect{0.1F_s}$ Frequency Shift}
+	\caption{Frequency Response with a $\protect{0.1F_s}$ Frequency Shift and `filterUpsample' Set to 1}
 	\label{fig::psd_upsample_1}
 \end{figure}
 
@@ -184,7 +184,7 @@ As long as the passband of our spectrum does not wrap when apply the frequency o
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_upsample_1_mod_shift.png}}}
-	\caption{Frequency Response with `filterUpsample' Set to 1 and a $\protect{F_s/16}$ Frequency Shift}
+	\caption{Frequency Response with a $\protect{F_s/16}$ Frequency Shift and `filterUpsample' Set to 1}
 	\label{fig::psd_upsample_1_mod_shift}
 \end{figure}
 
@@ -196,13 +196,13 @@ As long as the passband of our spectrum does not wrap when apply the frequency o
 	\label{fig::psd_freq_offset_05}
 \end{figure}
 
-\noindent At this frequency offset, we see that the frequency response is circularly shifted by half the sampling rate. We can explain this with DTFT properties as we did previously. However, another equivalent way of explaining these results is to treat the frequency shift as a continuous-time frequency shift followed by sampling. When the highest frequency of the continuous-time signal exceeds half the sample rate, this results in aliasing, which in turn, causes our frequency response to wrap.
+\noindent At this frequency offset, we see that the frequency response is circularly shifted by half the sampling rate. We can explain this with DTFT properties as we did previously. However, another equivalent way of explaining these results is to treat the frequency shift as a continuous-time frequency shift followed by sampling. When the highest frequency of the continuous-time signal exceeds half the sample rate, this results in aliasing, which, in turn, causes our frequency response to wrap.
 
 	In simulation, we also increment the timing vector for each frame (\texttt{timeIndex = (k:k+frameSize-1).'}). This models back-to-back frames being fed into a free-running oscillator. The frequency offsets we observe are primarily caused by LO mismatches. However, another cause of the frequency offset is a doppler shift (which is caused by relative motion of the receiver with respect to the transmitter).
 
 \subsection{Coarse Frequency Correction}
 
-In this experiment, we perform coarse frequency correction using an FFT. To remove the modulation from our constellation, we raise our received data up to a power equivalent to the modulation order. The maximum FFT bin then gives us an index that is proportional to our estimated carrier offset. For DBPSK, the estimated carrier offset can be computed using Equation \ref{eq::bpsk_coarse_freq_est}. When we apply coarse frequency compensation to a DBPSK-modulated signal with a $0.1F_s$ frequency offset, we obtain the FFT output shown in Figure \ref{fig::bpsk_coarse_freq_estimate}.
+In this experiment, we perform coarse frequency correction using an FFT. To remove the modulation from our constellation, we raise our received data up to a power corresponding to the modulation order. The maximum FFT bin then gives us an index that is proportional to our estimated carrier offset. For DBPSK, the estimated carrier offset can be computed using Equation \ref{eq::bpsk_coarse_freq_est}. When we apply coarse frequency compensation to a DBPSK-modulated signal with a $0.1F_s$ frequency offset, we obtain the FFT output shown in Figure \ref{fig::bpsk_coarse_freq_estimate}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{bpsk_coarse_freq_estimate.png}}}
@@ -232,7 +232,7 @@ In this experiment, we perform coarse frequency correction using an FFT. To remo
 	\label{fig::qpsk_coarse_freq_estimate}
 \end{figure}
 
-\noindent Comparing the FFT peak to the peak shown in Figure \ref{eq::bpsk_coarse_freq_est}, we see that the peak frequency has been scaled by 2 as expected. However, the frequency estimate remain the same. The spectrum before and after compensation is shown in Figure \ref{fig::psd_qpsk_with_cfc}.
+\noindent Comparing the FFT peak to the peak shown in Figure \ref{eq::bpsk_coarse_freq_est}, we see that the peak frequency has been scaled by 2 as expected. However, the frequency estimate remains the same. The spectrum before and after compensation is shown in Figure \ref{fig::psd_qpsk_with_cfc}.
  
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{psd_bpsk_with_cfc.png}}}
