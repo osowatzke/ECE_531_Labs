@@ -41,6 +41,8 @@
 \section{Introduction}
 %Introduction to the laboratory experiment, including a brief description of the objectives and goals.
 
+In this lab, we perform frame synchronization on data generated in MATLAB. Correct frame alignment is critical for correctly recovering the transmitted data. To detect the start of a packet, we specifically cross-correlate our received data with a known preamble. As part of our work in this lab, we learn how to perform cross-correlation with MATLAB's \texttt{filter} command. We also explore perform tradeoffs between the \texttt{xcorr} and \texttt{filter} commands. Finally, we implement a custom frame synchronization routine and evaluate its detection probabilities and packet error rates. The work that follows is divided into two sections. One provides the procedures for each of our experiments, and the other presents the results.
+
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
@@ -69,7 +71,7 @@
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{speedup.png}}}
 	\caption{Speedup from \texttt{filter} Command}
 	\label{fig::speedup}
-\end{figure}\\
+\end{figure}
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
