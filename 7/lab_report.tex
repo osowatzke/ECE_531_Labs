@@ -87,7 +87,7 @@ The \texttt{xcorr} function uses an FFT to perform a correlation, which can be s
 	z(k) = \sum_{k}{y(k)h(n-k)}
 \end{equation}
 
-\noindent We can implement cross-correlation with convolution by letting $h(k) = x^*(-k)$. In other words, we can use a flipped and conjugated version of our preamble as a matched filter. Doing so, we get the results shown in Figure \ref{fig::filter_preamble_detect}.
+\noindent We can perform cross-correlation with convolution by letting $h(k) = x^*(-k)$. In other words, we can use a flipped and conjugated version of our preamble as a matched filter. Doing so, we get the results shown in Figure \ref{fig::filter_preamble_detect}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{filter_preamble_detect.png}}}
@@ -95,17 +95,21 @@ The \texttt{xcorr} function uses an FFT to perform a correlation, which can be s
 	\label{fig::filter_preamble_detect}
 \end{figure}
 
-\noindent Note that the peak from our \texttt{filter} output occurs in a different location. However, we get the same delay estimate as the \texttt{xcorr} function if we account for the offsets in the output. Our filter output specifically peaks when the last sample of our preamble is input to the filter. If our preamble length is given by $L_p$, we can estimate the delay from our filter output $z(k)$ as follows:
+\noindent Note that the peak from our \texttt{filter} output occurs in a different location. However, we get the same delay estimate as the \texttt{xcorr} function if we account for the offsets in our output. The filter output specifically peaks when the last sample of our preamble is input to the filter. If our preamble length is given by $L_p$, we can estimate the delay from our filter output $z(k)$ as follows:
 
 \begin{equation}
 	\hat{p} = \underset{k}{\text{argmax}}\ z(k) - L_p
 \end{equation}
+
+\noindent In Figure \ref{fig::execution_time}, we compare the execution time of the \texttt{xcorr} and \texttt{filter} commands for sequence lengths in range [10, 2000]. For each sequence length, we perform also perform 1000 Monte Carlo runs to estimate the average runtime.
  
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{execution_time.png}}}
-	\caption{Comparison of \texttt{filter} and \texttt{filter} Execution Time}
+	\caption{Comparison of \texttt{xcorr} and \texttt{filter} Execution Time}
 	\label{fig::execution_time}
 \end{figure}
+
+\noindent Examining the execution times of both routines, we see that the \texttt{filter} command is faster for small sequence lengths ($< 500$), while the \texttt{xcorr} routine is faster for large filter lengths ($> 500$). For small filter lengths, time-domain filtering ( i.e. \texttt{filter}) is faster than frequency-domain filtering (i.e. \texttt{xcorr}) because it avoids the overhead of doing FFTs/IFFTs. However, as the filter length increases, the complexity increases faster for time-domain filters than it does for frequency-domain filters. In Figure \ref{fig::speedup}, we compute the speedup of the \texttt{filter} routine by dividing the average execution time of the \texttt{filter} command by the average execution time of the \texttt{xcorr} command. Examining the figure, we see that the \texttt{filter} command is approximately 8x faster for sequence lengths of 10, but is roughly half as fast for sequence lengths of 2000. The sequence lengths we use for the rest of the lab are small ($<< 500$), so we use the \texttt{filter} command.  
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{speedup.png}}}
