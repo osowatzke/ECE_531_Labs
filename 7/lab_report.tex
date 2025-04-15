@@ -46,6 +46,28 @@ In this lab, we perform frame synchronization on data generated in MATLAB. Corre
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
+In this section, we provide the procedure for each of our experiments. We are perform frame synchronization (i.e. detect the start of frames) that are consistent with the structure shown Figure \ref{fig::frame_structure}.
+
+\begin{figure}[H]
+	\centerline{\includegraphics[width=0.6\textwidth]{frame_structure.png}}
+	\caption{Frame Structure of Wireless Packet.}
+	\label{fig::frame_structure}
+\end{figure}
+
+\noindent The preamble is known by both the transmitter and receiver. As such, we can cross-correlate our received data with the preamble using the following equation:
+
+\begin{equation}
+	C_{xy}(k) = \sum_{m}{x^*(m)y_n(m+k)}
+\end{equation}
+
+\noindent We can use the peak of the cross-correlation output to determine the delay of the frame. The provided \texttt{lab7part1.m} script uses MATLAB's \texttt{xcorr} command to perform the cross-correlation. The \texttt{xcorr} command produces an output that is $2L_r - 1$ samples long, where $L_r$ is the length of the longest sequence. The center of its output corresponds to zero delay. Therefore, we can estimate the delay of our frame ($\hat{p}$) as follows:
+
+\begin{equation}
+	\hat{p} = \underset{k}{\text{argmax}}C_{ra}(k) - L_r
+\end{equation}
+
+\noindent In our first experiment, we replace the \texttt{xcorr} command in \texttt{lab7part1.m} with the \texttt{filter} command. Then, we evaluate the correctness of our implementation and compare its execution time to the original routine for different preamble lengths.
+ 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
