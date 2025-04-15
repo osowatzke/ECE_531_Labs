@@ -41,7 +41,7 @@
 \section{Introduction}
 %Introduction to the laboratory experiment, including a brief description of the objectives and goals.
 
-In this lab, we perform frame synchronization on data generated in MATLAB. Correct frame alignment is critical for correctly recovering the transmitted data. To detect the start of a packet, we specifically cross-correlate our received data with a known preamble. As part of our work in this lab, we learn how to perform cross-correlation with MATLAB's \texttt{filter} command. We also explore perform tradeoffs between the \texttt{xcorr} and \texttt{filter} commands. Finally, we implement a custom frame synchronization routine and evaluate its detection probabilities and packet error rates. The work that follows is divided into two sections. One provides the procedures for each of our experiments, and the other presents the results.
+In this lab, we perform frame synchronization on data generated in MATLAB. Correct frame alignment is critical for correctly recovering the transmitted data. To detect the start of a packet, we specifically cross-correlate our received data with a known preamble. As part of our work in this lab, we learn how to perform cross-correlation with MATLAB's \texttt{filter} command. We also explore performance tradeoffs between the \texttt{xcorr} and \texttt{filter} commands. Finally, we implement a custom frame synchronization routine and evaluate its detection probabilities and packet error rates. The work that follows is divided into two sections. One provides the procedures for each of our experiments, and the other presents the results.
 
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
@@ -66,7 +66,7 @@ In this section, we provide the procedure for each of our experiments. We perfor
 	\hat{p} = \underset{k}{\text{argmax}}\ C_{ra}(k) - L_r
 \end{equation}
 
-\noindent For our first experiment, we replace the \texttt{xcorr} command in \texttt{lab7part1.m} with the \texttt{filter} command. Then, we validate the correctness of our implementation and compare its execution time to the original routine for different preamble lengths.
+\noindent For our first experiment, we replace the \texttt{xcorr} command in \texttt{lab7part1.m} with the \texttt{filter} command. Then, we validate the correctness of our implementation and compare its execution time to the original execution time for different preamble lengths. Next, we use the template given in \texttt{lab7part2.m} and the example given in \texttt{lab7part1.m} to implement a custom frame synchronization routine. Finally, we evaluate the performance of our custom frame synchronization routine across SNRs in range [0,10] dB. As part of our performance analysis, we generate plots of the detection probability and packet error rate.
  
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
