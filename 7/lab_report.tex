@@ -63,7 +63,7 @@ In this section, we provide the procedure for each of our experiments. We perfor
 \noindent Then, we can use the peak of the cross-correlation output to determine the delay of the frame. In the lab, we execute the provided \texttt{lab7part1.m} script to perform frame synchronization. This script uses MATLAB's \texttt{xcorr} command to perform the cross-correlation. The \texttt{xcorr} command produces an output that is $2L_r - 1$ samples long, where $L_r$ is the length of the longest sequence. The center of its output corresponds to zero delay. Therefore, we can estimate the delay of our frame ($\hat{p}$) as follows:
 
 \begin{equation}
-	\hat{p} = \underset{k}{\text{argmax}}C_{ra}(k) - L_r
+	\hat{p} = \underset{k}{\text{argmax}}\ C_{ra}(k) - L_r
 \end{equation}
 
 \noindent For our first experiment, we replace the \texttt{xcorr} command in \texttt{lab7part1.m} with the \texttt{filter} command. Then, we validate the correctness of our implementation and compare its execution time to the original routine for different preamble lengths.
