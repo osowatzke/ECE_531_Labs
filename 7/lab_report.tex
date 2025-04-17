@@ -117,7 +117,35 @@ The \texttt{xcorr} function uses an FFT to perform a correlation, which can be s
 	\label{fig::speedup}
 \end{figure}
 
+Next, we implement a custom frame synchronizer in MATLAB. Our frame synchronizer uses the \texttt{filter} command to cross-correlate the received data with then preamble. It then normalizes the cross-correlation output to a range between 0 and 1 using the following formula:
+
+\begin{equation}
+	r(k) = \frac{C_{xy}(k)}{\sqrt{\sum_m{|x(m)|^2}}\sqrt{\sum_m{|y(m)|^2}}}
+\end{equation}
+
+\noindent This formula closely resembles the normalized correlation coefficient, which is described in \cite{pearson_correlation_coefficient}. The normalization function scales the input data, so it has a unit average power and divides the resulting correlation output by the code length. This makes the peak of the correlation output 1 instead of the preamble length. Whenever the magnitude of the normalized correlation output exceeds a threshold ($|r(k)| > T$), we mark the sample as the start of a preamble. For a more efficient hardware implementation, we can also implement the comparison as follows:
+
+\begin{equation}
+	|C_{xy}(k)|^2 > T^2\left(\sum_m{|x(m)|^2}\right)\left(\sum_m{|y(m)|^2}\right) = \alpha\sum_m{|x(m)|^2}
+\end{equation}
+
+\noindent Using our custom routine, we generate a receiver operating characteristics (ROC) curve, which is included in Figure \ref{}.
+
+ 
+
+
+\noindent We assume that the input and sequence are zero mean (a valid assumption). Additionally, we can pre-compute the correlation of the preamble to reduce the amount of real-time computation. To determine detections, we compare the absolution value of the correlation $|r|$ to a threshold $T$. Simplifying, we obtain:
+
+\begin{equation}
+	\left[\sum_{i=1}^n{x_i}{y_i}\right]^2
+\end{equation}
+
+
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
+
+\bibliographystyle{IEEEtran}
+\bibliography{sources}{}
 
 \end{document}
