@@ -129,10 +129,20 @@ Next, we implement a custom frame synchronizer in MATLAB. Our frame synchronizer
 	|C_{xy}(k)|^2 > T^2\left(\sum_m{|x(m)|^2}\right)\left(\sum_m{|y(m)|^2}\right) = \alpha\sum_m{|x(m)|^2}
 \end{equation}
 
-\noindent Using our custom routine, we generate a receiver operating characteristics (ROC) curve, which is included in Figure \ref{}.
+\noindent Using our custom routine, we generate a receiver operating characteristics (ROC) curve, which is included in Figure \ref{fig::roc_curve}.
 
- 
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{roc_curve.png}}}
+	\caption{Receiver Operating Characteristics}
+	\label{fig::roc_curve}
+\end{figure}
 
+\noindent For a given SNR, we see that increasing our threshold decreases the probability of false alarm and the probability of detection. Similarly, decreasing our threshold increases the probability of false alarm and the probability of detection. Any threshold we select will place us at a specific position on the ROC curve. As a result, when we choose our threshold, we have to trade off probability of detection and probability of false alarm.
+
+
+We also see that the probability of detection 
+
+However, our probability of detection will also  the probability of detection decreases as our threshold increases. 
 
 \noindent We assume that the input and sequence are zero mean (a valid assumption). Additionally, we can pre-compute the correlation of the preamble to reduce the amount of real-time computation. To determine detections, we compare the absolution value of the correlation $|r|$ to a threshold $T$. Simplifying, we obtain:
 
