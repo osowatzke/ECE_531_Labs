@@ -11,7 +11,7 @@ rng(0);
 SNR_dB = 0:10;
 
 %% Detector Configuration
-peakDetect = false;
+peakDetect = true;
 threshold = 0.7:0.1:0.9;
 
 % Override parameters for peak detection
@@ -154,5 +154,5 @@ if peakDetect
 else
     legendStr = [legendStr; cellfun(@(x)sprintf('Meas (T=%.2f)',x),...
         num2cell(threshold(:)), 'UniformOutput', false)];
-    legend(legendStr,'Location','southwest');
 end
+legend(legendStr,'Location','southwest');
