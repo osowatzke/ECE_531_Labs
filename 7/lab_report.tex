@@ -137,20 +137,7 @@ Next, we implement a custom frame synchronizer in MATLAB. Our frame synchronizer
 	\label{fig::roc_curve}
 \end{figure}
 
-\noindent For a given SNR, we see that increasing our threshold decreases the probability of false alarm and the probability of detection. Similarly, decreasing our threshold increases the probability of false alarm and the probability of detection. Any threshold we select will place us at a specific position on the ROC curve. As a result, when we choose our threshold, we have to trade off probability of detection and probability of false alarm.
-
-
-We also see that the probability of detection 
-
-However, our probability of detection will also  the probability of detection decreases as our threshold increases. 
-
-\noindent We assume that the input and sequence are zero mean (a valid assumption). Additionally, we can pre-compute the correlation of the preamble to reduce the amount of real-time computation. To determine detections, we compare the absolution value of the correlation $|r|$ to a threshold $T$. Simplifying, we obtain:
-
-\begin{equation}
-	\left[\sum_{i=1}^n{x_i}{y_i}\right]^2
-\end{equation}
-
-
+\noindent For a given SNR, we see that increasing our threshold decreases the probability of false alarm and the probability of detection. Similarly, decreasing our threshold increases the probability of false alarm and the probability of detection. Any threshold we lead to results at a specific position on the ROC curve. As a result, when we choose our threshold, we have to trade off probability of detection and probability of false alarm.
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
