@@ -27,7 +27,7 @@ classdef PreambleDetector < matlab.System
             % Determine matched filter
             self.mf = flip(conj(self.Preamble));
 
-            % Determine power of matched filter
+            % Determine power of matched filter output
             self.mfPwr = sum(abs(self.mf).^2);
 
             % Determine detection mode
