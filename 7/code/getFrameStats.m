@@ -1,17 +1,23 @@
 %% General system details
-sampleRateHz = 1e6; % Sample rate
+sampleRateHz = 1e6;
 samplesPerSymbol = 8;
 numFrames = 1e3;
 modulationOrder = 2;
 filterSymbolSpan = 4;
 barkerLength = 26; % Must be even
-rng(0); % Set random number generator seed
+rng(0);
 
 %% Impairemnts
 SNR_dB = 0:10;
 
 %% Detector Configuration
-treshold = 0.8;
+peakDetect = false;
+threshold = 0.7:0.1:0.9;
+
+% Override parameters for peak detection
+if peakDetect
+    threshold = 1;
+end
 
 %% Generate symbols
 bits = double(ASCII2bits('Arizona')); % Generate message (use booktxt.m for a long message)
@@ -23,8 +29,6 @@ barker = preamble<0;
 frame = [barker;bits];
 frameSize = length(frame);
 modulatedData = pskmod(frame,2);
-
-threshold = 0.7:0.05:0.9;
 
 %% Add TX/RX Filters
 TxFlt = comm.RaisedCosineTransmitFilter(...
@@ -45,8 +49,8 @@ for i = 1:length(threshold)
 
     % Probability of Detection
     probDetect = zeros(size(SNR_dB));
-    BER = zeros(size(SNR_dB));
-    BER_ideal = zeros(size(SNR_dB));
+    PER = zeros(size(SNR_dB));
+    PER_ideal = zeros(size(SNR_dB));
 
     for j = 1:length(SNR_dB)
 
@@ -64,10 +68,10 @@ for i = 1:length(threshold)
             'Detections', 'First',...
             'Threshold',  threshold(i));
     
-        % Keep track of missed detections
+        % Keep track of errors and missed detections
+        numErrors = 0;
+        numErrorsIdeal = 0;
         missedDetections = 0;
-        numBitErrors = 0;
-        numBitErrorsIdeal = 0;
     
         % Loop for each frame
         for k = 1:numFrames
@@ -87,46 +91,68 @@ for i = 1:length(threshold)
             filteredData = step(RxFlt, noisyData);
     
             % Detect the end of the preamble
-            [~,ccOut] = prbdet(filteredData);
-            [~, idx] = max(abs(ccOut));
+            [idx,ccOut] = prbdet(filteredData);
+            if peakDetect
+                [~, idx] = max(abs(ccOut));
+            end
 
-            % Estimate the delay
-            delayEst = idx - length(preamble) - RxGd - TxGd;
+            % Get the ideal index
+            idxIdeal = delay + length(preamble) + RxGd + TxGd;
     
             % Count number of missed detections
-            missedDetections = missedDetections + ~any(delayEst == delay);
+            missedDetections = missedDetections + ~any(idx == idxIdeal);
     
-            idxIdeal = delay + length(preamble) + RxGd + TxGd;
-            symbolsIdeal = filteredData(idxIdeal+1:idxIdeal+frameSize-length(preamble));
-            bitsIdeal = pskdemod(symbolsIdeal,2);
-            numBitErrorsIdeal = numBitErrorsIdeal + sum(bits ~= bitsIdeal);
-    
-            % Extract the bits for
-            if isempty(idx) || (idx+frameSize-length(preamble)) > length(filteredData)
-                numBitErrors = numBitErrors + length(bits);
+            % Get the number of errors
+            if isempty(idx) || (idx ~= idxIdeal)
+                numErrors = numErrors + 1;
             else
                 symbolsEst = filteredData(idx+1:idx+frameSize-length(preamble));
                 bitsEst = pskdemod(symbolsEst,2);
-                numBitErrors = numBitErrors + sum(bits ~= bitsEst);
+                numErrors = numErrors + any(bits ~= bitsEst);
             end
+            symbolsEst = filteredData(idxIdeal+1:idxIdeal+frameSize-length(preamble));
+            bitsEst = pskdemod(symbolsEst,2);
+            numErrorsIdeal = numErrorsIdeal + any(bits ~= bitsEst);
         end
     
+        % Get the detection probability
         probDetect(j) = 1 - missedDetections/numFrames;
-        BER(j) = numBitErrors/(numFrames*length(bits));
-        BER_ideal(j) = numBitErrorsIdeal/(numFrames*length(bits));
+
+        % Get the Packet Error Rates
+        PER(j) = numErrors/numFrames;
+        PER_ideal(j) = numErrorsIdeal/numFrames;
     end
     figure(1);
     plot(SNR_dB, probDetect); hold on;
     figure(2);
     if i == 1
-        semilogy(SNR_dB, BER_ideal); hold on;
+        semilogy(SNR_dB, PER_ideal); hold on;
     end
-    semilogy(SNR_dB, BER);
+    semilogy(SNR_dB, PER);
 end
 
-figure(1); clf;
-plot(probDetect);
-figure(2); clf;
-semilogy(BER); hold on;
-semilogy(BER_ideal);
-grid on;
+% Label Plots
+figure(1);
+grid on
+xlabel('SNR (dB)');
+ylabel('Detection Probability')
+title('Detection Probability vs SNR')
+if ~peakDetect
+    legendStr = cellfun(@(x)sprintf('T=%.2f',x), num2cell(threshold),...
+        'UniformOutput', false);
+    legend(legendStr,'Location','southeast');
+end
+
+figure(2);
+grid on
+xlabel('SNR (dB)');
+ylabel('PER')
+title('PER vs SNR')
+legendStr = {'Ideal'};
+if peakDetect
+    legendStr = [legendStr; {'Meas'}];
+else
+    legendStr = [legendStr; cellfun(@(x)sprintf('Meas (T=%.2f)',x),...
+        num2cell(threshold(:)), 'UniformOutput', false)];
+    legend(legendStr,'Location','southwest');
+end
