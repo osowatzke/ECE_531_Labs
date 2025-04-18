@@ -50,11 +50,11 @@ In this section, we provide the procedure for each of our experiments. We perfor
 
 \begin{figure}[H]
 	\centerline{\includegraphics[width=0.6\textwidth]{frame_structure.png}}
-	\caption{Frame Structure of Wireless Packet.}
+	\caption{Frame Structure of a Wireless Packet}
 	\label{fig::frame_structure}
 \end{figure}
 
-\noindent The preamble in our frames is known by both the transmitter and receiver. For our experiments, we specifically use concatenated barker sequences. Because the preamble is known by both the transmitter, we can cross-correlate our received data with the preamble using the following equation:
+\noindent The preamble in our frames is known by both the transmitter and receiver. For our experiments, we specifically use concatenated barker sequences. Because the preamble is known by the receiver, we can cross-correlate our received data with the preamble using the following equation:
 
 \begin{equation}
 	C_{xy}(k) = \sum_{m}{x^*(m)y_n(m+k)}
