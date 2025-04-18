@@ -161,7 +161,7 @@ We test our frame synchronization routine over SNRs in range [0, 10] dB. To eval
 
 \noindent Examining the equation, we see that the PER degrades as the packet length increases.
 
-So far, we have only considered peak locations in our performance analysis. Next, we consider the effects of adding a threshold, which is necessary for preventing false alarms. For this analysis, we consider the first point in the frame that exceeds the threshold the start of a packet. This is consistent with the algorithm presented in MATLAB's \texttt{comm.PreambleDetector}. Our results are included in Figures \ref{fig::detection_probability_first} and \ref{fig::per_first}.
+So far, we have only considered the peak locations in our frame synchronization. Next, we consider the effects of adding a threshold, which is necessary for preventing false alarms. For this analysis, we consider the first point in the frame that exceeds the threshold as the start of a packet. This is consistent with the algorithm presented in MATLAB's \texttt{comm.PreambleDetector}. Our results are included in Figures \ref{fig::detection_probability_first} and \ref{fig::per_first}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{detection_probability_first.png}}}
@@ -175,7 +175,7 @@ So far, we have only considered peak locations in our performance analysis. Next
 	\label{fig::per_first}
 \end{figure}
 
-\noindent Comparing our detection probability to the results in Figure \ref{fig::detection_probability_peak}, we see that lower thresholds result in a higher detection probabilities at low SNR. However, as our SNR increases, our probability of detection falls. This is because the sidelobes of our cross-correlation exceed our threshold and are selected as the start of the frame. The auto-correlation of our preamble before and after normalization is shown in Figure \ref{fig::auto_corr_preamble}.
+\noindent Comparing our detection probability to the results in Figure \ref{fig::detection_probability_peak}, we see that lower thresholds result in higher detection probabilities at low SNR. However, as our SNR increases, our probability of detection falls. This is because the sidelobes of our cross-correlation exceed our threshold and are selected as the start of the frame. The auto-correlation of our preamble before and after normalization is shown in Figure \ref{fig::auto_corr_preamble}.
 
 \begin{figure}[H]
 	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{auto_corr_preamble.png}}}
@@ -183,7 +183,7 @@ So far, we have only considered peak locations in our performance analysis. Next
 	\label{fig::auto_corr_preamble}
 \end{figure}
 
-\noindent Examining the correlation output, we see that that normalizing the response increases the sidelobe amplitude. This occurs because the average power of our input is lower at the start of our correlation because there are fewer non-zero samples being input to the correlator. This problem gets worse as the SNR of our input signal increase because the noise samples have a less significant impact on the power. However, for sufficiently high thresholds, we should be able to mitigate this issue. In Figure \ref{fig::per_first}, for example, we see that setting the threshold to 0.8 results in an almost ideal packet error rate. However, we also note that our probability of detection for low SNRs degrades.
+\noindent Examining the correlation output, we see that that normalizing the response increases the sidelobe amplitude. This occurs because the average power of our input is lower at the start of the correlation because there are fewer non-zero samples being input to the correlator. This problem gets worse as the SNR of our  signal increases because the noise samples have less power. However, for sufficiently high thresholds, we should be able to mitigate this issue. In Figure \ref{fig::per_first}, for example, we see that setting the threshold to 0.8 results in an almost ideal packet error rate. However, we also note that our low SNR detection probability degrades.
 
 	In addition to increasing the threshold, another solution that I came up with examines a full preamble length of samples when the threshold is crossed. It specifically looks at which of these samples results in a peak and marks the preamble position accordingly. This allows the threshold to be reduced to improve low SNR performance, while simultaneously maintaining the high SNR performance. My algorithm's results are shown in Figures \ref{fig::detection_probability_mod} and \ref{fig::per_mod}.
 	
