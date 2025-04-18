@@ -139,8 +139,54 @@ Next, we implement a custom frame synchronizer in MATLAB. Our frame synchronizer
 
 \noindent For a given SNR, we see that increasing our threshold decreases the probability of false alarm and the probability of detection. Similarly, decreasing our threshold increases the probability of false alarm and the probability of detection. Any threshold we lead to results at a specific position on the ROC curve. As a result, when we choose our threshold, we have to trade off probability of detection and probability of false alarm.
 
-We test our frame synchronization routine over SNRs in range [0, 10] dB. To evaluate its performance, we measure the detection probability and packet error rate. The detection probability is the probability we correctly detect the start of the packet, and the packet error rate is the probability that any bit in our packet contains an error. For our analysis, we also consider missed detections as packet errors. For our first stage of analysis, we consider the peak of the cross-correlator output as the start of a frame. In this configuration, we achieve our best possible performance. Our results are included in Figures \ref{} and \ref{}.
+We test our frame synchronization routine over SNRs in range [0, 10] dB. To evaluate its performance, we measure the detection probability and packet error rate. The detection probability is the probability we correctly detect the start of the packet, and the packet error rate is the probability that any bit in our packet contains an error. For our analysis, we also consider missed detections as packet errors. For our first stage of analysis, we consider the peak of the cross-correlator output as the start of a frame. In this configuration, we achieve our best possible performance. Our results are included in Figures \ref{fig::detection_probability_peak} and \ref{fig::per_peak}.
 
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{detection_probability_peak.png}}}
+	\caption{Best Case Detection Probability}
+	\label{fig::detection_probability_peak}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{per_peak.png}}}
+	\caption{Best Case Packet Error Rate}
+	\label{fig::per_peak}
+\end{figure}
+
+\noindent Examining the figures, we see that the detection probability is nearly 1 in all cases. Our preamble is 26 symbols long and provides a coherent gain of $10\log_{10}(26) = 14.15 \text{dB}$. This allows us to maintain high probabilities of detection even at low SNR. The packet error rate is high, approaching 1 for SNRs of 0dB. This occurs because the payload bits do not get any coherent gain from the preamble. Additionally, all the bits in the packet must be right for us to correctly decode a packet. We can write this mathematically as follows:
+
+\begin{equation*}
+	\text{PER} = 1 - (1 - \text{BER})^N
+\end{equation*}
+
+\noindent Examining the equation, we see that the PER degrades as the packet length increases.
+
+So far, we have only considered peak locations in our performance analysis. Next, we consider the effects of adding a threshold, which is necessary for preventing false alarms. For this analysis, we consider the first point in the frame that exceeds the threshold the start of a packet. This is consistent with the algorithm presented in MATLAB's \texttt{comm.PreambleDetector}. Our results are included in Figures \ref{fig::detection_probability_first} and \ref{fig::per_first}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{detection_probability_first.png}}}
+	\caption{Detection Probability Using First Sample That Exceeds Threshold}
+	\label{fig::detection_probability_first}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{per_first.png}}}
+	\caption{Packet Error Rate Using First Sample That Exceeds Threshold}
+	\label{fig::per_first}
+\end{figure}
+
+ specifically follow the algorithm given in MATLAB's 
+
+ when we use a single peak using the peak locations without thresholding t. We consider the effect of adding a threshold. We specifically consider the case where the threshold  want to use a threshold in our detection.
+
+ peak detection over a fixed interval period to determine the start of packets. If we are transmitted a stream of packets. 
+
+and assuming that our peak corresponds to the start of a preamble. However, in practice 
+
+For our analysis, we used a packet with a fixed length of 49 bits. Using the PER curve, we can solve for the BER. At 9 dB SNR, for example, we find that the PER is 0.01. This corresponds to a BER of $2.05 \times 10^{-4}$.
+
+
+ used Correlating with the preamble provides a coherent 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
