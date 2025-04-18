@@ -8,11 +8,11 @@ barkerLength = 26; % Must be even
 rng(0);
 
 %% Impairemnts
-SNR_dB = 80:4:100;
+SNR_dB = 0:10;
 
 %% Detector Configuration
 Detections = 'First'; % Should be 'First' or 'Peak'
-CheckNearbySamples = false; % Check nearby samples when performing thresholding
+CheckNearbySamples = true; % Check nearby samples when performing thresholding
 threshold = 0.6:0.1:0.9;
 
 % Override parameters for peak detection
@@ -117,12 +117,7 @@ for i = 1:length(threshold)
             % filteredData = noisyData;
 
             % Detect the end of the preamble
-            [idx,ccOut] = prbdet(filteredData);
-            
-            if j == length(SNR_dB)
-                figure(4); plot(abs(ccOut));
-                keyboard;
-            end
+            idx = prbdet(filteredData);
             % idx = prbdet(noisyData);
 
             % Get the ideal index

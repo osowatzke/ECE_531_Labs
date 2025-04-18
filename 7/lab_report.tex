@@ -184,7 +184,30 @@ So far, we have only considered peak locations in our performance analysis. Next
 \end{figure}
 
 \noindent Examining the correlation output, we see that that normalizing the response increases the sidelobe amplitude. This occurs because the average power of our input is lower at the start of our correlation because there are fewer non-zero samples being input to the correlator. This problem gets worse as the SNR of our input signal increase because the noise samples have a less significant impact on the power. However, for sufficiently high thresholds, we should be able to mitigate this issue. In Figure \ref{fig::per_first}, for example, we see that setting the threshold to 0.8 results in an almost ideal packet error rate. However, we also note that our probability of detection for low SNRs degrades.
- 
+
+	In addition to increasing the threshold, another solution that I came up with examines a full preamble length of samples when the threshold is crossed. It specifically looks at which of these samples results in a peak and marks the preamble position accordingly. This allows the threshold to be reduced to improve low SNR performance, while simultaneously maintaining the high SNR performance. My algorithm's results are shown in Figures \ref{fig::detection_probability_mod} and \ref{fig::per_mod}.
+	
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{detection_probability_mod.png}}}
+	\caption{Detection Probability Using Modified Algorithm}
+	\label{fig::detection_probability_mod}
+\end{figure}
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{per_mod.png}}}
+	\caption{Packet Error Rate Using Modified Algorithm}
+	\label{fig::per_mod}
+\end{figure}
+
+\noindent Compared to our results in Figures \ref{fig::detection_probability_first} and \ref{fig::per_first}, we see that the modified algorithm maintains low threshold performance at higher SNRs as intended. In contrast to our previous results, a threshold of 0.6 now appears best for performance. Note that our algorithm is designed specifically to improve performance for large swings in the input power. If we had back-to-back frames of data, the original normalization algorithm could be used instead. Finally if desired, we could also offshore our normalization and/or thresholding computations. MATLAB's \texttt{comm.PreambleDetector} for example does not include normalization. Therefore, we could hypothetically design a better algorithm, which would maintain the same scaling during cross-correlation. This in turn would allow us to have larger peak to sidelobe ratios, which finally would improve probability of detection and/or false alarm probabilities.
+
+\noindent specifically designed to handle large swings in average power.
+
+In this section, 
+
+
+	 the peak index from this subset of samples  One approach that I came up with to mitigate this issue was to check the next preamble length - 1 samples for a higher amplitude peak before proceeding. This 
+	
  specifically follow the algorithm given in MATLAB's 
 
  when we use a single peak using the peak locations without thresholding t. We consider the effect of adding a threshold. We specifically consider the case where the threshold  want to use a threshold in our detection.
