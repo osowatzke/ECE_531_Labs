@@ -199,29 +199,21 @@ So far, we have only considered peak locations in our performance analysis. Next
 	\label{fig::per_mod}
 \end{figure}
 
-\noindent Compared to our results in Figures \ref{fig::detection_probability_first} and \ref{fig::per_first}, we see that the modified algorithm maintains low threshold performance at higher SNRs as intended. In contrast to our previous results, a threshold of 0.6 now appears best for performance. Note that our algorithm is designed specifically to improve performance for large swings in the input power. If we had back-to-back frames of data, the original normalization algorithm could be used instead. Finally if desired, we could also offshore our normalization and/or thresholding computations. MATLAB's \texttt{comm.PreambleDetector} for example does not include normalization. Therefore, we could hypothetically design a better algorithm, which would maintain the same scaling during cross-correlation. This in turn would allow us to have larger peak to sidelobe ratios, which finally would improve probability of detection and/or false alarm probabilities.
+\noindent Compared to our results in Figures \ref{fig::detection_probability_first} and \ref{fig::per_first}, we see that the modified algorithm maintains low threshold performance at higher SNRs as intended. In contrast to our previous results, a threshold of 0.6 now appears best for performance. Note that our algorithm is designed specifically to improve performance for large swings in the input power. If we had back-to-back frames of data, the original normalization algorithm could be used instead. Finally if desired, we could also offshore our normalization and/or thresholding computations. MATLAB's \texttt{comm.PreambleDetector} for example does not include normalization. Therefore, we could hypothetically design a better algorithm, which would maintain the same scaling during cross-correlation. This in turn would allow us to have larger peak to sidelobe ratios, which finally would improve the probability of detection and/or the false alarm probability.
 
-\noindent specifically designed to handle large swings in average power.
-
-In this section, 
-
-
-	 the peak index from this subset of samples  One approach that I came up with to mitigate this issue was to check the next preamble length - 1 samples for a higher amplitude peak before proceeding. This 
-	
- specifically follow the algorithm given in MATLAB's 
-
- when we use a single peak using the peak locations without thresholding t. We consider the effect of adding a threshold. We specifically consider the case where the threshold  want to use a threshold in our detection.
-
- peak detection over a fixed interval period to determine the start of packets. If we are transmitted a stream of packets. 
-
-and assuming that our peak corresponds to the start of a preamble. However, in practice 
-
-For our analysis, we used a packet with a fixed length of 49 bits. Using the PER curve, we can solve for the BER. At 9 dB SNR, for example, we find that the PER is 0.01. This corresponds to a BER of $2.05 \times 10^{-4}$.
-
-
- used Correlating with the preamble provides a coherent 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
+
+In this lab, we performed frame synchronization on MATLAB-generated data. To do this, we cross-correlated our received data with the preamble. The peak of our cross-correlation output then helped us correctly locate the frame. In MATLAB, we performed the cross-correlation in two separate ways: \texttt{xcorr} and \texttt{filter}. For the \texttt{filter} commmand, we used a flipped and conjugated version of the preamble as an FIR filter. To determine delays from the the \texttt{xcorr} command, we had to subtract $L_r$ (length of the longest sequence) from our peak index. Similarly for the \texttt{filter} command, we had to subtract $L_p$ (preamble length) from our peak index.
+
+We also compared the runtimes of both routines. The \texttt{xcorr} command used an FFT to compute the correlation, while the \text{filter} command performed correlation in the time domain. As a result, we found that the \texttt{xcorr} command took longer to run for small preamble lengths ($ < 500$) , while the \texttt{filter} command took longer to run for large preamble lengths ($ > 500$). All of the preamble lengths used in this lab were very short ($ << 500$). Therefore we used the \texttt{filter} instead of the \texttt{xcorr} command for the remainder of the lab.
+
+	In 
+
+ samples after the dela
+ twice the longest sequence length. For the \texttt{xcorr} command we had to subtract the length 
+
+ In one approach, we used the \texttt{xcorr} command, and We specifically learned how to perform c
 
 \bibliographystyle{IEEEtran}
 \bibliography{sources}{}
