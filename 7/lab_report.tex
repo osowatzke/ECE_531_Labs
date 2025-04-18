@@ -208,7 +208,9 @@ In this lab, we performed frame synchronization on MATLAB-generated data. To do 
 
 We also compared the runtimes of both routines. The \texttt{xcorr} command used an FFT to compute the correlation, while the \text{filter} command performed correlation in the time domain. As a result, we found that the \texttt{xcorr} command took longer to run for small preamble lengths ($ < 500$) , while the \texttt{filter} command took longer to run for large preamble lengths ($ > 500$). All of the preamble lengths used in this lab were very short ($ << 500$). Therefore we used the \texttt{filter} instead of the \texttt{xcorr} command for the remainder of the lab.
 
-	In 
+Next, we created a custom frame synchronizer in MATLAB. Our routine closely resembled MATLAB's \texttt{comm.PreambleDetector}. It specifically applied a threshold to the cross-correlation output to determine when a frame was present. It also performed normalization to simplify the thresholding for different signal strengths. The normalization made both inputs unit power and accounted for the maximum coherent gain (the preamble length) during cross-correlation. Using our routine, we generated an ROC curve. The ROC curve allowed us to perform tradeoffs between the detection and false alarm probabilities.
+
+Then, for SNRs in range [0, 10] dB, we evaluated the performance of our frame synchronizer by examining detection probabilities and packet error rates.
 
  samples after the dela
  twice the longest sequence length. For the \texttt{xcorr} command we had to subtract the length 
