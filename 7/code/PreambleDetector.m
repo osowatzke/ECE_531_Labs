@@ -6,6 +6,7 @@ classdef PreambleDetector < matlab.System
         Normalize = false;
     end
     properties(Access=protected)
+        detectPeak;
         detectAll;
         dataR;
         mf;
@@ -31,6 +32,7 @@ classdef PreambleDetector < matlab.System
             self.mfPwr = sum(abs(self.mf).^2);
 
             % Determine detection mode
+            self.detectPeak = strcmp(self.Detections,'Peak');
             self.detectAll = strcmp(self.Detections,'All');
         end
         function resetImpl(self)
@@ -64,7 +66,9 @@ classdef PreambleDetector < matlab.System
             end
             
             % Detect end of preamble
-            if self.detectAll
+            if self.detectPeak
+                [~, idx] = max(abs(crossCorr));
+            elseif self.detectAll
                 idx = find(abs(crossCorr) > self.Threshold);
             else
                 idx = find(abs(crossCorr) > self.Threshold, 1, 'first');

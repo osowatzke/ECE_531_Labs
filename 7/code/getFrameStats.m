@@ -11,11 +11,11 @@ rng(0);
 SNR_dB = 0:10;
 
 %% Detector Configuration
-peakDetect = true;
+Detections = 'First'; % Should be 'First' or 'All'
 threshold = 0.7:0.1:0.9;
 
 % Override parameters for peak detection
-if peakDetect
+if strcmp(Detections, 'Peak')
     threshold = 1;
 end
 
@@ -65,7 +65,7 @@ for i = 1:length(threshold)
         prbdet = PreambleDetector(...
             'Preamble',   preamble,...
             'Normalize',  true,...
-            'Detections', 'First',...
+            'Detections', Detections,...
             'Threshold',  threshold(i));
     
         % Keep track of errors and missed detections
@@ -91,10 +91,7 @@ for i = 1:length(threshold)
             filteredData = step(RxFlt, noisyData);
     
             % Detect the end of the preamble
-            [idx,ccOut] = prbdet(filteredData);
-            if peakDetect
-                [~, idx] = max(abs(ccOut));
-            end
+            idx = prbdet(filteredData);
 
             % Get the ideal index
             idxIdeal = delay + length(preamble) + RxGd + TxGd;
@@ -123,12 +120,13 @@ for i = 1:length(threshold)
         PER_ideal(j) = numErrorsIdeal/numFrames;
     end
     figure(1);
-    plot(SNR_dB, probDetect); hold on;
+    plot(SNR_dB, probDetect, 'LineWidth', 1.5); hold on;
     figure(2);
     if i == 1
-        semilogy(SNR_dB, PER_ideal); hold on;
+        semilogy(SNR_dB, PER_ideal, 'LineWidth', 1.5);
     end
-    semilogy(SNR_dB, PER);
+    hold on;
+    semilogy(SNR_dB, PER, 'LineWidth', 1.5);
 end
 
 % Label Plots
@@ -137,7 +135,7 @@ grid on
 xlabel('SNR (dB)');
 ylabel('Detection Probability')
 title('Detection Probability vs SNR')
-if ~peakDetect
+if ~strcmp(Detections,'Peak')
     legendStr = cellfun(@(x)sprintf('T=%.2f',x), num2cell(threshold),...
         'UniformOutput', false);
     legend(legendStr,'Location','southeast');
@@ -149,7 +147,7 @@ xlabel('SNR (dB)');
 ylabel('PER')
 title('PER vs SNR')
 legendStr = {'Ideal'};
-if peakDetect
+if strcmp(Detections,'Peak')
     legendStr = [legendStr; {'Meas'}];
 else
     legendStr = [legendStr; cellfun(@(x)sprintf('Meas (T=%.2f)',x),...
