@@ -175,6 +175,16 @@ So far, we have only considered peak locations in our performance analysis. Next
 	\label{fig::per_first}
 \end{figure}
 
+\noindent Comparing our detection probability to the results in Figure \ref{fig::detection_probability_peak}, we see that lower thresholds result in a higher detection probabilities at low SNR. However, as our SNR increases, our probability of detection falls. This is because the sidelobes of our cross-correlation exceed our threshold and are selected as the start of the frame. The auto-correlation of our preamble before and after normalization is shown in Figure \ref{fig::auto_corr_preamble}.
+
+\begin{figure}[H]
+	\centerline{\fbox{\includegraphics[width=0.5\textwidth]{auto_corr_preamble.png}}}
+	\caption{Auto-Correlation of Preamble}
+	\label{fig::auto_corr_preamble}
+\end{figure}
+
+\noindent Examining the correlation output, we see that that normalizing the response increases the sidelobe amplitude. This occurs because the average power of our input is lower at the start of our correlation because there are fewer non-zero samples being input to the correlator. This problem gets worse as the SNR of our input signal increase because the noise samples have a less significant impact on the power. However, for sufficiently high thresholds, we should be able to mitigate this issue. In Figure \ref{fig::per_first}, for example, we see that setting the threshold to 0.8 results in an almost ideal packet error rate. However, we also note that our probability of detection for low SNRs degrades.
+ 
  specifically follow the algorithm given in MATLAB's 
 
  when we use a single peak using the peak locations without thresholding t. We consider the effect of adding a threshold. We specifically consider the case where the threshold  want to use a threshold in our detection.

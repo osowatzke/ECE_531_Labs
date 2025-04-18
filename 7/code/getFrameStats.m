@@ -8,10 +8,11 @@ barkerLength = 26; % Must be even
 rng(0);
 
 %% Impairemnts
-SNR_dB = 0:10;
+SNR_dB = 80:4:100;
 
 %% Detector Configuration
-Detections = 'First'; % Should be 'First' or 'All'
+Detections = 'First'; % Should be 'First' or 'Peak'
+CheckNearbySamples = false; % Check nearby samples when performing thresholding
 threshold = 0.6:0.1:0.9;
 
 % Override parameters for peak detection
@@ -30,6 +31,27 @@ frame = [barker;bits];
 frameSize = length(frame);
 modulatedData = pskmod(frame,2);
 
+%% Plot autocorrelation of preamble
+figure(1);
+clf;
+data = [preamble; zeros(length(preamble)-1,1)];
+autoCorr = filter(flip(conj(preamble)),1,data);
+plot(autoCorr./max(abs(autoCorr)));
+n = (0:(length(autoCorr)-1));
+n = n - floor(length(autoCorr)/2);
+plot(n, autoCorr/max(abs(autoCorr)), 'LineWidth', 1.5);
+hold on;
+h = ones(length(preamble), 1);
+dataPwr = filter(h, 1, data.*conj(data));
+mfPwr = sum(preamble.*conj(preamble));
+normFactor = sqrt(dataPwr)*sqrt(mfPwr);
+plot(n, autoCorr./normFactor, 'LineWidth', 1.5);
+xlabel('Sample')
+ylabel('Output (Normalized)')
+xlim([min(n) max(n)]);
+legend('Original','Normalized')
+title('Normalized Auto-Correlation')
+
 %% Add TX/RX Filters
 TxFlt = comm.RaisedCosineTransmitFilter(...
     'OutputSamplesPerSymbol', samplesPerSymbol,...
@@ -43,8 +65,8 @@ RxFlt = comm.RaisedCosineReceiveFilter(...
 RxGd = RxFlt.grpdelay(1)/samplesPerSymbol;
 
 %% Generate ROC curve for each SNR
-figure(1); clf;
 figure(2); clf;
+figure(3); clf;
 for i = 1:length(threshold)
 
     % Probability of Detection
@@ -60,6 +82,7 @@ for i = 1:length(threshold)
             'SNR',          SNR_dB(j), ...
             'SignalPower',  1, ...
             'RandomStream', 'mt19937ar with seed');
+            
 
         % Create a preamble detector
         prbdet = PreambleDetector(...
@@ -67,7 +90,7 @@ for i = 1:length(threshold)
             'Normalize',  true,...
             'Detections', Detections,...
             'Threshold',  threshold(i),...
-            'CheckNearbySamples', true);
+            'CheckNearbySamples', CheckNearbySamples);
     
         % Keep track of errors and missed detections
         numErrors = 0;
@@ -84,15 +107,23 @@ for i = 1:length(threshold)
         
             % Filter signal
             filteredTXDataDelayed = step(TxFlt, delayedSignal);
+            % filteredTXDataDelayed = delayedSignal;
             
             % Pass through channel
             noisyData = step(chan, filteredTXDataDelayed);
             
             % Filter signal
             filteredData = step(RxFlt, noisyData);
-    
+            % filteredData = noisyData;
+
             % Detect the end of the preamble
-            idx = prbdet(filteredData);
+            [idx,ccOut] = prbdet(filteredData);
+            
+            if j == length(SNR_dB)
+                figure(4); plot(abs(ccOut));
+                keyboard;
+            end
+            % idx = prbdet(noisyData);
 
             % Get the ideal index
             idxIdeal = delay + length(preamble) + RxGd + TxGd;
@@ -120,9 +151,9 @@ for i = 1:length(threshold)
         PER(j) = numErrors/numFrames;
         PER_ideal(j) = numErrorsIdeal/numFrames;
     end
-    figure(1);
-    plot(SNR_dB, probDetect, 'LineWidth', 1.5); hold on;
     figure(2);
+    plot(SNR_dB, probDetect, 'LineWidth', 1.5); hold on;
+    figure(3);
     if i == 1
         semilogy(SNR_dB, PER_ideal, 'LineWidth', 1.5);
     end
@@ -131,7 +162,7 @@ for i = 1:length(threshold)
 end
 
 % Label Plots
-figure(1);
+figure(2);
 grid on
 xlabel('SNR (dB)');
 ylabel('Detection Probability')
@@ -142,7 +173,7 @@ if ~strcmp(Detections,'Peak')
     legend(legendStr,'Location','southeast');
 end
 
-figure(2);
+figure(3);
 grid on
 xlabel('SNR (dB)');
 ylabel('PER')
