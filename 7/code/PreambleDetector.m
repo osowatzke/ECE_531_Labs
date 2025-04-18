@@ -4,6 +4,7 @@ classdef PreambleDetector < matlab.System
         Preamble = [1+1i; 1-1i];
         Detections = 'All';
         Normalize = false;
+        CheckNearbySamples = false;
     end
     properties(Access=protected)
         detectPeak;
@@ -72,6 +73,13 @@ classdef PreambleDetector < matlab.System
                 idx = find(abs(crossCorr) > self.Threshold);
             else
                 idx = find(abs(crossCorr) > self.Threshold, 1, 'first');
+                if self.CheckNearbySamples
+                    startIdx = idx;
+                    endIdx = startIdx + length(self.Preamble) - 1;
+                    endIdx = min(endIdx, length(crossCorr));
+                    [ ~, idxOff] = max(abs(crossCorr(startIdx:endIdx)));
+                    idx = idx + idxOff - 1;
+                end
             end
 
             % Update shift register

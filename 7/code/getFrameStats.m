@@ -12,7 +12,7 @@ SNR_dB = 0:10;
 
 %% Detector Configuration
 Detections = 'First'; % Should be 'First' or 'All'
-threshold = 0.7:0.1:0.9;
+threshold = 0.6:0.1:0.9;
 
 % Override parameters for peak detection
 if strcmp(Detections, 'Peak')
@@ -66,7 +66,8 @@ for i = 1:length(threshold)
             'Preamble',   preamble,...
             'Normalize',  true,...
             'Detections', Detections,...
-            'Threshold',  threshold(i));
+            'Threshold',  threshold(i),...
+            'CheckNearbySamples', true);
     
         % Keep track of errors and missed detections
         numErrors = 0;

@@ -139,6 +139,8 @@ Next, we implement a custom frame synchronizer in MATLAB. Our frame synchronizer
 
 \noindent For a given SNR, we see that increasing our threshold decreases the probability of false alarm and the probability of detection. Similarly, decreasing our threshold increases the probability of false alarm and the probability of detection. Any threshold we lead to results at a specific position on the ROC curve. As a result, when we choose our threshold, we have to trade off probability of detection and probability of false alarm.
 
+We test our frame synchronization routine over SNRs in range [0, 10] dB. To evaluate its performance, we measure the detection probability and packet error rate. The detection probability is the probability we correctly detect the start of the packet, and the packet error rate is the probability that any bit in our packet contains an error. For our analysis, we also consider missed detections as packet errors. For our first stage of analysis, we consider the peak of the cross-correlator output as the start of a frame. In this configuration, we achieve our best possible performance. Our results are included in Figures \ref{} and \ref{}.
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
