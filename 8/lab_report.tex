@@ -52,7 +52,21 @@ In this lab, we implement a monostatic CW radar with the PlutoSDR. We specifical
 Two common causes of the DC return in our data are clutter (from stationary returns) and transmitter leakage. We can minimize clutter with a tighter antenna pattern or by operating in an controlled environment, such as an anechoic chamber. However, it is usually not possible for us to constrain our environment. Antenna isolation achieved through a tighter antenna pattern or other techniques can be help us achieve better antenna isolation. We can also consider other design such as pulsed doppler radars. However, these radars may not be applicable in all cases (especially with close targets). In the lab, we used a notch filter to remove DC. However, we could have also removed or ignored the offending doppler bins in post-processing.
 
 An interfering signal would negatively impact the CW radar operation. If it was a wideband signal (such as 802.11 WiFi), it could mask the entire bandwidth of our signal and make detection more difficult. Conversely, if the interfering signal was narrow (worse case a tone), it could lead to false detections. To mitigate interference, we should try to minimize the utilized bandwidth. In the sample flowchart, provided in the lab, the RF bandwidth was larger than the sample rate. Tightening the RF bandwidth could prevent interference from aliasing into our bandwidth. Additionally, if the interference is high power, tightening our RF bandwidth can prevent the AGC from acting on interference and increase the effective number of bits for our return. We can also implement more sophisticated techniques to mitigate interference. For example, we can use a coded waveform such as a Barker code or Zadoff-chu waveform to increase the coherent gain on our returns. Additionally, having a tighter antenna pattern can reduce the interference power and increase the power of returns. If we had a ULA, we could even implement beamforming to null signals from specific directions of arrival.
- 
+
+\begin{figure}[H]
+    	\centering
+    	\fbox{\includegraphics[width=0.6\linewidth]{FMCW Blockdiagram}}
+    	\caption{Typical FMCW Block Diagram \cite{9613183}}
+    	\label{fig::fmcw_radar}
+\end{figure}
+	
+\begin{figure}[H]
+    	\centering
+    	\fbox{\includegraphics[width=0.6\linewidth]{FMCW Freq-Time graph}}
+    	\caption{Time Frequency Plot for Transmit and Receive Signal.\cite{Long2019AssistingTV}}
+    	\label{fig::fmcw_spectrogram}
+\end{figure}
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
