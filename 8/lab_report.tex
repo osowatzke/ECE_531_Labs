@@ -53,6 +53,8 @@ Two common causes of the DC return in our data are clutter (from stationary retu
 
 An interfering signal would negatively impact the CW radar operation. If it was a wideband signal (such as 802.11 WiFi), it could mask the entire bandwidth of our signal and make detection more difficult. Conversely, if the interfering signal was narrow (worse case a tone), it could lead to false detections. To mitigate interference, we should try to minimize the utilized bandwidth. In the sample flowchart, provided in the lab, the RF bandwidth was larger than the sample rate. Tightening the RF bandwidth could prevent interference from aliasing into our bandwidth. Additionally, if the interference is high power, tightening our RF bandwidth can prevent the AGC from acting on interference and increase the effective number of bits for our return. We can also implement more sophisticated techniques to mitigate interference. For example, we can use a coded waveform such as a Barker code or Zadoff-chu waveform to increase the coherent gain on our returns. Additionally, having a tighter antenna pattern can reduce the interference power and increase the power of returns. If we had a ULA, we could even implement beamforming to null signals from specific directions of arrival.
 
+We can extend our design to compute range measurements if we replace our sinusoid with a chirp. This is done in FMCW radars, for example, which we illustrate in Figure \ref{fig::fmcw_radar}
+
 \begin{figure}[H]
     	\centering
     	\fbox{\includegraphics[width=0.6\linewidth]{FMCW Blockdiagram}}
@@ -60,12 +62,16 @@ An interfering signal would negatively impact the CW radar operation. If it was 
     	\label{fig::fmcw_radar}
 \end{figure}
 	
+\noindent In an FMCW radar, we generate our chirp waveform with a VCO.  Typical transmit and receive signals are shown in Figure \ref{fig::fmcw_spectrogram}.
+
 \begin{figure}[H]
     	\centering
     	\fbox{\includegraphics[width=0.6\linewidth]{FMCW Freq-Time graph}}
     	\caption{Time Frequency Plot for Transmit and Receive Signal.\cite{Long2019AssistingTV}}
     	\label{fig::fmcw_spectrogram}
 \end{figure}
+
+\noindent After mixing we get a tone with a frequency that is proportional to range. If we limit the maximum resolvable range, we can use a sample rate that is much smaller than the chirp bandwidth, which allows us to use much cheaper hardware. As shown in Figure \ref{fig::fmcw_radar}, we can then use an FFT to detect range. Additionally, we can resolve doppler by taking a slow-time FFT across pulses.
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
