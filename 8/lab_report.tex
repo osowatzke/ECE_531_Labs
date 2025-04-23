@@ -49,6 +49,8 @@ In this lab, we implement a monostatic CW radar with the PlutoSDR. We specifical
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
+Two common causes of the DC return in our data are clutter (from stationary returns) and transmitter leakage. We can minimize clutter with a tighter antenna pattern or by operating in an controlled environment, such as an anechoic chamber. However, it is usually not possible for us to constrain our environment. Antenna isolation achieved through a tighter antenna pattern or other techniques can be help us achieve better antenna isolation. We can also consider other design such as pulsed doppler radars. However, these radars may not be applicable in all cases (especially with close targets). In the lab, we used a notch filter to remove DC. However, we could have also removed or ignored the offending doppler bins in post-processing.
+
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
 
