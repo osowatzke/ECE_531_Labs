@@ -18,9 +18,10 @@ w = w*(2*pi)/60;
 % Radial distance as a function of time
 dist = @(t) sqrt(r^2*cos(w*t).^2 + (r*sin(w*t) + r).^2 + d^2);
 
-% Create time vector over one cycle of movement
+% Create time vector over multiple cycles of movement
+num_cylces = 32;
 dt = 1e-5;
-t = 0:dt:(2*pi/w);
+t = 0:dt:num_cylces*(2*pi/w);
 
 % Compute the doppler shifts as a function of time
 fd = zeros(1,length(t));
@@ -31,7 +32,7 @@ end
 
 % Plot the doppler shift against time
 figure(1); clf;
-plot(t*1e3, fd);
+plot(t*1e3, fd, 'LineWidth', 1.5);
 grid on;
 xlabel('Time (ms)')
 ylabel('Doppler shift (Hz)')
@@ -47,7 +48,7 @@ phi = filter(1,[1 -1],2*pi*fd.*dt);
 
 % Plot the spectrum of the return
 figure(2); clf;
-plot(faxis/1e3,db(fftshift(fft(exp(1i*phi)))))
+plot(faxis/1e3,db(fftshift(fft(exp(1i*phi)))), 'LineWidth', 1.5)
 grid on;
 xlabel('Frequency (kHz)')
 ylabel('Magnitude (dB)')

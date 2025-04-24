@@ -131,6 +131,25 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::dopp_shift_vs_time}
 \end{figure}
  
+\noindent We can make sense of this plot by examining the test setup in Figure \ref{fig::angular_velocity_measurement}. Doing so, we find that the frequency decrease as we rotate away from the antenna and increases as we rotate towards the antenna. We also create a signal with an instantaneous frequency consistent with Figure \ref{fig::dopp_shift_vs_time} and plot the FFT of it, which is shown in Figure \ref{fig::freq_response}.
+
+\begin{figure}[H]
+    	\centering
+    \fbox{\includegraphics[width=0.5\linewidth]{freq_response.png}}
+    	\caption{FFT of Rotating Signal Reflection}
+    	\label{fig::freq_response}
+\end{figure}
+
+\noindent Note that the spectrum is very different from our hardware results shown in Figure \ref{fig::dopp_spectrum}. How can we explain the discrepancies in our results? Our simulation results were collected over one period of the sinusoid, while each point in our waterfall plot was likely collected over multiple periods of the sinusoid. If we perform our FFT over multiple cycles of the input signal, we get the plot shown in Figure \ref{fig::freq_response_multi_cycle}.
+
+\begin{figure}[H]
+    	\centering
+    \fbox{\includegraphics[width=0.5\linewidth]{freq_response_multi_cycle.png}}
+    	\caption{FFT of Rotating Signal Reflection Over Multiple Cycles of Rotation}
+    	\label{fig::freq_response_multi_cycle}
+\end{figure}
+
+
  12in from fan.
 
 Note that this radar can only sense 
