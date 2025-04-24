@@ -149,11 +149,16 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::freq_response_multi_cycle}
 \end{figure}
 
-\noindent Note that repeating our signal in the time domain has inserted zeros into our frequency response similar to how upsampling in the time-domain leads to replication in the frequency domain. The frequency of the first harmonic (20 Hz) also corresponds to the frequency of rotation. We do see evidence of faint harmonics in Figure \ref{fig::dopp_spectrum}. However, we can better visualize the artifacts if we place the PlutoSDR closer to the fan, which boosts the SNR. 
- 
- 12in from fan.
+\noindent Note that repeating our signal in the time domain has inserted zeros into our frequency response similar to how upsampling in the time-domain leads to replication in the frequency domain. The frequency of the first harmonic (20 Hz) also corresponds to the frequency of rotation. We do see evidence of faint harmonics in Figure \ref{fig::dopp_spectrum}. However, we can better visualize the artifacts if we place the PlutoSDR closer to the fan, which boosts the SNR. The results of our analysis are shown in Figure \ref{fig::dopp_harmonics}.
 
-Note that this radar can only sense 
+\begin{figure}[H]
+    	\centering
+    \fbox{\includegraphics[width=0.75\linewidth]{dopp_harmonics.png}}
+    	\caption{Data Captured with Pluto SDR Confirming Harmonics}
+    	\label{fig::dopp_harmonics}
+\end{figure}
+
+\noindent In the Figure, we show the fan being turned on at the lowest speed mode and then being turned off again. As soon as the fan is turned on, we see evenly spacing harmonics confirming the results shown in Figure \ref{fig::freq_response_multi_cycle}. As a result, we should be able to the frequency of the first harmonic to directly determine the angular velocity. Note that here we must also account for the number of blades because we may be periodic over intervals smaller than a full rotation. Our fan has 5 fans. Therefore, we conclude that the angular vectors for slow, medium, and fast speeds are 63/5 rotations/s, 79/5 rotations/s, and 95/5 rotations/s respectively. This corresponds to 756 rpm, 948 rpm, and 1140 rpm, which are reasonable values for a box fan.
 
 Two common causes of the DC return in our data are clutter (from stationary returns) and transmitter leakage. We can minimize clutter with a tighter antenna pattern or by operating in an controlled environment, such as an anechoic chamber. However, it is usually not possible for us to constrain our environment. Antenna isolation achieved through a tighter antenna pattern or other techniques can be help us achieve better antenna isolation. We can also consider other design such as pulsed doppler radars. However, these radars may not be applicable in all cases (especially with close targets). In the lab, we used a notch filter to remove DC. However, we could have also removed or ignored the offending doppler bins in post-processing.
 
