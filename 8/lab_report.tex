@@ -122,8 +122,8 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
 	x = \sqrt{r^2\cos({\omega}t)^2 + (r\sin({\omega}t) + r)^2 + d^2}
 \end{equation*}
 
-\noindent We then use MATLAB to differentiate this expression over time. The derivative of the radial distance is the radial velocity, which we can use in Equation \ref{eq::dopp_shift} to compute the corresponding doppler shift.
-
+\noindent We then use MATLAB to differentiate this expression over time. The derivative of the radial distance is the radial velocity, which we can use in Equation \ref{eq::dopp_shift} to compute the corresponding doppler shift. For this analysis, we choose representative values for the distances: $r = 0.25\ \text{m}$ and $d = 0.4\ \text{m}$. We also choose $\omega = 100/(2\pi)\ \text{rad}/\text{s}$ as a placeholder for our angular velocity.
+ 
  12in from fan.
 
 Note that this radar can only sense 
