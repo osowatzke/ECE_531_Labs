@@ -46,13 +46,22 @@ In this lab, we create a monostatic continuous wave (CW) radar using the PlutoSD
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
-In this section, we provide the procedures for each of our experiments. We specifically use GNU radio to implement a CW radar. Our radar uses the difference between the transmitted and received frequencies to measure the doppler shift of the target.
+In this section, we provide the procedures for each of our experiments. We specifically use GNU radio to implement a CW radar. A sample CW radar implementation is shown in Figure \ref{fig::gnu_radio_block_diagram}.
+
+\begin{figure}[H]
+    	\centering
+    \fbox{\includegraphics[width=0.5\linewidth]{cw_radar_block_diagram.png}}
+    	\caption{GNU Radio Flowchart which Implements a CW Radar}
+    	\label{fig::cw_radar_block_diagram}
+\end{figure}
+
+\noindent CW radars, such as the one shown, use the difference between the transmitted and received frequencies to measure the doppler shift of the target.
 
 \begin{equation*}
 	f_d = f_r - f_t
 \end{equation*}
 
-\noindent For a target with a velocity $v$, the doppler shift can be approximated as follows:
+\noindent For a target with a velocity $v$, the doppler shift can also be approximated as follows:
 
 \begin{equation*}
 	f_d \approx \pm\frac{2v}{\lambda}
@@ -64,7 +73,7 @@ In this section, we provide the procedures for each of our experiments. We speci
 	v \approx \pm\frac{f_d\lambda}{2}
 \end{equation*}
 
-\noindent Using our CW radar, we measure the angular velocity of a box fan. Next, we explain the strong DC return in our waterfall plots and discuss physical changes that can be made to reduce the power of this return. Then, we discuss how an interfering signal could affect the operation of our radar and propose changes to make the design more resilient to interference. Finally, we discuss how the design can be updated to support range measurements.
+\noindent Using our CW radar, we specifically measure the angular velocity of a box fan. Next, we explain the strong DC return in our waterfall plots and discuss physical changes that can be made to reduce the power of this return. Then, we discuss how an interfering signal could affect the operation of our radar and propose changes to make the design more resilient to interference. Finally, we discuss how the design can be updated to support range measurements.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
