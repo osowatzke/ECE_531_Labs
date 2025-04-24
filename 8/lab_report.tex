@@ -80,14 +80,7 @@ In this section, we provide the procedures for each of our experiments. We speci
 
 In this section, we provide the results for each of our experiments. We specifically create GNU radio flowchart which implements a CW radio in our PlutoSDR. Next, we use our design to measure the angular velocity of a box fan. Then, we discuss the short-coming of our design: DC return, resilience to interference, and no range measurement. Finally, we discuss how we can improve our design to handle these short-comings.
 
-
-In this section, we create a GNU radio flowchart to implement a CW radar. Our flowchart is shown in Figure \ref{fig::gnu_radio_block_diagram}. In this flowchart, we transmit a 10 kHz sinusoid at a 2.4 GHz carrier frequency. Then, we receive the sinusoid with a 500 kHz sampling rate and RF bandwidth. Note that this is much greater than twice the highest frequency (10 kHz plus a doppler shift), so we could further reduce our sampling rate if desired. However, if we did so, we should also reduce the RF bandwidth to reduce the amount of noise that aliases back into our spectrum. Next, we perform AGC on the received signal and signal source to maintain signal power. However, both these blocks are optional and can be removed because our transmitted signal has a fixed signal power and because we are performing AGC in the PlutoSDR. Next, we multiply the received signal by the conjugate of the transmitted signal. This is equivalent to mixing our return down to DC. After we mix down, we should be left with a tone at DC (from clutter and leakage) and a tone at the doppler shift. The doppler shift of our returns will be small with respect to our bandwidth. As such we select a sampling rate of 500 Hz for our water plot, which allows us to unambiguously resolve doppler shifts up to $\pm 250\ \text{Hz}$, which corresponds to radial velocities up to $\pm 15.625 m/s$. We use a low-pass filter with decimation to get down to this reduced sample rate. We also use a DC blocker to remove the clutter and leakage returns, which is much higher power than our reflections.
-
-%\begin{equation*}
-%	f_d = \frac{2v}{\lambda}
-%\end{equation*}
-
-% \noindent We specifically choose  shift of 
+Our GNU radio flowchart is shown in Figure \ref{fig::gnu_radio_block_diagram}. 
 
 \begin{figure}[H]
     	\centering
@@ -95,6 +88,14 @@ In this section, we create a GNU radio flowchart to implement a CW radar. Our fl
     	\caption{GNU Radio Flowchart which Implements a CW Radar}
     	\label{fig::gnu_radio_block_diagram}
 \end{figure}
+
+\noindent In this flowchart, we transmit a 10 kHz sinusoid on a 2.4 GHz carrier frequency. Then, we receive the sinusoid with a 500 kHz sampling rate and RF bandwidth. Note that our sampling greater is much greater than twice the highest frequency in our received signal (10 kHz plus a doppler shift), so we could further reduce our sampling rate if desired. However, if we do so, we should also reduce the RF bandwidth to reduce the amount of noise that aliases back into our spectrum. Next, we perform AGC on the received signal and signal source to maintain signal power. However, both these blocks are optional and can be removed because our transmitted signal has a fixed signal power and because we are performing AGC in the PlutoSDR. Next, we multiply the received signal by the conjugate of the transmitted signal. This is equivalent to mixing our return down to DC. After we mix down, we should be left with a tone at DC (from clutter and leakage) and a tone at the doppler shift. The doppler shift of our returns will be small with respect to our bandwidth. As such we select a sampling rate of 500 Hz for our waterfall plot, which allows us to unambiguously resolve doppler shifts up to $\pm 250\ \text{Hz}$ and radial velocities up to $\pm 15.625 \text{m}/\text{s}$. We use a low-pass filter with decimation to get down to this reduced sample rate. We also use a DC blocker to remove the clutter and leakage returns, which are much stronger than our target return.
+
+%\begin{equation*}
+%	f_d = \frac{2v}{\lambda}
+%\end{equation*}
+
+% \noindent We specifically choose  shift of 
 
 If we point our PlutoSDR at a running box fan, we receive the waterfall plot generated in Figure \ref{fig::dopp_spectrum}. Note that our flowchart shows the doppler shift for three different fan speeds. 
 
