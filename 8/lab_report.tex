@@ -64,12 +64,16 @@ In this section, we create a GNU radio flowchart to implement a CW radar. Our fl
     	\label{fig::gnu_radio_block_diagram}
 \end{figure}
 
+If we point our PlutoSDR at a running box fan, we receive the waterfall plot generated in Figure \ref{fig::dopp_spectrum}. Note that our flowchart shows the doppler shift for three different fan speeds. 
+
 \begin{figure}[H]
     	\centering
     \includegraphics[width=0.9\linewidth]{dopp_spectrum.png}
     	\caption{Waterfall Plot Displaying Doppler Shift from Box Fan}
     	\label{fig::dopp_spectrum}
 \end{figure}
+
+\noindent At these fan speeds, we measure doppler shifts of 63 Hz at low fan speeds, 79 Hz at medimum fan speeds, and 95 Hz at high fan speeds. This corresponds to radial velocities of 3.9375 m/s, 4.9375 m/s, and 5.9375 m/s respectively. 12in from fan.
 
 Note that this radar can only sense 
 
