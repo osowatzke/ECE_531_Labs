@@ -41,12 +41,30 @@
 \section{Introduction}
 %Introduction to the laboratory experiment, including a brief description of the objectives and goals.
 
-In this lab, we create a continuous wave (CW) radar using the PlutoSDR. Our CW radar uses the doppler beat frequency to measure velocity and does not measure measure range. We specifically use our CW radar to measure the angular velocity of box fan blades. Then, we explain how we can improve our radar. In the work that follows we provide the procedure for each of our experiments followed by the results. 
+In this lab, we create a monostatic continuous wave (CW) radar using the PlutoSDR. Our CW radar uses the doppler beat frequency to measure velocity and does not measure measure range. We specifically use our CW radar to measure the angular velocity of box fan blades. Then, we explain how we can improve our radar. In the work that follows we provide the procedure for each of our experiments followed by the results. 
 
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
-In this lab, we implement a monostatic CW radar with the PlutoSDR. We specifically use GNU radio to implement our radar and test it using a box fan. In our data, we explain the strong DC return and discuss physical changes that can be made to reduce the power of this return. Using the measured doppler shift, we also approximate the angular velocity of the box fan blades. Then, we discuss how an interfering signal could affect the operation of our radar and propose changes to make the design more resilient to interference. Finally, we discuss how the design can be updated to support range measurements.
+In this section, we provide the procedures for each of our experiments. We specifically use GNU radio to implement a CW radar. Our radar uses the difference between the transmitted and received frequencies to measure the doppler shift of the target.
+
+\begin{equation*}
+	f_d = f_r - f_t
+\end{equation*}
+
+\noindent For a target with a velocity $v$, the doppler shift can be approximated as follows:
+
+\begin{equation*}
+	f_d \approx \pm\frac{2v}{\lambda}
+\end{equation*}
+
+\noindent Here the positive sign corresponds to a closing (approaching) target and the negative sign corresponds to an opening (receding) target. Using the above equation and our measured doppler shifts, we can estimate the target velocity as follows:
+
+\begin{equation*}
+	v \approx \pm\frac{f_d\lambda}{2}
+\end{equation*}
+
+\noindent Using our CW radar, we measure the angular velocity of a box fan. Next, we explain the strong DC return in our waterfall plots and discuss physical changes that can be made to reduce the power of this return. Then, we discuss how an interfering signal could affect the operation of our radar and propose changes to make the design more resilient to interference. Finally, we discuss how the design can be updated to support range measurements.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
