@@ -64,6 +64,7 @@ In this section, we provide the procedures for each of our experiments. We speci
 \noindent For a target with a velocity $v$, the doppler shift can also be approximated as follows:
 
 \begin{equation*}
+	\label{eq::dopp_shift}
 	f_d \approx \pm\frac{2v}{\lambda}
 \end{equation*}
 
@@ -106,7 +107,7 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::dopp_spectrum}
 \end{figure}
 
-\noindent At these fan speeds, we measure doppler shifts of 63 Hz at low speed, 79 Hz at medimum speed, and 95 Hz at high speed. This corresponds to radial velocities of 3.9375 m/s, 4.9375 m/s, and 5.9375 m/s respectively. We have to be careful when mapping these radial velocities back to angular velocities. To help us with this analysis, we consider the setup shown in Figure \ref{fig::angular_velocity_measurement}.
+\noindent At these fan speeds, we measure doppler shifts of 63 Hz at low speed, 79 Hz at medimum speed, and 95 Hz at high speed. This corresponds to radial velocities of 3.9375 m/s, 4.9375 m/s, and 5.9375 m/s respectively. We have to be careful when mapping these radial velocities back to angular velocities. To help us with this analysis, we consider the setup shown in Figure \ref{fig::angular_velocity_measurement}. Note that the antenna also extends some distance $d$ out of the page.
 
 \begin{figure}[H]
     	\centering
@@ -115,6 +116,13 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::angular_velocity_measurement}
 \end{figure}
 
+\noindent To get the doppler shift for the point target at each point on its path of rotation, we need to compute the radial distance to the target and differentiate with respect to time. The distance, $x$ can be computed as follows:
+
+\begin{equation*}
+	x = \sqrt{r^2\cos({\omega}t)^2 + (r\sin({\omega}t) + r)^2 + d^2}
+\end{equation*}
+
+\noindent We then use MATLAB to differentiate this expression over time. The derivative of the radial distance is the radial velocity, which we can use in Equation \ref{eq::dopp_shift} to compute the corresponding doppler shift.
 
  12in from fan.
 
