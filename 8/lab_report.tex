@@ -88,7 +88,7 @@ In this section, we provide the results for each of our experiments. We specific
     	\label{fig::gnu_radio_block_diagram}
 \end{figure}
 
-\noindent In this flowchart, we transmit a 10 kHz sinusoid on a 2.4 GHz carrier frequency. Then, we receive the sinusoid with a 500 kHz sampling rate and RF bandwidth. Note that our sampling greater is much greater than twice the highest frequency in our received signal (10 kHz plus a doppler shift), so we could further reduce our sampling rate if desired. However, if we do so, we should also reduce the RF bandwidth to reduce the amount of noise that aliases back into our spectrum. Next, we perform AGC on the received signal and signal source to maintain signal power. However, both these blocks are optional and can be removed because our transmitted signal has a fixed signal power and because we are performing AGC in the PlutoSDR. Next, we multiply the received signal by the conjugate of the transmitted signal. This is equivalent to mixing our return down to DC. After we mix down, we should be left with a tone at DC (from clutter and leakage) and a tone at the doppler shift. The doppler shift of our returns will be small with respect to our bandwidth. As such we select a sampling rate of 500 Hz for our waterfall plot, which allows us to unambiguously resolve doppler shifts up to $\pm 250\ \text{Hz}$ and radial velocities up to $\pm 15.625 \text{m}/\text{s}$. We use a low-pass filter with decimation to get down to this reduced sample rate. We also use a DC blocker to remove the clutter and leakage returns, which are much stronger than our target return.
+\noindent In this flowchart, we transmit a 10 kHz sinusoid centered about a 2.4 GHz carrier frequency. Then, we receive the sinusoid with a 500 kHz sampling rate and RF bandwidth. Note that our sampling rate is much greater than twice the highest frequency in our received signal (10 kHz plus a doppler shift), so we could further reduce our sampling rate if desired. However, if we do so, we should also reduce the RF bandwidth to reduce the amount of noise that aliases back into our spectrum. Next, we perform AGC on the received signal and signal source to maintain signal power. However, both these blocks can likely be removed from our design because our transmitted signal has a fixed signal power and because we are performing AGC in the PlutoSDR. Next, we multiply the received signal by the conjugate of the transmitted signal. This is equivalent to mixing our return down to DC. After we mix down, we should be left with a tone at DC (from clutter and leakage) and a tone at the doppler shift. The doppler shift of our returns will be small with respect to our bandwidth. As such, we low-pass filter our signal and decimate to a sampling rate of 500 Hz. At this sampling rate,we can unambiguously resolve doppler shifts up to $\pm 250\ \text{Hz}$ and radial velocities up to $\pm 15.625 \text{m}/\text{s}$. We also add a DC blocker before the waterfall plot to remove the clutter and leakage returns, which are much stronger than our target return.
 
 %\begin{equation*}
 %	f_d = \frac{2v}{\lambda}
@@ -96,7 +96,7 @@ In this section, we provide the results for each of our experiments. We specific
 
 % \noindent We specifically choose  shift of 
 
-Next, to measure the angle velocity of our box fan, we place our PlutoSDR in front of it and execute our flow chart. The results of this experiment are shown in the waterfall plot given by Figure \ref{fig::dopp_spectrum}. Note that our flowchart shows the doppler shift for three different fan speeds: slow, medium, and fast.
+Next, to measure the angle velocity of our box fan, we place our PlutoSDR in front of it and execute our flow chart. The waterfall plot that results from this experiment is displayed Figure \ref{fig::dopp_spectrum}. Note that our flowchart shows the doppler shift for three different fan speeds: slow, medium, and fast.
 
 \begin{figure}[H]
     	\centering
@@ -105,7 +105,7 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::dopp_spectrum}
 \end{figure}
 
-\noindent At these fan speeds, we measure doppler shifts of 63 Hz at low speed, 79 Hz at medimum speed, and 95 Hz at high speed. This corresponds to radial velocities of 3.9375 m/s, 4.9375 m/s, and 5.9375 m/s respectively. We have to be careful when mapping these radial velocities back to angular velocities. To help us with this analysis, we consider the setup shown in Figure \ref{fig::angular_velocity_measurement}. Note that the antenna also extends some distance $d$ out of the page.
+\noindent Using the waterfall plot, we measure doppler shifts of 63 Hz at low speed, 79 Hz at medimum speed, and 95 Hz at high speed. This corresponds to radial velocities of 3.9375 m/s, 4.9375 m/s, and 5.9375 m/s respectively. However, we have to be careful when mapping our radial velocity measurements back to angular velocities. To help with this mapping, we consider the setup shown in Figure \ref{fig::angular_velocity_measurement}. Note that the antenna also extends some distance $d$ out of the page.
 
 \begin{figure}[H]
     	\centering
