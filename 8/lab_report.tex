@@ -105,8 +105,7 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::dopp_spectrum}
 \end{figure}
 
-\noindent Using the waterfall plot, we measure doppler shifts of 63 Hz at low speed, 79 Hz at medimum speed, and 95 Hz at high speed. This corresponds to radial velocities of 3.9375 m/s, 4.9375 m/s, and 5.9375 m/s respectively. However, we have to be careful when mapping our radial velocity measurements back to angular velocities. To help with this mapping, we consider the setup shown in Figure \ref{fig::angular_velocity_measurement}. Note that the antenna also extends some distance $d$ out of the page.
-
+\noindent Using the waterfall plot, we measure doppler shifts of 63 Hz at low speed, 79 Hz at medimum speed, and 95 Hz at high speed. This corresponds to radial velocities of 3.9375 m/s, 4.9375 m/s, and 5.9375 m/s respectively. However, we have to be careful when mapping our radial velocity measurements back to angular velocities. To help with this mapping, we consider the setup shown in Figure \ref{fig::angular_velocity_measurement}. 
 \begin{figure}[H]
     	\centering
     \includegraphics[width=0.4\linewidth]{angular_velocity_measurement.png}
@@ -114,13 +113,13 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::angular_velocity_measurement}
 \end{figure}
 
-\noindent To get the doppler shift for the point target at each point on its path of rotation, we need to compute the radial distance to the target and differentiate with respect to time. The distance, $x$ can be computed as follows:
+\noindent In this setup, we consider a point target which rotates around a circle of radius $r$ with an angular velocity $\omega$. We specifically measure the doppler shifts of our return with an antenna placed at the base of the circle. Note that the antenna also extends some distance $d$ out of the page. This model is a gross oversimplifaction of our lab setup. However, it is still useful for understanding. To solve for the doppler shifts, we first compute the radial distance between the target and point antenna. The resulting radial distance, $x$, can be computed for each angular position as follows:
 
 \begin{equation*}
 	x = \sqrt{r^2\cos({\omega}t)^2 + (r\sin({\omega}t) + r)^2 + d^2}
 \end{equation*}
 
-\noindent We then use MATLAB to differentiate this expression over time. The derivative of the radial distance is the radial velocity, which we can use in Equation \ref{eq::dopp_shift} to compute the corresponding doppler shift. For this analysis, we choose representative values for the distances: $r = 0.25\ \text{m}$ and $d = 0.4\ \text{m}$. We also choose $\omega = 40\pi\ \text{rad}/\text{s}$ as a placeholder for our angular velocity. The resulting doppler shifts are shown in Figure \ref{fig::dopp_shift_vs_time}.
+\noindent To obtain the radial velocity, we use MATLAB to differentiate the radial distance with respect to time. Then, we can use the radial velocities in Equation \ref{eq::dopp_shift} to compute the corresponding doppler shift. For this analysis, we choose representative values for the distances: $r = 0.25\ \text{m}$ and $d = 0.4\ \text{m}$. We also choose $\omega = 40\pi\ \text{rad}/\text{s}$ as a placeholder for our angular velocity. The doppler shift that results from our sample values values is displayed in Figure \ref{fig::dopp_shift_vs_time}.
 
 \begin{figure}[H]
     	\centering
