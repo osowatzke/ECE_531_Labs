@@ -46,7 +46,7 @@ In this lab, we create a monostatic continuous wave (CW) radar using our PlutoSD
 \section{Procedure}
 % Detailed explanation of the laboratory experiment, including the design, implementation, and testing of the system.
 
-In this section, we provide the procedures for each of our experiments. We specifically use GNU radio to implement a CW radar. A sample CW radar implementation is shown in Figure \ref{fig::gnu_radio_block_diagram}.
+In this section, we provide the procedures for each of our experiments. We specifically use GNU radio to implement the CW radar. A block diagram for a sample CW radar implementation is shown in Figure \ref{fig::gnu_radio_block_diagram}.
 
 \begin{figure}[H]
     	\centering
@@ -68,20 +68,18 @@ In this section, we provide the procedures for each of our experiments. We speci
 	f_d \approx \pm\frac{2v}{\lambda}
 \end{equation*}
 
-\noindent Here the positive sign corresponds to a closing (approaching) target and the negative sign corresponds to an opening (receding) target. Using the above equation and our measured doppler shifts, we can estimate the target velocity as follows:
+\noindent Here the positive sign corresponds to a closing target and the negative sign corresponds to an opening target. Using the above equation and our measured doppler shifts, we can estimate the target velocity as follows:
 
 \begin{equation*}
 	v \approx \pm\frac{f_d\lambda}{2}
 \end{equation*}
 
-\noindent Using our CW radar, we specifically measure the angular velocity of a box fan. Next, we explain the strong DC return in our waterfall plots and discuss physical changes that can be made to reduce the power of this return. Then, we discuss how an interfering signal could affect the operation of our radar and propose changes to make the design more resilient to interference. Finally, we discuss how the design can be updated to support range measurements.
+\noindent In this lab, we use our CW radar to measure the angular velocity of a box fan. Next, we explain the strong DC return in our waterfall plots and discuss physical changes that can be made to reduce the power of this return. Then, we discuss how an interfering signal could affect the operation of our radar and propose changes to make the design more resilient to interference. Finally, we discuss how the design can be updated to support range measurements.
 
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
-In this section, we provide the results for each of our experiments. We specifically create GNU radio flowchart which implements a CW radio in our PlutoSDR. Next, we use our design to measure the angular velocity of a box fan. Then, we discuss the short-coming of our design: DC return, resilience to interference, and no range measurement. Finally, we discuss how we can improve our design to handle these short-comings.
-
-Our GNU radio flowchart is shown in Figure \ref{fig::gnu_radio_block_diagram}. 
+In this section, we provide the results for each of our experiments. We specifically create GNU radio flowchart which implements a CW radio in our PlutoSDR. Next, we use our design to measure the angular velocity of a box fan. Then, we discuss the short-coming of our design: DC return, resilience to interference, and no range information. Finally, we discuss how we can improve our design to handle these short-comings. Our GNU radio flowchart is shown in Figure \ref{fig::gnu_radio_block_diagram}. 
 
 \begin{figure}[H]
     	\centering
