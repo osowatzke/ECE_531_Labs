@@ -157,13 +157,11 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
 
 \noindent In our Figure, we capture the fan being turned on at the lowest speed mode and then being turned off again. As soon as the fan is turned on, we see evenly spacing harmonics confirming the results shown in Figure \ref{fig::freq_response_multi_cycle}. In other words, the frequency of the first harmonic is related to period of the signal, which is in turn related to the angular velocity. In our lab results, we must also account for the number of fan blades because they will decrease the period of the signal and increase the frequency. The fan we used for analysis specifically has 5 blades. Therefore, we conclude that the angular velocities for slow, medium, and fast speeds are 63/5 rotations/s, 79/5 rotations/s, and 95/5 rotations/s. These measurements correspond to 756 rpm, 948 rpm, and 1140 rpm, which are reasonable angular velocities for a box fan.
 
-Two common causes of the DC return in our data are clutter (from stationary returns) and transmitter leakage. We can minimize clutter with a tighter antenna pattern or by operating in an controlled environment, such as an anechoic chamber. However, it is usually not possible for us to constrain our environment. Similarly, antenna isolation can also be achieved using a tighter antenna pattern. In the lab, we used a notch filter to remove DC. However, we could have also removed or ignored the offending doppler bins in post-processing.
-
-%  We can also consider other designs such as pulsed doppler radar. However, these radars may not be applicable for all uses cases (especially for handling of close targets). 
+Two common causes of the DC return in our data are clutter (from stationary returns) and transmitter leakage. We can minimize clutter with a tighter antenna pattern or by operating in an controlled environment, such as an anechoic chamber. However, it is usually not possible for us to constrain our environment. Similarly, antenna isolation can also be achieved using a tighter antenna pattern. We can also consider other designs such as pulsed doppler radar, which blank the transmitted signal. However, these radars may not be applicable for all uses cases (especially when dealing with close targets). In the lab, we used a notch filter to remove DC. However, we could have also removed or ignored the offending doppler bins in post-processing.
 
 An interfering signal would negatively impact our CW radar's operation. If the interference was from a wideband signal (such as 802.11 WiFi), it could cover the entire bandwidth of our signal and make detection more difficult. Conversely, if the interfering signal was narrow bandwidth (such as a tone), it could lead to false detections. To mitigate interference, we can do a few things. First, we should try to minimize the utilized bandwidth. In the sample flowchart, provided in the lab document, the RF bandwidth was larger than the sample rate. A tighter RF bandwidth can prevent interference from aliasing back into our bandwidth. Additionally, if the interference is high power, a tight RF bandwidth can prevent the AGC from acting on interference and increase the number of bits used to represent our return. We can also implement more sophisticated techniques. For example, we can use a coded waveform such as a Barker code or Zadoff-chu waveform to increase the coherent gain on our returns. Additionally, having a tighter antenna pattern can reduce the interference power and increase the power of our returns. If we had a ULA, we could even implement beamforming to null interference signals from directions of arrival.
 
-We can extend our design to compute range measurements if we replace our sinusoid with a chirp. This is done in FMCW radars, for example, which we illustrate in Figure \ref{fig::fmcw_radar}
+Another limitation of our design is that it cannot measure range. We can extend our design to measure range if we replace our sinusoid with a chirp. This is done in FMCW radars, for example, which we illustrate in Figure \ref{fig::fmcw_radar}.
 
 \begin{figure}[H]
     	\centering
@@ -172,16 +170,16 @@ We can extend our design to compute range measurements if we replace our sinusoi
     	\label{fig::fmcw_radar}
 \end{figure}
 	
-\noindent In an FMCW radar, we generate our chirp waveform with a VCO.  Typical transmit and receive signals are shown in Figure \ref{fig::fmcw_spectrogram}.
+\noindent In an FMCW radar, we generate our chirp waveform with a VCO. The resulting transmit and receive signals are shown in Figure \ref{fig::fmcw_spectrogram}.
 
 \begin{figure}[H]
     	\centering
     	\fbox{\includegraphics[width=0.6\linewidth]{FMCW Freq-Time graph}}
-    	\caption{Time Frequency Plot for Transmit and Receive Signal.\cite{Long2019AssistingTV}}
+    	\caption{Time Frequency Plot for Transmit and Receive Signals.\cite{Long2019AssistingTV}}
     	\label{fig::fmcw_spectrogram}
 \end{figure}
 
-\noindent After mixing we get a tone with a frequency that is proportional to range. If we limit the maximum resolvable range, we can use a sample rate that is much smaller than the chirp bandwidth, which allows us to use much cheaper hardware. As shown in Figure \ref{fig::fmcw_radar}, we can then use an FFT to detect range. Additionally, we can resolve doppler by taking a slow-time FFT across pulses.
+\noindent After mixing we get a tone with a frequency that is proportional to range. If we limit the maximum resolvable range, we can use a sample rate that is much lower than the chirp bandwidth. This significantly reduces the hardware cost. Then, we can use an FFT to measure the range as illustrated in Figure \ref{fig::fmcw_radar}. Additionally, we can resolve doppler by taking a slow-time FFT across pulses.
 
 \section{Conclusion}
 % Conclusions to the overall lab that discuss meaningful lessons learned and other takeaways from the assignment. (Important)
