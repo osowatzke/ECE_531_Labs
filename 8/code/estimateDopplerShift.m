@@ -19,7 +19,7 @@ w = w*(2*pi)/60;
 dist = @(t) sqrt(r^2*cos(w*t).^2 + (r*sin(w*t) + r).^2 + d^2);
 
 % Create time vector over multiple cycles of movement
-num_cylces = 32;
+num_cylces = 1;
 dt = 1e-5;
 t = 0:dt:num_cylces*(2*pi/w);
 
