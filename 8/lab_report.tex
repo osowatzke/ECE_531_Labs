@@ -119,7 +119,7 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
 	x = \sqrt{r^2\cos({\omega}t)^2 + (r\sin({\omega}t) + r)^2 + d^2}
 \end{equation*}
 
-\noindent To obtain the radial velocity, we use MATLAB to differentiate the radial distance with respect to time. Then, we can use the radial velocities in Equation \ref{eq::dopp_shift} to compute the corresponding doppler shift. For this analysis, we choose representative values for the distances: $r = 0.25\ \text{m}$ and $d = 0.4\ \text{m}$. We also choose $\omega = 40\pi\ \text{rad}/\text{s}$ as a placeholder for our angular velocity. The doppler shift that results from our sample values values is displayed in Figure \ref{fig::dopp_shift_vs_time}.
+\noindent To obtain the radial velocity, we use MATLAB to differentiate the radial distance with respect to time. Then, we can use the radial velocities in Equation \ref{eq::dopp_shift} to compute the corresponding doppler shift. For this analysis, we choose representative values for the distances: $r = 0.25\ \text{m}$ and $d = 0.4\ \text{m}$. We also choose $\omega = 40\pi\ \text{rad}/\text{s}$ as a placeholder for our angular velocity. The doppler shift that results from our sample values is included in Figure \ref{fig::dopp_shift_vs_time}.
 
 \begin{figure}[H]
     	\centering
@@ -128,7 +128,7 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::dopp_shift_vs_time}
 \end{figure}
  
-\noindent We can make sense of this plot by examining the test setup in Figure \ref{fig::angular_velocity_measurement}. Doing so, we find that the frequency decrease as we rotate away from the antenna and increases as we rotate towards the antenna. We also create a signal with an instantaneous frequency consistent with Figure \ref{fig::dopp_shift_vs_time} and plot the FFT of it, which is shown in Figure \ref{fig::freq_response}.
+\noindent We can understand this plot by referring to the test setup shown in Figure \ref{fig::angular_velocity_measurement}. Doing so, we find that the frequency decreases as we rotate away from the antenna and increases as we rotate towards the antenna. We also create a signal with the resulting instantaneous frequency. Then, we plot the FFT of this signal, which is displayed in Figure \ref{fig::freq_response}.
 
 \begin{figure}[H]
     	\centering
@@ -137,7 +137,7 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::freq_response}
 \end{figure}
 
-\noindent Note that the spectrum is very different from our hardware results shown in Figure \ref{fig::dopp_spectrum}. How can we explain the discrepancies in our results? Our simulation results were collected over one period of the sinusoid, while each point in our waterfall plot was likely collected over multiple periods of the sinusoid. If we perform our FFT over multiple cycles of the input signal, we get the plot shown in Figure \ref{fig::freq_response_multi_cycle}.
+\noindent Note that the spectrum is very different from our hardware results, which are included in Figure \ref{fig::dopp_spectrum}. How can we explain the discrepancies in our results? Our simulation results were collected over one period of the sinusoid, while each point in our waterfall plot was likely collected over multiple periods of the input signal. If we perform our FFT in simulation over multiple cycles of the input signal, we get the plot shown in Figure \ref{fig::freq_response_multi_cycle}.
 
 \begin{figure}[H]
     	\centering
@@ -146,7 +146,7 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::freq_response_multi_cycle}
 \end{figure}
 
-\noindent Note that repeating our signal in the time domain has inserted zeros into our frequency response similar to how upsampling in the time-domain leads to replication in the frequency domain. The frequency of the first harmonic (20 Hz) also corresponds to the frequency of rotation. We do see evidence of faint harmonics in Figure \ref{fig::dopp_spectrum}. However, we can better visualize the artifacts if we place the PlutoSDR closer to the fan, which boosts the SNR. The results of our analysis are shown in Figure \ref{fig::dopp_harmonics}.
+\noindent Note that repeating our signal in the time domain has inserted zeros between the samples in our frequency response. This is similar to how upsampling leads to replication in the frequency domain. The frequency of the first harmonic (20 Hz) also corresponds to the frequency of rotation. We do see evidence of faint harmonics in Figure \ref{fig::dopp_spectrum}. We can better visualize these artifacts if we place the PlutoSDR closer to the fan, which boosts the SNR. The results of this analysis are included in Figure \ref{fig::dopp_harmonics}.
 
 \begin{figure}[H]
     	\centering
@@ -155,7 +155,7 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::dopp_harmonics}
 \end{figure}
 
-\noindent In the Figure, we show the fan being turned on at the lowest speed mode and then being turned off again. As soon as the fan is turned on, we see evenly spacing harmonics confirming the results shown in Figure \ref{fig::freq_response_multi_cycle}. As a result, we should be able to the frequency of the first harmonic to directly determine the angular velocity. Note that here we must also account for the number of blades because we may be periodic over intervals smaller than a full rotation. Our fan has 5 fans. Therefore, we conclude that the angular vectors for slow, medium, and fast speeds are 63/5 rotations/s, 79/5 rotations/s, and 95/5 rotations/s respectively. This corresponds to 756 rpm, 948 rpm, and 1140 rpm, which are reasonable values for a box fan.
+\noindent In our Figure, we capture the fan being turned on at the lowest speed mode and then being turned off again. As soon as the fan is turned on, we see evenly spacing harmonics confirming the results shown in Figure \ref{fig::freq_response_multi_cycle}. In other words, the frequency of the first harmonic is related to period of the signal, which is in turn related to the angular velocity. In our lab results, we must also account for the number of fan blades because they will decrease the period of the signal and increase the frequency. The fan we used for analysis specifically has 5 blades. Therefore, we conclude that the angular velocities for slow, medium, and fast speeds are 63/5 rotations/s, 79/5 rotations/s, and 95/5 rotations/s. These measurements correspond to 756 rpm, 948 rpm, and 1140 rpm, which are reasonable angular velocities for a box fan.
 
 Two common causes of the DC return in our data are clutter (from stationary returns) and transmitter leakage. We can minimize clutter with a tighter antenna pattern or by operating in an controlled environment, such as an anechoic chamber. However, it is usually not possible for us to constrain our environment. Antenna isolation achieved through a tighter antenna pattern or other techniques can be help us achieve better antenna isolation. We can also consider other design such as pulsed doppler radars. However, these radars may not be applicable in all cases (especially with close targets). In the lab, we used a notch filter to remove DC. However, we could have also removed or ignored the offending doppler bins in post-processing.
 
