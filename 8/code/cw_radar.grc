@@ -230,7 +230,7 @@ blocks:
     alias: ''
     beta: '6.76'
     comment: ''
-    cutoff_freq: 5e3
+    cutoff_freq: '500'
     decim: '1000'
     gain: '1'
     interp: '1'
@@ -263,7 +263,7 @@ blocks:
     alpha8: '1.0'
     alpha9: '1.0'
     axislabels: 'True'
-    bw: samp_rate
+    bw: samp_rate/1000
     color1: '0'
     color10: '0'
     color2: '0'
@@ -299,7 +299,7 @@ blocks:
     nconnections: '1'
     showports: 'False'
     type: complex
-    update_time: '0.10'
+    update_time: '0.01'
     wintype: window.WIN_HAMMING
   states:
     bus_sink: false
