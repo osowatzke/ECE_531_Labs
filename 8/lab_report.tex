@@ -119,7 +119,7 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
 	x = \sqrt{r^2\cos({\omega}t)^2 + (r\sin({\omega}t) + r)^2 + d^2}
 \end{equation*}
 
-\noindent To obtain the radial velocity, we use MATLAB to differentiate the radial distance with respect to time. Then, we can use the radial velocities and Equation \ref{eq::dopp_shift} to compute the corresponding doppler shift. For this analysis, we choose representative values for the distances: $r = 0.25\ \text{m}$ and $d = 0.4\ \text{m}$. We also choose $\omega = 40\pi\ \text{rad}/\text{s}$ as a placeholder for our angular velocity. The doppler shift that results from our sample values is included in Figure \ref{fig::dopp_shift_vs_time}.
+\noindent To obtain the radial velocity, we use MATLAB to differentiate the radial distance with respect to time. Then, we plug our results into Equation \ref{eq::dopp_shift} to compute the corresponding doppler shift. For this analysis, we choose representative values for the distances: $r = 0.25\ \text{m}$ and $d = 0.4\ \text{m}$. We also choose $\omega = 40\pi\ \text{rad}/\text{s}$ as a placeholder for our angular velocity. The doppler shift that results from our sample values is included in Figure \ref{fig::dopp_shift_vs_time}.
 
 \begin{figure}[H]
     	\centering
@@ -128,7 +128,16 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::dopp_shift_vs_time}
 \end{figure}
  
-\noindent We can understand this plot by referring to the test setup shown in Figure \ref{fig::angular_velocity_measurement}. Doing so, we find that the frequency decreases as we rotate away from the antenna and increases as we rotate towards the antenna. We also create a signal with the resulting instantaneous frequency. Then, we plot the FFT of this signal, which is displayed in Figure \ref{fig::freq_response}.
+\noindent We can understand this plot by referring to the test setup shown in Figure \ref{fig::angular_velocity_measurement}. Doing so, we find that the frequency decreases as we rotate away from the antenna and increases as we rotate towards the antenna. This time-varying doppler shift is known as the micro-doppler effect. It is also presented in the MATLAB documentation, which estimated the doppler shifts from a spinning helicopter blade \cite{matlab_micro_doppler}.
+
+\begin{figure}[H]
+    	\centering
+    \fbox{\includegraphics[width=0.5\linewidth]{micro_doppler.png}}
+    	\caption{Doppler Shift Induced By a Spinning Helicopter Blade \cite{matlab_micro_doppler}}
+    	\label{fig::micro_doppler}
+\end{figure}
+
+Depending on the duration of our FFTs, we may or may not see changing doppler shifts in our time-frequency plots. For the spinning point target we simulated, we captured data for a full rotation of the blades. This results in a fixed-width spectrum which is shown in Figure \ref{fig::freq_response}.
 
 \begin{figure}[H]
     	\centering
@@ -137,7 +146,7 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::freq_response}
 \end{figure}
 
-\noindent Note that the spectrum is very different from our hardware results, which are included in Figure \ref{fig::dopp_spectrum}. How can we explain the discrepancies in our results? Our simulation results were collected over one period of the sinusoid, while each point in our waterfall plot was likely collected over multiple periods of the input signal. If we perform our FFT in simulation over multiple cycles of the input signal, we get the plot shown in Figure \ref{fig::freq_response_multi_cycle}.
+\noindent Note that the simulated spectrum is very different from our hardware results, which are included in Figure \ref{fig::dopp_spectrum}. How can we explain the discrepancies in our results? Our simulation results were collected over one period of the sinusoid, while each point in our waterfall plot was likely collected over multiple periods of the input signal. If we perform our FFT in simulation over multiple cycles of the input signal, we get the plot shown in Figure \ref{fig::freq_response_multi_cycle}.
 
 \begin{figure}[H]
     	\centering
@@ -146,7 +155,7 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::freq_response_multi_cycle}
 \end{figure}
 
-\noindent Note that repeating our signal in the time domain has inserted zeros between the samples in our frequency response. This is similar to how upsampling leads to replication in the frequency domain. The frequency of the first harmonic (20 Hz) also corresponds to the frequency of rotation. We do see evidence of faint harmonics in Figure \ref{fig::dopp_spectrum}, which can be explained by this theory. We can better visualize these artifacts if we place the PlutoSDR closer to the fan, to boost the SNR. The results of this analysis are included in Figure \ref{fig::dopp_harmonics}.
+\noindent Note that repeating our signal in the time domain has inserted zeros between the samples in our frequency response. This is analogous to how upsampling (inserting zeros between samples) leads to replication in the frequency domain. The frequency of our first harmonic (20 Hz) also corresponds to the configured frequency of rotation. We do see evidence of faint harmonics in Figure \ref{fig::dopp_spectrum}, which can be explained by this theory. We can better visualize these artifacts if we place the PlutoSDR closer to the fan, to boost the SNR. The results of this analysis are included in Figure \ref{fig::dopp_harmonics}.
 
 \begin{figure}[H]
     	\centering
