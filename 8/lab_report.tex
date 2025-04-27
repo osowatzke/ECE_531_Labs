@@ -79,7 +79,7 @@ In this section, we provide the procedures for each of our experiments. We speci
 \section{Results}
 % Results and discussion of the laboratory experiment, including captured outputs, observations, and responses to laboratory questions.
 
-In this section, we provide the results for each of our experiments. We specifically create a GNU radio flowchart, which implements a CW radio in our PlutoSDR. Next, we use our design to measure the angular velocity of the blades within a box fan. Then, we discuss the short-comings of our design: DC return, resilience to interference, and no range information. Finally, we discuss how we can improve our design to handle these short-comings. Our GNU radio flowchart is shown in Figure \ref{fig::gnu_radio_block_diagram}. 
+In this section, we provide the results for each of our experiments. We specifically create a GNU radio flowchart, which implements a CW radio in our PlutoSDR. Next, we use our design to measure the angular velocity of the moving box fan blades. Then, we discuss the short-comings of our design: DC return, no resilience to interference, and no range information. Finally, we discuss how we can improve our design to handle these short-comings. Our GNU radio flowchart is shown in Figure \ref{fig::gnu_radio_block_diagram}. 
 
 \begin{figure}[H]
     	\centering
@@ -96,7 +96,7 @@ In this section, we provide the results for each of our experiments. We specific
 
 % \noindent We specifically choose  shift of 
 
-Next, to measure the angle velocity of our box fan, we place our PlutoSDR in front of it and execute our flowchart. The waterfall plot that results from this experiment is displayed Figure \ref{fig::dopp_spectrum}. Note that our flowchart shows the doppler shift for three different fan speeds: slow, medium, and fast.
+Next, to measure the angle velocity of our box fan blades, we place our PlutoSDR in front of the fan and execute our flowchart. The waterfall plot that is generated during this experiment is displayed Figure \ref{fig::dopp_spectrum}. Note that our flowchart shows the doppler shift for three different fan speeds: slow, medium, and fast.
 
 \begin{figure}[H]
     	\centering
@@ -113,13 +113,13 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::angular_velocity_measurement}
 \end{figure}
 
-\noindent In this setup, we consider a point target which rotates around a circle of radius $r$ with an angular velocity $\omega$. We specifically measure the doppler shifts of our return when our antenna placed at the base of the circle. Note that our antenna also extends some distance $d$ out of the page. This model is a gross oversimplification of our lab setup. However, it is still useful for our understanding. To solve for the doppler shifts, we first compute the radial distance between the target and point antenna. The resulting radial distance, $x$, can be computed for each angular position as follows:
+\noindent In this setup, we consider a point target which rotates around a circle of radius $r$ with an angular velocity $\omega$. We specifically measure the doppler shifts of our return when our antenna is placed at the base of the circle. Note that our antenna also extends some distance $d$ out of the page. This model is an oversimplification of our lab setup. However, it is still useful for our understanding. To solve for the doppler shifts, we first compute the radial distance between the target and point antenna. The resulting radial distance, $x$, can be computed for each angular position as follows:
 
 \begin{equation*}
 	x = \sqrt{r^2\cos({\omega}t)^2 + (r\sin({\omega}t) + r)^2 + d^2}
 \end{equation*}
 
-\noindent To obtain the radial velocity, we use MATLAB to differentiate the radial distance with respect to time. Then, we plug our results into Equation \ref{eq::dopp_shift} to compute the corresponding doppler shift. For this analysis, we choose representative values for the distances: $r = 0.25\ \text{m}$ and $d = 0.4\ \text{m}$. We also choose $\omega = 40\pi\ \text{rad}/\text{s}$ as a placeholder for our angular velocity. The doppler shift that results from our sample values is included in Figure \ref{fig::dopp_shift_vs_time}.
+\noindent To obtain the radial velocity, we use MATLAB to differentiate the radial distance with respect to time. Then, we plug our results into Equation \ref{eq::dopp_shift} to compute the corresponding doppler shift. For this analysis, we choose representative values for the blade length and antenna position: $r = 0.25\ \text{m}$ and $d = 0.4\ \text{m}$. We also choose $\omega = 40\pi\ \text{rad}/\text{s}$ as a placeholder for our angular velocity. The doppler shift that results from our sample values is included in Figure \ref{fig::dopp_shift_vs_time}.
 
 \begin{figure}[H]
     	\centering
@@ -128,16 +128,16 @@ Next, to measure the angle velocity of our box fan, we place our PlutoSDR in fro
     	\label{fig::dopp_shift_vs_time}
 \end{figure}
  
-\noindent We can understand this plot by referring to the test setup shown in Figure \ref{fig::angular_velocity_measurement}. Doing so, we find that the frequency decreases as we rotate away from the antenna and increases as we rotate towards the antenna. This time-varying doppler shift is known as the micro-doppler effect. It is also presented in the MATLAB documentation, which estimated the doppler shifts from a spinning helicopter blade \cite{matlab_micro_doppler}.
+\noindent We can understand this plot by referring to the test setup shown in Figure \ref{fig::angular_velocity_measurement}. Doing so, we find that the frequency decreases as we rotate away from the antenna and increases as we rotate towards the antenna. This time-varying doppler shift is known as the micro-doppler effect. It is also presented in the MATLAB documentation, which estimates the doppler shifts from a spinning helicopter blades \cite{matlab_micro_doppler}.
 
 \begin{figure}[H]
     	\centering
     \fbox{\includegraphics[width=0.5\linewidth]{micro_doppler.png}}
-    	\caption{Doppler Shift Induced By a Spinning Helicopter Blade \cite{matlab_micro_doppler}}
+    	\caption{Doppler Shift Induced By a Spinning Helicopter Blades \cite{matlab_micro_doppler}}
     	\label{fig::micro_doppler}
 \end{figure}
 
-Depending on the duration of our FFTs, we may or may not see changing doppler shifts in our time-frequency plots. For the spinning point target we simulated, we captured data for a full rotation of the blades. This results in a fixed-width spectrum which is shown in Figure \ref{fig::freq_response}.
+Depending on the duration of our FFTs, we may or may not see changing doppler shifts in our time-frequency plots. For the rotating point target we simulated, we captured data for a full rotation of the blades before taking the FFT. This results in a fixed-width spectrum which is shown in Figure \ref{fig::freq_response}.
 
 \begin{figure}[H]
     	\centering
@@ -164,9 +164,11 @@ Depending on the duration of our FFTs, we may or may not see changing doppler sh
     	\label{fig::dopp_harmonics}
 \end{figure}
 
-\noindent In our Figure, we capture the fan being turned on at the lowest speed mode and then being turned off again. As soon as the fan is turned on, we see evenly spacing harmonics confirming the results shown in Figure \ref{fig::freq_response_multi_cycle}. In other words, the frequency of the first harmonic is related to period of the signal, which is in turn related to the angular velocity. In our lab results, we must also account for the number of fan blades because they will decrease the period of the signal, which increasing the resulting frequency. The fan we used has 5 blades. Therefore, we conclude that the angular velocities for slow, medium, and fast speeds are 63/5 rotations/s, 79/5 rotations/s, and 95/5 rotations/s. These measurements correspond to 756 rpm, 948 rpm, and 1140 rpm, which are reasonable angular velocities for a box fan.
+\noindent In our Figure, we capture the fan being turned on at the lowest speed setting and then being turned off again. As soon as the fan is turned on, we see evenly spacing harmonics confirming the results shown in Figure \ref{fig::freq_response_multi_cycle}. We also monitored the sampled signal power at the output of the ADC with a QT Time Sink and did not see any clipping artifacts.
 
-Two common causes of the DC return in our data are clutter (from stationary returns) and transmitter leakage. We can minimize clutter with a tighter antenna pattern or by operating in an controlled environment, such as an anechoic chamber. However, it is usually not possible for us to constrain our environment. Similarly, antenna isolation can also be achieved using a tighter antenna pattern. We can also consider other designs such as pulsed doppler radar, which blank the transmitted signal. However, these radars may not be suited for all applications (such as dealing with close range targets). In the lab, we used a notch filter to remove DC. However, we could have also removed or ignored the offending doppler bins in post-processing.
+From our simulation results, we know that the frequency of the first harmonic is related to period of the signal. Therefore, we can use its frequency to compute the angular velocity. In our analysis, we also need to account for the number of fan blades because they will decrease the period of the signal and increase the resulting frequency. Our fan specifically had 5 blades. Therefore, we conclude that the angular velocities for slow, medium, and fast speeds are 63/5 rps, 79/5 rps, and 95/5 rps. These measurements correspond to 756 rpm, 948 rpm, and 1140 rpm, which are reasonable angular velocities for box fan blades.
+
+Next, we consider some of the non-idealities present in our data. Two common causes of the DC return are clutter (from stationary returns) and transmitter leakage. We can minimize clutter with a tighter antenna pattern or by operating in an controlled environment, such as an anechoic chamber. However, it is usually not possible for us to constrain our environment. We can also achieve better antenna isolation by using a tighter antenna pattern. To reduce leakage, we can also consider other designs such as a pulsed doppler radar, which blank the receiver during transmission. However, pulsed-doppler radars may not be suitable for all applications (such as dealing with close range targets). However, for the purposes of the lab, we simply used a notch filter to remove the DC component of our signal.
 
 An interfering signal would negatively impact our CW radar's operation. If the interference was from a wideband signal (such as 802.11 WiFi), it could cover the entire bandwidth of our signal and make detection more difficult. Conversely, if the interfering signal was narrow bandwidth (such as a tone), it could lead to false detections. To mitigate interference, we can do a few things. First, we should try to minimize the utilized bandwidth. In the sample flowchart, provided in the lab document, the RF bandwidth was larger than the sample rate. A tighter RF bandwidth can prevent interference from aliasing back into our bandwidth. Additionally, if the interference is high power, a tight RF bandwidth can prevent the AGC from acting on interference and increase the number of bits used to represent our return. We can also implement more sophisticated techniques to handle interference. For example, we can use a coded waveform such as a Barker code or Zadoff-chu waveform to increase the coherent gain on our returns. Additionally, having a tighter antenna pattern can reduce the interference power and increase the power of our returns. If we had a ULA, we could even implement beamforming to null interference signals from different directions of arrival.
 
